@@ -89,7 +89,7 @@ class MenuView extends React.Component<ImenuProps,ImenuState>{
                         <NavItem>
                             <NavLink />
                         </NavItem>
-                    {loggedin ? <UserMenu userMnText = {menuText.user} user = {this.props.currentUsr}/> : <InlineLogin loginTextInline = {menuText.loginFormInline}/>}
+                    {loggedin ? <UserMenu userMnText = {menuText.user} user = {this.props.currentUsr}/> : <InlineLogin />}
                     </Nav>
                 </Collapse>
             </Navbar>

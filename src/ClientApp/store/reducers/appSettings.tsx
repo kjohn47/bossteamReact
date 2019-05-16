@@ -17,7 +17,7 @@ import {setLanguage,
     getCurrentUser} from '../../settings';
 import {tempUser} from '../../pageData/mock/user';
 
-setCurrentUser(tempUser);
+//setCurrentUser(tempUser);
 
 const defaultState: IAppSettings = {
     menuText : defaultMenuText,

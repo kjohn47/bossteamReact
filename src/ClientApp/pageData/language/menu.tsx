@@ -31,7 +31,7 @@ export const defaultMenuText : ImenuText = {
         administration : "#Administration",
         logout : "#Logout",
     },
-    loginFormInline : {
+    loginForm : {
         username : '#Username',
         password : '#Password',
         register : '#Register',
@@ -75,7 +75,7 @@ export const menuPTText : ImenuText = {
         administration : "Administração",
         logout : "Sair",
     },
-    loginFormInline : {
+    loginForm : {
         username : 'Nome do Utilizador',
         password : 'Password',
         register : 'Registar',
@@ -119,7 +119,7 @@ export const menuENText : ImenuText = {
         administration : "Administration",
         logout : "Logout",
     },
-    loginFormInline : {
+    loginForm : {
         username : 'Username',
         password : 'Password',
         register : 'Register',

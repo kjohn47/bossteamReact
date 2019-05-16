@@ -8,5 +8,5 @@ export interface IloginMenu {
 }
 
 export interface ILoginText {
-    loginTextInline?: IloginMenu;
+    loginText?: IloginMenu;
 }

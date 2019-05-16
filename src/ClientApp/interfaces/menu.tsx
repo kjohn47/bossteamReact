@@ -22,7 +22,7 @@ export interface ImenuText {
     events : IeventsText;
     language : ILanguageText;
     user : IusrMnText;
-    loginFormInline : IloginMenu;
+    loginForm : IloginMenu;
 }
 
 //Blogs Menu

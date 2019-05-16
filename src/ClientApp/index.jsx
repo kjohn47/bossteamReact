@@ -18,7 +18,6 @@ if (currLang === null || currLang === '' || currLang === undefined )
     setLanguage();
 }
 
-//import { AppContainer } from 'react-hot-loader'
 const store = configureStore(window.__STATE__);
 const render = () =>
     ReactDOM.hydrate(
@@ -30,11 +29,3 @@ const render = () =>
         document.getElementById("root"));
 
 render();
-/*
-// webpack Hot Module Replacement API
-if (module.hot) {
-    module.hot.accept('./components/App', () => {
-      // if you are using harmony modules ({modules:false})
-      render()
-    })
-  }*/
