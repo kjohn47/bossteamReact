@@ -31,12 +31,6 @@ export const defaultMenuText : ImenuText = {
         administration : "#Administration",
         logout : "#Logout",
     },
-    loginForm : {
-        username : '#Username',
-        password : '#Password',
-        register : '#Register',
-        submit : '#Submit'
-    },
     language : {
         title : '#LANGUAGE',
         portuguese : '#Portuguese',
@@ -75,12 +69,6 @@ export const menuPTText : ImenuText = {
         administration : "Administração",
         logout : "Sair",
     },
-    loginForm : {
-        username : 'Nome do Utilizador',
-        password : 'Password',
-        register : 'Registar',
-        submit : 'Entrar'
-    },
     language : {
         title : 'Língua',
         portuguese : 'Português',
@@ -118,12 +106,6 @@ export const menuENText : ImenuText = {
         account : "My Account",
         administration : "Administration",
         logout : "Logout",
-    },
-    loginForm : {
-        username : 'Username',
-        password : 'Password',
-        register : 'Register',
-        submit : 'Enter'
     },
     language : {
         title : 'Language',

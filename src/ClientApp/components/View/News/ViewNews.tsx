@@ -12,7 +12,7 @@ const Comments = commentLogic(Comment);
 class ViewNews extends React.Component<IViewNews,{}>{    
     render(){        
         const newsData = this.props.newsData;
-        const AddComments = addCommentLogic(AddComment, this.props.addCommentAction, newsData.id);
+        const AddComments = addCommentLogic( AddComment, this.props.addCommentAction );
         return(
             <div>
                 <Row>

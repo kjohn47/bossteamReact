@@ -4,25 +4,32 @@ const cookies = new Cookies();
 
 export const ptCode = 'PT';
 export const enCode = 'EN';
+export const results = {
+    success: 'Success',
+    failure: 'Failure',
+    default: ''
+}
+const langCookie = 'appLanguage';
+const userCookie = 'appCurrentUser';
 
 export const currentLanguage = () => {
-   return cookies.get('appLanguage');
+   return cookies.get(langCookie);
 };
 
 export const setLanguage = (lang: string = ptCode) => {
-   cookies.set('appLanguage', lang, { path: '/' });
+   cookies.set(langCookie, lang, { path: '/' });
 };
 
 export const getCurrentUser = () => {
-   return cookies.get('appCurrentUser');
+   return cookies.get(userCookie);
 };
 
 export const setCurrentUser = (userData: IcurrentUser ) => {
-   cookies.set('appCurrentUser', userData, { path: '/' }) 
+   cookies.set(userCookie, userData, { path: '/' }) 
 };
 
 export const cookieLogout = () => {
-   cookies.remove('appCurrentUser', { path: '/' });
+   cookies.remove(userCookie, { path: '/' });
 };
 
 export const checkLogin = () => {

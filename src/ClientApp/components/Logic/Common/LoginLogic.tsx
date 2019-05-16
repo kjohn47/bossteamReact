@@ -1,56 +1,122 @@
 import * as React from 'react';
-import {ILogin} from '../../../interfaces/login';
+import { ILogin, ILoginActions, ILoginState } from '../../../interfaces/login';
 import { connect } from 'react-redux';
 import { Istore } from '../../../interfaces/store';
 import { IUserMenu } from '../../../interfaces/menu';
 import { IAppSettings, IappActions } from '../../../interfaces/appSettings';
-import { makeLogin, makeLogout } from '../../../store/actions/appSettings';
+import { makeLogin, makeLogout, resetLoginStatus } from '../../../store/actions/appSettings';
+import { results } from '../../../settings';
 
-function loginLogic (WrappedComponentLogin:React.ComponentType<ILogin>, WrappedComponentLoggedIn?:React.ComponentType<IUserMenu>)
-{
-    class LoginLogic extends React.Component<IAppSettings & IappActions,{}>{ 
-        constructor(props:any){
+
+function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedComponentLoggedIn?: React.ComponentType<IUserMenu>) {
+    class LoginLogic extends React.Component<IAppSettings & IappActions, ILoginState>{
+        constructor(props: any) {
             super(props);
             this.makeLogin = this.makeLogin.bind(this);
             this.makeLogout = this.makeLogout.bind(this);
+            this.handlePassword = this.handlePassword.bind(this);
+            this.handleUser = this.handleUser.bind(this);
+            this.state =
+                {
+                    user: '',
+                    password: ''
+                };
         }
 
-        makeLogin(user: string, password: string) {
-            this.props.makeLogin(user, password);
+        handleUser(event: any) {
+            this.setState(
+                {
+                    user: event.target.value
+                });
+        }
+
+        handlePassword(event: any) {
+            this.setState(
+                {
+                    password: event.target.value
+                });
+        }
+
+        makeLogin() {
+            if (this.state.user.trim() === '') {
+                alert(this.props.loginForm.emptyUser);
+            }
+            else if (this.state.password.trim() === '') {
+                alert(this.props.loginForm.emptyPassword);
+            }
+            else {
+                this.props.makeLogin(this.state.user, this.state.password);                            
+            }
         }
 
         makeLogout() {
-            this.props.makeLogout();
+            if (this.props.isLogged) {
+                this.props.makeLogout();
+                //redirect to /
+            }
         }
-        
-        render(){
-            return(
-                this.props.isLogged ? 
-                    WrappedComponentLoggedIn !== null || WrappedComponentLoggedIn !== undefined  ?
-                        <WrappedComponentLoggedIn user = {this.props.loggedUser} userMnText = {this.props.menuText.user} userMenuAction = {this.makeLogout}/>
+
+        componentDidUpdate( prevProps: IAppSettings & IappActions) {
+            if ( this.props.tryLogin !== prevProps.tryLogin ) {
+                if ( this.props.tryLogin === results.failure ||  this.props.tryLogin === results.success )
+                {
+                    this.props.resetLoginStatus();
+                    if ( !this.props.isLogged ) {
+                        alert(this.props.loginForm.invalidLogin);
+                    }
+                    else if ( this.props.isLogged )
+                    {
+                        this.setState(
+                        {
+                            user: '',
+                            password: ''                        
+                        });
+                        //redirect to /
+                    }                        
+                }
+            }
+        }
+
+        render() {
+            const loginActions: ILoginActions = {
+                handlePassword: (event: any) => this.handlePassword(event),
+                handleUser: (event: any) => this.handleUser(event),
+                makeLogin: () => this.makeLogin(),                
+                state: {
+                    user: this.state.user,
+                    password: this.state.password
+                }
+            }
+
+            return (
+                this.props.isLogged ?
+                    WrappedComponentLoggedIn !== null || WrappedComponentLoggedIn !== undefined ?
+                        <WrappedComponentLoggedIn user={this.props.loggedUser} userMnText={this.props.menuText.user} userMenuAction={this.makeLogout} />
+                        :
+                        <div></div>//redirect to logout prompt
                     :
-                    <div></div>
-                :
-                    <WrappedComponentLogin loginText = {this.props.menuText.loginForm} loginAction = {this.makeLogin}/>
+                    <WrappedComponentLogin loginText={this.props.loginForm} loginAction={loginActions} />
             );
         }
     }
-    const mapStateToProps = ( state: Istore ) =>
-    {
+    const mapStateToProps = (state: Istore) => {
         return {
             menuText: state.appSettings.menuText,
+            loginForm: state.appSettings.loginForm,
             isLogged: state.appSettings.isLogged,
-            loggedUser : state.appSettings.loggedUser
+            loggedUser: state.appSettings.loggedUser,
+            tryLogin: state.appSettings.tryLogin
         }
     };
 
-    const mapDispatchToProps = ( dispatch: Function ) => (
-    {
-        makeLogin: ( user: string, password: string ) => dispatch( makeLogin( user, password ) ),
-        makeLogout: () => dispatch( makeLogout() )
-    });
+    const mapDispatchToProps = (dispatch: Function) => (
+        {
+            makeLogin: (user: string, password: string) => dispatch(makeLogin(user, password)),
+            makeLogout: () => dispatch(makeLogout()),
+            resetLoginStatus: () => dispatch(resetLoginStatus())
+        });
 
-    return connect( mapStateToProps, mapDispatchToProps )( LoginLogic );
+    return connect(mapStateToProps, mapDispatchToProps)(LoginLogic);
 }
 
 export default loginLogic;

@@ -21,8 +21,7 @@ export interface ImenuText {
     tours : ItoursText;
     events : IeventsText;
     language : ILanguageText;
-    user : IusrMnText;
-    loginForm : IloginMenu;
+    user : IusrMnText;    
 }
 
 //Blogs Menu

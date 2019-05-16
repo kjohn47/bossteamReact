@@ -1,7 +1,8 @@
 import { 
-            APP_GET_LANGUAGE,
-            MAKE_LOGIN,
-            MAKE_LOGOUT
+        APP_GET_LANGUAGE,
+        MAKE_LOGIN,
+        MAKE_LOGOUT,
+        RESET_LOGIN_STATUS
         } from '../actionTypes';
 
 import {ptCode} from '../../settings';
@@ -28,5 +29,11 @@ export function makeLogin( user: string, password: string ){
 export function makeLogout(){
     return {
         type: MAKE_LOGOUT
+    }
+}
+
+export function resetLoginStatus(){
+    return {
+        type: RESET_LOGIN_STATUS
     }
 }
