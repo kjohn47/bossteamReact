@@ -58,16 +58,6 @@ const Routes = [
   {
     component: App,
     routes: [
-        /*{
-          ...homeRoute //spreads the content of the route for home
-        },
-        {
-          ...listerRoute //spreads the content of the route for lister
-        },
-          component: TSTest,
-          path: '/tstest',
-          exact: true
-        },*/
         getComponentRoute(Home, '/'), //or call directly the function.. atention to not use {} in this case
         getComponentRoute(News, '/news'), 
         getComponentRoute(ViewNewsInfo, '/ViewNews/:ID'), 

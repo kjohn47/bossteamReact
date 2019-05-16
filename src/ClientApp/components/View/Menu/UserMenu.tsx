@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {IusrMnText} from '../../../interfaces/menu';
-import { IcurrentUser } from '../../../interfaces/currentUser';
+import {IUserMenu} from '../../../interfaces/menu';
 import {
     UncontrolledDropdown,
     DropdownToggle,
@@ -8,12 +7,9 @@ import {
     DropdownItem } from 'reactstrap';
 import {NavLink as RouterLink} from 'react-router-dom';
 
-interface IUserMenuText {
-    userMnText?: IusrMnText;
-    user?: IcurrentUser;
-}
 
-class UserMenu extends React.PureComponent<IUserMenuText,{}>{
+
+class UserMenu extends React.PureComponent<IUserMenu,{}>{
     render(){
         const userName = this.props.user.name + ' ' + this.props.user.surname;
         const userMnText = this.props.userMnText;
@@ -24,7 +20,7 @@ class UserMenu extends React.PureComponent<IUserMenuText,{}>{
                     <DropdownItem>{userMnText.administration}</DropdownItem>
                     <DropdownItem>{userMnText.account}</DropdownItem>
                     <DropdownItem divider />
-                    <DropdownItem>{userMnText.logout}</DropdownItem>
+                    <DropdownItem onClick= {() => this.props.userMenuAction()}>{userMnText.logout}</DropdownItem>
                 </DropdownMenu>
             </UncontrolledDropdown>
         );

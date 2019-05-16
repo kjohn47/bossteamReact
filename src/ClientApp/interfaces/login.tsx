@@ -5,8 +5,24 @@ export interface IloginMenu {
     password : string;
     submit : string;
     register : string;
+    emptyUser: string;
+    emptyPassword: string;
+    invalidLogin: string;
 }
 
-export interface ILoginText {
-    loginTextInline?: IloginMenu;
+export interface ILogin {
+    loginText?: IloginMenu;
+    loginAction?: ILoginActions;
+}
+
+export interface ILoginActions {
+    handleUser?: Function;
+    handlePassword?: Function;
+    makeLogin?: Function;  
+    state?: ILoginState;  
+}
+
+export interface ILoginState {
+    user: string;
+    password: string;
 }

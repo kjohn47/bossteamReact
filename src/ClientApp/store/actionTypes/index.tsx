@@ -2,6 +2,7 @@
 export const APP_GET_LANGUAGE = 'APP_GET_LANGUAGE';
 export const MAKE_LOGIN = 'MAKE_LOGIN';
 export const MAKE_LOGOUT = 'MAKE_LOGOUT';
+export const RESET_LOGIN_STATUS = 'RESET_LOGIN_STATUS';
 
 ////NEWS
 export const GET_NEWS_LIST = 'GET_NEWS_LIST';

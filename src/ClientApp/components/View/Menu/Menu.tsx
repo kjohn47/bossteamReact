@@ -20,7 +20,7 @@ import {
 
 import {NavLink as RouterLink} from 'react-router-dom';
 
-const InlineLogin = loginLogic( LoginForm );
+const InlineLogin = loginLogic( LoginForm, UserMenu );
 
 class MenuView extends React.Component<ImenuProps,ImenuState>{
     constructor(props:any) {
@@ -89,7 +89,7 @@ class MenuView extends React.Component<ImenuProps,ImenuState>{
                         <NavItem>
                             <NavLink />
                         </NavItem>
-                    {loggedin ? <UserMenu userMnText = {menuText.user} user = {this.props.currentUsr}/> : <InlineLogin loginTextInline = {menuText.loginFormInline}/>}
+                        <InlineLogin />
                     </Nav>
                 </Collapse>
             </Navbar>
