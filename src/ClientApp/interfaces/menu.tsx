@@ -70,3 +70,9 @@ export interface ILanguageText {
     portuguese: string;
     english: string;
 }
+
+export interface IUserMenu {
+    userMnText?: IusrMnText;
+    user?: IcurrentUser;
+    userMenuAction?: Function;
+}

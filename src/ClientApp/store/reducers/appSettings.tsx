@@ -1,4 +1,4 @@
-import { APP_GET_LANGUAGE } from '../actionTypes';
+import { APP_GET_LANGUAGE, MAKE_LOGOUT, MAKE_LOGIN } from '../actionTypes';
 import { IappAction, IAppSettings } from '../../interfaces/appSettings';
 import { defaultMenuText, menuENText, menuPTText } from '../../pageData/language/menu';
 import { defaultNewsText, enNewsText, ptNewsText } from '../../pageData/language/news';
@@ -14,10 +14,9 @@ import {setLanguage,
     currentLanguage,
     setCurrentUser,
     checkLogin,
-    getCurrentUser} from '../../settings';
+    getCurrentUser,
+    cookieLogout} from '../../settings';
 import {tempUser} from '../../pageData/mock/user';
-
-//setCurrentUser(tempUser);
 
 const defaultState: IAppSettings = {
     menuText : defaultMenuText,
@@ -55,6 +54,20 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
                     presentationLanguage: ptCode
                 };
             }
+        }
+        case MAKE_LOGOUT: {
+            cookieLogout();
+            return{...state,
+                isLogged: false,
+                loggedUser: null
+            };
+        }
+        case MAKE_LOGIN: {
+            setCurrentUser(tempUser);
+            return{...state,
+                isLogged: true,
+                loggedUser: tempUser
+            };
         }
 
     default: 

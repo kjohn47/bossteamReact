@@ -10,17 +10,21 @@ export const currentLanguage = () => {
 };
 
 export const setLanguage = (lang: string = ptCode) => {
-   return cookies.set('appLanguage', lang, { path: '/' });
+   cookies.set('appLanguage', lang, { path: '/' });
 };
 
 export const getCurrentUser = () => {
-   return cookies.get('appCurrenUser');
+   return cookies.get('appCurrentUser');
 };
 
-export const setCurrentUser = (userData: IcurrentUser = null) => {
-   return cookies.set('appCurrenUser', userData, { path: '/' });
+export const setCurrentUser = (userData: IcurrentUser ) => {
+   cookies.set('appCurrentUser', userData, { path: '/' }) 
+};
+
+export const cookieLogout = () => {
+   cookies.remove('appCurrentUser', { path: '/' });
 };
 
 export const checkLogin = () => {
    return getCurrentUser() !== null && getCurrentUser() !== undefined;
-}
+};

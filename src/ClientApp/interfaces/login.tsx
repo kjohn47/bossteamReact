@@ -7,6 +7,7 @@ export interface IloginMenu {
     register : string;
 }
 
-export interface ILoginText {
+export interface ILogin {
     loginText?: IloginMenu;
+    loginAction?: Function;
 }

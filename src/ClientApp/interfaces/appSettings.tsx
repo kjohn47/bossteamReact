@@ -18,9 +18,13 @@ export interface IappAction{
 }
 
 export interface IappActions{
-    appGetLanguage: Function;
+    appGetLanguage?: Function;
+    makeLogin?: Function;
+    makeLogout?: Function;
 }
 
 interface Ipayload {
-    language?:string;
+    language?: string;
+    user?: string;
+    password?: string;
 }
