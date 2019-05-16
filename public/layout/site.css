@@ -1,0 +1,163 @@
+.headspan {
+    font-weight: bold;
+}
+.textspan {
+    border: dotted 1px;
+    display: inline-block;
+    width:200px;
+}
+
+html{
+    height: 100%;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 100vh;
+}
+
+.main-div {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.pageContent {
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-bottom: 20px;
+}
+
+header{
+   /* We want the header to have a static height, 
+   it will always take up just as much space as it needs.  */
+   /* 0 flex-grow, 0 flex-shrink, auto flex-basis */
+   flex: 0 0 auto;
+}
+
+.main-content{
+   /* By setting flex-grow to 1, the main content will take up 
+   all of the remaining space on the page. 
+   The other elements have flex-grow: 0 and won't contest the free space. */
+   /* 1 flex-grow, 0 flex-shrink, auto flex-basis */
+   flex: 1 0 auto;
+   margin-left: 0px !important;
+   margin-right: 0px !important;
+}
+
+footer{
+   /* Like the header, the footer will have a static height - it shouldn't grow or shrink.  */
+   /* 0 flex-grow, 0 flex-shrink, auto flex-basis */
+   flex: 0 0 auto;
+}
+
+.separatorRow{
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+body{
+    overflow-y:scroll;
+}
+
+.HomePageImage{
+    padding-bottom: 20px; 
+    max-width: 480px; 
+    max-height: 360px;
+    min-width: 220px;
+    min-height: 160px;
+}
+
+.OuterColLayout{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+.news-content {
+    min-height: 150px;
+    margin-top: 10px;    
+    margin-bottom: 10px; 
+    width: 100%;
+    padding: 20px !important;
+    display: inline-block;
+    border: lightslategrey dashed 1px;
+}
+
+.add-comment{
+    border: 1px black solid;
+    width: 100%;
+    display: inline-block;
+    margin-top: 10px;
+    padding: 15px !important;
+    min-height: 100px;
+}
+
+.add-comment-text{
+    width: 100%;
+    height: 100px;    
+}
+
+.add-comment-button{
+    height: 100px;
+}
+
+.add-comment-inner{
+    padding: 15px !important;
+}
+
+.comment-info{
+    font-size: small;
+    font-weight: bold;
+}
+
+.comment-info span{
+    font-weight: normal;
+    font-style: italic;
+}
+
+.comment-info-col{
+    margin-right: 2px;
+}
+
+.comment{
+    border: 1px gray dotted;    
+    width: 100%;
+    display: inline-block;
+    padding: 10px !important;
+    min-height: 75px;
+    margin-top:5px;        
+}
+
+.comment-row{
+    flex-wrap:nowrap !important;
+    -ms-flex-wrap: nowrap !important;
+}
+
+.jumbotron {
+    min-height: 340px;
+}
+
+@media(max-width: 768px)
+{
+    .HomePageImage{
+        max-width: 100%;
+        max-height: 100%;
+    }
+    .HomeImageDiv{
+        visibility: hidden;
+        display: none;
+    }
+}
+
+@media(max-width: 480px)
+{    
+
+}

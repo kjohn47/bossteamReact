@@ -1,0 +1,28 @@
+{
+  "lister": [
+    {
+      "id": 0,
+      "name": "EleZero",
+      "description": "Element of list number 0",
+      "enabled": "yes"
+    },
+    {
+      "id": 1,
+      "name": "EleOne",
+      "description": "Element of list number 1",
+      "enabled": "no"
+    },
+    {
+      "id": 2,
+      "name": "EleTwo",
+      "description": "Element of list number 2",
+      "enabled": "no"
+    },
+    {
+      "id": 3,
+      "name": "EleThree",
+      "description": "Element of list number 3",
+      "enabled": "yes"
+    }
+  ]
+}
