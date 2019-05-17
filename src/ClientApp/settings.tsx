@@ -13,7 +13,13 @@ const langCookie = 'appLanguage';
 const userCookie = 'appCurrentUser';
 
 export const currentLanguage = () => {
-   return cookies.get(langCookie);
+   let lang = cookies.get(langCookie);
+   if( lang === null || lang === undefined || lang === '' )
+    {
+        setLanguage()
+        return ptCode;
+    }
+   return lang;
 };
 
 export const setLanguage = (lang: string = ptCode) => {
@@ -21,7 +27,7 @@ export const setLanguage = (lang: string = ptCode) => {
 };
 
 export const getCurrentUser = () => {
-   return cookies.get(userCookie);
+    return cookies.get(userCookie);  
 };
 
 export const setCurrentUser = (userData: IcurrentUser ) => {

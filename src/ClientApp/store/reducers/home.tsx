@@ -1,8 +1,6 @@
 import { GET_PRESENTATION_DATA, CHANGE_PRESENTATION_LANGUAGE, GET_HOME_IMAGE } from '../actionTypes';
 import { IHomeAction, IHomeRedux, IpresentationData, IpresentationServer } from '../../interfaces/home';
-import {mockPresentationFromServer, mockHomeImage} from '../../pageData/mock/homepage';
 import {enCode} from '../../settings';
-import { Iimage } from '../../interfaces/common';
 
 //// -- Default homepage presentation state
 const defaultState: IHomeRedux = {
@@ -22,12 +20,6 @@ const defaultState: IHomeRedux = {
 
 //// -- Homepage presentation
 
-function getPresentationFromServer()
-{
-    ////mocked server data -- replace with server call
-    return mockPresentationFromServer;
-}
-
 function changePresentationLanguage(language:string, presentationServer: IpresentationServer)
 {
     let presentationData : IpresentationData = {
@@ -41,22 +33,12 @@ function changePresentationLanguage(language:string, presentationServer: Ipresen
 
 //// -- Homepage presentation
 
-//// -- Homepage Image
-
-function getImageFromServer()
-{
-    let image: Iimage = mockHomeImage;
-    return image;
-}
-
-//// -- Homepage Image
-
 //// -- Homepage presentation reducer
 export function home(state:IHomeRedux = defaultState, action:IHomeAction) {
 
     switch (action.type) {
         case GET_PRESENTATION_DATA: {     
-            let presentationFromServer = getPresentationFromServer();
+            let presentationFromServer = action.payload.presentation;
             return {...state,
                 presentationData: changePresentationLanguage(action.payload.language, presentationFromServer),
                 presentationServer: presentationFromServer
@@ -69,7 +51,7 @@ export function home(state:IHomeRedux = defaultState, action:IHomeAction) {
         }
         case GET_HOME_IMAGE: {
             return {...state,
-                image: getImageFromServer()
+                image: action.payload.image
             };
         }
 

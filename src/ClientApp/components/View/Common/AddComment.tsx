@@ -1,9 +1,12 @@
 import {Row, Col} from 'reactstrap';
 import * as React from 'react';
 import {IAddComment, IAddCommentText} from '../../../interfaces/common';
+import { IAppSettings } from '../../../interfaces/appSettings';
 
-class AddComment extends React.Component<IAddComment & IAddCommentText,{}>{
-    constructor(props:any) {
+type IAddCommentProps = IAddCommentText & IAddComment & IAppSettings;
+
+class AddComment extends React.Component<IAddCommentProps,{}>{
+    constructor(props:IAddCommentProps) {
         super(props)
     };
 

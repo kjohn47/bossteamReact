@@ -20,7 +20,9 @@ export interface IpresentationServer {
 }
 
 interface Ipayload {
-    language: string;
+    language?: string;
+    image?: Iimage;
+    presentation?: IpresentationServer;    
 }
 
 export interface IHomeAction{

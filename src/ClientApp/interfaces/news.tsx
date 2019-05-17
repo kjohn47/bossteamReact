@@ -35,9 +35,10 @@ export interface InewsActions{
 
 export interface Ipayload {
     language: string;
-    ID?: number;
-    user?: IcurrentUser;
-    comment?: string;
+    newsList?: INewsData[];
+    newsData?: IViewNewsDataServer;
+    comments?: ICommentData[];
+    newsID?: number;
 }
 
 export interface INewsData {

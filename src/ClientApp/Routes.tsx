@@ -32,7 +32,6 @@ const getComponentRoute = (component:any, path:string, actions:any[] = []) => {
       actions.forEach(action => {
           promises.push(store.dispatch(action));
       });
-      //@ts-ignore
       return Promise.all(promises);
     }
 

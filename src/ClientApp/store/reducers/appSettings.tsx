@@ -18,7 +18,6 @@ import {setLanguage,
     getCurrentUser,
     cookieLogout,
     results} from '../../settings';
-import {tempUser} from '../../pageData/mock/user';
 
 const defaultState: IAppSettings = {
     menuText : defaultMenuText,
@@ -30,14 +29,6 @@ const defaultState: IAppSettings = {
     isLogged: checkLogin(),
     loggedUser: getCurrentUser(),
     tryLogin: results.default
-}
-
-function makeLoginOnServer( user: string, password: string ){
-    if( user === "abc" && password === "123")////To replace with server call -- mock abc/123
-    {
-        return tempUser;
-    }
-    return false;
 }
 
 export function appSettings(state:IAppSettings = defaultState, action:IappAction) {
@@ -77,8 +68,8 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
             };
         }
         case MAKE_LOGIN: {
-            let loggedUser = makeLoginOnServer( action.payload.user, action.payload.password );
-            if( !loggedUser )
+            let loggedUser = action.payload.user;
+            if( !loggedUser || loggedUser === true )
             {
                 return{...state,
                     isLogged: false,
