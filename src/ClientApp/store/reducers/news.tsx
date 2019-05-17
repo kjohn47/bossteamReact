@@ -152,11 +152,14 @@ export function news(state:InewsListRedux = defaultState, action:InewsAction) {
                 return { ...state };
             }
             let commentList = [...state.newsViewData.comments];
-            let newsData = {...state.newsViewData};
             commentList.push( newComment );
-            newsData.comments = commentList;         
+            let newsData = {...state.newsViewData};
+            let newsServerData = {...state.newsViewDataServer};            
+            newsData.comments = [...commentList];         
+            newsServerData.comments =  [...commentList];
             return {...state,
-                newsViewData: newsData
+                newsViewData: newsData,
+                newsViewDataServer: newsServerData
             };        
         }
 
