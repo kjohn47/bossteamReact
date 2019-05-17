@@ -17,7 +17,11 @@ class AddComment extends React.Component<IAddComment & IAddCommentText,{}>{
                             <textarea className="add-comment-text"></textarea>
                         </Col>
                         <Col xs="1" className="add-comment-inner">
-                            <input type="submit" value = {this.props.submitBtnText} className="add-comment-button"/>
+                            <input 
+                                type="button" 
+                                value = {this.props.submitBtnText} 
+                                className="add-comment-button" onClick = { () => this.props.addCommentAction() }
+                            />
                         </Col>
                         <Col xs="2" className="add-comment-inner">
                         </Col>

@@ -4,14 +4,23 @@ import {connect} from 'react-redux';
 import {IAddComment, IAddCommentText} from '../../../interfaces/common';
 import {IAppSettings} from '../../../interfaces/appSettings';
 
-function addCommentLogic (WrappedComponent:React.ComponentType<IAddComment & IAddCommentText>, action: Function)
+function addCommentLogic (WrappedComponent:React.ComponentType<IAddComment & IAddCommentText>)
 {
-    class AddComment extends React.Component<IAppSettings,{}>{
+    class AddComment extends React.Component<IAppSettings & IAddComment,{}>{
+        constructor(props:any){
+            super(props);
+            this.addComment = this.addComment.bind(this);
+        }
+
+        addComment() {            
+            this.props.addCommentAction("comment");
+        }
+
         render(){
             return(
                 <WrappedComponent 
-                    action = {action} 
-                    submitBtnText = {this.props.addCommentText.submitBtnText}
+                    addCommentAction = { this.addComment } 
+                    submitBtnText = { this.props.addCommentText.submitBtnText }
                 />
             );
         }

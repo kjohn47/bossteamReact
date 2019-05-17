@@ -13,7 +13,7 @@ function viewNewsLogic (WrappedComponent:React.ComponentType<IViewNews>)
     class ViewNewsLogic extends React.Component<INewsReduxProps,{}>{                 
         constructor(props:any){
             super(props);
-            this.addCommentAction=this.addCommentAction.bind(this);
+            this.addCommentAction = this.addCommentAction.bind(this);
         }
 
         componentDidMount(){            

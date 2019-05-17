@@ -3,16 +3,18 @@ import {
     GET_NEWS_LIST_SHORT, 
     CHANGE_NEWS_LANGUAGE,
     GET_NEWS_DATA,
-    CHANGE_NEWS_DATA_LANGUAGE 
+    CHANGE_NEWS_DATA_LANGUAGE,
+    ADD_NEWS_COMMENT 
 } from '../actionTypes';
 import { 
     InewsAction, 
     InewsListRedux, 
     INewsData, 
     IViewNewsDataServer, 
-    IViewNewsData 
+    IViewNewsData, 
+    Ipayload
 } from '../../interfaces/news';
-import { IcardMainData} from '../../interfaces/common';
+import { IcardMainData, ICommentData} from '../../interfaces/common';
 import {enCode} from '../../settings';
 import {mockNewsDataServer, mockNewsFromServer} from '../../pageData/mock/news';
 
@@ -89,6 +91,21 @@ function changeNewsDataLanguage(language:string, newsServer: IViewNewsDataServer
     return newsData;
 }
 
+function addCommentToNews( newsID: number, comment: Ipayload )
+{
+    if( newsID.toString() !== comment.ID.toString() )
+    {
+        return false;
+    }
+    let newComment: ICommentData = {
+        Comment: comment.comment,
+        Owner: comment.user.name + " " + comment.user.surname,
+        Time: new Date(),
+        ID:123
+    }
+    return newComment;
+}
+
 //// -- View News Data
 
 
@@ -127,6 +144,20 @@ export function news(state:InewsListRedux = defaultState, action:InewsAction) {
                 return {...state,
                     newsViewData: changeNewsDataLanguage(action.payload.language, state.newsViewDataServer)
                 };        
+        }
+        case ADD_NEWS_COMMENT:{
+            let newComment = addCommentToNews( state.newsViewData.id, action.payload );
+            if ( !newComment )
+            {
+                return { ...state };
+            }
+            let commentList = [...state.newsViewData.comments];
+            let newsData = {...state.newsViewData};
+            commentList.push( newComment );
+            newsData.comments = commentList;         
+            return {...state,
+                newsViewData: newsData
+            };        
         }
 
         default: 

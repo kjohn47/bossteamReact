@@ -33,7 +33,7 @@ export interface ICommentData {
 }
 
 export interface IAddComment {
-    action: Function;
+    addCommentAction: Function;
 }
 
 export interface IAddCommentText {

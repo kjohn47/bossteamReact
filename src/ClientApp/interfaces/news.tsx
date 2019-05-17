@@ -33,10 +33,11 @@ export interface InewsActions{
     changeNewsLanguage: Function;
 }
 
-interface Ipayload {
+export interface Ipayload {
     language: string;
     ID?: number;
     user?: IcurrentUser;
+    comment?: string;
 }
 
 export interface INewsData {
