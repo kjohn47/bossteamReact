@@ -44,7 +44,7 @@ function commentLogic (WrappedComponent:React.ComponentType<IcommentProps>)
         }
     };
     
-    return connect(mapStateToProps,null)(Comment);
+    return connect(mapStateToProps, null)(Comment);
 }
 
 export default commentLogic;

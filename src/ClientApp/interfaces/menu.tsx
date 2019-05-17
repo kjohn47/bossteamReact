@@ -21,8 +21,7 @@ export interface ImenuText {
     tours : ItoursText;
     events : IeventsText;
     language : ILanguageText;
-    user : IusrMnText;
-    loginFormInline : IloginMenu;
+    user : IusrMnText;    
 }
 
 //Blogs Menu
@@ -69,4 +68,10 @@ export interface ILanguageText {
     title: string;
     portuguese: string;
     english: string;
+}
+
+export interface IUserMenu {
+    userMnText?: IusrMnText;
+    user?: IcurrentUser;
+    userMenuAction?: Function;
 }
