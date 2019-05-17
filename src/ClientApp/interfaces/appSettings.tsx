@@ -29,6 +29,5 @@ export interface IappActions{
 
 interface Ipayload {
     language?: string;
-    user?: string;
-    password?: string;
+    user?: IcurrentUser | boolean;
 }

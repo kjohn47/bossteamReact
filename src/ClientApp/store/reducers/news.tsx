@@ -1,6 +1,5 @@
 import { 
     GET_NEWS_LIST, 
-    GET_NEWS_LIST_SHORT, 
     CHANGE_NEWS_LANGUAGE,
     GET_NEWS_DATA,
     CHANGE_NEWS_DATA_LANGUAGE,
@@ -16,7 +15,6 @@ import {
 } from '../../interfaces/news';
 import { IcardMainData, ICommentData} from '../../interfaces/common';
 import {enCode} from '../../settings';
-import {mockNewsDataServer, mockNewsFromServer} from '../../pageData/mock/news';
 
 //// -- Default news state
 const defaultState: InewsListRedux = {
@@ -35,17 +33,6 @@ const defaultState: InewsListRedux = {
 //// -- Default news state
 
 //// -- News List
-
-function getNewsListFromServer( short: boolean = false)
-{
-    ////mocked server data -- replace with server call
-    if(short)
-    {
-        return mockNewsFromServer.slice((mockNewsFromServer.length - 3), mockNewsFromServer.length) 
-    }
-
-    return mockNewsFromServer;
-}
 
 function changeNewsLanguage(language:string, newsList:INewsData[]):IcardMainData[]
 {
@@ -68,13 +55,6 @@ function changeNewsLanguage(language:string, newsList:INewsData[]):IcardMainData
 
 //// -- View news data
 
-function getNewsDataFromServer(ID:number)
-{
-    ////mocked server data -- replace with server call
-    let serverData: IViewNewsDataServer = mockNewsDataServer[ID - 1];
-    return serverData;
-}
-
 function changeNewsDataLanguage(language:string, newsServer: IViewNewsDataServer)
 {
     let newsData : IViewNewsData = {
@@ -91,26 +71,10 @@ function changeNewsDataLanguage(language:string, newsServer: IViewNewsDataServer
     return newsData;
 }
 
-function addCommentToNews( newsID: number, commentPayload: Ipayload, newsDataLocal: IViewNewsData, newsDataServer: IViewNewsDataServer )
-{
-    if( newsID.toString() !== commentPayload.ID.toString() )
-    {
-        return false;
-    }
-    //// server call - add comment to news and get ID back
-    let newComment: ICommentData = {
-        Comment: commentPayload.comment,
-        Owner: commentPayload.user.name + " " + commentPayload.user.surname,
-        Time: new Date(),
-        ID:123
-    }
-    let serverComments = newsDataServer.comments
-    let commentList = serverComments !== null && serverComments !== undefined ? [...serverComments] : [];
-
-    commentList.push( newComment );       
-
-    newsDataLocal.comments = [...commentList];         
-    newsDataServer.comments =  [...commentList];
+function addCommentToNews( newsDataLocal: IViewNewsData, newsDataServer: IViewNewsDataServer, comments: ICommentData[] )
+{   
+    newsDataServer.comments = [...comments]; 
+    newsDataLocal.comments = newsDataServer.comments;
     
     return {
         newsViewData: newsDataLocal,
@@ -127,17 +91,10 @@ export function news(state:InewsListRedux = defaultState, action:InewsAction) {
 
     switch (action.type) {
         case GET_NEWS_LIST: {  
-            let newsListServer = getNewsListFromServer();   
+            let newsListServer = action.payload.newsList;
             return {...state,
                  newsList: changeNewsLanguage(action.payload.language, newsListServer),
                  newsListFromServer: newsListServer
-            };
-        }
-        case GET_NEWS_LIST_SHORT: {                 
-            let newsListServer = getNewsListFromServer(true); 
-            return {...state, 
-                newsList: changeNewsLanguage(action.payload.language, newsListServer),
-                newsListFromServer: newsListServer
             };
         }
         case CHANGE_NEWS_LANGUAGE:{
@@ -146,7 +103,7 @@ export function news(state:InewsListRedux = defaultState, action:InewsAction) {
             };
         }
         case GET_NEWS_DATA:{
-            let serverData: IViewNewsDataServer = getNewsDataFromServer(action.payload.ID);
+            let serverData: IViewNewsDataServer = action.payload.newsData;
             return {...state,                
                 newsViewDataServer: serverData,
                 newsViewData: changeNewsDataLanguage(action.payload.language, serverData)
@@ -158,14 +115,14 @@ export function news(state:InewsListRedux = defaultState, action:InewsAction) {
                 };        
         }
         case ADD_NEWS_COMMENT:{
-            let newCommentState = addCommentToNews( state.newsViewData.id, action.payload, {...state.newsViewData}, {...state.newsViewDataServer} );
-            if ( !newCommentState )
+            if ( state.newsViewData.id.toString() !== state.newsViewDataServer.id.toString() && state.newsViewData.id.toString() !== action.payload.newsID.toString() )
             {
-                return { ...state };
+                return {...state};
             }
+            let newsViewDataState = addCommentToNews(  {...state.newsViewData}, {...state.newsViewDataServer}, action.payload.comments );
             return {...state,
-                newsViewData: newCommentState.newsViewData,
-                newsViewDataServer: newCommentState.newsViewDataServer
+                newsViewData: newsViewDataState.newsViewData,
+                newsViewDataServer: newsViewDataState.newsViewDataServer
             };      
         }
 
