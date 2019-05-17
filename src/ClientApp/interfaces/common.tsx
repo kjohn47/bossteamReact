@@ -34,10 +34,13 @@ export interface ICommentData {
 
 export interface IAddComment {
     addCommentAction: Function;
+    handleCommentText?: Function;
+    commentValue?: string;
 }
 
 export interface IAddCommentText {
     submitBtnText: string;
+    invalidCommentText?: string;
 }
 
 export interface ICommentText {

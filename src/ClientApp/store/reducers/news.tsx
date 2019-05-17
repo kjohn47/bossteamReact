@@ -91,19 +91,31 @@ function changeNewsDataLanguage(language:string, newsServer: IViewNewsDataServer
     return newsData;
 }
 
-function addCommentToNews( newsID: number, comment: Ipayload )
+function addCommentToNews( newsID: number, commentPayload: Ipayload, newsDataLocal: IViewNewsData, newsDataServer: IViewNewsDataServer )
 {
-    if( newsID.toString() !== comment.ID.toString() )
+    if( newsID.toString() !== commentPayload.ID.toString() )
     {
         return false;
     }
+    //// server call - add comment to news and get ID back
     let newComment: ICommentData = {
-        Comment: comment.comment,
-        Owner: comment.user.name + " " + comment.user.surname,
+        Comment: commentPayload.comment,
+        Owner: commentPayload.user.name + " " + commentPayload.user.surname,
         Time: new Date(),
         ID:123
     }
-    return newComment;
+    let serverComments = newsDataServer.comments
+    let commentList = serverComments !== null && serverComments !== undefined ? [...serverComments] : [];
+
+    commentList.push( newComment );       
+
+    newsDataLocal.comments = [...commentList];         
+    newsDataServer.comments =  [...commentList];
+    
+    return {
+        newsViewData: newsDataLocal,
+        newsViewDataServer: newsDataServer
+    };    
 }
 
 //// -- View News Data
@@ -146,21 +158,15 @@ export function news(state:InewsListRedux = defaultState, action:InewsAction) {
                 };        
         }
         case ADD_NEWS_COMMENT:{
-            let newComment = addCommentToNews( state.newsViewData.id, action.payload );
-            if ( !newComment )
+            let newCommentState = addCommentToNews( state.newsViewData.id, action.payload, {...state.newsViewData}, {...state.newsViewDataServer} );
+            if ( !newCommentState )
             {
                 return { ...state };
             }
-            let commentList = [...state.newsViewData.comments];
-            commentList.push( newComment );
-            let newsData = {...state.newsViewData};
-            let newsServerData = {...state.newsViewDataServer};            
-            newsData.comments = [...commentList];         
-            newsServerData.comments =  [...commentList];
             return {...state,
-                newsViewData: newsData,
-                newsViewDataServer: newsServerData
-            };        
+                newsViewData: newCommentState.newsViewData,
+                newsViewDataServer: newCommentState.newsViewDataServer
+            };      
         }
 
         default: 
