@@ -4,14 +4,16 @@ import {connect} from 'react-redux';
 import {IAddComment, IAddCommentText} from '../../../interfaces/common';
 import {IAppSettings} from '../../../interfaces/appSettings';
 
-function addCommentLogic ( WrappedComponent:React.ComponentType<IAddComment & IAddCommentText> )
+type IAddCommentProps = IAppSettings & IAddComment & IAddCommentText;
+
+function addCommentLogic ( WrappedComponent:React.ComponentType<IAddCommentProps> )
 {
     interface IAddCommentState {
         commentText: string;
-    };
+    };  
 
-    class AddComment extends React.Component<IAppSettings & IAddComment, IAddCommentState>{
-        constructor( props:any ){
+    class AddComment extends React.Component<IAddCommentProps, IAddCommentState>{
+        constructor( props:IAddCommentProps ){
             super( props );
             this.addComment = this.addComment.bind( this );
             this.handleCommentText = this.handleCommentText.bind( this );

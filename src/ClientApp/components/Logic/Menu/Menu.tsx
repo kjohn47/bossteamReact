@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ImenuProps, ImenuText } from "../../../interfaces/menu";
 import {IAppSettings, IappActions} from '../../../interfaces/appSettings';
-import { IcurrentUser } from '../../../interfaces/currentUser';
 import { Istore } from '../../../interfaces/store';
 import {connect} from 'react-redux';
 import { appGetLanguage } from '../../../store/actions/appSettings';
