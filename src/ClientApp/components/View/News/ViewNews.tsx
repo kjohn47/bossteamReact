@@ -8,11 +8,11 @@ import commentLogic from '../../Logic/Common/Comment';
 import addCommentLogic from '../../Logic/Common/AddComment';
 
 const Comments = commentLogic(Comment);
+const AddComments = addCommentLogic( AddComment );
 
 class ViewNews extends React.Component<IViewNews,{}>{    
     render(){        
-        const newsData = this.props.newsData;
-        const AddComments = addCommentLogic( AddComment, this.props.addCommentAction );
+        const newsData = this.props.newsData;        
         return(
             <div>
                 <Row>
@@ -41,7 +41,7 @@ class ViewNews extends React.Component<IViewNews,{}>{
                 <Row>
                     {
                         newsData.allowComments && this.props.logedIn ? 
-                            <AddComments /> 
+                            <AddComments addCommentAction = { this.props.addCommentAction }/> 
                             : 
                             ""                   
                     }

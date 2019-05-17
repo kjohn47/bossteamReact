@@ -1,15 +1,18 @@
 import { IAddCommentText, ICommentText } from '../../interfaces/common';
 export const defaultAddCommentText: IAddCommentText =
 {
-    submitBtnText: '#Send Comment'
+    submitBtnText: '#Send Comment',
+    invalidCommentText: '#Invalid Comment'
 }
 export const ptAddCommentText: IAddCommentText =
 {
-    submitBtnText: 'Enviar Comentário'
+    submitBtnText: 'Enviar Comentário',
+    invalidCommentText: 'Comentário Inválido'
 }
 export const enAddCommentText: IAddCommentText =
 {
-    submitBtnText: 'Send Comment'
+    submitBtnText: 'Send Comment',
+    invalidCommentText: 'Invalid Comment'
 }
 
 export const defaultCommentText: ICommentText =

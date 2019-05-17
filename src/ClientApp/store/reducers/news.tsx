@@ -3,16 +3,18 @@ import {
     GET_NEWS_LIST_SHORT, 
     CHANGE_NEWS_LANGUAGE,
     GET_NEWS_DATA,
-    CHANGE_NEWS_DATA_LANGUAGE 
+    CHANGE_NEWS_DATA_LANGUAGE,
+    ADD_NEWS_COMMENT 
 } from '../actionTypes';
 import { 
     InewsAction, 
     InewsListRedux, 
     INewsData, 
     IViewNewsDataServer, 
-    IViewNewsData 
+    IViewNewsData, 
+    Ipayload
 } from '../../interfaces/news';
-import { IcardMainData} from '../../interfaces/common';
+import { IcardMainData, ICommentData} from '../../interfaces/common';
 import {enCode} from '../../settings';
 import {mockNewsDataServer, mockNewsFromServer} from '../../pageData/mock/news';
 
@@ -89,6 +91,33 @@ function changeNewsDataLanguage(language:string, newsServer: IViewNewsDataServer
     return newsData;
 }
 
+function addCommentToNews( newsID: number, commentPayload: Ipayload, newsDataLocal: IViewNewsData, newsDataServer: IViewNewsDataServer )
+{
+    if( newsID.toString() !== commentPayload.ID.toString() )
+    {
+        return false;
+    }
+    //// server call - add comment to news and get ID back
+    let newComment: ICommentData = {
+        Comment: commentPayload.comment,
+        Owner: commentPayload.user.name + " " + commentPayload.user.surname,
+        Time: new Date(),
+        ID:123
+    }
+    let serverComments = newsDataServer.comments
+    let commentList = serverComments !== null && serverComments !== undefined ? [...serverComments] : [];
+
+    commentList.push( newComment );       
+
+    newsDataLocal.comments = [...commentList];         
+    newsDataServer.comments =  [...commentList];
+    
+    return {
+        newsViewData: newsDataLocal,
+        newsViewDataServer: newsDataServer
+    };    
+}
+
 //// -- View News Data
 
 
@@ -127,6 +156,17 @@ export function news(state:InewsListRedux = defaultState, action:InewsAction) {
                 return {...state,
                     newsViewData: changeNewsDataLanguage(action.payload.language, state.newsViewDataServer)
                 };        
+        }
+        case ADD_NEWS_COMMENT:{
+            let newCommentState = addCommentToNews( state.newsViewData.id, action.payload, {...state.newsViewData}, {...state.newsViewDataServer} );
+            if ( !newCommentState )
+            {
+                return { ...state };
+            }
+            return {...state,
+                newsViewData: newCommentState.newsViewData,
+                newsViewDataServer: newCommentState.newsViewDataServer
+            };      
         }
 
         default: 
