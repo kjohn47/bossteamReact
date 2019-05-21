@@ -7,8 +7,9 @@ import {renderRoutes} from "react-router-config";
 import { Provider } from 'react-redux';
 import configureStore from "./store/configureStore";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import $ from 'jquery';
-import Popper from 'popper.js';
+import 'jquery';
+import 'popper.js';
+import '@babel/polyfill';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 const store = configureStore(window.__STATE__);

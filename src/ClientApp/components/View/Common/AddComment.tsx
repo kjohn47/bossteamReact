@@ -5,7 +5,7 @@ import { IAppSettings } from '../../../interfaces/appSettings';
 
 type IAddCommentProps = IAddCommentText & IAddComment & IAppSettings;
 
-class AddComment extends React.Component<IAddCommentProps,{}>{
+class AddComment extends React.PureComponent<IAddCommentProps,{}>{
     constructor(props:IAddCommentProps) {
         super(props)
     };

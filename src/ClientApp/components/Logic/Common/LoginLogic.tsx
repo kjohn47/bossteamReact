@@ -39,9 +39,11 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
 
         makeLogin() {
             if (this.state.user.trim() === '') {
+                //@ts-ignore
                 alert(this.props.loginForm.emptyUser);
             }
             else if (this.state.password.trim() === '') {
+                //@ts-ignore
                 alert(this.props.loginForm.emptyPassword);
             }
             else {
@@ -62,6 +64,7 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
                 {
                     this.props.resetLoginStatus();
                     if ( !this.props.isLogged ) {
+                        //@ts-ignore
                         alert(this.props.loginForm.invalidLogin);
                     }
                     else if ( this.props.isLogged )

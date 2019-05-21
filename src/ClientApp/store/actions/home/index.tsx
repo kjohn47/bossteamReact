@@ -1,21 +1,27 @@
 import { GET_PRESENTATION_DATA, CHANGE_PRESENTATION_LANGUAGE, GET_HOME_IMAGE } from '../../actionTypes';
 import {ptCode} from '../../../settings';
-import { startServerCommunication, endServerCommunication } from '../appSettings';
+import { startServerCommunication, endServerCommunication, serverCommunicationError } from '../appSettings';
 import { getPresentationFromServer, getImageFromServer } from './homeServerCalls';
 import { IpresentationServer } from '../../../interfaces/home';
-import { Iimage } from '../../../interfaces/common';
+import { Iimage, IErrorHandling } from '../../../interfaces/common';
 
 export function getPresentationData( language: string = ptCode ) {    
-    return (dispatch: Function) => {
-            dispatch(startServerCommunication()); 
-            Promise.resolve(getPresentationFromServer())
-            .then( ( result: IpresentationServer ) => {
-                dispatch(getPresentationDataSuccess( language, result ));  
-                dispatch(endServerCommunication(true));                                       
-            })
-            .catch( (err: any) => {
-                dispatch(endServerCommunication(false));
-            })
+    return (dispatch: Function) =>  {     
+        dispatch(startServerCommunication());          
+        return new Promise( async (resolve, reject) => {
+            let serverData:IpresentationServer | IErrorHandling = await getPresentationFromServer();                         
+            if( serverData.hasError )
+            { 
+                reject(serverData)
+            }
+            resolve(serverData)
+        }).then( ( result: IpresentationServer ) => {
+            dispatch(getPresentationDataSuccess( language, result ))
+        }).catch( (err: IErrorHandling) => {
+            dispatch(serverCommunicationError( { ...err }))
+        }).finally ( () => {
+            dispatch(endServerCommunication()) 
+        } )
     }       
 };
 
@@ -40,16 +46,22 @@ export function changePresentationLanguage( language: string = ptCode ){
 }
 
 export function getHomeImage(){
-    return (dispatch: Function) => {
-        dispatch(startServerCommunication());              
-        Promise.resolve(getImageFromServer())
-        .then( ( result: Iimage ) => {
-            dispatch(getHomeImageSuccess( result ));  
-            dispatch(endServerCommunication(true));                                       
-        })
-        .catch( (err: any) => {
-            dispatch(endServerCommunication(false));
-        })
+    return (dispatch: Function) =>  {     
+        dispatch(startServerCommunication());          
+        return new Promise( async (resolve, reject) => {
+            let serverData:Iimage | IErrorHandling = await getImageFromServer();                         
+            if( serverData.hasError )
+            { 
+                reject(serverData)
+            }
+            resolve(serverData)
+        }).then( ( result: Iimage ) => {
+            dispatch(getHomeImageSuccess( result ))
+        }).catch( (err: IErrorHandling) => {
+            dispatch(serverCommunicationError( { ...err }))
+        }).finally ( () => {
+            dispatch(endServerCommunication()) 
+        } )
     }
 }
 

@@ -3,41 +3,53 @@ import {
     CHANGE_NEWS_LANGUAGE,
     GET_NEWS_DATA,
     CHANGE_NEWS_DATA_LANGUAGE,
-    ADD_NEWS_COMMENT 
+    ADD_NEWS_COMMENT
 } from '../../actionTypes';
-import {ptCode} from '../../../settings';
+import {ptCode, LOAD_NEW_COMMENT} from '../../../settings';
 import {IcurrentUser} from '../../../interfaces/currentUser';
 import { INewsData, IViewNewsDataServer } from '../../../interfaces/news';
 import { getNewsListFromServer, getNewsDataFromServer, addNewsCommentToServer} from './newsServerCalls';
-import { endServerCommunication, startServerCommunication } from '../appSettings';
-import { ICommentData } from '../../../interfaces/common';
+import { endServerCommunication, startServerCommunication, serverCommunicationError } from '../appSettings';
+import { ICommentData, IErrorHandling } from '../../../interfaces/common';
 //// Actions for News List
 
 export function getNewsList( language: string = ptCode ){
-    return (dispatch: Function) => {
-        dispatch(startServerCommunication());              
-        Promise.resolve(getNewsListFromServer())
-        .then( ( result: INewsData[] ) => {
-            dispatch(getNewsListSuccess( language, result ));  
-            dispatch(endServerCommunication(true));                                       
-        })
-        .catch( (err: any) => {
-            dispatch(endServerCommunication(false));
-        })
+    return (dispatch: Function) =>  {     
+        dispatch(startServerCommunication());          
+        return new Promise( async (resolve, reject) => {
+            let serverData:INewsData[] | IErrorHandling = await getNewsListFromServer();                         
+            if( serverData.hasError )
+            { 
+                reject(serverData)
+            }
+            resolve(serverData)
+        }).then( ( result: INewsData[] ) => {
+            dispatch(getNewsListSuccess( language, result ))         
+        }).catch( (err: IErrorHandling) => {
+            dispatch(serverCommunicationError( { ...err }))
+        }).finally ( () => {
+            dispatch(endServerCommunication()) 
+        } )
     }
 }
 
 export function getNewsListShort( language: string = ptCode ){
-    return (dispatch: Function) => {
-        dispatch(startServerCommunication());               
-        Promise.resolve(getNewsListFromServer(true))
-        .then( ( result: INewsData[] ) => {
-            dispatch(getNewsListSuccess( language, result ));  
-            dispatch(endServerCommunication(true));                                       
-        })
-        .catch( (err: any) => {
-            dispatch(endServerCommunication(false));
-        })
+    return (dispatch: Function) =>  {     
+        dispatch(startServerCommunication());          
+        return new Promise( async (resolve, reject) => {
+            let serverData:INewsData[] | IErrorHandling = await getNewsListFromServer(true);                         
+            if( serverData.hasError )
+            { 
+                reject(serverData)
+            }
+            resolve(serverData)
+        }).then( ( result: INewsData[] ) => {
+            dispatch(getNewsListSuccess( language, result )) 
+        }).catch( (err: IErrorHandling) => {
+            dispatch(serverCommunicationError( { ...err }))
+        }).finally ( () => {
+            dispatch(endServerCommunication()) 
+        } )
     }
 }
 
@@ -65,16 +77,22 @@ export function changeNewsLanguage( language: string = ptCode ){
 
 export function getNewsData ( language: string = ptCode, ID: number )
 {
-    return (dispatch: Function) => {
-        dispatch(startServerCommunication());              
-        Promise.resolve(getNewsDataFromServer( ID ))
-        .then( ( result: IViewNewsDataServer ) => {
-            dispatch(getNewsDataSuccess( language, result ));  
-            dispatch(endServerCommunication(true));                                       
-        })
-        .catch( (err: any) => {
-            dispatch(endServerCommunication(false));
-        })
+    return (dispatch: Function) =>  {     
+        dispatch(startServerCommunication());          
+        return new Promise( async (resolve, reject) => {
+            let serverData:IViewNewsDataServer | IErrorHandling = await getNewsDataFromServer( ID );                         
+            if( serverData.hasError )
+            { 
+                reject(serverData)
+            }
+            resolve(serverData)
+        }).then( ( result: IViewNewsDataServer ) => {
+            dispatch(getNewsDataSuccess( language, result ))  
+        }).catch( (err: IErrorHandling) => {
+            dispatch(serverCommunicationError( { ...err }))
+        }).finally ( () => {
+            dispatch(endServerCommunication()) 
+        } )
     }
 }
 
@@ -103,16 +121,22 @@ export function changeNewsDataLanguage ( language: string = ptCode )
 
 export function addNewsComment (newsID: number, comment: string, user:IcurrentUser)
 {
-    return (dispatch: Function) => {
-        dispatch(startServerCommunication());              
-        Promise.resolve(addNewsCommentToServer( newsID, comment, user ))
-        .then( ( result: ICommentData[] ) => {
-            dispatch(addNewsCommentSuccess( result, newsID ));  
-            dispatch(endServerCommunication(true));                                       
-        })
-        .catch( (err: any) => {
-            dispatch(endServerCommunication(false));
-        })
+    return (dispatch: Function) =>  {     
+        dispatch(startServerCommunication( true, LOAD_NEW_COMMENT ));          
+        return new Promise( async (resolve, reject) => {
+            let serverData:ICommentData[] | IErrorHandling = await addNewsCommentToServer( newsID, comment, user );                         
+            if( serverData.hasError )
+            { 
+                reject(serverData)
+            }
+            resolve(serverData)
+        }).then( ( result: ICommentData[] ) => {
+            dispatch(addNewsCommentSuccess( result, newsID ))                     
+        }).catch( (err: IErrorHandling) => {
+            dispatch(serverCommunicationError({...err}))                
+        }).finally ( () => {
+            dispatch(endServerCommunication()) 
+        } )
     }
 }
 

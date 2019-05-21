@@ -1,4 +1,4 @@
-import { APP_GET_LANGUAGE, MAKE_LOGOUT, MAKE_LOGIN, RESET_LOGIN_STATUS } from '../actionTypes';
+import { APP_GET_LANGUAGE, MAKE_LOGOUT, MAKE_LOGIN, RESET_LOGIN_STATUS, START_SERVER_COMUNICATION, END_SERVER_COMUNICATION, SERVER_COMUNICATION_FAIL, RESET_SERVER_ERROR } from '../actionTypes';
 import { IappAction, IAppSettings } from '../../interfaces/appSettings';
 import { defaultMenuText, menuENText, menuPTText } from '../../pageData/language/menu';
 import { defaultNewsText, enNewsText, ptNewsText } from '../../pageData/language/news';
@@ -17,7 +17,10 @@ import {setLanguage,
     checkLogin,
     getCurrentUser,
     cookieLogout,
-    results} from '../../settings';
+    results,
+    LOAD_LOGIN_MENU,
+    LOAD_NEW_COMMENT} from '../../settings';
+import { ILoading } from '../../interfaces/common';
 
 const defaultState: IAppSettings = {
     menuText : defaultMenuText,
@@ -28,7 +31,34 @@ const defaultState: IAppSettings = {
     presentationLanguage: currentLanguage(),
     isLogged: checkLogin(),
     loggedUser: getCurrentUser(),
-    tryLogin: results.default
+    tryLogin: results.default,
+    fetchData: {
+        error: {
+            hasError: false,
+            errorTitle: "",
+            errorMessage: ""
+        },
+        loading: {
+            isGeneralLoading: false,
+            localLoading: {
+                loadComment: false,
+                loadLogin: false
+            }
+        }
+    } 
+}
+
+function getLoadingState(isLocalized: boolean, loadLocalization: string)
+{
+    let loading: ILoading = {
+        isGeneralLoading: !isLocalized,
+        localLoading: {
+            loadComment: loadLocalization === LOAD_LOGIN_MENU,
+            loadLogin: loadLocalization === LOAD_NEW_COMMENT
+        }
+    }
+
+    return {...loading};
 }
 
 export function appSettings(state:IAppSettings = defaultState, action:IappAction) {
@@ -87,6 +117,61 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
         case RESET_LOGIN_STATUS: {
             return{...state,
                 tryLogin: results.default
+            }
+        }
+        case START_SERVER_COMUNICATION: {
+            let loadingData = getLoadingState( action.payload.isLocalized, action.payload.loadLocalization );
+            let fetchDataState = {
+                loading : loadingData,
+                error: {
+                    hasError: false,
+                    errorMessage: "",
+                    errorTitle: ""
+                }
+            };            
+            return{...state,
+                fetchData: fetchDataState
+            }
+        }
+
+        case END_SERVER_COMUNICATION: {
+            let fetchDataState = {
+                loading : {
+                    isGeneralLoading: false,
+                    localLoading: {
+                        loadComment: false,
+                        loadLogin: false
+                    }
+                },
+                error: {... state.fetchData.error}
+            };  
+            return{...state,
+                fetchData: fetchDataState
+            }
+        }
+
+        case SERVER_COMUNICATION_FAIL: {
+            let fetchDataState = {...state.fetchData};
+            fetchDataState = {
+                loading: {...state.fetchData.loading},
+                error: action.payload.error
+            };
+            return{...state,
+                fetchData: fetchDataState
+            }
+        }
+        case RESET_SERVER_ERROR: {
+            let fetchDataState = {...state.fetchData};
+            fetchDataState = {
+                loading: {...state.fetchData.loading},
+                error: {
+                    hasError: false,
+                    errorMessage: "",
+                    errorTitle: ""
+                }
+            };
+            return{...state,
+                fetchData: fetchDataState
             }
         }
 

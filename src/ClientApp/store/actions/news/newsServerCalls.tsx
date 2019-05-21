@@ -4,41 +4,70 @@ import axios from 'axios';
 import { mockNewsFromServer, mockNewsDataServer } from '../../../pageData/mock/news';
 import { IViewNewsDataServer } from '../../../interfaces/news';
 import { IcurrentUser } from '../../../interfaces/currentUser';
-import { ICommentData } from '../../../interfaces/common';
-
+import { ICommentData, IErrorHandling } from '../../../interfaces/common';
 
 //// NEWS
 
-export function getNewsListFromServer( short: boolean = false)
+export async function getNewsListFromServer( short: boolean = false)
 {
     ////mocked server data -- replace with server call
+    return new Promise( (resolve) => {
     if(short)
     {
-        return mockNewsFromServer.slice((mockNewsFromServer.length - 3), mockNewsFromServer.length) 
-    }
-
-    return mockNewsFromServer;
+        setTimeout(() => { resolve(mockNewsFromServer.slice((mockNewsFromServer.length - 3), mockNewsFromServer.length) )} , 800) 
+    }    
+        setTimeout(() => { resolve(mockNewsFromServer)} , 1000)
+               
+    }).catch( ( err:any ) =>{
+        let error:IErrorHandling = {
+            hasError: true,
+            errorTitle: "News List Error",
+            errorMessage: err.toString()
+        };
+        return error;
+    })
 }
 
-export function getNewsDataFromServer(ID:number)
+export async function getNewsDataFromServer(ID:number)
 {
-    ////mocked server data -- replace with server call
-    let serverData: IViewNewsDataServer = mockNewsDataServer[ID - 1];
-    return serverData;
+    return new Promise( (resolve) => {
+        let serverData: IViewNewsDataServer;    
+        ////mocked server data -- replace with server call
+        serverData = mockNewsDataServer[ID - 1];      
+        setTimeout(() => { resolve(serverData)} , 1100)       
+    }).catch( ( err:any ) =>{
+        let error:IErrorHandling = {
+            hasError: true,
+            errorTitle: "News Get Error",
+            errorMessage: err.toString()
+        };
+        return error;
+    })
 }
 
-export function addNewsCommentToServer( newsID: number, comment: string, user: IcurrentUser )
-{
-    let serverData: IViewNewsDataServer = mockNewsDataServer[newsID - 1];
-    let newComment: ICommentData = {
-        Comment: comment,
-        Owner: user.name + " " + user.surname,
-        Time: new Date(),
-        ID:123
-    }
-    serverData.comments !== null && serverData.comments !== undefined ? serverData.comments.push(newComment) : serverData.comments = [newComment];
-
-    return serverData.comments;
+export async function addNewsCommentToServer( newsID: number, comment: string, user: IcurrentUser )
+{    
+    return new Promise( (resolve, reject) => {   
+        let serverData: IViewNewsDataServer = mockNewsDataServer[newsID - 1];
+        let newComment: ICommentData = {
+            Comment: comment,
+            Owner: user.name + " " + user.surname,
+            Time: new Date(),
+            ID:123
+        }
+        serverData.comments !== null && serverData.comments !== undefined ? serverData.comments.push(newComment) : serverData.comments = [newComment];
+                        
+        //reject("Error occurred");
+        setTimeout(() => { 
+            resolve(serverData.comments); } , 500);               
+    }).catch( ( err:any ) =>{
+        let error:IErrorHandling = {
+            hasError: true,
+            errorTitle: "Add Comment Error",
+            errorMessage: err.toString()
+        };
+        return error;
+    })
 }
 
 //// NEWS

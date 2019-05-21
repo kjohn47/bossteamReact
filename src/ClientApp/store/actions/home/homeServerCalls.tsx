@@ -5,19 +5,23 @@ import { mockPresentationFromServer, mockHomeImage } from '../../../pageData/moc
 import { Iimage } from '../../../interfaces/common';
 
 //// HOMEPAGE
-export function getPresentationFromServer()
+export async function getPresentationFromServer()
 {
     ////mocked server data -- replace with server call
     /*
     axios.post{}
     axios.get{}
     */
-    return mockPresentationFromServer;
+    return new Promise( (resolve) => {
+        setTimeout(() => { resolve(mockPresentationFromServer)} , 500)       
+    })
 }
 
-export function getImageFromServer()
+export async function getImageFromServer()
 {
     let image: Iimage = mockHomeImage;
-    return image;
+    return new Promise( (resolve) => {
+        setTimeout(() => { resolve(image)} , 500)       
+    })
 }
 //// HOMEPAGE

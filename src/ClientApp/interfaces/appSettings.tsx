@@ -1,6 +1,6 @@
 import {ImenuText} from './menu';
 import {InewsLanguage} from './news';
-import {IAddCommentText, ICommentText} from './common';
+import {IAddCommentText, ICommentText, IErrorHandling, ILoading} from './common';
 import {IcurrentUser} from './currentUser';
 import { IloginMenu } from './login';
 export interface IAppSettings {
@@ -13,6 +13,7 @@ export interface IAppSettings {
     isLogged?: boolean;
     loggedUser?: IcurrentUser;
     tryLogin?: string;
+    fetchData?: IFetchData;
 }
 
 export interface IappAction{
@@ -30,4 +31,12 @@ export interface IappActions{
 interface Ipayload {
     language?: string;
     user?: IcurrentUser | boolean;
+    error?: IErrorHandling;
+    isLocalized?: boolean;
+    loadLocalization?: string;
+}
+
+export interface IFetchData {
+    error?: IErrorHandling;
+    loading?: ILoading;
 }

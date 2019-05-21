@@ -25,6 +25,7 @@ function addCommentLogic ( WrappedComponent:React.ComponentType<IAddCommentProps
         addComment() {      
             if( this.state.commentText.trim() === '' )
             {
+                //@ts-ignore
                 alert( this.props.addCommentText.invalidCommentText );
             }   
             else

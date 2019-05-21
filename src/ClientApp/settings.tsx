@@ -12,6 +12,9 @@ export const results = {
 const langCookie = 'appLanguage';
 const userCookie = 'appCurrentUser';
 
+export const LOAD_LOGIN_MENU = 'LOAD_LOGIN_MENU';
+export const LOAD_NEW_COMMENT = 'LOAD_NEW_COMMENT';
+
 export const currentLanguage = () => {
    let lang = cookies.get(langCookie);
    if( lang === null || lang === undefined || lang === '' )

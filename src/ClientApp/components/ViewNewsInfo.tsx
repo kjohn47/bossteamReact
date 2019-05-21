@@ -8,13 +8,11 @@ const NewsView = viewNewsLogic(ViewNews);
 class ViewNewsInfo extends React.Component<{match?:any},{}>{
     render(){
         return(
-            <div>
-                <Row>
-                    <Col>
-                        <NewsView newsID = {this.props.match.params.ID}/>
-                    </Col>
-                </Row>
-            </div>
+            <Row>
+                <Col>
+                    <NewsView newsID = {this.props.match.params.ID}/>
+                </Col>
+            </Row>
         );
     }
 }

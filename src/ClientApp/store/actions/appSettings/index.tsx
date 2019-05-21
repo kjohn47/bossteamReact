@@ -5,12 +5,14 @@ import {
         RESET_LOGIN_STATUS,
         START_SERVER_COMUNICATION,
         SERVER_COMUNICATION_FAIL,
-        END_SERVER_COMUNICATION
+        END_SERVER_COMUNICATION,
+        RESET_SERVER_ERROR
         } from '../../actionTypes';
 
-import {ptCode} from '../../../settings';
+import {ptCode, LOAD_LOGIN_MENU} from '../../../settings';
 import { IcurrentUser } from '../../../interfaces/currentUser';
 import { makeLoginOnServer } from './appServerCalls';
+import { IErrorHandling } from '../../../interfaces/common';
 
 export function appGetLanguage( language: string = ptCode ){
     return {
@@ -22,16 +24,22 @@ export function appGetLanguage( language: string = ptCode ){
 }
 
 export function makeLogin( user: string, password: string ){
-    return (dispatch: Function) => {
-        dispatch(startServerCommunication());                     
-        Promise.resolve(makeLoginOnServer( user, password ) )
-        .then( ( result: IcurrentUser | boolean ) => {
-            dispatch(makeLoginSuccess( result ));  
-            dispatch(endServerCommunication(true));                                       
-        })
-        .catch( (err: any) => {
-            dispatch(endServerCommunication(false));
-        })
+    return (dispatch: Function) =>  {     
+        dispatch(startServerCommunication(true, LOAD_LOGIN_MENU));          
+        return new Promise( async (resolve, reject) => {
+            let serverData:IcurrentUser | boolean | IErrorHandling = await makeLoginOnServer( user, password );                         
+            if( serverData.hasError )
+            { 
+                reject(serverData)
+            }
+            resolve(serverData)
+        }).then( ( result: IcurrentUser | boolean ) => {
+            dispatch(makeLoginSuccess( result ))
+        }).catch( (err: IErrorHandling) => {
+            dispatch(serverCommunicationError( { ...err }))
+        }).finally ( () => {
+            dispatch(endServerCommunication()) 
+        } )
     }
 }
 
@@ -56,23 +64,33 @@ export function resetLoginStatus(){
     }
 }
 
-export function startServerCommunication(){
+export function startServerCommunication( isLocalized:boolean = false, loadLocalization:string = ""){
     return {
-        type: START_SERVER_COMUNICATION
+        type: START_SERVER_COMUNICATION,
+        payload: {
+            isLocalized: isLocalized,
+            loadLocalization: loadLocalization
+        }
     }
 }
 
-export function endServerCommunication( success: boolean ){
-    if( success )
-    {
-        return {
-            type: END_SERVER_COMUNICATION
+export function endServerCommunication(){
+    return {
+        type: END_SERVER_COMUNICATION
+    }
+}
+
+export function serverCommunicationError( error: IErrorHandling ){
+    return {
+        type: SERVER_COMUNICATION_FAIL,
+        payload: {
+            error: error
         }
     }
-    else
-    {
-        return {
-            type: SERVER_COMUNICATION_FAIL
-        }
+}
+
+export function resetError() {
+    return {
+        type: RESET_SERVER_ERROR        
     }
 }

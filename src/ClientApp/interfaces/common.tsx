@@ -1,3 +1,5 @@
+////Cards interfaces
+
 export interface ICardData {
     title:string;
     date:string;
@@ -17,6 +19,8 @@ export interface IcardMainData {
     id: number;
 }
 
+////Image interface
+
 export interface Iimage {
     alt:string;
     src:string;
@@ -24,6 +28,8 @@ export interface Iimage {
     width?:number;
     className?: string;
 }
+
+////Comment interfaces
 
 export interface ICommentData {
     ID: number;
@@ -46,4 +52,22 @@ export interface IAddCommentText {
 export interface ICommentText {
     ownerText: string;
     dateText: string;
+}
+
+////Error handling interfaces
+
+export interface ILoading {
+    isGeneralLoading?: boolean;    
+    localLoading?: ILocalLoading;
+}
+
+interface ILocalLoading {
+    loadLogin?: boolean;
+    loadComment?: boolean;
+}
+
+export interface IErrorHandling {
+    hasError?: boolean;
+    errorMessage?: string;
+    errorTitle?:string;    
 }

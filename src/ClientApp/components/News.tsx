@@ -8,13 +8,11 @@ const ListNews = newsListLogic(NewsList);
 class News extends React.Component{
     render(){
         return(
-            <div>
-                <Row>
-                    <Col>
-                        <ListNews />
-                    </Col>
-                </Row>
-            </div>
+            <Row>
+                <Col>
+                    <ListNews />
+                </Col>
+            </Row>
         );
     }
 }
