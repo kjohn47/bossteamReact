@@ -1,3 +1,4 @@
+import { IcurrentUser } from "./currentUser";
 
 //login Menu
 export interface IloginMenu {
@@ -25,4 +26,9 @@ export interface ILoginActions {
 export interface ILoginState {
     user: string;
     password: string;
+}
+
+export interface ILoginResponse {
+    success: boolean;
+    user?: IcurrentUser; 
 }

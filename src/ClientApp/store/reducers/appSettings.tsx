@@ -1,4 +1,11 @@
-import { APP_GET_LANGUAGE, MAKE_LOGOUT, MAKE_LOGIN, RESET_LOGIN_STATUS, START_SERVER_COMUNICATION, END_SERVER_COMUNICATION, SERVER_COMUNICATION_FAIL, RESET_SERVER_ERROR } from '../actionTypes';
+import { APP_GET_LANGUAGE, 
+    MAKE_LOGOUT, 
+    MAKE_LOGIN, 
+    RESET_LOGIN_STATUS, 
+    START_SERVER_COMUNICATION, 
+    END_SERVER_COMUNICATION, 
+    SERVER_COMUNICATION_FAIL, 
+    RESET_SERVER_ERROR } from '../actionTypes';
 import { IappAction, IAppSettings } from '../../interfaces/appSettings';
 import { defaultMenuText, menuENText, menuPTText } from '../../pageData/language/menu';
 import { defaultNewsText, enNewsText, ptNewsText } from '../../pageData/language/news';
@@ -9,14 +16,12 @@ import { defaultAddCommentText,
     defaultCommentText,
     enCommentText,
     ptCommentText } from '../../pageData/language/comment';
-import {setLanguage, 
+import { 
     enCode, 
     ptCode, 
     currentLanguage,
-    setCurrentUser,
     checkLogin,
-    getCurrentUser,
-    cookieLogout,
+    getCurrentUser,    
     results,
     LOAD_LOGIN_MENU,
     LOAD_NEW_COMMENT} from '../../settings';
@@ -67,7 +72,6 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
         case APP_GET_LANGUAGE: {
             if ( action.payload.language === enCode )
             {
-                setLanguage(enCode);
                 return {...state, 
                     menuText: menuENText,
                     newsLanguage: enNewsText,
@@ -79,7 +83,6 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
             }
             else
             {
-                setLanguage(ptCode);
                 return {...state, 
                     menuText: menuPTText,
                     newsLanguage: ptNewsText,
@@ -91,27 +94,16 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
             }
         }
         case MAKE_LOGOUT: {
-            cookieLogout();
             return{...state,
                 isLogged: false,
                 loggedUser: null
             };
         }
         case MAKE_LOGIN: {
-            let loggedUser = action.payload.user;
-            if( !loggedUser || loggedUser === true )
-            {
-                return{...state,
-                    isLogged: false,
-                    loggedUser: null,
-                    tryLogin: results.failure
-                };    
-            }
-            setCurrentUser(loggedUser);
             return{...state,
-                isLogged: true,
-                loggedUser: loggedUser,
-                tryLogin: results.success                
+                isLogged: action.payload.login.success,
+                loggedUser: action.payload.login.user,
+                tryLogin: action.payload.login.success ? results.success : results.failure               
             };
         }
         case RESET_LOGIN_STATUS: {
