@@ -1,22 +1,23 @@
-import { GET_PRESENTATION_DATA, CHANGE_PRESENTATION_LANGUAGE, GET_HOME_IMAGE } from '../../actionTypes';
+import {  CHANGE_PRESENTATION_LANGUAGE, GET_HOME_DATA } from '../../actionTypes';
 import {ptCode} from '../../../settings';
 import { startServerCommunication, endServerCommunication, serverCommunicationError } from '../appSettings';
-import { getPresentationFromServer, getImageFromServer } from './homeServerCalls';
-import { IpresentationServer } from '../../../interfaces/home';
+import { getHomeDataFromServer } from './homeServerCalls';
+import { IhomeDataServer } from '../../../interfaces/home';
 import { Iimage, IErrorHandling } from '../../../interfaces/common';
 
-export function getPresentationData( language: string = ptCode ) {    
+
+export function getHomeData( language: string = ptCode ) {    
     return (dispatch: Function) =>  {     
         dispatch(startServerCommunication());          
         return new Promise( async (resolve, reject) => {
-            let serverData:IpresentationServer | IErrorHandling = await getPresentationFromServer();                         
+            let serverData:IhomeDataServer | IErrorHandling = await getHomeDataFromServer();                         
             if( serverData.hasError )
             { 
                 reject(serverData)
             }
             resolve(serverData)
-        }).then( ( result: IpresentationServer ) => {
-            dispatch(getPresentationDataSuccess( language, result ))
+        }).then( ( result: IhomeDataServer ) => {
+            dispatch(getHomeDataSuccess( language, result ))
         }).catch( (err: IErrorHandling) => {
             dispatch(serverCommunicationError( { ...err }))
         }).finally ( () => {
@@ -25,13 +26,14 @@ export function getPresentationData( language: string = ptCode ) {
     }       
 };
 
-function getPresentationDataSuccess( language: string, result: IpresentationServer)
+function getHomeDataSuccess( language: string, result: IhomeDataServer)
 {
     return {
-        type: GET_PRESENTATION_DATA,
+        type: GET_HOME_DATA,
         payload: {
             language: language,
-            presentation: result
+            presentation: result.presentation,
+            image: result.image
         }
     }
 }
@@ -42,34 +44,5 @@ export function changePresentationLanguage( language: string = ptCode ){
         payload: {
             language: language
             }
-    }
-}
-
-export function getHomeImage(){
-    return (dispatch: Function) =>  {     
-        dispatch(startServerCommunication());          
-        return new Promise( async (resolve, reject) => {
-            let serverData:Iimage | IErrorHandling = await getImageFromServer();                         
-            if( serverData.hasError )
-            { 
-                reject(serverData)
-            }
-            resolve(serverData)
-        }).then( ( result: Iimage ) => {
-            dispatch(getHomeImageSuccess( result ))
-        }).catch( (err: IErrorHandling) => {
-            dispatch(serverCommunicationError( { ...err }))
-        }).finally ( () => {
-            dispatch(endServerCommunication()) 
-        } )
-    }
-}
-
-function getHomeImageSuccess( image: Iimage){
-    return {
-        type: GET_HOME_IMAGE,
-        payload: {
-            image: image
-        }
     }
 }

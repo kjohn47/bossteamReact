@@ -2,10 +2,12 @@
 import axios from 'axios';
 
 import { mockPresentationFromServer, mockHomeImage } from '../../../pageData/mock/homepage';
-import { Iimage } from '../../../interfaces/common';
+import { IErrorHandling } from '../../../interfaces/common';
+import { IhomeDataServer } from '../../../interfaces/home';
 
 //// HOMEPAGE
-export async function getPresentationFromServer()
+
+export async function getHomeDataFromServer()
 {
     ////mocked server data -- replace with server call
     /*
@@ -13,15 +15,18 @@ export async function getPresentationFromServer()
     axios.get{}
     */
     return new Promise( (resolve) => {
-        setTimeout(() => { resolve(mockPresentationFromServer)} , 500)       
-    })
-}
-
-export async function getImageFromServer()
-{
-    let image: Iimage = mockHomeImage;
-    return new Promise( (resolve) => {
-        setTimeout(() => { resolve(image)} , 500)       
+        let result: IhomeDataServer = {
+            presentation: mockPresentationFromServer,
+            image: mockHomeImage
+        }
+        setTimeout(() => { resolve(result)} , 500)       
+    }).catch( ( err:any ) =>{
+        let error:IErrorHandling = {
+            hasError: true,
+            errorTitle: "News List Error",
+            errorMessage: err.toString()
+        };
+        return error;
     })
 }
 //// HOMEPAGE

@@ -10,8 +10,7 @@ import {
     InewsListRedux, 
     INewsData, 
     IViewNewsDataServer, 
-    IViewNewsData, 
-    Ipayload
+    IViewNewsData
 } from '../../interfaces/news';
 import { IcardMainData, ICommentData} from '../../interfaces/common';
 import {enCode} from '../../settings';
