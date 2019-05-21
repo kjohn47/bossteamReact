@@ -1,8 +1,8 @@
 {
   "presets":  [
-    "react",
-    "stage-2",
-    "env"
+    "@babel/react",
+    "@babel/preset-env",
+    "@babel/preset-typescript"
   ],
   "plugins":[
     "react-hot-loader/babel"
