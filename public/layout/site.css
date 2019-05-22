@@ -145,6 +145,10 @@ body{
     min-height: 340px;
 }
 
+.shortNewsList {
+    min-height: 125px;
+}
+
 .loadingOverlay {
     background-color: white;    
     width:      100%;

@@ -3,7 +3,8 @@ import {
     CHANGE_NEWS_LANGUAGE,
     GET_NEWS_DATA,
     CHANGE_NEWS_DATA_LANGUAGE,
-    ADD_NEWS_COMMENT 
+    ADD_NEWS_COMMENT, 
+    RESET_NEWS_LIST
 } from '../actionTypes';
 import { 
     InewsAction, 
@@ -101,6 +102,12 @@ export function news(state:InewsListRedux = defaultState, action:InewsAction) {
                 newsList: changeNewsLanguage(action.payload.language, state.newsListFromServer)
             };
         }
+        case RESET_NEWS_LIST: {
+            return {...state,
+                newsList: []
+            }
+        }
+
         case GET_NEWS_DATA:{
             let serverData: IViewNewsDataServer = action.payload.newsData;
             return {...state,                

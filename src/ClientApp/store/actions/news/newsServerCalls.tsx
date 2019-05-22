@@ -14,9 +14,12 @@ export async function getNewsListFromServer( short: boolean = false)
     return new Promise( (resolve) => {
     if(short)
     {
-        setTimeout(() => { resolve(mockNewsFromServer.slice((mockNewsFromServer.length - 3), mockNewsFromServer.length) )} , 800) 
-    }    
+        setTimeout(() => { resolve(mockNewsFromServer.slice((mockNewsFromServer.length - 3), mockNewsFromServer.length) )} , 1500) 
+    }
+    else    
+    {
         setTimeout(() => { resolve(mockNewsFromServer)} , 1000)
+    }   
                
     }).catch( ( err:any ) =>{
         let error:IErrorHandling = {

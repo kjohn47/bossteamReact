@@ -3,7 +3,9 @@ import {
     CHANGE_NEWS_LANGUAGE,
     GET_NEWS_DATA,
     CHANGE_NEWS_DATA_LANGUAGE,
-    ADD_NEWS_COMMENT
+    ADD_NEWS_COMMENT,
+    RESET_NEWS_DATA,
+    RESET_NEWS_LIST
 } from '../../actionTypes';
 import {ptCode, LOAD_NEW_COMMENT, LOAD_HOME_NEWS} from '../../../settings';
 import {IcurrentUser} from '../../../interfaces/currentUser';
@@ -148,5 +150,19 @@ function addNewsCommentSuccess ( comments: ICommentData[], newsID: number )
             comments: comments,
             newsID: newsID
         }
+    }
+}
+
+export function resetNewsData()
+{
+    return {
+        type: RESET_NEWS_DATA
+    }
+}
+
+export function resetNewsList()
+{
+    return {
+        type: RESET_NEWS_LIST
     }
 }

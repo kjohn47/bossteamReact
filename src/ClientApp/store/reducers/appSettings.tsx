@@ -55,31 +55,32 @@ const defaultState: IAppSettings = {
     } 
 }
 
-function getLoadingState(pageLoading: boolean, loadLocalization: string)
+function getLoadingState(isLocalLoading: boolean, pageLoading: ILoading, loadLocalization: string)
 {
     let loading: ILoading = {
-        isPageLoading: pageLoading,
+        isPageLoading: isLocalLoading ? pageLoading.isPageLoading : true,
         localLoading: {
-            loadComment: loadLocalization === LOAD_LOGIN_MENU,
-            loadLogin: loadLocalization === LOAD_NEW_COMMENT,
-            loadHomeNews: loadLocalization === LOAD_HOME_NEWS
-        }
+            loadComment: isLocalLoading  && loadLocalization === LOAD_LOGIN_MENU ? true : pageLoading.localLoading.loadLogin,
+            loadLogin: isLocalLoading  && loadLocalization === LOAD_NEW_COMMENT ? true : pageLoading.localLoading.loadComment,
+            loadHomeNews: isLocalLoading  && loadLocalization === LOAD_HOME_NEWS ? true : pageLoading.localLoading.loadHomeNews
+        }        
     }
+    console.log(loading);
 
     return {...loading};
 }
 
-function endLoadingState(isLocalLoading: boolean, pageLoading: boolean, loadLocalization: string)
+function endLoadingState(isLocalLoading: boolean, pageLoading: ILoading, loadLocalization: string)
 {
-    let pageLoadingState = isLocalLoading ? pageLoading : false;
     let loading: ILoading = {
-        isPageLoading: pageLoadingState,
+        isPageLoading: isLocalLoading ? pageLoading.isPageLoading : false,
         localLoading: {
-            loadComment: !(loadLocalization === LOAD_LOGIN_MENU),
-            loadLogin: !(loadLocalization === LOAD_NEW_COMMENT),
-            loadHomeNews: !(loadLocalization === LOAD_HOME_NEWS)
+            loadComment: isLocalLoading  && loadLocalization === LOAD_LOGIN_MENU ? false : pageLoading.localLoading.loadLogin,
+            loadLogin: isLocalLoading  && loadLocalization === LOAD_NEW_COMMENT ? false : pageLoading.localLoading.loadComment,
+            loadHomeNews: isLocalLoading  && loadLocalization === LOAD_HOME_NEWS ? false : pageLoading.localLoading.loadHomeNews
         }
     }
+    console.log(loading);
 
     return {...loading};
 }
@@ -130,7 +131,7 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
             }
         }
         case START_SERVER_COMUNICATION: {
-            let loadingData = getLoadingState( !action.payload.isLocalized || state.fetchData.loading.isPageLoading, action.payload.loadLocalization );
+            let loadingData = getLoadingState( action.payload.isLocalized, {...state.fetchData.loading}, action.payload.loadLocalization );
             let fetchDataState = {
                 loading : loadingData,
                 error: {
@@ -145,7 +146,7 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
         }
 
         case END_SERVER_COMUNICATION: {
-            let loadingData = endLoadingState( action.payload.isLocalized, state.fetchData.loading.isPageLoading, action.payload.loadLocalization );
+            let loadingData = endLoadingState( action.payload.isLocalized, {...state.fetchData.loading}, action.payload.loadLocalization );
             let fetchDataState = {
                     loading : loadingData,            
                     error: {... state.fetchData.error}

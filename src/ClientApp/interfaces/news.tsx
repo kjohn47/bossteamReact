@@ -31,6 +31,7 @@ export interface InewsActions{
     getNewsList: Function;
     getNewsListShort: Function;
     changeNewsLanguage: Function;
+    resetNewsList:Function;
 }
 
 export interface Ipayload {
@@ -90,6 +91,7 @@ export interface IViewNewsActions{
     getNewsData: Function;
     changeNewsDataLanguage: Function;
     addNewsComment: Function;
+    resetNewsData:Function;
 }
 
 export interface IViewNewsAction{

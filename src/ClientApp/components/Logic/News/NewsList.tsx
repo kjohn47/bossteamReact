@@ -2,7 +2,7 @@ import * as React from 'react';
 import {IAppSettings} from '../../../interfaces/appSettings';
 import { Istore } from '../../../interfaces/store';
 import {connect} from 'react-redux';
-import { getNewsList, getNewsListShort, changeNewsLanguage } from '../../../store/actions/news';
+import { getNewsList, getNewsListShort, changeNewsLanguage, resetNewsList } from '../../../store/actions/news';
 import { InewsCard, InewsActions, InewsListRedux } from '../../../interfaces/news';
 import makeCard from '../Common/makeCard';
 import { ICardData } from '../../../interfaces/common';
@@ -17,7 +17,11 @@ type INewsReduxProps = IAppSettings & InewsActions & InewsListRedux & INewsListL
 
 function newsListLogic (WrappedComponent:React.ComponentType<InewsCard>, shortList: boolean = false)
 {
-    class NewsListLogic extends React.Component<INewsReduxProps,{}>{    
+    class NewsListLogic extends React.Component<INewsReduxProps,{}>{
+        componentWillUnmount(){
+            this.props.resetNewsList();
+        }
+        
         componentDidMount(){
             if(shortList)
             {
@@ -71,7 +75,8 @@ function newsListLogic (WrappedComponent:React.ComponentType<InewsCard>, shortLi
     const mapDispatchToProps = (dispatch:Function) => ({
         getNewsList: (language: string) => dispatch(getNewsList(language)),
         getNewsListShort: (language: string) => dispatch(getNewsListShort(language)),        
-        changeNewsLanguage: (language: string) => dispatch(changeNewsLanguage(language))
+        changeNewsLanguage: (language: string) => dispatch(changeNewsLanguage(language)),
+        resetNewsList: () => dispatch(resetNewsList())
       });
     return connect(mapStateToProps, mapDispatchToProps)(NewsListLogic);
 }

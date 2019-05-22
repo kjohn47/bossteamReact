@@ -1,4 +1,4 @@
-import {  CHANGE_PRESENTATION_LANGUAGE, GET_HOME_DATA } from '../../actionTypes';
+import {  CHANGE_PRESENTATION_LANGUAGE, GET_HOME_DATA, RESET_HOME_DATA } from '../../actionTypes';
 import {ptCode} from '../../../settings';
 import { startServerCommunication, endServerCommunication, serverCommunicationError } from '../appSettings';
 import { getHomeDataFromServer } from './homeServerCalls';
@@ -44,5 +44,12 @@ export function changePresentationLanguage( language: string = ptCode ){
         payload: {
             language: language
             }
+    }
+}
+
+export function resetHomeData()
+{
+    return {
+        type: RESET_HOME_DATA
     }
 }

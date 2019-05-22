@@ -15,7 +15,7 @@ class Home extends React.Component{
             <div>
                 <HomeTop />
                 <Row>
-                    <Col>
+                    <Col className="shortNewsList">
                         <NewsListShort />
                     </Col>
                 </Row>

@@ -12,7 +12,7 @@ class LoadingView extends React.PureComponent<ILoading,{}>{
             <React.Fragment>
                 <div className = {overlayClasses }/>   
                 {this.props.isPageLoading &&                                   
-                        <Spinner color="info" className = {spinnerClasses} />                   
+                        <Spinner color="secondary" className = {spinnerClasses} />                   
                 }
                 {this.props.children}
             </React.Fragment>
