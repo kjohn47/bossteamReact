@@ -5,7 +5,7 @@ import {
     CHANGE_NEWS_DATA_LANGUAGE,
     ADD_NEWS_COMMENT
 } from '../../actionTypes';
-import {ptCode, LOAD_NEW_COMMENT} from '../../../settings';
+import {ptCode, LOAD_NEW_COMMENT, LOAD_HOME_NEWS} from '../../../settings';
 import {IcurrentUser} from '../../../interfaces/currentUser';
 import { INewsData, IViewNewsDataServer } from '../../../interfaces/news';
 import { getNewsListFromServer, getNewsDataFromServer, addNewsCommentToServer} from './newsServerCalls';
@@ -35,7 +35,7 @@ export function getNewsList( language: string = ptCode ){
 
 export function getNewsListShort( language: string = ptCode ){
     return (dispatch: Function) =>  {     
-        dispatch(startServerCommunication());          
+        dispatch(startServerCommunication( true, LOAD_HOME_NEWS));          
         return new Promise( async (resolve, reject) => {
             let serverData:INewsData[] | IErrorHandling = await getNewsListFromServer(true);                         
             if( serverData.hasError )
@@ -48,7 +48,7 @@ export function getNewsListShort( language: string = ptCode ){
         }).catch( (err: IErrorHandling) => {
             dispatch(serverCommunicationError( { ...err }))
         }).finally ( () => {
-            dispatch(endServerCommunication()) 
+            dispatch(endServerCommunication( true, LOAD_HOME_NEWS)) 
         } )
     }
 }

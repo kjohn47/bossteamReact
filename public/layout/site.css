@@ -165,6 +165,15 @@ body{
     height: 100px !important;
     border-width: 7px !important;
 }
+
+.loadingOverlayLess {
+    z-index: 4998 !important;
+}
+
+.loadingSpinnerLess {
+    z-index: 4999 !important;
+}
+
 .errorTitle {
     font-weight: bold;
     font-size: 24px;

@@ -57,13 +57,15 @@ export interface ICommentText {
 ////Error handling interfaces
 
 export interface ILoading {
-    isGeneralLoading?: boolean;    
+    isPageLoading?: boolean;    
     localLoading?: ILocalLoading;
+    lessPriority?: boolean;    
 }
 
 interface ILocalLoading {
     loadLogin?: boolean;
     loadComment?: boolean;
+    loadHomeNews?: boolean;
 }
 
 export interface IErrorHandling {

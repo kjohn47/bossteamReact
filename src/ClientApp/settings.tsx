@@ -14,6 +14,7 @@ const userCookie = 'appCurrentUser';
 
 export const LOAD_LOGIN_MENU = 'LOAD_LOGIN_MENU';
 export const LOAD_NEW_COMMENT = 'LOAD_NEW_COMMENT';
+export const LOAD_HOME_NEWS = 'LOAD_HOME_NEWS';
 
 export const currentLanguage = () => {
    let lang = cookies.get(langCookie);

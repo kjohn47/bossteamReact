@@ -32,12 +32,16 @@ function errorHandlingLogic (ErrorHandlingView:React.ComponentType<IErrorHandlin
         render(){
             const error = this.props.error;
             return(
-                error.hasError  ?                 
-                    <ErrorHandlingView errorMessage = { error.errorMessage } errorTitle = { error.errorTitle }/>  
-                :
-                    <LoadingView isGeneralLoading = {this.props.loading.isGeneralLoading}>                    
-                            {this.props.children}
-                    </LoadingView>
+                <div className="col-md-10 col-sm-12 pageContent">   
+                {
+                    error.hasError  ?                 
+                        <ErrorHandlingView errorMessage = { error.errorMessage } errorTitle = { error.errorTitle }/>  
+                    :
+                        <LoadingView isPageLoading = {this.props.loading.isPageLoading}>                    
+                                {this.props.children}
+                        </LoadingView>
+                }
+                </div>
             );
         }
     }

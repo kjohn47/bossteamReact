@@ -6,8 +6,14 @@ import { getNewsList, getNewsListShort, changeNewsLanguage } from '../../../stor
 import { InewsCard, InewsActions, InewsListRedux } from '../../../interfaces/news';
 import makeCard from '../Common/makeCard';
 import { ICardData } from '../../../interfaces/common';
+import LoadingView from '../../View/Common/Loading';
 
-type INewsReduxProps = IAppSettings & InewsActions & InewsListRedux;
+interface INewsListLoading {
+    loading?: boolean;
+}
+
+type INewsReduxProps = IAppSettings & InewsActions & InewsListRedux & INewsListLoading;
+
 
 function newsListLogic (WrappedComponent:React.ComponentType<InewsCard>, shortList: boolean = false)
 {
@@ -41,11 +47,13 @@ function newsListLogic (WrappedComponent:React.ComponentType<InewsCard>, shortLi
             const cardsList: ICardData[] = makeCard(this.props.newsList, '/ViewNews', this.props.newsLanguage.cardButtonText);
             return(
                 <div className="row">
-                {
-                    cardsList.map( (item:ICardData, i) => 
-                        <WrappedComponent key={i} newsCard = {item}/>
-                    )
-                }
+                 <LoadingView isPageLoading = { this.props.loading } lessPriority={true}>
+                    {                   
+                        cardsList.map( (item:ICardData, i) => 
+                            <WrappedComponent key={i} newsCard = {item}/>
+                        )                    
+                    }
+                </LoadingView>
             </div>                
             );
         }
@@ -55,7 +63,8 @@ function newsListLogic (WrappedComponent:React.ComponentType<InewsCard>, shortLi
         return {
             newsLanguage: state.appSettings.newsLanguage,
             newsList: state.news.newsList,
-            presentationLanguage: state.appSettings.presentationLanguage     
+            presentationLanguage: state.appSettings.presentationLanguage,
+            loading: state.appSettings.fetchData.loading.localLoading.loadHomeNews     
          };
     };
 

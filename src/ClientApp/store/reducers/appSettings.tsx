@@ -24,7 +24,8 @@ import {
     getCurrentUser,    
     results,
     LOAD_LOGIN_MENU,
-    LOAD_NEW_COMMENT} from '../../settings';
+    LOAD_NEW_COMMENT,
+    LOAD_HOME_NEWS} from '../../settings';
 import { ILoading } from '../../interfaces/common';
 
 const defaultState: IAppSettings = {
@@ -44,22 +45,39 @@ const defaultState: IAppSettings = {
             errorMessage: ""
         },
         loading: {
-            isGeneralLoading: false,
+            isPageLoading: false,
             localLoading: {
                 loadComment: false,
-                loadLogin: false
+                loadLogin: false,
+                loadHomeNews: false
             }
         }
     } 
 }
 
-function getLoadingState(isLocalized: boolean, loadLocalization: string)
+function getLoadingState(pageLoading: boolean, loadLocalization: string)
 {
     let loading: ILoading = {
-        isGeneralLoading: !isLocalized,
+        isPageLoading: pageLoading,
         localLoading: {
             loadComment: loadLocalization === LOAD_LOGIN_MENU,
-            loadLogin: loadLocalization === LOAD_NEW_COMMENT
+            loadLogin: loadLocalization === LOAD_NEW_COMMENT,
+            loadHomeNews: loadLocalization === LOAD_HOME_NEWS
+        }
+    }
+
+    return {...loading};
+}
+
+function endLoadingState(isLocalLoading: boolean, pageLoading: boolean, loadLocalization: string)
+{
+    let pageLoadingState = isLocalLoading ? pageLoading : false;
+    let loading: ILoading = {
+        isPageLoading: pageLoadingState,
+        localLoading: {
+            loadComment: !(loadLocalization === LOAD_LOGIN_MENU),
+            loadLogin: !(loadLocalization === LOAD_NEW_COMMENT),
+            loadHomeNews: !(loadLocalization === LOAD_HOME_NEWS)
         }
     }
 
@@ -112,7 +130,7 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
             }
         }
         case START_SERVER_COMUNICATION: {
-            let loadingData = getLoadingState( action.payload.isLocalized, action.payload.loadLocalization );
+            let loadingData = getLoadingState( !action.payload.isLocalized || state.fetchData.loading.isPageLoading, action.payload.loadLocalization );
             let fetchDataState = {
                 loading : loadingData,
                 error: {
@@ -127,16 +145,11 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
         }
 
         case END_SERVER_COMUNICATION: {
+            let loadingData = endLoadingState( action.payload.isLocalized, state.fetchData.loading.isPageLoading, action.payload.loadLocalization );
             let fetchDataState = {
-                loading : {
-                    isGeneralLoading: false,
-                    localLoading: {
-                        loadComment: false,
-                        loadLogin: false
-                    }
-                },
-                error: {... state.fetchData.error}
-            };  
+                    loading : loadingData,            
+                    error: {... state.fetchData.error}
+                };
             return{...state,
                 fetchData: fetchDataState
             }

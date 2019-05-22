@@ -5,14 +5,17 @@ import { ILoading } from '../../../interfaces/common';
 
 class LoadingView extends React.PureComponent<ILoading,{}>{
     render(){
+        const overlayClasses = this.props.isPageLoading ? "loadingOverlay" + (this.props.lessPriority ? " loadingOverlayLess" : "") : "";
+        const spinnerClasses = "loadingSpinner" + (this.props.lessPriority ? " loadingSpinnerLess" : "");      
+
         return(
-            <div className="col-md-10 col-sm-12 pageContent">
-                <div className = {this.props.isGeneralLoading ? "loadingOverlay" : "" }/>   
-                {this.props.isGeneralLoading &&                                   
-                        <Spinner color="info" className = "loadingSpinner" />                   
+            <React.Fragment>
+                <div className = {overlayClasses }/>   
+                {this.props.isPageLoading &&                                   
+                        <Spinner color="info" className = {spinnerClasses} />                   
                 }
                 {this.props.children}
-            </div>
+            </React.Fragment>
         )};
 }
 export default LoadingView;

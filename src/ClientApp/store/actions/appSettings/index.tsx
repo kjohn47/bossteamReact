@@ -83,7 +83,7 @@ export function resetLoginStatus(){
     }
 }
 
-export function startServerCommunication( isLocalized:boolean = false, loadLocalization:string = ""){
+export function startServerCommunication( isLocalized:boolean = false, loadLocalization:string = "" ){
     return {
         type: START_SERVER_COMUNICATION,
         payload: {
@@ -93,9 +93,13 @@ export function startServerCommunication( isLocalized:boolean = false, loadLocal
     }
 }
 
-export function endServerCommunication(){
+export function endServerCommunication( isLocalized:boolean = false, loadLocalization:string = "" ){
     return {
-        type: END_SERVER_COMUNICATION
+        type: END_SERVER_COMUNICATION,
+        payload: {
+            isLocalized: isLocalized,
+            loadLocalization: loadLocalization
+        }
     }
 }
 
