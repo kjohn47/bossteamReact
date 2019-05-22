@@ -2,8 +2,8 @@
 import axios from 'axios';
 
 import { mockPresentationFromServer, mockHomeImage } from '../../../pageData/mock/homepage';
-import { IErrorHandling } from '../../../interfaces/common';
 import { IhomeDataServer } from '../../../interfaces/home';
+import { serverResolve } from '../common';
 
 //// HOMEPAGE
 
@@ -14,6 +14,20 @@ export async function getHomeDataFromServer()
     axios.post{}
     axios.get{}
     */
+    return await serverResolve( () =>
+        {
+            let result: IhomeDataServer = {
+                presentation: mockPresentationFromServer,
+                image: mockHomeImage
+            }
+            return new Promise( (resolve: Function) => { 
+                setTimeout( () => {
+                    resolve(result)
+                    }, 500 )
+            })
+        }
+    );
+/*
     return new Promise( (resolve) => {
         let result: IhomeDataServer = {
             presentation: mockPresentationFromServer,
@@ -27,6 +41,6 @@ export async function getHomeDataFromServer()
             errorMessage: err.toString()
         };
         return error;
-    })
+    })*/
 }
 //// HOMEPAGE

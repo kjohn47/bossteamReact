@@ -12,7 +12,6 @@ export function getHomeData( language: string = ptCode ) {
 
 function getHomeDataSuccess( result: IhomeDataServer, language: string)
 {
-    console.log(language)
     return {
         type: GET_HOME_DATA,
         payload: {

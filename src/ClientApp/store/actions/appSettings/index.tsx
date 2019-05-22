@@ -31,6 +31,7 @@ function changeLanguage(language: string){
     }
 }
 
+//this has special parameters so is not a common action
 export function makeLogin( user: string, password: string ){
     return (dispatch: Function) =>  {     
         dispatch(startServerCommunication(true, LOAD_LOGIN_MENU));          
@@ -64,6 +65,8 @@ function makeLoginSuccess( result: ILoginResponse ){
     }
 }
 
+
+//this has special parameters so is not a common action
 export function makeLogout( user: IcurrentUser){
     return (dispatch: Function) =>  
     {     

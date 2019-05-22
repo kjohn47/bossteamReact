@@ -3,16 +3,17 @@ import axios from 'axios';
 
 import {tempUser} from '../../../pageData/mock/user';
 import { IcurrentUser } from '../../../interfaces/currentUser';
-import { IErrorHandling } from '../../../interfaces/common';
 import { ILoginResponse } from '../../../interfaces/login';
+import { serverResolve } from '../common';
 
 //// APP
 export async function makeLoginOnServer( user: string, password: string ){
-    return new Promise( (resolve) => {
+    return await serverResolve( () =>
+    {
         let userServer:ILoginResponse = {
             success: false        
         };
-    
+
         if( user === "abc" && password === "123")////To replace with server call -- mock abc/123
         {
             userServer = {
@@ -20,36 +21,31 @@ export async function makeLoginOnServer( user: string, password: string ){
                 user: tempUser
             };
         }
-
-        setTimeout(() => { resolve(userServer)} , 300)       
-    }).catch( ( err:any ) =>{
-        let error:IErrorHandling = {
-            hasError: true,
-            errorTitle: "Login Error",
-            errorMessage: err.toString()
-        };
-        return error;
-    });
+        
+        return new Promise( (resolve: Function) => { 
+            setTimeout( () => {
+                resolve(userServer)
+                }, 150 )
+        })
+        
+    }, 'Login Error')
 }
 //// APP
 
 export async function makeLogoutOnServer( user: IcurrentUser ){
-    return new Promise( (resolve, reject) => {
+    return await serverResolve( () =>
+    {
         if(user === null )
         {
-            reject("Invalid user");
+            throw new Error("Invalid user");
         }
         else
-        {
-            let success = true;
-            setTimeout(() => { resolve(success)} , 150);
+        {            
+            return new Promise( (resolve: Function) => { 
+                setTimeout( () => {
+                    resolve(true)
+                    }, 100 )
+            })
         }
-    }).catch( ( err:any ) =>{
-        let error:IErrorHandling = {
-            hasError: true,
-            errorTitle: "Logout Error",
-            errorMessage: err.toString()
-        };
-        return error;
-    });
+    }, 'Logout Error')
 }

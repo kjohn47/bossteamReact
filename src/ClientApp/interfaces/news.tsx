@@ -98,3 +98,9 @@ export interface IViewNewsAction{
     type:string;
     payload?:Ipayload;
 }
+
+export interface InewsDataArg {
+    newsID: number;
+    comment:string;
+    user: IcurrentUser
+}

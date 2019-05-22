@@ -47,6 +47,13 @@ export function changeNewsLanguage( language: string = ptCode ){
     }
 }
 
+export function resetNewsList()
+{
+    return {
+        type: RESET_NEWS_LIST
+    }
+}
+
 //// Actions for view news
 
 export function getNewsData ( language: string = ptCode, ID: number )
@@ -77,7 +84,14 @@ export function changeNewsDataLanguage ( language: string = ptCode )
     }
 }
 
+export function resetNewsData()
+{
+    return {
+        type: RESET_NEWS_DATA
+    }
+}
 
+//Actions for adding comments
 
 export function addNewsComment (newsID: number, comment: string, user:IcurrentUser)
 {
@@ -94,19 +108,5 @@ function addNewsCommentSuccess ( result: ICommentData[] , newsID: number )
             comments: result,
             newsID: newsID
         }
-    }
-}
-
-export function resetNewsData()
-{
-    return {
-        type: RESET_NEWS_DATA
-    }
-}
-
-export function resetNewsList()
-{
-    return {
-        type: RESET_NEWS_LIST
     }
 }

@@ -20,3 +20,18 @@ export function commonServerAction(dispatch: Function, serverCall:Function, succ
         dispatch(endServerCommunication(isLocalLoad, localLoad)) 
     } )    
 }
+
+export function serverResolve( serverCall: Function, errorTitle: string = 'Error' )
+{
+    return new Promise( (resolve) => {
+        let serverReturn = serverCall();
+        resolve( serverReturn ); 
+    }).catch( ( err:any ) =>{
+        let error:IErrorHandling = {
+            hasError: true,
+            errorTitle: errorTitle,
+            errorMessage: err.toString()
+        };
+        return error;
+    })
+}
