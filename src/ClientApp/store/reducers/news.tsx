@@ -4,7 +4,8 @@ import {
     GET_NEWS_DATA,
     CHANGE_NEWS_DATA_LANGUAGE,
     ADD_NEWS_COMMENT, 
-    RESET_NEWS_LIST
+    RESET_NEWS_LIST,
+    RESET_NEWS_DATA
 } from '../actionTypes';
 import { 
     InewsAction, 
@@ -104,7 +105,8 @@ export function news(state:InewsListRedux = defaultState, action:InewsAction) {
         }
         case RESET_NEWS_LIST: {
             return {...state,
-                newsList: []
+                newsList: [],
+                newsListFromServer: []
             }
         }
 
@@ -115,11 +117,27 @@ export function news(state:InewsListRedux = defaultState, action:InewsAction) {
                 newsViewData: changeNewsDataLanguage(action.payload.language, serverData)
             };
         }
+        
         case CHANGE_NEWS_DATA_LANGUAGE:{
                 return {...state,
                     newsViewData: changeNewsDataLanguage(action.payload.language, state.newsViewDataServer)
                 };        
         }
+
+        case RESET_NEWS_DATA: {
+            return {...state,
+                newsViewData: {
+                    id: 0,
+                    title: "",
+                    content: "",
+                    description:"",
+                    allowComments:false,
+                    date: new Date()
+                },
+                newsViewDataServer: null  
+            }
+        }
+
         case ADD_NEWS_COMMENT:{
             if ( state.newsViewData.id.toString() !== state.newsViewDataServer.id.toString() && state.newsViewData.id.toString() !== action.payload.newsID.toString() )
             {

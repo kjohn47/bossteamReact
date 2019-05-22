@@ -10,9 +10,10 @@ import {
         } from '../../actionTypes';
 
 import {ptCode, LOAD_LOGIN_MENU, setCurrentUser, setLanguage, cookieLogout} from '../../../settings';
-import { makeLoginOnServer } from './appServerCalls';
+import { makeLoginOnServer, makeLogoutOnServer } from './appServerCalls';
 import { IErrorHandling } from '../../../interfaces/common';
 import { ILoginResponse } from '../../../interfaces/login';
+import { IcurrentUser } from '../../../interfaces/currentUser';
 
 export function appGetLanguage( language: string = ptCode ){
     return (dispatch: Function) => {
@@ -63,12 +64,28 @@ function makeLoginSuccess( result: ILoginResponse ){
     }
 }
 
-export function makeLogout(){
-    return (dispatch: Function) =>  { 
-        cookieLogout();
-        dispatch(logout());
-    }
-    
+export function makeLogout( user: IcurrentUser){
+    return (dispatch: Function) =>  
+    {     
+        dispatch(startServerCommunication());        
+        return new Promise( async (resolve, reject) => {
+            let serverData: boolean | IErrorHandling = await makeLogoutOnServer( user );                         
+            if( serverData.hasError )
+            { 
+                reject(serverData)
+            }
+            resolve(serverData)
+        }).then( ( ) => {
+            dispatch(logout())
+        }).catch( (err: IErrorHandling) => {
+            dispatch(serverCommunicationError( { ...err }))
+        }).finally ( () => {
+            cookieLogout();  
+            dispatch(endServerCommunication()) 
+            //@ts-ignore
+            window.location = '/';   
+        } )
+    } 
 }
 
 function logout(){

@@ -6,6 +6,7 @@ import { IUserMenu } from '../../../interfaces/menu';
 import { IAppSettings, IappActions } from '../../../interfaces/appSettings';
 import { makeLogin, makeLogout, resetLoginStatus } from '../../../store/actions/appSettings';
 import { results } from '../../../settings';
+import { IcurrentUser } from '../../../interfaces/currentUser';
 
 
 function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedComponentLoggedIn?: React.ComponentType<IUserMenu>) {
@@ -53,7 +54,7 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
 
         makeLogout() {
             if (this.props.isLogged) {
-                this.props.makeLogout();
+                this.props.makeLogout( this.props.loggedUser );
                 //redirect to /
             }
         }
@@ -113,11 +114,11 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
     };
 
     const mapDispatchToProps = (dispatch: Function) => (
-        {
-            makeLogin: (user: string, password: string) => dispatch(makeLogin(user, password)),
-            makeLogout: () => dispatch(makeLogout()),
-            resetLoginStatus: () => dispatch(resetLoginStatus())
-        });
+    {
+        makeLogin: (user: string, password: string) => dispatch(makeLogin(user, password)),
+        makeLogout: ( user: IcurrentUser) => dispatch(makeLogout(user)),
+        resetLoginStatus: () => dispatch(resetLoginStatus())
+    });
 
     return connect(mapStateToProps, mapDispatchToProps)(LoginLogic);
 }

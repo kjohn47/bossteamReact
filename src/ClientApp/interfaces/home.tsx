@@ -40,6 +40,7 @@ export interface IHomeActions {
     getPresentationData?: Function;
     changePresentationLanguage?: Function;
     getHomeData?: Function;
+    resetHomeData?: Function;
 }
 
 export interface IHomeRedux {

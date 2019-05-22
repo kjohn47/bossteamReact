@@ -25,10 +25,31 @@ export async function makeLoginOnServer( user: string, password: string ){
     }).catch( ( err:any ) =>{
         let error:IErrorHandling = {
             hasError: true,
-            errorTitle: "News List Error",
+            errorTitle: "Login Error",
             errorMessage: err.toString()
         };
         return error;
     });
 }
 //// APP
+
+export async function makeLogoutOnServer( user: IcurrentUser ){
+    return new Promise( (resolve, reject) => {
+        if(user === null )
+        {
+            reject("Invalid user");
+        }
+        else
+        {
+            let success = true;
+            setTimeout(() => { resolve(success)} , 150);
+        }
+    }).catch( ( err:any ) =>{
+        let error:IErrorHandling = {
+            hasError: true,
+            errorTitle: "Logout Error",
+            errorMessage: err.toString()
+        };
+        return error;
+    });
+}
