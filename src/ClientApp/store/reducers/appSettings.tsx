@@ -65,8 +65,6 @@ function getLoadingState(isLocalLoading: boolean, pageLoading: ILoading, loadLoc
             loadHomeNews: isLocalLoading  && loadLocalization === LOAD_HOME_NEWS ? true : pageLoading.localLoading.loadHomeNews
         }        
     }
-    console.log(loading);
-
     return {...loading};
 }
 
@@ -80,8 +78,6 @@ function endLoadingState(isLocalLoading: boolean, pageLoading: ILoading, loadLoc
             loadHomeNews: isLocalLoading  && loadLocalization === LOAD_HOME_NEWS ? false : pageLoading.localLoading.loadHomeNews
         }
     }
-    console.log(loading);
-
     return {...loading};
 }
 

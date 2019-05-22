@@ -23,7 +23,7 @@ export async function getHomeDataFromServer()
     }).catch( ( err:any ) =>{
         let error:IErrorHandling = {
             hasError: true,
-            errorTitle: "News List Error",
+            errorTitle: "Home error",
             errorMessage: err.toString()
         };
         return error;

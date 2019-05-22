@@ -1,33 +1,18 @@
 import {  CHANGE_PRESENTATION_LANGUAGE, GET_HOME_DATA, RESET_HOME_DATA } from '../../actionTypes';
 import {ptCode} from '../../../settings';
-import { startServerCommunication, endServerCommunication, serverCommunicationError } from '../appSettings';
 import { getHomeDataFromServer } from './homeServerCalls';
 import { IhomeDataServer } from '../../../interfaces/home';
-import { Iimage, IErrorHandling } from '../../../interfaces/common';
+import { commonServerAction } from '../common';
 
-
-export function getHomeData( language: string = ptCode ) {    
-    return (dispatch: Function) =>  {     
-        dispatch(startServerCommunication());          
-        return new Promise( async (resolve, reject) => {
-            let serverData:IhomeDataServer | IErrorHandling = await getHomeDataFromServer();                         
-            if( serverData.hasError )
-            { 
-                reject(serverData)
-            }
-            resolve(serverData)
-        }).then( ( result: IhomeDataServer ) => {
-            dispatch(getHomeDataSuccess( language, result ))
-        }).catch( (err: IErrorHandling) => {
-            dispatch(serverCommunicationError( { ...err }))
-        }).finally ( () => {
-            dispatch(endServerCommunication()) 
-        } )
-    }       
+export function getHomeData( language: string = ptCode ) {        
+    return (dispatch: Function) =>  { 
+        commonServerAction( dispatch, getHomeDataFromServer, getHomeDataSuccess, null, language ) 
+    }     
 };
 
-function getHomeDataSuccess( language: string, result: IhomeDataServer)
+function getHomeDataSuccess( result: IhomeDataServer, language: string)
 {
+    console.log(language)
     return {
         type: GET_HOME_DATA,
         payload: {

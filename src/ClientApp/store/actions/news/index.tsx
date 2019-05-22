@@ -11,51 +11,23 @@ import {ptCode, LOAD_NEW_COMMENT, LOAD_HOME_NEWS} from '../../../settings';
 import {IcurrentUser} from '../../../interfaces/currentUser';
 import { INewsData, IViewNewsDataServer } from '../../../interfaces/news';
 import { getNewsListFromServer, getNewsDataFromServer, addNewsCommentToServer} from './newsServerCalls';
-import { endServerCommunication, startServerCommunication, serverCommunicationError } from '../appSettings';
-import { ICommentData, IErrorHandling } from '../../../interfaces/common';
+import { ICommentData } from '../../../interfaces/common';
+import { commonServerAction } from '../common';
 //// Actions for News List
 
-export function getNewsList( language: string = ptCode ){
-    return (dispatch: Function) =>  {     
-        dispatch(startServerCommunication());          
-        return new Promise( async (resolve, reject) => {
-            let serverData:INewsData[] | IErrorHandling = await getNewsListFromServer();                         
-            if( serverData.hasError )
-            { 
-                reject(serverData)
-            }
-            resolve(serverData)
-        }).then( ( result: INewsData[] ) => {
-            dispatch(getNewsListSuccess( language, result ))         
-        }).catch( (err: IErrorHandling) => {
-            dispatch(serverCommunicationError( { ...err }))
-        }).finally ( () => {
-            dispatch(endServerCommunication()) 
-        } )
+export function getNewsList( language: string = ptCode ){    
+    return (dispatch: Function) =>  {   
+        commonServerAction( dispatch, getNewsListFromServer, getNewsListSuccess, null, language );
     }
 }
 
 export function getNewsListShort( language: string = ptCode ){
-    return (dispatch: Function) =>  {     
-        dispatch(startServerCommunication( true, LOAD_HOME_NEWS));          
-        return new Promise( async (resolve, reject) => {
-            let serverData:INewsData[] | IErrorHandling = await getNewsListFromServer(true);                         
-            if( serverData.hasError )
-            { 
-                reject(serverData)
-            }
-            resolve(serverData)
-        }).then( ( result: INewsData[] ) => {
-            dispatch(getNewsListSuccess( language, result )) 
-        }).catch( (err: IErrorHandling) => {
-            dispatch(serverCommunicationError( { ...err }))
-        }).finally ( () => {
-            dispatch(endServerCommunication( true, LOAD_HOME_NEWS)) 
-        } )
+    return (dispatch: Function) =>  {  
+        commonServerAction( dispatch, getNewsListFromServer, getNewsListSuccess, true, language , true, LOAD_HOME_NEWS );
     }
 }
 
-function getNewsListSuccess( language: string, result: INewsData[] )
+function getNewsListSuccess( result: INewsData[], language: string  )
 {
     return {
         type: GET_NEWS_LIST,
@@ -80,25 +52,11 @@ export function changeNewsLanguage( language: string = ptCode ){
 export function getNewsData ( language: string = ptCode, ID: number )
 {
     return (dispatch: Function) =>  {     
-        dispatch(startServerCommunication());          
-        return new Promise( async (resolve, reject) => {
-            let serverData:IViewNewsDataServer | IErrorHandling = await getNewsDataFromServer( ID );                         
-            if( serverData.hasError )
-            { 
-                reject(serverData)
-            }
-            resolve(serverData)
-        }).then( ( result: IViewNewsDataServer ) => {
-            dispatch(getNewsDataSuccess( language, result ))  
-        }).catch( (err: IErrorHandling) => {
-            dispatch(serverCommunicationError( { ...err }))
-        }).finally ( () => {
-            dispatch(endServerCommunication()) 
-        } )
+        commonServerAction( dispatch, getNewsDataFromServer, getNewsDataSuccess, ID, language );
     }
 }
 
-function getNewsDataSuccess ( language: string, result: IViewNewsDataServer )
+function getNewsDataSuccess ( result: IViewNewsDataServer, language: string )
 {
     return {
         type: GET_NEWS_DATA,
@@ -123,31 +81,17 @@ export function changeNewsDataLanguage ( language: string = ptCode )
 
 export function addNewsComment (newsID: number, comment: string, user:IcurrentUser)
 {
-    return (dispatch: Function) =>  {     
-        dispatch(startServerCommunication( true, LOAD_NEW_COMMENT ));          
-        return new Promise( async (resolve, reject) => {
-            let serverData:ICommentData[] | IErrorHandling = await addNewsCommentToServer( newsID, comment, user );                         
-            if( serverData.hasError )
-            { 
-                reject(serverData)
-            }
-            resolve(serverData)
-        }).then( ( result: ICommentData[] ) => {
-            dispatch(addNewsCommentSuccess( result, newsID ))                     
-        }).catch( (err: IErrorHandling) => {
-            dispatch(serverCommunicationError({...err}))                
-        }).finally ( () => {
-            dispatch(endServerCommunication()) 
-        } )
+    return (dispatch: Function) =>  {
+        commonServerAction( dispatch, addNewsCommentToServer, addNewsCommentSuccess, { newsID, comment, user }, newsID, true, LOAD_NEW_COMMENT );
     }
 }
 
-function addNewsCommentSuccess ( comments: ICommentData[], newsID: number )
+function addNewsCommentSuccess ( result: ICommentData[] , newsID: number )
 {
     return {
         type: ADD_NEWS_COMMENT,
         payload: {
-            comments: comments,
+            comments: result,
             newsID: newsID
         }
     }

@@ -8,7 +8,7 @@ import { ICommentData, IErrorHandling } from '../../../interfaces/common';
 
 //// NEWS
 
-export async function getNewsListFromServer( short: boolean = false)
+export async function getNewsListFromServer( short: boolean = false )
 {
     ////mocked server data -- replace with server call
     return new Promise( (resolve) => {
@@ -31,7 +31,7 @@ export async function getNewsListFromServer( short: boolean = false)
     })
 }
 
-export async function getNewsDataFromServer(ID:number)
+export async function getNewsDataFromServer( ID:number )
 {
     return new Promise( (resolve) => {
         let serverData: IViewNewsDataServer;    
@@ -48,13 +48,19 @@ export async function getNewsDataFromServer(ID:number)
     })
 }
 
-export async function addNewsCommentToServer( newsID: number, comment: string, user: IcurrentUser )
+interface InewsDataArg {
+    newsID: number;
+    comment:string;
+    user: IcurrentUser
+}
+
+export async function addNewsCommentToServer( newsArg: InewsDataArg )
 {    
     return new Promise( (resolve, reject) => {   
-        let serverData: IViewNewsDataServer = mockNewsDataServer[newsID - 1];
+        let serverData: IViewNewsDataServer = mockNewsDataServer[newsArg.newsID - 1];
         let newComment: ICommentData = {
-            Comment: comment,
-            Owner: user.name + " " + user.surname,
+            Comment: newsArg.comment,
+            Owner: newsArg.user.name + " " + newsArg.user.surname,
             Time: new Date(),
             ID:123
         }
