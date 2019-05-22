@@ -9,11 +9,12 @@ import {
         RESET_SERVER_ERROR
         } from '../../actionTypes';
 
-import {ptCode, LOAD_LOGIN_MENU, setCurrentUser, setLanguage, cookieLogout} from '../../../settings';
+import {ptCode, LOAD_LOGIN_MENU, setCurrentUser, setLanguage, cookieLogout, pageHome, newsRoute, viewsNewsRoute} from '../../../settings';
 import { makeLoginOnServer, makeLogoutOnServer } from './appServerCalls';
 import { IErrorHandling } from '../../../interfaces/common';
 import { ILoginResponse } from '../../../interfaces/login';
 import { IcurrentUser } from '../../../interfaces/currentUser';
+import { commonServerAction } from '../common';
 
 export function appGetLanguage( language: string = ptCode ){
     return (dispatch: Function) => {
@@ -31,28 +32,17 @@ function changeLanguage(language: string){
     }
 }
 
-//this has special parameters so is not a common action
 export function makeLogin( user: string, password: string ){
-    return (dispatch: Function) =>  {     
-        dispatch(startServerCommunication(true, LOAD_LOGIN_MENU));          
-        return new Promise( async (resolve, reject) => {
-            let serverData:ILoginResponse | IErrorHandling = await makeLoginOnServer( user, password );                         
-            if( serverData.hasError )
-            { 
-                reject(serverData)
-            }
-            resolve(serverData)
-        }).then( ( result: ILoginResponse ) => {
-            if(result.success)
-            {
-                setCurrentUser(result.user);
-            }
-            dispatch(makeLoginSuccess( result ))
-        }).catch( (err: IErrorHandling) => {
-            dispatch(serverCommunicationError( { ...err }))
-        }).finally ( () => {
-            dispatch(endServerCommunication()) 
-        } )
+    return (dispatch: Function) =>  { 
+        commonServerAction( dispatch, makeLoginOnServer, makeLoginSuccess, {user, password}, null , true, LOAD_LOGIN_MENU, updateLoginToken );
+    }
+}
+
+function updateLoginToken( result: ILoginResponse )
+{
+    if(result.success)
+    {
+        setCurrentUser(result.user);
     }
 }
 
@@ -65,33 +55,20 @@ function makeLoginSuccess( result: ILoginResponse ){
     }
 }
 
-
-//this has special parameters so is not a common action
 export function makeLogout( user: IcurrentUser){
     return (dispatch: Function) =>  
     {     
-        dispatch(startServerCommunication());        
-        return new Promise( async (resolve, reject) => {
-            let serverData: boolean | IErrorHandling = await makeLogoutOnServer( user );                         
-            if( serverData.hasError )
-            { 
-                reject(serverData)
-            }
-            resolve(serverData)
-        }).then( ( ) => {
-            dispatch(logout())
-        }).catch( (err: IErrorHandling) => {
-            dispatch(serverCommunicationError( { ...err }))
-        }).finally ( () => {
-            cookieLogout();  
-            dispatch(endServerCommunication()) 
-            //@ts-ignore
-            window.location = '/';   
-        } )
+        commonServerAction( dispatch, makeLogoutOnServer, logout, user, null , false, '', null, logoutFunctions );
     } 
 }
 
-function logout(){
+function logoutFunctions(){
+    cookieLogout();  
+    if(window.location.pathname !== pageHome && window.location.pathname !== newsRoute && window.location.pathname.substring( 0, viewsNewsRoute.length ) !== viewsNewsRoute )  
+        {window.location.assign(pageHome); }  
+}
+
+function logout(result:any){
     return {
         type: MAKE_LOGOUT
     }

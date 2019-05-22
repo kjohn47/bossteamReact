@@ -12,7 +12,7 @@ interface ILanguageMenu {
     appGetLanguage: Function;
 }
 
-class Language extends React.PureComponent<ILanguageMenu,{}>{
+class Language extends React.Component<ILanguageMenu,{}>{
     render(){
         const languageText = this.props.languageText;
         const changeLanguage = this.props.appGetLanguage;

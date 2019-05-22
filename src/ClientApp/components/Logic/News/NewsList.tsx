@@ -7,6 +7,7 @@ import { InewsCard, InewsActions, InewsListRedux } from '../../../interfaces/new
 import makeCard from '../Common/makeCard';
 import { ICardData } from '../../../interfaces/common';
 import LoadingView from '../../View/Common/Loading';
+import { viewsNewsRoute } from '../../../settings';
 
 interface INewsListLoading {
     loading?: boolean;
@@ -48,7 +49,7 @@ function newsListLogic (WrappedComponent:React.ComponentType<InewsCard>, shortLi
           }
 
         render(){
-            const cardsList: ICardData[] = makeCard(this.props.newsList, '/ViewNews', this.props.newsLanguage.cardButtonText);
+            const cardsList: ICardData[] = makeCard(this.props.newsList, viewsNewsRoute, this.props.newsLanguage.cardButtonText);
             return(
                 <div className="row">
                  <LoadingView isPageLoading = { this.props.loading } lessPriority={true}>

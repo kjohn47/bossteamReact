@@ -2,7 +2,15 @@ import { startServerCommunication, serverCommunicationError, endServerCommunicat
 import { IErrorHandling } from "../../interfaces/common";
 
 
-export function commonServerAction(dispatch: Function, serverCall:Function, successCall: Function, serverCallArg: any = null, successCallArg: any = null, isLocalLoad: boolean = false, localLoad: string = '')
+export function commonServerAction( dispatch: Function, 
+                                    serverCall:Function, 
+                                    successCall: Function, 
+                                    serverCallArg: any = null, 
+                                    successCallArg: any = null, 
+                                    isLocalLoad: boolean = false, 
+                                    localLoad: string = '',
+                                    runBeforeSuccess: Function = null,
+                                    runAfterFinish:Function = null)
 {    
     dispatch( startServerCommunication( isLocalLoad, localLoad ) );    
     return new Promise( async (resolve, reject) => {
@@ -12,16 +20,18 @@ export function commonServerAction(dispatch: Function, serverCall:Function, succ
             reject(serverData)
         }
         resolve(serverData)
-    }).then( (result:any) => {        
+    }).then( (result:any) => { 
+        runBeforeSuccess !== null && runBeforeSuccess(result);
         dispatch(successCall(result, successCallArg))
     }).catch( (err: IErrorHandling) => {
         dispatch(serverCommunicationError( { ...err }))
-    }).finally ( () => {        
-        dispatch(endServerCommunication(isLocalLoad, localLoad)) 
+    }).finally ( () => {                
+        dispatch(endServerCommunication(isLocalLoad, localLoad));        
+        runAfterFinish !== null && runAfterFinish();
     } )    
 }
 
-export function serverResolve( serverCall: Function, errorTitle: string = 'Error' )
+export async function serverResolve( serverCall: Function, errorTitle: string = 'Error' )
 {
     return new Promise( (resolve) => {
         let serverReturn = serverCall();

@@ -3,12 +3,10 @@ import {Istore} from '../../../interfaces/store';
 import {connect} from 'react-redux';
 import { ILoading, IErrorHandling } from '../../../interfaces/common';
 import { IFetchData } from '../../../interfaces/appSettings';
-import { withRouter } from 'react-router';
+import { withRouter, RouteComponentProps } from 'react-router';
 import { resetError } from '../../../store/actions/appSettings';
 
-interface IHistory {
-    history: any;
-};
+interface IHistory extends RouteComponentProps<any> {};
 
 interface IErrorAction {
     resetError: Function;
@@ -23,7 +21,7 @@ function errorHandlingLogic (ErrorHandlingView:React.ComponentType<IErrorHandlin
             super(props);        
             this.props.history.listen((location: any, action: any) => {
                 if(this.props.error.hasError)
-                {
+                {                    
                     this.props.resetError();
                 }
             });
@@ -58,8 +56,8 @@ function errorHandlingLogic (ErrorHandlingView:React.ComponentType<IErrorHandlin
             resetError: () => dispatch(resetError())
         });
     
-    //@ts-ignore
-    return withRouter(connect(mapStateToProps, mapDispatchToProps)(ErrorHandling));
+
+    return withRouter<IHistory>(connect(mapStateToProps, mapDispatchToProps)(ErrorHandling));
 }
 
 export default errorHandlingLogic;

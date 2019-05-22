@@ -3,18 +3,18 @@ import axios from 'axios';
 
 import {tempUser} from '../../../pageData/mock/user';
 import { IcurrentUser } from '../../../interfaces/currentUser';
-import { ILoginResponse } from '../../../interfaces/login';
+import { ILoginResponse, ILoginState } from '../../../interfaces/login';
 import { serverResolve } from '../common';
 
 //// APP
-export async function makeLoginOnServer( user: string, password: string ){
+export async function makeLoginOnServer( loginArg: ILoginState ){
     return await serverResolve( () =>
     {
         let userServer:ILoginResponse = {
             success: false        
         };
 
-        if( user === "abc" && password === "123")////To replace with server call -- mock abc/123
+        if( loginArg.user === "abc" && loginArg.password === "123")////To replace with server call -- mock abc/123
         {
             userServer = {
                 success: true,

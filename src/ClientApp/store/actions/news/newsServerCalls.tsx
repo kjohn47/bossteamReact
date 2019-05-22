@@ -53,7 +53,7 @@ export async function addNewsCommentToServer( newsArg: InewsDataArg )
             Owner: newsArg.user.name + " " + newsArg.user.surname,
             Time: new Date(),
             ID:123
-        }
+        }        
         serverData.comments !== null && serverData.comments !== undefined ? serverData.comments.push(newComment) : serverData.comments = [newComment];
         return new Promise( (resolve: Function) => { 
             setTimeout( () => {
