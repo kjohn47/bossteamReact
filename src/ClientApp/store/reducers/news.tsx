@@ -3,15 +3,16 @@ import {
     CHANGE_NEWS_LANGUAGE,
     GET_NEWS_DATA,
     CHANGE_NEWS_DATA_LANGUAGE,
-    ADD_NEWS_COMMENT 
+    ADD_NEWS_COMMENT, 
+    RESET_NEWS_LIST,
+    RESET_NEWS_DATA
 } from '../actionTypes';
 import { 
     InewsAction, 
     InewsListRedux, 
     INewsData, 
     IViewNewsDataServer, 
-    IViewNewsData, 
-    Ipayload
+    IViewNewsData
 } from '../../interfaces/news';
 import { IcardMainData, ICommentData} from '../../interfaces/common';
 import {enCode} from '../../settings';
@@ -102,6 +103,13 @@ export function news(state:InewsListRedux = defaultState, action:InewsAction) {
                 newsList: changeNewsLanguage(action.payload.language, state.newsListFromServer)
             };
         }
+        case RESET_NEWS_LIST: {
+            return {...state,
+                newsList: [],
+                newsListFromServer: []
+            }
+        }
+
         case GET_NEWS_DATA:{
             let serverData: IViewNewsDataServer = action.payload.newsData;
             return {...state,                
@@ -109,11 +117,27 @@ export function news(state:InewsListRedux = defaultState, action:InewsAction) {
                 newsViewData: changeNewsDataLanguage(action.payload.language, serverData)
             };
         }
+        
         case CHANGE_NEWS_DATA_LANGUAGE:{
                 return {...state,
                     newsViewData: changeNewsDataLanguage(action.payload.language, state.newsViewDataServer)
                 };        
         }
+
+        case RESET_NEWS_DATA: {
+            return {...state,
+                newsViewData: {
+                    id: 0,
+                    title: "",
+                    content: "",
+                    description:"",
+                    allowComments:false,
+                    date: new Date()
+                },
+                newsViewDataServer: null  
+            }
+        }
+
         case ADD_NEWS_COMMENT:{
             if ( state.newsViewData.id.toString() !== state.newsViewDataServer.id.toString() && state.newsViewData.id.toString() !== action.payload.newsID.toString() )
             {

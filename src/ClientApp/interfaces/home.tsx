@@ -25,6 +25,11 @@ interface Ipayload {
     presentation?: IpresentationServer;    
 }
 
+export interface IhomeDataServer {
+    image: Iimage;
+    presentation: IpresentationServer;   
+}
+
 export interface IHomeAction{
     type:string;
     payload?:Ipayload;
@@ -34,6 +39,8 @@ export interface IHomeActions {
     getHomeImage?: Function;
     getPresentationData?: Function;
     changePresentationLanguage?: Function;
+    getHomeData?: Function;
+    resetHomeData?: Function;
 }
 
 export interface IHomeRedux {

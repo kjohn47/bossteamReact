@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {Route, Switch} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import Home from './components/Home';
 import News from './components/News';
 import ViewNewsInfo from './components/ViewNewsInfo';
 import App from './components/App';
+import { pageHome, newsRoute, viewsNewsRoute } from './settings';
 //@ts-ignore
 const Status = ({ code, children }) => (
     <Route render={({ staticContext }) => {
@@ -57,9 +58,9 @@ const Routes = [
   {
     component: App,
     routes: [
-        getComponentRoute(Home, '/'), //or call directly the function.. atention to not use {} in this case
-        getComponentRoute(News, '/news'), 
-        getComponentRoute(ViewNewsInfo, '/ViewNews/:ID'), 
+        getComponentRoute(Home, pageHome), //or call directly the function.. atention to not use {} in this case
+        getComponentRoute(News, newsRoute), 
+        getComponentRoute(ViewNewsInfo, viewsNewsRoute + '/:ID'), 
         /*getComponentRoute(Lister, '/lister', [listerFetchData()]),
         getComponentRoute(TSTest, '/tstest'),*/
         { path: '*',

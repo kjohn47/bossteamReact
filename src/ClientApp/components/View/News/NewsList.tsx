@@ -4,7 +4,7 @@ import { InewsCard } from '../../../interfaces/news';
 
 
 
-class NewsList extends React.Component<InewsCard,{}>{
+class NewsList extends React.PureComponent<InewsCard,{}>{
     render(){
         const newsCard = this.props.newsCard;
         return(

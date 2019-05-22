@@ -19,6 +19,7 @@ import {
     NavLink} from 'reactstrap';
 
 import {NavLink as RouterLink} from 'react-router-dom';
+import { pageHome, newsRoute } from '../../../settings';
 
 const InlineLogin = loginLogic( LoginForm, UserMenu );
 
@@ -43,7 +44,7 @@ class MenuView extends React.Component<ImenuProps,ImenuState>{
         const menuText = this.props.menuText;
         return(
             <Navbar color="dark" dark expand= {loggedin ? "md": "lg"}>
-                <RouterLink className="navbar-brand" to="/">BossTeam</RouterLink>
+                <RouterLink className="navbar-brand" to={pageHome}>BossTeam</RouterLink>
                 <NavbarToggler onClick={this.toggle} />
                 <Collapse isOpen={this.state.isOpen} navbar>
                     <Nav navbar>
@@ -51,38 +52,31 @@ class MenuView extends React.Component<ImenuProps,ImenuState>{
                             <NavLink />
                         </NavItem>
                         <NavItem>
-                            <RouterLink className="nav-link" to="/news">{menuText.newsTitle}</RouterLink>
+                            <RouterLink className="nav-link" to={newsRoute}>{menuText.newsTitle}</RouterLink>
                         </NavItem>
                         <NavItem>
                             <NavLink />
                         </NavItem>
-                        {loggedin ? 
-                            <Blogs blogsText = {menuText.blogs} user = {this.props.currentUsr}/>
-                        : ""}                        
-                        {loggedin ? 
+                        {loggedin && <Blogs blogsText = {menuText.blogs} user = {this.props.currentUsr}/>}                        
+                        {loggedin && 
                             <NavItem> 
                                 <NavLink />
                             </NavItem>
-                        : ""}
-                        {loggedin ? 
-                            <Sales salesText = {menuText.sales} user = {this.props.currentUsr}/>
-                        : ""}                     
-                        {loggedin ? 
+                        }
+                        {loggedin && <Sales salesText = {menuText.sales} user = {this.props.currentUsr}/>}                   
+                        {loggedin && 
+                            <NavItem>
+                                <NavLink />
+                            </NavItem>
+                        }
+                        {loggedin && <Events eventsText = {menuText.events} user = {this.props.currentUsr}/> }
+                        
+                        {loggedin &&
                             <NavItem>
                                 <NavLink />
                             </NavItem> 
-                        : ""}
-                        {loggedin ? 
-                            <Events eventsText = {menuText.events} user = {this.props.currentUsr}/> 
-                        : ""}    
-                        {loggedin ?
-                            <NavItem>
-                                <NavLink />
-                            </NavItem> 
-                        : ""}
-                        {loggedin ? 
-                            <Tours toursText = {menuText.tours} user = {this.props.currentUsr}/>
-                        : ""}    
+                        }
+                        {loggedin && <Tours toursText = {menuText.tours} user = {this.props.currentUsr}/> }
                     </Nav>
                     <Nav navbar  className="ml-auto">
                         <Language languageText = {menuText.language} appGetLanguage = {this.props.appGetLanguage}/>
