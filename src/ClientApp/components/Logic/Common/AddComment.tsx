@@ -50,6 +50,7 @@ function addCommentLogic ( WrappedComponent:React.ComponentType<IAddCommentProps
                     submitBtnText = { this.props.addCommentText.submitBtnText }
                     handleCommentText = { this.handleCommentText }
                     commentValue = { this.state.commentText }
+                    loading = { this.props.loading }
                 />
             );
         }
@@ -58,6 +59,7 @@ function addCommentLogic ( WrappedComponent:React.ComponentType<IAddCommentProps
     const mapStateToProps = ( state: Istore ) => {
         return {
             addCommentText: state.appSettings.addCommentText,
+            loading: state.appSettings.fetchData.loading.localLoading.loadComment
         }
     };
 

@@ -60,8 +60,8 @@ function getLoadingState(isLocalLoading: boolean, pageLoading: ILoading, loadLoc
     let loading: ILoading = {
         isPageLoading: isLocalLoading ? pageLoading.isPageLoading : true,
         localLoading: {
-            loadComment: isLocalLoading  && loadLocalization === LOAD_LOGIN_MENU ? true : pageLoading.localLoading.loadLogin,
-            loadLogin: isLocalLoading  && loadLocalization === LOAD_NEW_COMMENT ? true : pageLoading.localLoading.loadComment,
+            loadLogin: isLocalLoading  && loadLocalization === LOAD_LOGIN_MENU ? true : pageLoading.localLoading.loadLogin,
+            loadComment: isLocalLoading  && loadLocalization === LOAD_NEW_COMMENT ? true : pageLoading.localLoading.loadComment,
             loadHomeNews: isLocalLoading  && loadLocalization === LOAD_HOME_NEWS ? true : pageLoading.localLoading.loadHomeNews
         }        
     }
@@ -73,9 +73,9 @@ function endLoadingState(isLocalLoading: boolean, pageLoading: ILoading, loadLoc
     let loading: ILoading = {
         isPageLoading: isLocalLoading ? pageLoading.isPageLoading : false,
         localLoading: {
-            loadComment: isLocalLoading  && loadLocalization === LOAD_LOGIN_MENU ? false : pageLoading.localLoading.loadLogin,
-            loadLogin: isLocalLoading  && loadLocalization === LOAD_NEW_COMMENT ? false : pageLoading.localLoading.loadComment,
-            loadHomeNews: isLocalLoading  && loadLocalization === LOAD_HOME_NEWS ? false : pageLoading.localLoading.loadHomeNews
+            loadLogin: (isLocalLoading  && loadLocalization === LOAD_LOGIN_MENU) ? false : pageLoading.localLoading.loadLogin,
+            loadComment: (isLocalLoading  && loadLocalization === LOAD_NEW_COMMENT) ? false : pageLoading.localLoading.loadComment,
+            loadHomeNews: (isLocalLoading  && loadLocalization === LOAD_HOME_NEWS) ? false : pageLoading.localLoading.loadHomeNews
         }
     }
     return {...loading};

@@ -58,7 +58,7 @@ export async function addNewsCommentToServer( newsArg: InewsDataArg )
         return new Promise( (resolve: Function) => { 
             setTimeout( () => {
                 resolve(serverData.comments)
-                }, 500 )
+                }, 1000 )
         })
     }, 'Add Comment Error')
 }
