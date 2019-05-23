@@ -10,7 +10,7 @@ import addCommentLogic from '../../Logic/Common/AddComment';
 const Comments = commentLogic(Comment);
 const AddComments = addCommentLogic( AddComment );
 
-class ViewNews extends React.Component<IViewNews,{}>{    
+class ViewNews extends React.PureComponent<IViewNews,{}>{    
     render(){        
         const newsData = this.props.newsData;        
         return(
@@ -40,10 +40,8 @@ class ViewNews extends React.Component<IViewNews,{}>{
                 </Row>
                 <Row>
                     {
-                        newsData.allowComments && this.props.logedIn ? 
-                            <AddComments addCommentAction = { this.props.addCommentAction }/> 
-                            : 
-                            ""                   
+                        newsData.allowComments && this.props.logedIn && 
+                            <AddComments addCommentAction = { this.props.addCommentAction }/>                  
                     }
                 </Row>
             </div>

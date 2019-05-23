@@ -4,7 +4,7 @@ import {ICommentData, ICommentText} from '../../../interfaces/common';
 
 type IcommentProps = ICommentData & ICommentText;
 
-class Comment extends React.Component<IcommentProps,{}>{
+class Comment extends React.PureComponent<IcommentProps,{}>{
     render(){
         return(
             <Row className="comment-row">

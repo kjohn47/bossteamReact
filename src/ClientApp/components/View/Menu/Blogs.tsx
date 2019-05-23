@@ -13,7 +13,7 @@ interface IblogMenu {
     user? : IcurrentUser;
 }
 
-class Blogs extends React.Component<IblogMenu,{}>{
+class Blogs extends React.PureComponent<IblogMenu,{}>{
     render(){
         const blogsText = this.props.blogsText;
         return(

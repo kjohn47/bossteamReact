@@ -3,45 +3,31 @@ import {
     CHANGE_NEWS_LANGUAGE,
     GET_NEWS_DATA,
     CHANGE_NEWS_DATA_LANGUAGE,
-    ADD_NEWS_COMMENT 
+    ADD_NEWS_COMMENT,
+    RESET_NEWS_DATA,
+    RESET_NEWS_LIST
 } from '../../actionTypes';
-import {ptCode} from '../../../settings';
+import {ptCode, LOAD_NEW_COMMENT, LOAD_HOME_NEWS} from '../../../settings';
 import {IcurrentUser} from '../../../interfaces/currentUser';
 import { INewsData, IViewNewsDataServer } from '../../../interfaces/news';
 import { getNewsListFromServer, getNewsDataFromServer, addNewsCommentToServer} from './newsServerCalls';
-import { endServerCommunication, startServerCommunication } from '../appSettings';
 import { ICommentData } from '../../../interfaces/common';
+import { commonServerAction } from '../common';
 //// Actions for News List
 
-export function getNewsList( language: string = ptCode ){
-    return (dispatch: Function) => {
-        dispatch(startServerCommunication());              
-        Promise.resolve(getNewsListFromServer())
-        .then( ( result: INewsData[] ) => {
-            dispatch(getNewsListSuccess( language, result ));  
-            dispatch(endServerCommunication(true));                                       
-        })
-        .catch( (err: any) => {
-            dispatch(endServerCommunication(false));
-        })
+export function getNewsList( language: string = ptCode ){    
+    return (dispatch: Function) =>  {   
+        commonServerAction( dispatch, getNewsListFromServer, getNewsListSuccess, null, language );
     }
 }
 
 export function getNewsListShort( language: string = ptCode ){
-    return (dispatch: Function) => {
-        dispatch(startServerCommunication());               
-        Promise.resolve(getNewsListFromServer(true))
-        .then( ( result: INewsData[] ) => {
-            dispatch(getNewsListSuccess( language, result ));  
-            dispatch(endServerCommunication(true));                                       
-        })
-        .catch( (err: any) => {
-            dispatch(endServerCommunication(false));
-        })
+    return (dispatch: Function) =>  {  
+        commonServerAction( dispatch, getNewsListFromServer, getNewsListSuccess, true, language , true, LOAD_HOME_NEWS );
     }
 }
 
-function getNewsListSuccess( language: string, result: INewsData[] )
+function getNewsListSuccess( result: INewsData[], language: string  )
 {
     return {
         type: GET_NEWS_LIST,
@@ -61,24 +47,23 @@ export function changeNewsLanguage( language: string = ptCode ){
     }
 }
 
+export function resetNewsList()
+{
+    return {
+        type: RESET_NEWS_LIST
+    }
+}
+
 //// Actions for view news
 
 export function getNewsData ( language: string = ptCode, ID: number )
 {
-    return (dispatch: Function) => {
-        dispatch(startServerCommunication());              
-        Promise.resolve(getNewsDataFromServer( ID ))
-        .then( ( result: IViewNewsDataServer ) => {
-            dispatch(getNewsDataSuccess( language, result ));  
-            dispatch(endServerCommunication(true));                                       
-        })
-        .catch( (err: any) => {
-            dispatch(endServerCommunication(false));
-        })
+    return (dispatch: Function) =>  {     
+        commonServerAction( dispatch, getNewsDataFromServer, getNewsDataSuccess, ID, language );
     }
 }
 
-function getNewsDataSuccess ( language: string, result: IViewNewsDataServer )
+function getNewsDataSuccess ( result: IViewNewsDataServer, language: string )
 {
     return {
         type: GET_NEWS_DATA,
@@ -99,29 +84,28 @@ export function changeNewsDataLanguage ( language: string = ptCode )
     }
 }
 
-
-
-export function addNewsComment (newsID: number, comment: string, user:IcurrentUser)
+export function resetNewsData()
 {
-    return (dispatch: Function) => {
-        dispatch(startServerCommunication());              
-        Promise.resolve(addNewsCommentToServer( newsID, comment, user ))
-        .then( ( result: ICommentData[] ) => {
-            dispatch(addNewsCommentSuccess( result, newsID ));  
-            dispatch(endServerCommunication(true));                                       
-        })
-        .catch( (err: any) => {
-            dispatch(endServerCommunication(false));
-        })
+    return {
+        type: RESET_NEWS_DATA
     }
 }
 
-function addNewsCommentSuccess ( comments: ICommentData[], newsID: number )
+//Actions for adding comments
+
+export function addNewsComment (newsID: number, comment: string, user:IcurrentUser)
+{
+    return (dispatch: Function) =>  {
+        commonServerAction( dispatch, addNewsCommentToServer, addNewsCommentSuccess, { newsID, comment, user }, newsID, true, LOAD_NEW_COMMENT );
+    }
+}
+
+function addNewsCommentSuccess ( result: ICommentData[] , newsID: number )
 {
     return {
         type: ADD_NEWS_COMMENT,
         payload: {
-            comments: comments,
+            comments: result,
             newsID: newsID
         }
     }

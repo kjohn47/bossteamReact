@@ -2,6 +2,11 @@ import * as React from 'react';
 import Menu from './Menu';
 import Footer from './View/Menu/Footer';
 
+import errorHandlingLogic from './Logic/Common/ErrorHandling';
+import ErrorHandlingView from './View/Common/ErrorHandling';
+import LoadingView from './View/Common/Loading';
+const ErrorHandling = errorHandlingLogic(ErrorHandlingView, LoadingView);
+
 class Layout extends React.Component<{},{}>{
     render(){
         return(
@@ -11,9 +16,9 @@ class Layout extends React.Component<{},{}>{
             </header>
             <section className="row main-content">
                 <div className="col-md-1 hidden-sm OuterColLayout"></div>
-                <div className="col-md-10 col-sm-12 pageContent">
-                    {this.props.children}
-                </div>
+                    <ErrorHandling >
+                        {this.props.children}
+                    </ErrorHandling>
                 <div className="col-md-1 hidden-sm OuterColLayout"></div>
             </section>
             <div className="row separatorRow">

@@ -6,10 +6,11 @@ import { IUserMenu } from '../../../interfaces/menu';
 import { IAppSettings, IappActions } from '../../../interfaces/appSettings';
 import { makeLogin, makeLogout, resetLoginStatus } from '../../../store/actions/appSettings';
 import { results } from '../../../settings';
+import { IcurrentUser } from '../../../interfaces/currentUser';
 
 
 function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedComponentLoggedIn?: React.ComponentType<IUserMenu>) {
-    class LoginLogic extends React.Component<IAppSettings & IappActions, ILoginState>{
+    class LoginLogic extends React.Component<IAppSettings & IappActions & ILogin, ILoginState>{
         constructor(props: any) {
             super(props);
             this.makeLogin = this.makeLogin.bind(this);
@@ -38,10 +39,10 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
         }
 
         makeLogin() {
-            if (this.state.user.trim() === '') {
+            if (this.state.user.trim() === '') {                
                 alert(this.props.loginForm.emptyUser);
             }
-            else if (this.state.password.trim() === '') {
+            else if (this.state.password.trim() === '') {                
                 alert(this.props.loginForm.emptyPassword);
             }
             else {
@@ -51,8 +52,7 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
 
         makeLogout() {
             if (this.props.isLogged) {
-                this.props.makeLogout();
-                //redirect to /
+                this.props.makeLogout( this.props.loggedUser );                
             }
         }
 
@@ -90,12 +90,17 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
 
             return (
                 this.props.isLogged ?
-                    WrappedComponentLoggedIn !== null || WrappedComponentLoggedIn !== undefined ?
-                        <WrappedComponentLoggedIn user={this.props.loggedUser} userMnText={this.props.menuText.user} userMenuAction={this.makeLogout} />
-                        :
-                        <div></div>//redirect to logout prompt
+                    (WrappedComponentLoggedIn !== null || WrappedComponentLoggedIn !== undefined) &&
+                        <WrappedComponentLoggedIn 
+                            user={this.props.loggedUser} 
+                            userMnText={this.props.menuText.user}
+                            userMenuAction={this.makeLogout} 
+                            loading = { this.props.loading } />
                     :
-                    <WrappedComponentLogin loginText={this.props.loginForm} loginAction={loginActions} />
+                    <WrappedComponentLogin 
+                        loginText={this.props.loginForm} 
+                        loginAction={loginActions} 
+                        loading = { this.props.loading } />
             );
         }
     }
@@ -105,16 +110,17 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
             loginForm: state.appSettings.loginForm,
             isLogged: state.appSettings.isLogged,
             loggedUser: state.appSettings.loggedUser,
-            tryLogin: state.appSettings.tryLogin
+            tryLogin: state.appSettings.tryLogin,
+            loading: state.appSettings.fetchData.loading.localLoading.loadLogin
         }
     };
 
     const mapDispatchToProps = (dispatch: Function) => (
-        {
-            makeLogin: (user: string, password: string) => dispatch(makeLogin(user, password)),
-            makeLogout: () => dispatch(makeLogout()),
-            resetLoginStatus: () => dispatch(resetLoginStatus())
-        });
+    {
+        makeLogin: (user: string, password: string) => dispatch(makeLogin(user, password)),
+        makeLogout: ( user: IcurrentUser) => dispatch(makeLogout(user)),
+        resetLoginStatus: () => dispatch(resetLoginStatus())
+    });
 
     return connect(mapStateToProps, mapDispatchToProps)(LoginLogic);
 }

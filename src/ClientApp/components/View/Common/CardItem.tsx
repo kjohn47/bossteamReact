@@ -10,7 +10,7 @@ interface ICardItemProps {
     data?: ICardData;
 }
 
-class CardItem extends React.Component<ICardItemProps,{}>{
+class CardItem extends React.PureComponent<ICardItemProps,{}>{
     render(){
         const data = this.props.data;
         return(

@@ -1,11 +1,11 @@
-import {Row, Col} from 'reactstrap';
+import {Row, Col, Spinner} from 'reactstrap';
 import * as React from 'react';
 import {IAddComment, IAddCommentText} from '../../../interfaces/common';
 import { IAppSettings } from '../../../interfaces/appSettings';
 
 type IAddCommentProps = IAddCommentText & IAddComment & IAppSettings;
 
-class AddComment extends React.Component<IAddCommentProps,{}>{
+class AddComment extends React.PureComponent<IAddCommentProps,{}>{
     constructor(props:IAddCommentProps) {
         super(props)
     };
@@ -21,15 +21,20 @@ class AddComment extends React.Component<IAddCommentProps,{}>{
                                 className="add-comment-text" 
                                 value = { this.props.commentValue }
                                 onChange = { ( event: any ) => this.props.handleCommentText( event ) }
+                                readOnly = { this.props.loading }
                             ></textarea>
                         </Col>
                         <Col xs="1" className="add-comment-inner">
-                            <input 
-                                type="button" 
-                                value = {this.props.submitBtnText} 
-                                className="add-comment-button" 
-                                onClick = { () => this.props.addCommentAction() }
-                            />
+                            {this.props.loading ? 
+                                <Spinner color="secondary" type="grow" className = "comment-spinner" />
+                            :
+                                <input 
+                                    type="button" 
+                                    value = {this.props.submitBtnText} 
+                                    className="add-comment-button" 
+                                    onClick = { () => this.props.addCommentAction() }
+                                />
+                            }
                         </Col>
                         <Col xs="2" className="add-comment-inner">
                         </Col>

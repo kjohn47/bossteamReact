@@ -74,4 +74,5 @@ export interface IUserMenu {
     userMnText?: IusrMnText;
     user?: IcurrentUser;
     userMenuAction?: Function;
+    loading?:boolean;
 }

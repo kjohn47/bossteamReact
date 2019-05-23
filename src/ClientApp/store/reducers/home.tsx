@@ -1,4 +1,4 @@
-import { GET_PRESENTATION_DATA, CHANGE_PRESENTATION_LANGUAGE, GET_HOME_IMAGE } from '../actionTypes';
+import { CHANGE_PRESENTATION_LANGUAGE, GET_HOME_DATA, RESET_HOME_DATA } from '../actionTypes';
 import { IHomeAction, IHomeRedux, IpresentationData, IpresentationServer } from '../../interfaces/home';
 import {enCode} from '../../settings';
 
@@ -37,22 +37,35 @@ function changePresentationLanguage(language:string, presentationServer: Ipresen
 export function home(state:IHomeRedux = defaultState, action:IHomeAction) {
 
     switch (action.type) {
-        case GET_PRESENTATION_DATA: {     
-            let presentationFromServer = action.payload.presentation;
-            return {...state,
-                presentationData: changePresentationLanguage(action.payload.language, presentationFromServer),
-                presentationServer: presentationFromServer
-            };
-        }
         case CHANGE_PRESENTATION_LANGUAGE: {  
             return {...state, 
                 presentationData: changePresentationLanguage(action.payload.language, state.presentationServer),
             };
         }
-        case GET_HOME_IMAGE: {
+
+        case GET_HOME_DATA: {
+            let presentationFromServer = action.payload.presentation;
             return {...state,
+                presentationData: changePresentationLanguage(action.payload.language, presentationFromServer),
+                presentationServer: presentationFromServer,
                 image: action.payload.image
             };
+        }
+
+        case RESET_HOME_DATA: {
+            return {...state, 
+                presentationData: {
+                    description:"",
+                    introduction:"",
+                    title:""
+                },
+                presentationServer: null,
+                image: {
+                    src: "",
+                    alt: "",
+                    link: ""
+                }
+            }
         }
 
     default: 

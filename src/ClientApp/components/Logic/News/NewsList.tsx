@@ -2,16 +2,27 @@ import * as React from 'react';
 import {IAppSettings} from '../../../interfaces/appSettings';
 import { Istore } from '../../../interfaces/store';
 import {connect} from 'react-redux';
-import { getNewsList, getNewsListShort, changeNewsLanguage } from '../../../store/actions/news';
+import { getNewsList, getNewsListShort, changeNewsLanguage, resetNewsList } from '../../../store/actions/news';
 import { InewsCard, InewsActions, InewsListRedux } from '../../../interfaces/news';
 import makeCard from '../Common/makeCard';
 import { ICardData } from '../../../interfaces/common';
+import LoadingView from '../../View/Common/Loading';
+import { viewsNewsRoute } from '../../../settings';
 
-type INewsReduxProps = IAppSettings & InewsActions & InewsListRedux;
+interface INewsListLoading {
+    loading?: boolean;
+}
+
+type INewsReduxProps = IAppSettings & InewsActions & InewsListRedux & INewsListLoading;
+
 
 function newsListLogic (WrappedComponent:React.ComponentType<InewsCard>, shortList: boolean = false)
 {
-    class NewsListLogic extends React.Component<INewsReduxProps,{}>{    
+    class NewsListLogic extends React.Component<INewsReduxProps,{}>{
+        componentWillUnmount(){
+            this.props.resetNewsList();
+        }
+        
         componentDidMount(){
             if(shortList)
             {
@@ -38,14 +49,16 @@ function newsListLogic (WrappedComponent:React.ComponentType<InewsCard>, shortLi
           }
 
         render(){
-            const cardsList: ICardData[] = makeCard(this.props.newsList, '/ViewNews', this.props.newsLanguage.cardButtonText);
+            const cardsList: ICardData[] = makeCard(this.props.newsList, viewsNewsRoute, this.props.newsLanguage.cardButtonText);
             return(
                 <div className="row">
-                {
-                    cardsList.map( (item:ICardData, i) => 
-                        <WrappedComponent key={i} newsCard = {item}/>
-                    )
-                }
+                 <LoadingView isPageLoading = { this.props.loading } lessPriority={true}>
+                    {                   
+                        cardsList.map( (item:ICardData, i) => 
+                            <WrappedComponent key={i} newsCard = {item}/>
+                        )                    
+                    }
+                </LoadingView>
             </div>                
             );
         }
@@ -55,14 +68,16 @@ function newsListLogic (WrappedComponent:React.ComponentType<InewsCard>, shortLi
         return {
             newsLanguage: state.appSettings.newsLanguage,
             newsList: state.news.newsList,
-            presentationLanguage: state.appSettings.presentationLanguage     
+            presentationLanguage: state.appSettings.presentationLanguage,
+            loading: state.appSettings.fetchData.loading.localLoading.loadHomeNews     
          };
     };
 
     const mapDispatchToProps = (dispatch:Function) => ({
         getNewsList: (language: string) => dispatch(getNewsList(language)),
         getNewsListShort: (language: string) => dispatch(getNewsListShort(language)),        
-        changeNewsLanguage: (language: string) => dispatch(changeNewsLanguage(language))
+        changeNewsLanguage: (language: string) => dispatch(changeNewsLanguage(language)),
+        resetNewsList: () => dispatch(resetNewsList())
       });
     return connect(mapStateToProps, mapDispatchToProps)(NewsListLogic);
 }
