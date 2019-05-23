@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {NavItem, NavLink, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import {NavItem, NavLink, Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
 import {ILogin} from '../../../interfaces/login';
 import {NavLink as RouterLink} from 'react-router-dom';
 
@@ -18,6 +18,7 @@ class LoginForm extends React.PureComponent<ILogin,{}>{
                         value = { this.props.loginAction.state.user }    
                     />
                 </FormGroup> 
+                &nbsp;
                 <FormGroup  className="mb-2 mr-sm-2 mb-sm-0">
                     <Input 
                         type="password" 
@@ -28,13 +29,23 @@ class LoginForm extends React.PureComponent<ILogin,{}>{
                         value = { this.props.loginAction.state.password }    
                     />
                 </FormGroup>
-                <Button onClick = { () => this.props.loginAction.makeLogin() }>{loginText.submit}</Button>
-                <NavItem>
-                    <NavLink />
-                </NavItem>
-                <NavItem>
-                    <RouterLink className="nav-link" to="/">{loginText.register}</RouterLink>
-                </NavItem>
+                <div className="login_form_btn">
+                    { this.props.loading ? 
+                            <Spinner size="sm" color="light" className="loginSpinner"/>
+                        :
+                            <Button onClick = { () => this.props.loginAction.makeLogin() }>{loginText.submit}</Button>
+                    }
+                    <NavItem>
+                        <NavLink />
+                    </NavItem>
+                    <NavItem>
+                    { this.props.loading ?
+                            <div className="nav-link registLink">{loginText.register}</div>
+                        :
+                            <RouterLink className="nav-link registLink" to="/">{loginText.register}</RouterLink>
+                    }
+                    </NavItem>
+                </div>
             </Form>
         );
     }

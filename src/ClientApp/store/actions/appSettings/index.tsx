@@ -58,7 +58,7 @@ function makeLoginSuccess( result: ILoginResponse ){
 export function makeLogout( user: IcurrentUser){
     return (dispatch: Function) =>  
     {     
-        commonServerAction( dispatch, makeLogoutOnServer, logout, user, null , false, '', null, logoutFunctions );
+        commonServerAction( dispatch, makeLogoutOnServer, logout, user, null , true, LOAD_LOGIN_MENU, null, logoutFunctions );
     } 
 }
 

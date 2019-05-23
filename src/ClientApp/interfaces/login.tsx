@@ -14,6 +14,7 @@ export interface IloginMenu {
 export interface ILogin {
     loginText?: IloginMenu;
     loginAction?: ILoginActions;
+    loading?: boolean;
 }
 
 export interface ILoginActions {

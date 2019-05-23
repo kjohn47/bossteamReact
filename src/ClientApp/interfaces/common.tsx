@@ -42,6 +42,7 @@ export interface IAddComment {
     addCommentAction?: Function;
     handleCommentText?: Function;
     commentValue?: string;
+    loading?:boolean;
 }
 
 export interface IAddCommentText {

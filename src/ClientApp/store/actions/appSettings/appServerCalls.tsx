@@ -25,7 +25,7 @@ export async function makeLoginOnServer( loginArg: ILoginState ){
         return new Promise( (resolve: Function) => { 
             setTimeout( () => {
                 resolve(userServer)
-                }, 150 )
+                }, 1000 )
         })
         
     }, 'Login Error')
@@ -44,7 +44,7 @@ export async function makeLogoutOnServer( user: IcurrentUser ){
             return new Promise( (resolve: Function) => { 
                 setTimeout( () => {
                     resolve(true)
-                    }, 100 )
+                    }, 800 )
             })
         }
     }, 'Logout Error')
