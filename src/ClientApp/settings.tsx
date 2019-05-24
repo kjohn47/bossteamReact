@@ -27,6 +27,15 @@ export const LOAD_LOGIN_MENU = 'LOAD_LOGIN_MENU';
 export const LOAD_NEW_COMMENT = 'LOAD_NEW_COMMENT';
 export const LOAD_HOME_NEWS = 'LOAD_HOME_NEWS';
 
+//ERROR CODES
+export const Show_Error_Detailed = true;////set true to dev, false to prd
+export const ERROR_GENERIC = 'ERROR_GENERIC';
+export const ERROR_ADD_COMMENT = 'ERROR_ADD_COMMENT';
+export const ERROR_LOGIN = 'ERROR_LOGIN';
+export const ERROR_LOGOUT = 'ERROR_LOGOUT';
+export const ERROR_HOME_PAGE = 'ERROR_HOME_PAGE';
+export const ERROR_GET_NEWS_LIST = 'ERROR_GET_NEWS_LIST';
+export const ERROR_GET_NEWS_DATA = 'ERROR_GET_NEWS_DATA';
 
 // COOKIE METHODS
 export const currentLanguage = () => {
@@ -58,3 +67,9 @@ export const cookieLogout = () => {
 export const checkLogin = () => {
    return getCurrentUser() !== null && getCurrentUser() !== undefined;
 };
+
+//// COMMON METHODS
+export function GetPropertyValue(object: object,dataToRetrieve: string){
+   //@ts-ignore
+   return object[dataToRetrieve];
+}

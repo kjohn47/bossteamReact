@@ -6,7 +6,7 @@ import { APP_GET_LANGUAGE,
     END_SERVER_COMUNICATION, 
     SERVER_COMUNICATION_FAIL, 
     RESET_SERVER_ERROR } from '../actionTypes';
-import { IappAction, IAppSettings } from '../../interfaces/appSettings';
+import { IappAction, IAppSettings, IFetchData } from '../../interfaces/appSettings';
 import { defaultMenuText, menuENText, menuPTText } from '../../pageData/language/menu';
 import { defaultNewsText, enNewsText, ptNewsText } from '../../pageData/language/news';
 import { defaultLoginForm, ptLoginForm, enLoginForm } from '../../pageData/language/login';
@@ -25,8 +25,11 @@ import {
     results,
     LOAD_LOGIN_MENU,
     LOAD_NEW_COMMENT,
-    LOAD_HOME_NEWS} from '../../settings';
-import { ILoading } from '../../interfaces/common';
+    LOAD_HOME_NEWS,
+    Show_Error_Detailed,
+    GetPropertyValue} from '../../settings';
+import { ILoading, IErrorHandling, IErrorHandlingText, IErrorHandlingTextTranslation } from '../../interfaces/common';
+import { ERRORS } from '../../pageData/language/errors';
 
 const defaultState: IAppSettings = {
     menuText : defaultMenuText,
@@ -41,8 +44,9 @@ const defaultState: IAppSettings = {
     fetchData: {
         error: {
             hasError: false,
-            errorTitle: "",
-            errorMessage: ""
+            errorDescription: "",
+            errorCode: "",
+            errorText: null
         },
         loading: {
             isPageLoading: false,
@@ -81,10 +85,56 @@ function endLoadingState(isLocalLoading: boolean, pageLoading: ILoading, loadLoc
     return {...loading};
 }
 
+function getTranslatedError( language: string, error: IErrorHandling )
+{
+    let recievedCode = error.errorCode;
+    let errorData: IErrorHandlingTextTranslation = GetPropertyValue(ERRORS,recievedCode);
+    let errorText: IErrorHandlingText = null;    
+    let errorNotTranslated = true;
+
+    if (errorData !== null && errorData !== undefined)
+    {
+        let translatedError: IErrorHandlingText = GetPropertyValue(errorData, language);
+        if (translatedError !== null && translatedError !== undefined)
+        {
+            errorText = {
+                errorTitle: translatedError.errorTitle + ( Show_Error_Detailed ? ' [' + error.errorCode + ']' : ''),
+                errorMessage: translatedError.errorMessage + ( Show_Error_Detailed ? ' [' + error.errorDescription + ']' : '')
+            }
+            errorNotTranslated = false;
+        }        
+    }
+
+    if( Show_Error_Detailed && errorNotTranslated )
+    {
+        errorText = {
+            errorTitle: '[' + error.errorCode + ']',
+            errorMessage: '[' + error.errorDescription + ']'
+        }
+    }
+
+    let errorOut: IErrorHandling = {
+        errorCode: error.errorCode,
+        errorDescription: error.errorDescription,
+        hasError: error.hasError,
+        errorText: errorText
+    }
+
+    return errorOut;
+}
+
+
+
 export function appSettings(state:IAppSettings = defaultState, action:IappAction) {
 
     switch (action.type) {
-        case APP_GET_LANGUAGE: {
+        case APP_GET_LANGUAGE: {            
+            let errorData: IErrorHandling = {...state.fetchData.error}
+            if( state.fetchData.error.hasError )
+            {
+                errorData = getTranslatedError(action.payload.language, {...state.fetchData.error});
+            }
+
             if ( action.payload.language === enCode )
             {
                 return {...state, 
@@ -93,7 +143,10 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
                     addCommentText: enAddCommentText,
                     commentText: enCommentText,
                     loginForm: enLoginForm,
-                    presentationLanguage: enCode                    
+                    presentationLanguage: enCode,
+                    fetchData: {...state.fetchData, 
+                        error: errorData
+                    }                    
                 };
             }
             else
@@ -104,7 +157,10 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
                     addCommentText: ptAddCommentText,
                     commentText: ptCommentText,
                     loginForm: ptLoginForm,
-                    presentationLanguage: ptCode
+                    presentationLanguage: ptCode,                
+                    fetchData: {...state.fetchData, 
+                        error: errorData
+                    }        
                 };
             }
         }
@@ -128,12 +184,13 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
         }
         case START_SERVER_COMUNICATION: {
             let loadingData = getLoadingState( action.payload.isLocalized, {...state.fetchData.loading}, action.payload.loadLocalization );
-            let fetchDataState = {
+            let fetchDataState: IFetchData = {
                 loading : loadingData,
                 error: {
                     hasError: false,
-                    errorMessage: "",
-                    errorTitle: ""
+                    errorDescription: "",
+                    errorCode: "",
+                    errorText: null
                 }
             };            
             return{...state,
@@ -153,23 +210,25 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
         }
 
         case SERVER_COMUNICATION_FAIL: {
-            let fetchDataState = {...state.fetchData};
+            let fetchDataState: IFetchData = {...state.fetchData};
+            let errorData = getTranslatedError(state.presentationLanguage, {...action.payload.error});
             fetchDataState = {
                 loading: {...state.fetchData.loading},
-                error: action.payload.error
+                error: errorData
             };
             return{...state,
                 fetchData: fetchDataState
             }
         }
         case RESET_SERVER_ERROR: {
-            let fetchDataState = {...state.fetchData};
+            let fetchDataState: IFetchData = {...state.fetchData};
             fetchDataState = {
                 loading: {...state.fetchData.loading},
                 error: {
                     hasError: false,
-                    errorMessage: "",
-                    errorTitle: ""
+                    errorDescription: "",
+                    errorCode: "",
+                    errorText: null
                 }
             };
             return{...state,

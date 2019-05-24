@@ -5,6 +5,7 @@ import { mockNewsFromServer, mockNewsDataServer } from '../../../pageData/mock/n
 import { IViewNewsDataServer, InewsDataArg, INewsData } from '../../../interfaces/news';
 import { ICommentData } from '../../../interfaces/common';
 import { serverResolve } from '../common';
+import { ERROR_ADD_COMMENT, ERROR_GET_NEWS_DATA, ERROR_GET_NEWS_LIST } from '../../../settings';
 
 //// NEWS
 
@@ -26,7 +27,7 @@ export async function getNewsListFromServer( short: boolean = false )
                 resolve(serverData)
                 }, 900 )
         })
-    }, 'Get News List Error')
+    }, ERROR_GET_NEWS_LIST)
 }
 
 export async function getNewsDataFromServer( ID:number )
@@ -40,7 +41,7 @@ export async function getNewsDataFromServer( ID:number )
                 resolve(serverData)
                 }, 800 )
         })
-    }, 'Get News Data Error')
+    }, ERROR_GET_NEWS_DATA)
 }
 
 export async function addNewsCommentToServer( newsArg: InewsDataArg )
@@ -53,14 +54,14 @@ export async function addNewsCommentToServer( newsArg: InewsDataArg )
             Owner: newsArg.user.name + " " + newsArg.user.surname,
             Time: new Date(),
             ID:123
-        }        
+        }   
         serverData.comments !== null && serverData.comments !== undefined ? serverData.comments.push(newComment) : serverData.comments = [newComment];
         return new Promise( (resolve: Function) => { 
             setTimeout( () => {
                 resolve(serverData.comments)
                 }, 1000 )
         })
-    }, 'Add Comment Error')
+    }, ERROR_ADD_COMMENT)
 }
 
 //// NEWS

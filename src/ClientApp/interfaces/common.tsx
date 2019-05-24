@@ -71,6 +71,27 @@ interface ILocalLoading {
 
 export interface IErrorHandling {
     hasError?: boolean;
+    errorDescription?: string; 
+    errorCode?:string;
+    errorText?: IErrorHandlingText;
+}
+
+export interface IErrorHandlingText {
     errorMessage?: string;
     errorTitle?:string;    
+}
+
+export interface IErrorHandlingTextTranslation {
+    PT?: IErrorHandlingText;
+    EN?: IErrorHandlingText;
+}
+
+export interface IErrorHandlingErrors {
+    ERROR_GENERIC: IErrorHandlingTextTranslation;
+    ERROR_ADD_COMMENT: IErrorHandlingTextTranslation;
+    ERROR_LOGIN: IErrorHandlingTextTranslation;
+    ERROR_LOGOUT: IErrorHandlingTextTranslation;
+    ERROR_HOME_PAGE: IErrorHandlingTextTranslation;
+    ERROR_GET_NEWS_LIST: IErrorHandlingTextTranslation;
+    ERROR_GET_NEWS_DATA: IErrorHandlingTextTranslation;
 }

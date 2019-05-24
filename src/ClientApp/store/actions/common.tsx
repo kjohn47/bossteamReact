@@ -1,5 +1,6 @@
 import { startServerCommunication, serverCommunicationError, endServerCommunication } from "./appSettings";
 import { IErrorHandling } from "../../interfaces/common";
+import { ERROR_GENERIC } from "../../settings";
 
 
 export function commonServerAction( dispatch: Function, 
@@ -31,7 +32,7 @@ export function commonServerAction( dispatch: Function,
     } )    
 }
 
-export async function serverResolve( serverCall: Function, errorTitle: string = 'Error' )
+export async function serverResolve( serverCall: Function, errorCode: string = ERROR_GENERIC )
 {
     return new Promise( (resolve) => {
         let serverReturn = serverCall();
@@ -39,8 +40,8 @@ export async function serverResolve( serverCall: Function, errorTitle: string = 
     }).catch( ( err:any ) =>{
         let error:IErrorHandling = {
             hasError: true,
-            errorTitle: errorTitle,
-            errorMessage: err.toString()
+            errorCode: errorCode,
+            errorDescription: err.toString()
         };
         return error;
     })
