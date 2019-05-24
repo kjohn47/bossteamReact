@@ -1,6 +1,6 @@
 import { CHANGE_PRESENTATION_LANGUAGE, GET_HOME_DATA, RESET_HOME_DATA } from '../actionTypes';
 import { IHomeAction, IHomeRedux, IpresentationData, IpresentationServer } from '../../interfaces/home';
-import {enCode} from '../../settings';
+import { GetPropertyValue } from '../../settings';
 
 //// -- Default homepage presentation state
 const defaultState: IHomeRedux = {
@@ -22,10 +22,15 @@ const defaultState: IHomeRedux = {
 
 function changePresentationLanguage(language:string, presentationServer: IpresentationServer)
 {
+    let translatedPresentation: IpresentationData = GetPropertyValue(presentationServer, language);
+    if( translatedPresentation === null || translatedPresentation === undefined )
+    {
+        translatedPresentation = presentationServer.PT;   
+    }
     let presentationData : IpresentationData = {
-        description: language === enCode ? presentationServer.descriptionEN : presentationServer.description,
-        introduction: language === enCode ? presentationServer.introductionEN : presentationServer.introduction,
-        title: language === enCode ? presentationServer.titleEN : presentationServer.title
+        description: translatedPresentation.description,
+        introduction: translatedPresentation.introduction,
+        title: translatedPresentation.title
     };
     
     return presentationData;

@@ -48,14 +48,18 @@ export interface Ipayload {
 }
 
 export interface INewsData {
-    title:string;
-    titleEN:string;
     date:Date;
     imgLink?:string;
-    description:string;
-    descriptionEN:string;
     outlineColor?:string;
     id: number;
+    PT: InewsServerDataText;
+    EN?: InewsServerDataText;
+}
+
+export interface InewsServerDataText {
+    title: string;
+    description: string;
+    content?: string;
 }
 
 //// Interfaces for View News
@@ -79,17 +83,13 @@ export interface IViewNewsData {
 }
 
 export interface IViewNewsDataServer {
-    title:string;
-    titleEN:string;
     date:Date;
     imgLink?:string;
-    description:string;
-    descriptionEN:string;    
-    content:string;
-    contentEN:string;
     id: number;
     allowComments: boolean;
     comments?: ICommentData[];
+    PT: InewsServerDataText;
+    EN?: InewsServerDataText;
 }
 
 export interface IViewNewsActions{
