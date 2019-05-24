@@ -5,6 +5,7 @@ import {tempUser} from '../../../pageData/mock/user';
 import { IcurrentUser } from '../../../interfaces/currentUser';
 import { ILoginResponse, ILoginState } from '../../../interfaces/login';
 import { serverResolve } from '../common';
+import { ERROR_LOGIN, ERROR_LOGOUT } from '../../../settings';
 
 //// APP
 export async function makeLoginOnServer( loginArg: ILoginState ){
@@ -28,7 +29,7 @@ export async function makeLoginOnServer( loginArg: ILoginState ){
                 }, 1000 )
         })
         
-    }, 'Login Error')
+    }, ERROR_LOGIN)
 }
 //// APP
 
@@ -47,5 +48,5 @@ export async function makeLogoutOnServer( user: IcurrentUser ){
                     }, 800 )
             })
         }
-    }, 'Logout Error')
+    }, ERROR_LOGOUT)
 }

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { mockPresentationFromServer, mockHomeImage } from '../../../pageData/mock/homepage';
 import { IhomeDataServer } from '../../../interfaces/home';
 import { serverResolve } from '../common';
+import { ERROR_HOME_PAGE } from '../../../settings';
 
 //// HOMEPAGE
 
@@ -25,22 +26,6 @@ export async function getHomeDataFromServer()
                     resolve(result)
                     }, 500 )
             })
-        }
-    );
-/*
-    return new Promise( (resolve) => {
-        let result: IhomeDataServer = {
-            presentation: mockPresentationFromServer,
-            image: mockHomeImage
-        }
-        setTimeout(() => { resolve(result)} , 500)       
-    }).catch( ( err:any ) =>{
-        let error:IErrorHandling = {
-            hasError: true,
-            errorTitle: "Home error",
-            errorMessage: err.toString()
-        };
-        return error;
-    })*/
+        }, ERROR_HOME_PAGE)
 }
 //// HOMEPAGE

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Istore} from '../../../interfaces/store';
 import {connect} from 'react-redux';
-import { ILoading, IErrorHandling } from '../../../interfaces/common';
+import { ILoading, IErrorHandlingText } from '../../../interfaces/common';
 import { IFetchData } from '../../../interfaces/appSettings';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { resetError } from '../../../store/actions/appSettings';
@@ -14,7 +14,7 @@ interface IErrorAction {
 
 type ErrorHandlingType = IFetchData & ILoading & IHistory & IErrorAction;
 
-function errorHandlingLogic (ErrorHandlingView:React.ComponentType<IErrorHandling>, LoadingView:React.ComponentType<ILoading>)
+function errorHandlingLogic (ErrorHandlingView:React.ComponentType<IErrorHandlingText>, LoadingView:React.ComponentType<ILoading>)
 {
     class ErrorHandling extends React.Component<ErrorHandlingType>{
         constructor(props:ErrorHandlingType) {
@@ -33,7 +33,15 @@ function errorHandlingLogic (ErrorHandlingView:React.ComponentType<IErrorHandlin
                 <div className="col-md-10 col-sm-12 pageContent">   
                 {
                     error.hasError  ?                 
-                        <ErrorHandlingView errorMessage = { error.errorMessage } errorTitle = { error.errorTitle }/>  
+                        <ErrorHandlingView 
+                        errorMessage = {                             
+                            error.errorText !== null && error.errorText!== undefined ?
+                                error.errorText.errorMessage : ''                                                           
+                        } 
+                        errorTitle = { 
+                            error.errorText !== null && error.errorText!== undefined ?
+                                error.errorText.errorTitle : 'Unknown Error' 
+                        }/>  
                     :
                         <LoadingView isPageLoading = {this.props.loading.isPageLoading}>                    
                                 {this.props.children}

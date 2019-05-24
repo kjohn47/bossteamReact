@@ -1,9 +1,6 @@
 import {createStore, applyMiddleware} from 'redux';
-//@ts-ignore
 import thunk from 'redux-thunk';
 import reducers from './reducers';
-//@ts-ignore
-import axiosMiddleware from 'redux-axios-middleware';
 
 //var myInvariant = require('redux-immutable-state-invariant').default();//For development only - check reducer for mutations
 
