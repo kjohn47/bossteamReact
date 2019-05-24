@@ -7,15 +7,10 @@ import { APP_GET_LANGUAGE,
     SERVER_COMUNICATION_FAIL, 
     RESET_SERVER_ERROR } from '../actionTypes';
 import { IappAction, IAppSettings, IFetchData } from '../../interfaces/appSettings';
-import { defaultMenuText, menuENText, menuPTText } from '../../pageData/language/menu';
-import { defaultNewsText, enNewsText, ptNewsText } from '../../pageData/language/news';
-import { defaultLoginForm, ptLoginForm, enLoginForm } from '../../pageData/language/login';
-import { defaultAddCommentText, 
-    enAddCommentText, 
-    ptAddCommentText, 
-    defaultCommentText,
-    enCommentText,
-    ptCommentText } from '../../pageData/language/comment';
+import { TEXT_MENU } from '../../pageData/language/menu';
+import { TEXT_NEWS_LIST } from '../../pageData/language/news';
+import { TEXT_LOGIN_MENU } from '../../pageData/language/login';
+import { TEXT_COMMENT, TEXT_COMMENT_ADD} from '../../pageData/language/comment';
 import { 
     enCode, 
     ptCode, 
@@ -31,13 +26,15 @@ import {
 import { ILoading, IErrorHandling, IErrorHandlingText, IErrorHandlingTextTranslation } from '../../interfaces/common';
 import { ERRORS } from '../../pageData/language/errors';
 
+const startLang = currentLanguage();
+
 const defaultState: IAppSettings = {
-    menuText : defaultMenuText,
-    newsLanguage: defaultNewsText,
-    addCommentText: defaultAddCommentText,
-    commentText: defaultCommentText,
-    loginForm: defaultLoginForm,
-    presentationLanguage: currentLanguage(),
+    menuText : GetPropertyValue(TEXT_MENU, startLang),
+    newsLanguage: GetPropertyValue(TEXT_NEWS_LIST, startLang),
+    addCommentText: GetPropertyValue(TEXT_COMMENT_ADD, startLang),
+    commentText: GetPropertyValue(TEXT_COMMENT, startLang),
+    loginForm: GetPropertyValue(TEXT_LOGIN_MENU, startLang),
+    presentationLanguage: startLang,
     isLogged: checkLogin(),
     loggedUser: getCurrentUser(),
     tryLogin: results.default,
@@ -88,7 +85,7 @@ function endLoadingState(isLocalLoading: boolean, pageLoading: ILoading, loadLoc
 function getTranslatedError( language: string, error: IErrorHandling )
 {
     let recievedCode = error.errorCode;
-    let errorData: IErrorHandlingTextTranslation = GetPropertyValue(ERRORS,recievedCode);
+    let errorData: IErrorHandlingTextTranslation = GetPropertyValue(ERRORS, recievedCode);
     let errorText: IErrorHandlingText = null;    
     let errorNotTranslated = true;
 
@@ -123,8 +120,6 @@ function getTranslatedError( language: string, error: IErrorHandling )
     return errorOut;
 }
 
-
-
 export function appSettings(state:IAppSettings = defaultState, action:IappAction) {
 
     switch (action.type) {
@@ -134,42 +129,31 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
             {
                 errorData = getTranslatedError(action.payload.language, {...state.fetchData.error});
             }
-
-            if ( action.payload.language === enCode )
+            let lang = action.payload.language;
+            if(lang !== ptCode && lang !== enCode)
             {
-                return {...state, 
-                    menuText: menuENText,
-                    newsLanguage: enNewsText,
-                    addCommentText: enAddCommentText,
-                    commentText: enCommentText,
-                    loginForm: enLoginForm,
-                    presentationLanguage: enCode,
-                    fetchData: {...state.fetchData, 
-                        error: errorData
-                    }                    
-                };
+                lang = ptCode;
             }
-            else
-            {
-                return {...state, 
-                    menuText: menuPTText,
-                    newsLanguage: ptNewsText,
-                    addCommentText: ptAddCommentText,
-                    commentText: ptCommentText,
-                    loginForm: ptLoginForm,
-                    presentationLanguage: ptCode,                
-                    fetchData: {...state.fetchData, 
-                        error: errorData
-                    }        
-                };
-            }
+            return {...state, 
+                menuText: GetPropertyValue(TEXT_MENU, lang),
+                newsLanguage: GetPropertyValue(TEXT_NEWS_LIST, lang),
+                addCommentText: GetPropertyValue(TEXT_COMMENT_ADD, lang),
+                commentText: GetPropertyValue(TEXT_COMMENT, lang),
+                loginForm: GetPropertyValue(TEXT_LOGIN_MENU, lang),
+                presentationLanguage: lang,                
+                fetchData: {...state.fetchData, 
+                    error: errorData
+                }        
+            };
         }
+        
         case MAKE_LOGOUT: {
             return{...state,
                 isLogged: false,
                 loggedUser: null
             };
         }
+        
         case MAKE_LOGIN: {
             return{...state,
                 isLogged: action.payload.login.success,
@@ -177,11 +161,13 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
                 tryLogin: action.payload.login.success ? results.success : results.failure               
             };
         }
+        
         case RESET_LOGIN_STATUS: {
             return{...state,
                 tryLogin: results.default
             }
         }
+        
         case START_SERVER_COMUNICATION: {
             let loadingData = getLoadingState( action.payload.isLocalized, {...state.fetchData.loading}, action.payload.loadLocalization );
             let fetchDataState: IFetchData = {
@@ -211,7 +197,7 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
 
         case SERVER_COMUNICATION_FAIL: {
             let fetchDataState: IFetchData = {...state.fetchData};
-            let errorData = getTranslatedError(state.presentationLanguage, {...action.payload.error});
+            let errorData = getTranslatedError(state.presentationLanguage, action.payload.error);
             fetchDataState = {
                 loading: {...state.fetchData.loading},
                 error: errorData

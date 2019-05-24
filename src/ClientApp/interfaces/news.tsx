@@ -11,6 +11,11 @@ export interface InewsLanguage {
     contentText: string;
 }
 
+export interface InewsListTranslations {
+    PT: InewsLanguage;
+    EN: InewsLanguage;
+}
+
 export interface InewsCard {
     newsCard: ICardData;
 }
