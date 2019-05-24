@@ -1,9 +1,9 @@
 import {Row,Col} from 'reactstrap';
 import * as React from 'react';
-import { IErrorHandling } from '../../../interfaces/common';
+import { IErrorHandlingText } from '../../../interfaces/common';
 
 
-class ErrorHandlingView extends React.PureComponent<IErrorHandling,{}>{
+class ErrorHandlingView extends React.PureComponent<IErrorHandlingText,{}>{
     render(){
         return(                                
             <Row>
