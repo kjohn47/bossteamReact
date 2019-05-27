@@ -48,7 +48,7 @@ function changeNewsLanguage(language:string, newsList:INewsData[]):IcardMainData
         let newsTemp: IcardMainData = {
             title: newsTranslatedText.title,
             description: newsTranslatedText.description,
-            date: news.date.toLocaleDateString(),
+            date: new Date(news.date).toLocaleDateString(),
             id: news.id,
             imgLink: news.imgLink,
             outlineColor: news.outlineColor
@@ -74,7 +74,7 @@ function changeNewsDataLanguage(language:string, newsServer: IViewNewsDataServer
         title: translatedNewsData.title,
         id: newsServer.id,
         allowComments: newsServer.allowComments,
-        date: newsServer.date,
+        date: new Date(newsServer.date),
         imgLink: newsServer.imgLink,
         content: translatedNewsData.content,
         description: translatedNewsData.description,
