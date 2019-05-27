@@ -85,6 +85,7 @@ export async function addNewsCommentToServer( newsArg: InewsDataArg )
         else
         {
             //// when using real rest server this must be adapted correctly using POST but for now:
+            //// how it will work: make post with data and return updated news comment list from server
             return axios.get(restServer + "newsData/" + newsArg.newsID).then( (response) => {
             let newsData = response.data;
             newsData.comments !== null && newsData.comments !== undefined ? newsData.comments.push(newComment) : newsData.comments = [newComment];
