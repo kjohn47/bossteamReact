@@ -46,13 +46,19 @@ export async function getNewsDataFromServer( ID:number )
 {
     return await serverResolve( () =>
     {
-        let serverData: IViewNewsDataServer;    
-        serverData = mockNewsDataServer[ID - 1];  
-        return new Promise( (resolve: Function) => { 
-            setTimeout( () => {
-                resolve(serverData)
-                }, 800 )
-        })
+        if( !getDataFromServer ) {
+            let serverData: IViewNewsDataServer;    
+            serverData = mockNewsDataServer[ID - 1];  
+            return new Promise( (resolve: Function) => { 
+                setTimeout( () => {
+                    resolve(serverData)
+                    }, 800 )
+            })
+        }
+        else
+        {
+            return axios.get(restServer + "newsData/" + ID).then( (response) => {return response.data});
+        }
     }, ERROR_GET_NEWS_DATA)
 }
 
@@ -60,19 +66,32 @@ export async function addNewsCommentToServer( newsArg: InewsDataArg )
 {    
     return await serverResolve( () =>
     {
-        let serverData: IViewNewsDataServer = mockNewsDataServer[newsArg.newsID - 1];
         let newComment: ICommentData = {
             Comment: newsArg.comment,
             Owner: newsArg.user.name + " " + newsArg.user.surname,
-            Time: new Date(),
+            Time: new Date().toISOString(),
             ID:123
-        }   
-        serverData.comments !== null && serverData.comments !== undefined ? serverData.comments.push(newComment) : serverData.comments = [newComment];
-        return new Promise( (resolve: Function) => { 
-            setTimeout( () => {
-                resolve(serverData.comments)
-                }, 1000 )
-        })
+        }  
+        
+        if( !getDataFromServer ) {
+            let serverData: IViewNewsDataServer = mockNewsDataServer[newsArg.newsID - 1];             
+            serverData.comments !== null && serverData.comments !== undefined ? serverData.comments.push(newComment) : serverData.comments = [newComment];
+            return new Promise( (resolve: Function) => { 
+                setTimeout( () => {
+                    resolve(serverData.comments)
+                    }, 1000 )
+            })
+        }
+        else
+        {
+            //// when using real rest server this must be adapted correctly using POST but for now:
+            return axios.get(restServer + "newsData/" + newsArg.newsID).then( (response) => {
+            let newsData = response.data;
+            newsData.comments !== null && newsData.comments !== undefined ? newsData.comments.push(newComment) : newsData.comments = [newComment];
+            axios.put(restServer + "newsData/" + newsArg.newsID, {...newsData});
+            return newsData.comments;
+            });
+        }
     }, ERROR_ADD_COMMENT)
 }
 

@@ -34,7 +34,7 @@ export interface Iimage {
 export interface ICommentData {
     ID: number;
     Owner: string;
-    Time: Date;
+    Time: string;
     Comment: string;
 }
 
