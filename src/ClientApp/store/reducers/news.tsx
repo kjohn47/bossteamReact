@@ -12,10 +12,11 @@ import {
     InewsListRedux, 
     INewsData, 
     IViewNewsDataServer, 
-    IViewNewsData
+    IViewNewsData,
+    InewsServerDataText
 } from '../../interfaces/news';
 import { IcardMainData, ICommentData} from '../../interfaces/common';
-import {enCode} from '../../settings';
+import { GetPropertyValue } from '../../settings';
 
 //// -- Default news state
 const defaultState: InewsListRedux = {
@@ -39,9 +40,14 @@ function changeNewsLanguage(language:string, newsList:INewsData[]):IcardMainData
 {
     let myNews:IcardMainData[] = [];
     newsList.forEach(news => {
+        let newsTranslatedText: InewsServerDataText = GetPropertyValue(news, language);
+        if ( newsTranslatedText === null || newsTranslatedText === undefined ){
+            newsTranslatedText = news.PT;
+        }
+
         let newsTemp: IcardMainData = {
-            title: language === enCode ? news.titleEN : news.title,
-            description: language === enCode ? news.descriptionEN : news.description,
+            title: newsTranslatedText.title,
+            description: newsTranslatedText.description,
             date: news.date.toLocaleDateString(),
             id: news.id,
             imgLink: news.imgLink,
@@ -57,15 +63,21 @@ function changeNewsLanguage(language:string, newsList:INewsData[]):IcardMainData
 //// -- View news data
 
 function changeNewsDataLanguage(language:string, newsServer: IViewNewsDataServer)
-{
+{   
+    let translatedNewsData: InewsServerDataText = GetPropertyValue(newsServer, language);
+    if( translatedNewsData === null || translatedNewsData === undefined )
+    {
+        translatedNewsData = newsServer.PT;
+    }
+
     let newsData : IViewNewsData = {
-        title: language === enCode ? newsServer.titleEN : newsServer.title,
+        title: translatedNewsData.title,
         id: newsServer.id,
         allowComments: newsServer.allowComments,
         date: newsServer.date,
         imgLink: newsServer.imgLink,
-        content: language === enCode ? newsServer.contentEN : newsServer.content,
-        description: language === enCode ? newsServer.descriptionEN : newsServer.description,
+        content: translatedNewsData.content,
+        description: translatedNewsData.description,
         comments: newsServer.comments
     };
     

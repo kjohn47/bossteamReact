@@ -1,32 +1,23 @@
-import { IAddCommentText, ICommentText } from '../../interfaces/common';
-export const defaultAddCommentText: IAddCommentText =
-{
-    submitBtnText: '#Send Comment',
-    invalidCommentText: '#Invalid Comment'
-}
-export const ptAddCommentText: IAddCommentText =
-{
-    submitBtnText: 'Enviar Comentário',
-    invalidCommentText: 'Comentário Inválido'
-}
-export const enAddCommentText: IAddCommentText =
-{
-    submitBtnText: 'Send Comment',
-    invalidCommentText: 'Invalid Comment'
+import { ICommentAddTranslations, ICommentTranslations } from '../../interfaces/common';
+
+export const TEXT_COMMENT: ICommentTranslations = {
+    PT: {
+        ownerText: "Utilizador:",
+        dateText: "Data:"
+    },
+    EN:{
+        ownerText: "User:",
+        dateText: "Date:"
+    }
 }
 
-export const defaultCommentText: ICommentText =
-{
-    ownerText: "#Owner",
-    dateText: "#Date"
-}
-export const ptCommentText: ICommentText =
-{
-    ownerText: "Utilizador:",
-    dateText: "Data:"
-}
-export const enCommentText: ICommentText =
-{
-    ownerText: "User:",
-    dateText: "Date:"
+export const TEXT_COMMENT_ADD: ICommentAddTranslations = {
+    PT:{
+        submitBtnText: 'Enviar Comentário',
+        invalidCommentText: 'Comentário Inválido'
+    },
+    EN:{
+        submitBtnText: 'Send Comment',
+        invalidCommentText: 'Invalid Comment'
+    }
 }

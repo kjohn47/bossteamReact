@@ -11,6 +11,11 @@ export interface IloginMenu {
     invalidLogin: string;
 }
 
+export interface IloginMenuTranslations {
+    PT: IloginMenu;
+    EN: IloginMenu;
+}
+
 export interface ILogin {
     loginText?: IloginMenu;
     loginAction?: ILoginActions;

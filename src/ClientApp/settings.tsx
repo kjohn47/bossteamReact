@@ -2,7 +2,7 @@ import {IcurrentUser} from './interfaces/currentUser';
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
-//APP
+//APP GENERIC -- Do not change, will break app
 export const ptCode = 'PT';
 export const enCode = 'EN';
 export const results = {
@@ -10,6 +10,20 @@ export const results = {
     failure: 'Failure',
     default: ''
 }
+
+//ERROR CODES -- do not change or it will break objects for translations
+export const ERROR_GENERIC = 'ERROR_GENERIC';
+export const ERROR_ADD_COMMENT = 'ERROR_ADD_COMMENT';
+export const ERROR_LOGIN = 'ERROR_LOGIN';
+export const ERROR_LOGOUT = 'ERROR_LOGOUT';
+export const ERROR_HOME_PAGE = 'ERROR_HOME_PAGE';
+export const ERROR_GET_NEWS_LIST = 'ERROR_GET_NEWS_LIST';
+export const ERROR_GET_NEWS_DATA = 'ERROR_GET_NEWS_DATA';
+
+//APP
+export const Show_Error_Detailed = true;////set true to dev, false to prd
+
+//SERVER
 export const restServer = '/';
 
 //ROUTES
@@ -21,34 +35,27 @@ export const viewsNewsRoute = '/ViewNews';
 const langCookie = 'appLanguage';
 const userCookie = 'appCurrentUser';
 
-
 // LOAD LOCALIZED
 export const LOAD_LOGIN_MENU = 'LOAD_LOGIN_MENU';
 export const LOAD_NEW_COMMENT = 'LOAD_NEW_COMMENT';
 export const LOAD_HOME_NEWS = 'LOAD_HOME_NEWS';
 
-//ERROR CODES
-export const Show_Error_Detailed = true;////set true to dev, false to prd
-export const ERROR_GENERIC = 'ERROR_GENERIC';
-export const ERROR_ADD_COMMENT = 'ERROR_ADD_COMMENT';
-export const ERROR_LOGIN = 'ERROR_LOGIN';
-export const ERROR_LOGOUT = 'ERROR_LOGOUT';
-export const ERROR_HOME_PAGE = 'ERROR_HOME_PAGE';
-export const ERROR_GET_NEWS_LIST = 'ERROR_GET_NEWS_LIST';
-export const ERROR_GET_NEWS_DATA = 'ERROR_GET_NEWS_DATA';
-
-// COOKIE METHODS
+// COOKIE METHODS -- Do not change
 export const currentLanguage = () => {
    let lang = cookies.get(langCookie);
-   if( lang === null || lang === undefined || lang === '' )
+   if( lang === null || lang === undefined || lang === '' || !( lang === enCode || lang === ptCode ) )
     {
         setLanguage()
         return ptCode;
-    }
+    }    
    return lang;
 };
 
 export const setLanguage = (lang: string = ptCode) => {
+   if(lang !== ptCode && lang !== enCode)
+   {
+         lang = ptCode;
+   }
    cookies.set(langCookie, lang, { path: pageHome });
 };
 
@@ -68,7 +75,7 @@ export const checkLogin = () => {
    return getCurrentUser() !== null && getCurrentUser() !== undefined;
 };
 
-//// COMMON METHODS
+//// COMMON METHODS -- Do not change
 export function GetPropertyValue(object: object,dataToRetrieve: string){
    //@ts-ignore
    return object[dataToRetrieve];
