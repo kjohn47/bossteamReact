@@ -18,7 +18,7 @@ function commentLogic (WrappedComponent:React.ComponentType<IcommentProps>)
             return(
                 <div>
                     {
-                        comments !== null && comments !== undefined ?
+                        comments !== null && comments !== undefined &&
                             comments.map( (item:ICommentData, i) =>                
                                 <WrappedComponent 
                                     key = {i} 
@@ -30,8 +30,6 @@ function commentLogic (WrappedComponent:React.ComponentType<IcommentProps>)
                                     dateText = {this.props.commentText.dateText}                          
                                 />
                             )
-                        : 
-                        ""
                     }
                 </div>
             );

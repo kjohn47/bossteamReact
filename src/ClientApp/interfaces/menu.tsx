@@ -1,5 +1,5 @@
 import { IcurrentUser } from "./currentUser";
-import { IloginMenu } from './login';
+
 // Menu props
 export interface ImenuProps {
     isLogged : boolean;
@@ -22,6 +22,11 @@ export interface ImenuText {
     events : IeventsText;
     language : ILanguageText;
     user : IusrMnText;    
+}
+
+export interface ImenuTranslations {
+    PT: ImenuText;
+    EN: ImenuText;
 }
 
 //Blogs Menu

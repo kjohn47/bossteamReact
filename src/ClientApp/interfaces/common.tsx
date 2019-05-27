@@ -50,9 +50,19 @@ export interface IAddCommentText {
     invalidCommentText?: string;
 }
 
+export interface ICommentAddTranslations {
+    PT: IAddCommentText;
+    EN: IAddCommentText;
+}
+
 export interface ICommentText {
     ownerText: string;
     dateText: string;
+}
+
+export interface ICommentTranslations {
+    PT: ICommentText;
+    EN: ICommentText;
 }
 
 ////Error handling interfaces

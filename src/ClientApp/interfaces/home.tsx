@@ -11,12 +11,14 @@ export interface IpresentationData {
 }
 
 export interface IpresentationServer {
+    PT: IpresentationServerContent;
+    EN?: IpresentationServerContent;
+}
+
+export interface IpresentationServerContent {
     title:string;
-    titleEN:string;
     introduction: string;
-    introductionEN: string;
     description:string;
-    descriptionEN:string;
 }
 
 interface Ipayload {
