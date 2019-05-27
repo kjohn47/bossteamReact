@@ -9,7 +9,7 @@ run scripts to run project in dev mode:
 ---------------------------------------------------------------
 build "npm run build:dev:client"
 ---------------------------------------------------------------
-execute "npm run start:dev:client"
+build and execute "npm run start:dev"
 ---------------------------------------------------------------
 
 For linux use linux configs (Webpack_Linux)
