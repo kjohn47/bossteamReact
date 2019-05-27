@@ -20,32 +20,54 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
             this.state =
                 {
                     user: '',
-                    password: ''
+                    password: '',
+                    invalidUser: false,
+                    emptyUser: false,
+                    emptyPassword:false
                 };
         }
 
         handleUser(event: any) {
+            let newText: string = event.target.value;
+            var format = /^[!@#$%^&*()ºª_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+            if( ( newText !== '' && 
+                    newText.charAt(newText.length - 1).match(format) ) ||
+                ( newText.length === 1 &&
+                    !isNaN(newText as unknown as number) ) ){
+                newText = this.state.user;           
+            }
             this.setState(
                 {
-                    user: event.target.value
+                    emptyUser: false,
+                    invalidUser: false,
+                    user: newText
                 });
         }
 
         handlePassword(event: any) {
             this.setState(
-                {
+                {                    
+                    emptyPassword: false,
+                    invalidUser: false,
                     password: event.target.value
                 });
         }
 
         makeLogin() {
+            let withError = false;
             if (this.state.user.trim() === '') {                
-                alert(this.props.loginForm.emptyUser);
+                this.setState({
+                    emptyUser: true
+                });
+                withError = true;
             }
-            else if (this.state.password.trim() === '') {                
-                alert(this.props.loginForm.emptyPassword);
+            if (this.state.password.trim() === '') {                
+                this.setState({
+                    emptyPassword: true
+                });
+                withError = true;
             }
-            else {
+            if( !withError ) {
                 this.props.makeLogin(this.state.user, this.state.password);                            
             }
         }
@@ -58,11 +80,13 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
 
         componentDidUpdate( prevProps: IAppSettings & IappActions) {
             if ( this.props.tryLogin !== prevProps.tryLogin ) {
-                if ( this.props.tryLogin === results.failure ||  this.props.tryLogin === results.success )
+                if ( this.props.tryLogin === results.failure || this.props.tryLogin === results.success )
                 {
                     this.props.resetLoginStatus();
                     if ( !this.props.isLogged ) {
-                        alert(this.props.loginForm.invalidLogin);
+                        this.setState({
+                            invalidUser: true
+                        })
                     }
                     else if ( this.props.isLogged )
                     {
@@ -71,7 +95,6 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
                             user: '',
                             password: ''                        
                         });
-                        //redirect to /
                     }                        
                 }
             }
@@ -84,7 +107,10 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
                 makeLogin: () => this.makeLogin(),                
                 state: {
                     user: this.state.user,
-                    password: this.state.password
+                    password: this.state.password,
+                    invalidUser: this.state.invalidUser,
+                    emptyUser: this.state.emptyUser,
+                    emptyPassword: this.state.emptyPassword
                 }
             }
 
