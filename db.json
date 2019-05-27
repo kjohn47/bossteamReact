@@ -17,5 +17,106 @@
       "src": "/images/480x360.png",
       "alt": "HomeImg" 
     }
-  }
+  },
+  "newsList": 
+  [
+    {
+        "date": "1990-01-10T00:00:00Z",
+        "outlineColor" : "info",
+        "id": 1,
+        "imgLink": "/images/318x180.png",
+        "PT": {            
+            "title": "Cartão teste 1",
+            "description": "Isto é um teste de ojecto de dados cartão"
+        },
+        "EN": {
+            "title": "Card Test 1",
+            "description": "This is a test of card data object"
+
+        }
+    },
+    {
+        "date": "1990-01-10T00:00:00Z",
+        "outlineColor" : "info",
+        "id": 2,
+        "imgLink": "/images/318x180.png",
+        "PT": {            
+            "title": "Cartão teste 2",
+            "description": "Isto é um teste de ojecto de dados cartão"
+        },
+        "EN": {
+            "title": "Card Test 2",
+            "description": "This is a test of card data object"
+
+        }
+    },
+    {
+        "date": "1990-01-10T00:00:00Z",
+        "outlineColor" : "info",
+        "id": 3,
+        "imgLink": "/images/318x180.png",
+        "PT": {            
+            "title": "Cartão teste 3",
+            "description": "Isto é um teste de ojecto de dados cartão"
+        },
+        "EN": {
+            "title": "Card Test 3",
+            "description": "This is a test of card data object"
+
+        }
+    },
+    {
+        "date": "1990-01-10T00:00:00Z",
+        "outlineColor" : "info",
+        "id": 4,
+        "imgLink": "/images/318x180.png",
+        "PT": {            
+            "title": "Cartão teste 4",
+            "description": "Isto é um teste de ojecto de dados cartão"
+        }
+    }
+  ],
+  "newsListShort": 
+  [
+    {
+        "date": "1990-01-10T00:00:000Z",
+        "outlineColor" : "info",
+        "id": 2,
+        "imgLink": "/images/318x180.png",
+        "PT": {            
+            "title": "Cartão teste 2",
+            "description": "Isto é um teste de ojecto de dados cartão"
+        },
+        "EN": {
+            "title": "Card Test 2",
+            "description": "This is a test of card data object"
+
+        }
+    },
+    {
+        "date": "1990-01-10T00:00:000Z",
+        "outlineColor" : "info",
+        "id": 3,
+        "imgLink": "/images/318x180.png",
+        "PT": {            
+            "title": "Cartão teste 3",
+            "description": "Isto é um teste de ojecto de dados cartão"
+        },
+        "EN": {
+            "title": "Card Test 3",
+            "description": "This is a test of card data object"
+
+        }
+    },
+    {
+        "date": "1990-01-10T00:00:000Z",
+        "outlineColor" : "info",
+        "id": 4,
+        "imgLink": "/images/318x180.png",
+        "PT": {            
+            "title": "Cartão teste 4",
+            "description": "Isto é um teste de ojecto de dados cartão"
+        }
+    }
+  ]
 }

@@ -5,7 +5,7 @@ import { mockNewsFromServer, mockNewsDataServer } from '../../../pageData/mock/n
 import { IViewNewsDataServer, InewsDataArg, INewsData } from '../../../interfaces/news';
 import { ICommentData } from '../../../interfaces/common';
 import { serverResolve } from '../common';
-import { ERROR_ADD_COMMENT, ERROR_GET_NEWS_DATA, ERROR_GET_NEWS_LIST } from '../../../settings';
+import { ERROR_ADD_COMMENT, ERROR_GET_NEWS_DATA, ERROR_GET_NEWS_LIST, getDataFromServer, restServer } from '../../../settings';
 
 //// NEWS
 
@@ -13,20 +13,32 @@ export async function getNewsListFromServer( short: boolean = false )
 {
     return await serverResolve( () =>
     {
-        let serverData: INewsData[];    
-        if(short)
-        {
-            serverData = mockNewsFromServer.slice((mockNewsFromServer.length - 3), mockNewsFromServer.length);
+        let serverData: INewsData[];  
+        if( !getDataFromServer ) {
+              
+            if(short)
+            {
+                serverData = mockNewsFromServer.slice((mockNewsFromServer.length - 3), mockNewsFromServer.length);
+            }
+            else    
+            {
+                serverData= mockNewsFromServer;
+            }   
+            return new Promise( (resolve: Function) => { 
+                setTimeout( () => {
+                    resolve(serverData)
+                    }, 900 )
+            })
         }
-        else    
+        else
         {
-            serverData= mockNewsFromServer;
-        }   
-        return new Promise( (resolve: Function) => { 
-            setTimeout( () => {
-                resolve(serverData)
-                }, 900 )
-        })
+            if(short){
+                return axios.get(restServer + "newsListShort").then( (response) => {return response.data});                
+            }
+            else{
+                return axios.get(restServer + "newsList").then( (response) => {return response.data});
+            }
+        }
     }, ERROR_GET_NEWS_LIST)
 }
 

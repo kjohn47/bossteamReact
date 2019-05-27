@@ -40,7 +40,6 @@ export async function serverResolve( serverCall: Function, errorCode: string = E
         {
             reject("Empty data from server");
         }
-
         resolve( serverReturn ); 
     }).catch( ( err:any ) =>{
         let error:IErrorHandling = {

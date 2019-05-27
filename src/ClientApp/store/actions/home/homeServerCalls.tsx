@@ -17,7 +17,7 @@ export async function getHomeDataFromServer()
     */
     return await serverResolve( () =>
         {
-            if(!getDataFromServer) {
+            if( !getDataFromServer ) {
                 let result: IhomeDataServer = {
                     presentation: mockPresentationFromServer,
                     image: mockHomeImage
