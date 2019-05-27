@@ -48,7 +48,7 @@ export interface Ipayload {
 }
 
 export interface INewsData {
-    date:Date;
+    date:string;
     imgLink?:string;
     outlineColor?:string;
     id: number;
@@ -83,7 +83,7 @@ export interface IViewNewsData {
 }
 
 export interface IViewNewsDataServer {
-    date:Date;
+    date:string;
     imgLink?:string;
     id: number;
     allowComments: boolean;

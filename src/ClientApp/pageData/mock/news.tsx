@@ -3,7 +3,7 @@ import {INewsData, IViewNewsDataServer} from '../../interfaces/news';
 
 export const mockNewsFromServer: INewsData[] = [
     {
-        date: new Date('1990-01-10T00:00:00Z'),
+        date: '1990-01-10T00:00:00Z',
         outlineColor : "info",
         id: 1,
         imgLink: "/images/318x180.png",
@@ -18,7 +18,7 @@ export const mockNewsFromServer: INewsData[] = [
         }
     },
     {
-        date: new Date('1990-01-10T00:00:00Z'),
+        date: '1990-01-10T00:00:00Z',
         outlineColor : "info",
         id: 2,
         imgLink: "/images/318x180.png",
@@ -33,7 +33,7 @@ export const mockNewsFromServer: INewsData[] = [
         }
     },
     {
-        date: new Date('1990-01-10T00:00:00Z'),
+        date: '1990-01-10T00:00:00Z',
         outlineColor : "info",
         id: 3,
         imgLink: "/images/318x180.png",
@@ -48,7 +48,7 @@ export const mockNewsFromServer: INewsData[] = [
         }
     },
     {
-        date: new Date('1990-01-10T00:00:00Z'),
+        date: '1990-01-10T00:00:00Z',
         outlineColor : "info",
         id: 4,
         imgLink: "/images/318x180.png",
@@ -62,7 +62,7 @@ export const mockNewsFromServer: INewsData[] = [
 export const mockNewsDataServer : IViewNewsDataServer[] = [
     {
         id: 1,
-        date: new Date('1990-01-10T00:00:00Z'),
+        date: '1990-01-10T00:00:00Z',
         imgLink: '/images/480x360.png',
         allowComments: true,
         PT: {
@@ -80,19 +80,19 @@ export const mockNewsDataServer : IViewNewsDataServer[] = [
                 Comment: "Comment 1",
                 ID: 1,
                 Owner: "Me",                
-                Time: new Date('1990-01-10T00:00:00Z')
+                Time:'1990-01-10T00:00:00Z'
             },
             {
                 Comment: "Comment 2",
                 ID: 2,
                 Owner: "Me",                
-                Time: new Date('1990-01-19T00:10:00Z')
+                Time: '1990-01-19T00:10:00Z'
             }
         ]
     },
     {
         id: 2,
-        date: new Date('1990-01-10T00:00:00Z'),
+        date: '1990-01-10T00:00:00Z',
         imgLink: '/images/480x360.png',
         allowComments: false,
         PT: {
@@ -108,7 +108,7 @@ export const mockNewsDataServer : IViewNewsDataServer[] = [
     },
     {
         id: 3,
-        date: new Date('1990-01-10T00:00:00Z'),
+        date: '1990-01-10T00:00:00Z',
         imgLink: '/images/480x360.png',
         allowComments: true,
         PT: {
@@ -124,12 +124,13 @@ export const mockNewsDataServer : IViewNewsDataServer[] = [
     },
     {
         id: 4,
-        date: new Date('1990-01-10T00:00:00Z'),
+        date: '1990-01-10T00:00:00Z',
         imgLink: '/images/480x360.png',
         allowComments: false,
         PT: {
             title: "OLA 4",
             description: "Noticia de teste 4",
             content: "Blablabla teste 1 2 3 4 5 6 blaaa"
-        },
-}];
+        }
+    }
+];

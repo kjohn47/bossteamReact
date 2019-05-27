@@ -34,8 +34,12 @@ export function commonServerAction( dispatch: Function,
 
 export async function serverResolve( serverCall: Function, errorCode: string = ERROR_GENERIC )
 {
-    return new Promise( (resolve) => {
+    return new Promise( (resolve, reject) => {
         let serverReturn = serverCall();
+        if(serverReturn === null || serverReturn === undefined)
+        {
+            reject("Empty data from server");
+        }
         resolve( serverReturn ); 
     }).catch( ( err:any ) =>{
         let error:IErrorHandling = {
