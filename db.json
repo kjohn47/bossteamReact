@@ -1,28 +1,21 @@
 {
-  "lister": [
-    {
-      "id": 0,
-      "name": "EleZero",
-      "description": "Element of list number 0",
-      "enabled": "yes"
+  "homePage": 
+  {
+    "presentation": {
+      "PT": {
+        "description": "Aqui é para quem se destina a página.",
+        "introduction": "Isto é a página de introdução da bossteam, alguma info sobre a página aqui.",
+        "title": "BossTeam"
+      },
+      "EN": {
+          "description": "This is for who this page is.",
+          "introduction": "This is bossteam intro page, some info of the page here.",
+          "title": "BossTeam"
+      }
     },
-    {
-      "id": 1,
-      "name": "EleOne",
-      "description": "Element of list number 1",
-      "enabled": "no"
-    },
-    {
-      "id": 2,
-      "name": "EleTwo",
-      "description": "Element of list number 2",
-      "enabled": "no"
-    },
-    {
-      "id": 3,
-      "name": "EleThree",
-      "description": "Element of list number 3",
-      "enabled": "yes"
+    "image": {
+      "src": "/images/480x360.png",
+      "alt": "HomeImg" 
     }
-  ]
+  }
 }

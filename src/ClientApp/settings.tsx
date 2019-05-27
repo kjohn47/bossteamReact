@@ -24,7 +24,8 @@ export const ERROR_GET_NEWS_DATA = 'ERROR_GET_NEWS_DATA';
 export const Show_Error_Detailed = true;////set true to dev, false to prd
 
 //SERVER
-export const restServer = '/';
+export const restServer = 'http://localhost:4000/rest/';
+export const getDataFromServer = true;
 
 //ROUTES
 export const pageHome = '/';
@@ -76,7 +77,10 @@ export const checkLogin = () => {
 };
 
 //// COMMON METHODS -- Do not change
-export function GetPropertyValue(object: object,dataToRetrieve: string){
-   //@ts-ignore
+interface IIndexable {
+   [key: string]: any;
+}
+
+export function GetPropertyValue(object: IIndexable,dataToRetrieve: string){
    return object[dataToRetrieve];
 }
