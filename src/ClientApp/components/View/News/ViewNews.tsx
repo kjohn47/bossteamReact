@@ -1,33 +1,33 @@
 import * as React from 'react';
 import { IViewNews } from '../../../interfaces/news';
-import {Jumbotron, Row, Col, Toast, ToastBody} from 'reactstrap';
-import Image from '../Common/Image';
+import { Row, Col, Toast, ToastBody} from 'reactstrap';
 import Comment from '../Common/Comment';
 import AddComment from '../Common/AddComment';
 import commentLogic from '../../Logic/Common/Comment';
 import addCommentLogic from '../../Logic/Common/AddComment';
+import { Iimage, IpresentationData } from '../../../interfaces/common';
+import PageTop from '../Common/PageTop';
 
 const Comments = commentLogic(Comment);
 const AddComments = addCommentLogic( AddComment );
 
-class ViewNews extends React.PureComponent<IViewNews,{}>{    
-    render(){        
+class ViewNews extends React.PureComponent<IViewNews,{}>{        
+    render(){                
         const newsData = this.props.newsData;        
+        const Image: Iimage = {
+            alt: newsData.title,
+            src: newsData.imgLink,
+            link: ''
+        }
+        const Presentation: IpresentationData = {
+            title: newsData.title,
+            introduction: newsData.description,
+            description: newsData.date.toLocaleString()
+        }
+
         return(
             <div>
-                <Row>
-                    <Col md="4" sm="12" className="HomeImageDiv">
-                        <Image src={newsData.imgLink} link = "" alt = "News Image"  className = "HomePageImage"/>
-                    </Col>
-                    <Col md="8" sm="12">
-                        <Jumbotron>
-                            <h1 className="display-3">{newsData.title}</h1>
-                            <p className="lead">{newsData.description}</p>
-                            <hr className="my-2" />
-                            <p>{newsData.date.toLocaleString()}</p>
-                        </Jumbotron>
-                    </Col>
-                </Row>
+                <PageTop image = {Image} presentation = {Presentation}/>
                 <Row>
                     <Col xs="12" className="news-content">
                         <Toast className="news-content">

@@ -1,4 +1,24 @@
+////Header Interfaces
+export interface IPageHeader {
+    title: string;
+}
+
+export interface IPageTop {
+    image: Iimage;
+    presentation: IpresentationData;
+}
+
+export interface IpresentationData {
+    title:string;
+    introduction: string;
+    description:string;
+}
+
 ////Cards interfaces
+
+export interface ICardItem {
+    data?: ICardData;
+}
 
 export interface ICardData {
     title:string;
@@ -34,8 +54,10 @@ export interface Iimage {
 export interface ICommentData {
     ID: number;
     Owner: string;
+    OwnerID?: string;
     Time: string;
     Comment: string;
+    Mine?: boolean;
 }
 
 export interface IAddComment {

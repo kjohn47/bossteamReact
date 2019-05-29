@@ -1,10 +1,10 @@
 import * as React from 'react';
 import Menu from './Menu';
 import Footer from './View/Menu/Footer';
-
 import errorHandlingLogic from './Logic/Common/ErrorHandling';
 import ErrorHandlingView from './View/Common/ErrorHandling';
 import LoadingView from './View/Common/Loading';
+
 const ErrorHandling = errorHandlingLogic(ErrorHandlingView, LoadingView);
 
 class Layout extends React.Component<{},{}>{

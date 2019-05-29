@@ -6,6 +6,7 @@ import {ICommentData, ICommentText} from '../../../interfaces/common';
 interface ICommentArray {
     commentList: ICommentData[];
     commentText?: ICommentText;
+    userUUID?: string;
 };
 
 type IcommentProps = ICommentData & ICommentText;
@@ -27,8 +28,9 @@ function commentLogic (WrappedComponent:React.ComponentType<IcommentProps>)
                                     Owner ={item.Owner} 
                                     Time = {item.Time}   
                                     ownerText = {this.props.commentText.ownerText}
-                                    dateText = {this.props.commentText.dateText}                          
-                                />
+                                    dateText = {this.props.commentText.dateText}     
+                                    Mine = {this.props.userUUID === item.OwnerID}                     
+                                />                                
                             )
                     }
                 </div>
@@ -39,6 +41,7 @@ function commentLogic (WrappedComponent:React.ComponentType<IcommentProps>)
     const mapStateToProps = ( state: Istore ) => {
         return {
             commentText: state.appSettings.commentText,
+            userUUID: state.appSettings.loggedUser !== null && state.appSettings.loggedUser !== undefined ? state.appSettings.loggedUser.uuid : ''
         }
     };
     

@@ -3,11 +3,12 @@ import {IAppSettings} from '../../../interfaces/appSettings';
 import { Istore } from '../../../interfaces/store';
 import {connect} from 'react-redux';
 import { getNewsList, getNewsListShort, changeNewsLanguage, resetNewsList } from '../../../store/actions/news';
-import { InewsCard, InewsActions, InewsListRedux } from '../../../interfaces/news';
+import { InewsActions, InewsListRedux } from '../../../interfaces/news';
 import makeCard from '../Common/makeCard';
-import { ICardData } from '../../../interfaces/common';
+import { ICardData, ICardItem } from '../../../interfaces/common';
 import LoadingView from '../../View/Common/Loading';
 import { viewsNewsRoute } from '../../../settings';
+import PageHeader from '../../View/Common/PageHeader';
 
 interface INewsListLoading {
     loading?: boolean;
@@ -16,7 +17,7 @@ interface INewsListLoading {
 type INewsReduxProps = IAppSettings & InewsActions & InewsListRedux & INewsListLoading;
 
 
-function newsListLogic (WrappedComponent:React.ComponentType<InewsCard>, shortList: boolean = false)
+function newsListLogic (WrappedComponent:React.ComponentType<ICardItem>, shortList: boolean = false)
 {
     class NewsListLogic extends React.Component<INewsReduxProps,{}>{
         componentWillUnmount(){
@@ -51,15 +52,18 @@ function newsListLogic (WrappedComponent:React.ComponentType<InewsCard>, shortLi
         render(){
             const cardsList: ICardData[] = makeCard(this.props.newsList, viewsNewsRoute, this.props.newsLanguage.cardButtonText);
             return(
-                <div className="row">
-                 <LoadingView isPageLoading = { this.props.loading } lessPriority={true}>
-                    {                   
-                        cardsList.map( (item:ICardData, i) => 
-                            <WrappedComponent key={i} newsCard = {item}/>
-                        )                    
-                    }
-                </LoadingView>
-            </div>                
+                <React.Fragment>
+                    {!shortList && <PageHeader title = {this.props.newsLanguage.pageHeaderTitle}/>}
+                    <div className="row">
+                    <LoadingView isPageLoading = { this.props.loading } lessPriority={true}>
+                        {                   
+                            cardsList.map( (item:ICardData, i) => 
+                                <WrappedComponent key={i} data = {item}/>
+                            )                    
+                        }
+                    </LoadingView>
+                </div>              
+            </React.Fragment>  
             );
         }
     }

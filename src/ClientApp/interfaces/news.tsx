@@ -1,23 +1,16 @@
-import {ICardData, IcardMainData, ICommentData} from './common';
+import {IcardMainData, ICommentData} from './common';
 import { IcurrentUser } from './currentUser';
 
 //// Interfaces for News List
 
 export interface InewsLanguage {
-    cardButtonText : string;
-    titleText: string;
-    dateText: string;
-    descriptionText: string;    
-    contentText: string;
+    cardButtonText: string;
+    pageHeaderTitle: string;
 }
 
 export interface InewsListTranslations {
     PT: InewsLanguage;
     EN: InewsLanguage;
-}
-
-export interface InewsCard {
-    newsCard: ICardData;
 }
 
 export interface InewsListRedux {
