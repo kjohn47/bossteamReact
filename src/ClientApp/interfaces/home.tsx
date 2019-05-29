@@ -1,14 +1,10 @@
-import { Iimage } from "./common";
+import { Iimage, IpresentationData } from "./common";
 
 export interface Ipresentation {
     presentationData: IpresentationData;
 }
 
-export interface IpresentationData {
-    title:string;
-    introduction: string;
-    description:string;
-}
+
 
 export interface IpresentationServer {
     PT: IpresentationServerContent;

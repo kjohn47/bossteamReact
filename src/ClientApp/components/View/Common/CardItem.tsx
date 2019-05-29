@@ -1,16 +1,13 @@
 import * as React from 'react';
 import { Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button } from 'reactstrap';
-import {ICardData} from '../../../interfaces/common';
+import {ICardItem} from '../../../interfaces/common';
 import {NavLink as RouterLink} from 'react-router-dom';
 
 const defaultImageLink = "imgLink: images/318x180.png";
 
-interface ICardItemProps {
-    data?: ICardData;
-}
 
-class CardItem extends React.PureComponent<ICardItemProps,{}>{
+class CardItem extends React.PureComponent<ICardItem,{}>{
     render(){
         const data = this.props.data;
         return(

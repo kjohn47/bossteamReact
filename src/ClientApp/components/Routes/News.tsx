@@ -1,9 +1,9 @@
 import * as React from 'react';
-import NewsList from './View/News/NewsList';
-import newsListLogic from './Logic/News/NewsList';
+import ListItem from '../View/Common/ListItem';
+import newsListLogic from '../Logic/News/NewsList';
 import {Row, Col} from 'reactstrap';
 
-const ListNews = newsListLogic(NewsList);
+const ListNews = newsListLogic(ListItem);
 
 class News extends React.Component{
     render(){

@@ -70,7 +70,8 @@ export async function addNewsCommentToServer( newsArg: InewsDataArg )
             Comment: newsArg.comment,
             Owner: newsArg.user.name + " " + newsArg.user.surname,
             Time: new Date().toISOString(),
-            ID:123
+            ID:123,
+            OwnerID: newsArg.user.uuid
         }  
         
         if( !getDataFromServer ) {

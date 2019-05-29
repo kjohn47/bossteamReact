@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {Route} from 'react-router-dom';
-import Home from './components/Home';
-import News from './components/News';
-import ViewNewsInfo from './components/ViewNewsInfo';
+import Home from './components/Routes/Home';
+import News from './components/Routes/News';
+import ViewNewsInfo from './components/Routes/ViewNewsInfo';
 import App from './components/App';
 import { pageHome, newsRoute, viewsNewsRoute } from './settings';
 //@ts-ignore

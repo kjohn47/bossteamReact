@@ -1,15 +1,14 @@
 import * as React from 'react';
 import { Istore } from '../../../interfaces/store';
-import {IAppSettings} from '../../../interfaces/appSettings';
-import {connect} from 'react-redux';
-import {Ipresentation, IHomeRedux, IHomeActions} from '../../../interfaces/home';
+import { IAppSettings } from '../../../interfaces/appSettings';
+import { connect } from 'react-redux';
+import { IHomeRedux, IHomeActions} from '../../../interfaces/home';
 import { changePresentationLanguage, getHomeData, resetHomeData } from '../../../store/actions/home';
-import { Row, Col } from 'reactstrap';
-import { Iimage } from '../../../interfaces/common';
+import { IPageTop } from '../../../interfaces/common';
 
 type IpresentationReduxProps = IAppSettings & IHomeActions & IHomeRedux;
 
-function homeLogic (HomePresentation:React.ComponentType<Ipresentation>,HomeImage:React.ComponentType<Iimage>)
+function homeLogic (WrappedComponent:React.ComponentType<IPageTop>)
 {
     class HomeLogic extends React.Component<IpresentationReduxProps,{}>{
 
@@ -32,14 +31,7 @@ function homeLogic (HomePresentation:React.ComponentType<Ipresentation>,HomeImag
             const presentation = this.props.presentationData;
             const homeImage = this.props.image;
             return(
-                <Row>
-                    <Col md="4" sm="12" className="HomeImageDiv">
-                        <HomeImage alt={homeImage.alt} link={homeImage.link} src= {homeImage.src} className = "HomePageImage"/>
-                    </Col>
-                    <Col md="8" sm="12">
-                        <HomePresentation presentationData = {presentation} />
-                    </Col>
-                </Row>
+                <WrappedComponent image = { homeImage } presentation = { presentation } />
             );
         }
     }
