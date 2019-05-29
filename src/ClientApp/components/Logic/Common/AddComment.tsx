@@ -10,6 +10,7 @@ function addCommentLogic ( WrappedComponent:React.ComponentType<IAddCommentProps
 {
     interface IAddCommentState {
         commentText: string;
+        emptyComment:boolean;
     };  
 
     class AddComment extends React.Component<IAddCommentProps, IAddCommentState>{
@@ -18,14 +19,17 @@ function addCommentLogic ( WrappedComponent:React.ComponentType<IAddCommentProps
             this.addComment = this.addComment.bind( this );
             this.handleCommentText = this.handleCommentText.bind( this );
             this.state = {
-                commentText: ''
+                commentText: '',
+                emptyComment: false
             }
         }
 
         addComment() {      
             if( this.state.commentText.trim() === '' )
             {
-                alert( this.props.addCommentText.invalidCommentText );
+                this.setState({
+                    emptyComment: true
+                })
             }   
             else
             {   
@@ -38,6 +42,7 @@ function addCommentLogic ( WrappedComponent:React.ComponentType<IAddCommentProps
 
         handleCommentText( event: any ){
             this.setState({
+                emptyComment:false,
                 commentText: event.target.value
             });
         }
@@ -50,6 +55,8 @@ function addCommentLogic ( WrappedComponent:React.ComponentType<IAddCommentProps
                     handleCommentText = { this.handleCommentText }
                     commentValue = { this.state.commentText }
                     loading = { this.props.loading }
+                    invalidCommentText = { this.props.addCommentText.invalidCommentText }
+                    emptyComment = { this.state.emptyComment }
                 />
             );
         }

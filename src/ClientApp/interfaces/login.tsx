@@ -32,6 +32,9 @@ export interface ILoginActions {
 export interface ILoginState {
     user: string;
     password: string;
+    invalidUser: boolean;
+    emptyUser: boolean;
+    emptyPassword:boolean;
 }
 
 export interface ILoginResponse {

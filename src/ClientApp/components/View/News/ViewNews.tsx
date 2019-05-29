@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IViewNews } from '../../../interfaces/news';
-import {Jumbotron, Row, Col} from 'reactstrap';
+import {Jumbotron, Row, Col, Toast, ToastBody} from 'reactstrap';
 import Image from '../Common/Image';
 import Comment from '../Common/Comment';
 import AddComment from '../Common/AddComment';
@@ -30,7 +30,11 @@ class ViewNews extends React.PureComponent<IViewNews,{}>{
                 </Row>
                 <Row>
                     <Col xs="12" className="news-content">
-                            {this.props.newsData.content}
+                        <Toast className="news-content">
+                            <ToastBody>
+                                {this.props.newsData.content}
+                            </ToastBody>
+                        </Toast>                            
                     </Col>
                 </Row>
                 <Row>
