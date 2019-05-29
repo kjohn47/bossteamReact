@@ -30,7 +30,8 @@ export const getDataFromServer = true;
 //ROUTES
 export const pageHome = '/';
 export const newsRoute = '/news';
-export const viewsNewsRoute = '/ViewNews';
+export const viewsNewsRoute = '/viewnews';
+export const blogsListAllRoute = '/listallblogs';
 
 // COOKIE NAMES
 const langCookie = 'appLanguage';

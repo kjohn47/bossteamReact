@@ -6,7 +6,6 @@ type IcommentProps = ICommentData & ICommentText;
 
 class Comment extends React.PureComponent<IcommentProps,{}>{    
     render(){
-        console.log(this.props.Mine);
         return(
             <Row className="comment-row">                
                 <Col xs="12">

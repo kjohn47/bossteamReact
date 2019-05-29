@@ -119,6 +119,11 @@ export interface IErrorHandlingTextTranslation {
     EN?: IErrorHandlingText;
 }
 
+export interface IPageNotFoundTextTranslation {
+    PT?: IErrorHandlingText;
+    EN?: IErrorHandlingText;
+}
+
 export interface IErrorHandlingErrors {
     ERROR_GENERIC: IErrorHandlingTextTranslation;
     ERROR_ADD_COMMENT: IErrorHandlingTextTranslation;

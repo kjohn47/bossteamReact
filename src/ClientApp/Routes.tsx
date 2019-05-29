@@ -3,25 +3,17 @@ import {Route} from 'react-router-dom';
 import Home from './components/Routes/Home';
 import News from './components/Routes/News';
 import ViewNewsInfo from './components/Routes/ViewNewsInfo';
+import BlogsListAll from './components/Routes/BlogsListAll';
 import App from './components/App';
-import { pageHome, newsRoute, viewsNewsRoute } from './settings';
-//@ts-ignore
-const Status = ({ code, children }) => (
-    <Route render={({ staticContext }) => {
-      if (staticContext)
-        //@ts-ignore
-        staticContext.status = code
-      return children
-    }}/>
-  )
+import { 
+  pageHome, 
+  newsRoute, 
+  viewsNewsRoute, 
+  blogsListAllRoute } from './settings';
+import ErrorHandlingView from './components/View/Common/ErrorHandling';
+import pageNotFoundLogic from './components/Logic/Common/PageNotFound';
 
-  const NotFound = () => (
-    <Status code={404}>
-      <div>
-        <h1>Sorry, can’t find that.</h1>
-      </div>
-    </Status>
-  )
+const NotFound = pageNotFoundLogic(ErrorHandlingView);
 
 //adds the loadData function with the desired data fetch action for server side rendering
 //how to use: getComponentRoute(Component Name, Route string like '/something', action array or [action1(), action2(), action3()])
@@ -53,6 +45,7 @@ const getComponentRoute = (component:any, path:string, actions:any[] = []) => {
 //generates the routes for home and lister with the needed datafetch for server side rendering
 //const homeRoute = getComponentRoute(Home, '/', [listerFetchData()]);
 //const listerRoute = getComponentRoute(Lister, '/lister', [listerFetchData()]);
+/*getComponentRoute(Lister, '/lister', [listerFetchData()]),*/
 
 const Routes = [
   {
@@ -61,11 +54,8 @@ const Routes = [
         getComponentRoute(Home, pageHome), //or call directly the function.. atention to not use {} in this case
         getComponentRoute(News, newsRoute), 
         getComponentRoute(ViewNewsInfo, viewsNewsRoute + '/:ID'), 
-        /*getComponentRoute(Lister, '/lister', [listerFetchData()]),
-        getComponentRoute(TSTest, '/tstest'),*/
-        { path: '*',
-        component: NotFound
-        }
+        getComponentRoute(BlogsListAll, blogsListAllRoute),    
+        getComponentRoute(NotFound, '*')
       ]
   }
 ];

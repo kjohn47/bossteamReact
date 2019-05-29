@@ -1,4 +1,15 @@
-import { IErrorHandlingErrors } from "../../interfaces/common";
+import { IErrorHandlingErrors, IPageNotFoundTextTranslation } from "../../interfaces/common";
+
+export const TEXT_PAGE_NOT_FOUND: IPageNotFoundTextTranslation = {
+    PT: {
+        errorTitle: "Erro: 404",
+        errorMessage: "Página procurada não foi encontrada!"
+    },
+    EN: {
+        errorTitle: "Error: 404",
+        errorMessage: "Searched page was not found!"
+    }
+}
 
 export const ERRORS: IErrorHandlingErrors = {
     ERROR_GENERIC: {

@@ -35,9 +35,20 @@ export interface ILoginState {
     invalidUser: boolean;
     emptyUser: boolean;
     emptyPassword:boolean;
+    loginAttempt: boolean;
 }
 
 export interface ILoginResponse {
     success: boolean;
     user?: IcurrentUser; 
+}
+
+export interface IloginFormHeaderTranslations {
+    PT: IloginFormHeader;
+    EN: IloginFormHeader;
+}
+
+export interface IloginFormHeader {
+    title: string;
+    warning: string;
 }
