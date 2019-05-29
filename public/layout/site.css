@@ -103,27 +103,24 @@ body{
 }
 
 .news-content {
-    min-height: 150px;
-    margin-top: 10px;    
+    min-height: 200px;
     margin-bottom: 10px; 
     width: 100%;
-    padding: 20px !important;
-    display: inline-block;
-    border: lightslategrey dashed 1px;
+    max-width: 100% !important;
+    padding: 10px !important;
+    font-size: 16px !important;
 }
 
 .add-comment{
-    border: 1px black solid;
     width: 100%;
-    display: inline-block;
     margin-top: 10px;
-    padding: 15px !important;
-    min-height: 100px;
+    min-height: 100px !important;
+    max-width: 100% !important;
 }
 
 .add-comment-text{
-    width: 100%;
-    height: 100px;    
+    width: 100% !important;
+    height: 100px !important;   
 }
 
 .add-comment-button{
@@ -146,24 +143,33 @@ body{
 .comment-info{
     font-size: small;
     font-weight: bold;
+    display: inline-block;    
+    width: 50%;  
+}
+
+.comment{     
+    width: 100%;
+    max-width: 100% !important;    
+    padding: 5px !important;
+    min-height: 125px !important;
+    margin-top:10px;          
 }
 
 .comment-info span{
     font-weight: normal;
     font-style: italic;
-}
-
-.comment-info-col{
-    margin-right: 2px;
-}
-
-.comment{
-    border: 1px gray dotted;    
-    width: 100%;
+    min-width: 75px;
     display: inline-block;
-    padding: 10px !important;
-    min-height: 75px;
-    margin-top:5px;        
+}
+
+.comment strong {
+    width: 100% !important;
+}
+
+.commentDate {
+    display: inline-block;
+    text-align: right;
+    width: 50%;    
 }
 
 .comment-row{
