@@ -239,6 +239,11 @@ body{
     color: gray;
 }
 
+.login_form_big {
+    padding-top: 25px;
+    padding-left: 15px;
+}
+
 @media(max-width: 768px)
 {
     .HomePageImage{

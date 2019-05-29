@@ -16,7 +16,7 @@ class LoginForm extends React.PureComponent<ILogin,{}>{
                         placeholder={loginText.username} 
                         onChange = { ( event:any ) => this.props.loginAction.handleUser( event ) }
                         value = { this.props.loginAction.state.user }  
-                        invalid = { this.props.loginAction.state.emptyUser || this.props.loginAction.state.invalidUser }  
+                        invalid = { this.props.loginAction.state.loginAttempt && ( this.props.loginAction.state.emptyUser || this.props.loginAction.state.invalidUser ) }  
                     />
                     <FormFeedback tooltip>
                         { this.props.loginAction.state.emptyUser ? this.props.loginText.emptyUser : this.props.loginText.invalidLogin }
@@ -31,7 +31,7 @@ class LoginForm extends React.PureComponent<ILogin,{}>{
                         placeholder={loginText.password} 
                         onChange = { ( event:any ) => this.props.loginAction.handlePassword( event ) }
                         value = { this.props.loginAction.state.password }    
-                        invalid = { this.props.loginAction.state.emptyPassword || this.props.loginAction.state.invalidUser }  
+                        invalid = { this.props.loginAction.state.loginAttempt && ( this.props.loginAction.state.emptyPassword || this.props.loginAction.state.invalidUser ) }  
                     />
                     {
                         this.props.loginAction.state.emptyPassword && 

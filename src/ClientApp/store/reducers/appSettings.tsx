@@ -9,7 +9,7 @@ import { APP_GET_LANGUAGE,
 import { IappAction, IAppSettings, IFetchData } from '../../interfaces/appSettings';
 import { TEXT_MENU } from '../../pageData/language/menu';
 import { TEXT_NEWS_LIST } from '../../pageData/language/news';
-import { TEXT_LOGIN_MENU } from '../../pageData/language/login';
+import { TEXT_LOGIN_MENU, TEXT_NEED_LOGIN } from '../../pageData/language/login';
 import { TEXT_COMMENT, TEXT_COMMENT_ADD} from '../../pageData/language/comment';
 import { 
     enCode, 
@@ -24,7 +24,7 @@ import {
     Show_Error_Detailed,
     GetPropertyValue} from '../../settings';
 import { ILoading, IErrorHandling, IErrorHandlingText, IErrorHandlingTextTranslation } from '../../interfaces/common';
-import { ERRORS } from '../../pageData/language/errors';
+import { ERRORS, TEXT_PAGE_NOT_FOUND } from '../../pageData/language/errors';
 
 const startLang = currentLanguage();
 
@@ -34,6 +34,8 @@ const defaultState: IAppSettings = {
     addCommentText: GetPropertyValue(TEXT_COMMENT_ADD, startLang),
     commentText: GetPropertyValue(TEXT_COMMENT, startLang),
     loginForm: GetPropertyValue(TEXT_LOGIN_MENU, startLang),
+    loginFormHeader: GetPropertyValue(TEXT_NEED_LOGIN, startLang),
+    pageNotFoundText: GetPropertyValue(TEXT_PAGE_NOT_FOUND, startLang),
     presentationLanguage: startLang,
     isLogged: checkLogin(),
     loggedUser: getCurrentUser(),
@@ -139,7 +141,9 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
                 newsLanguage: GetPropertyValue(TEXT_NEWS_LIST, lang),
                 addCommentText: GetPropertyValue(TEXT_COMMENT_ADD, lang),
                 commentText: GetPropertyValue(TEXT_COMMENT, lang),
+                loginFormHeader: GetPropertyValue(TEXT_NEED_LOGIN, lang),
                 loginForm: GetPropertyValue(TEXT_LOGIN_MENU, lang),
+                pageNotFoundText: GetPropertyValue(TEXT_PAGE_NOT_FOUND, lang),
                 presentationLanguage: lang,                
                 fetchData: {...state.fetchData, 
                     error: errorData

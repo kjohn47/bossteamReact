@@ -9,7 +9,7 @@ import { results } from '../../../settings';
 import { IcurrentUser } from '../../../interfaces/currentUser';
 
 
-function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedComponentLoggedIn?: React.ComponentType<IUserMenu>) {
+function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedComponentLoggedIn?: React.ComponentType<IUserMenu> ) {
     class LoginLogic extends React.Component<IAppSettings & IappActions & ILogin, ILoginState>{
         constructor(props: any) {
             super(props);
@@ -23,7 +23,8 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
                     password: '',
                     invalidUser: false,
                     emptyUser: false,
-                    emptyPassword:false
+                    emptyPassword:false,
+                    loginAttempt: false
                 };
         }
 
@@ -40,7 +41,8 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
                 {
                     emptyUser: false,
                     invalidUser: false,
-                    user: newText
+                    user: newText,
+                    loginAttempt: false
                 });
         }
 
@@ -49,12 +51,16 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
                 {                    
                     emptyPassword: false,
                     invalidUser: false,
-                    password: event.target.value
+                    password: event.target.value,
+                    loginAttempt: false
                 });
         }
 
         makeLogin() {
             let withError = false;
+            this.setState({
+                loginAttempt: true
+            });
             if (this.state.user.trim() === '') {                
                 this.setState({
                     emptyUser: true
@@ -110,7 +116,8 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
                     password: this.state.password,
                     invalidUser: this.state.invalidUser,
                     emptyUser: this.state.emptyUser,
-                    emptyPassword: this.state.emptyPassword
+                    emptyPassword: this.state.emptyPassword,
+                    loginAttempt: this.state.loginAttempt
                 }
             }
 
