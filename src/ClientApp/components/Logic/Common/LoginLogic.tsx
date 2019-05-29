@@ -99,7 +99,8 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
                         this.setState(
                         {
                             user: '',
-                            password: ''                        
+                            password: '',
+                            loginAttempt: false                        
                         });
                     }                        
                 }

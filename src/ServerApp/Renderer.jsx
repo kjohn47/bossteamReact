@@ -22,7 +22,7 @@ export default (req, store, context) => {
         <!DOCTYPE html>
             <html>
                 <head>
-                    <title>MyTest</title>
+                    <title>BossTeam</title>
                     <link rel="stylesheet" href="/layout/site.css" type="text/css">
                     <meta http-equiv="Content-Type" content="text/html">
                 </head>
