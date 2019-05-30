@@ -47,17 +47,12 @@ const getComponentRoute = (component:any, path:string, actions:any[] = []) => {
 //const listerRoute = getComponentRoute(Lister, '/lister', [listerFetchData()]);
 /*getComponentRoute(Lister, '/lister', [listerFetchData()]),*/
 
-const Routes = [
-  {
-    component: App,
-    routes: [
+const routes = [
         getComponentRoute(Home, pageHome), //or call directly the function.. atention to not use {} in this case
         getComponentRoute(News, newsRoute), 
         getComponentRoute(ViewNewsInfo, viewsNewsRoute + '/:ID'), 
         getComponentRoute(BlogsListAll, blogsListAllRoute),    
         getComponentRoute(NotFound, '*')
-      ]
-  }
-];
+      ];
 
-export default Routes;
+export default routes;
