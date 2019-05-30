@@ -29,6 +29,7 @@ export const getDataFromServer = true;
 
 //ROUTES
 export const pageHome = '/';
+export const registrationRoute = '/registration';
 export const newsRoute = '/news';
 export const viewsNewsRoute = '/viewnews';
 export const blogsListAllRoute = '/listallblogs';

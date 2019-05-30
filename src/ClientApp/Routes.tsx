@@ -4,12 +4,14 @@ import Home from './components/Routes/Home';
 import News from './components/Routes/News';
 import ViewNewsInfo from './components/Routes/ViewNewsInfo';
 import BlogsListAll from './components/Routes/BlogsListAll';
-import App from './components/App';
+import Registration from './components/Routes/Registration';
 import { 
   pageHome, 
   newsRoute, 
   viewsNewsRoute, 
-  blogsListAllRoute } from './settings';
+  blogsListAllRoute, 
+  registrationRoute
+  } from './settings';
 import ErrorHandlingView from './components/View/Common/ErrorHandling';
 import pageNotFoundLogic from './components/Logic/Common/PageNotFound';
 
@@ -49,6 +51,7 @@ const getComponentRoute = (component:any, path:string, actions:any[] = []) => {
 
 const routes = [
         getComponentRoute(Home, pageHome), //or call directly the function.. atention to not use {} in this case
+        getComponentRoute(Registration, registrationRoute), 
         getComponentRoute(News, newsRoute), 
         getComponentRoute(ViewNewsInfo, viewsNewsRoute + '/:ID'), 
         getComponentRoute(BlogsListAll, blogsListAllRoute),    
