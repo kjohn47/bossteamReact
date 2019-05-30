@@ -43,17 +43,17 @@ export const LOAD_NEW_COMMENT = 'LOAD_NEW_COMMENT';
 export const LOAD_HOME_NEWS = 'LOAD_HOME_NEWS';
 
 // COOKIE METHODS -- Do not change
-export const currentLanguage = () => {
-   let lang = cookies.get(langCookie);
+export const currentLanguage = () : string => {
+   let lang: string = cookies.get(langCookie);
    if( lang === null || lang === undefined || lang === '' || !( lang === enCode || lang === ptCode ) )
     {
-        setLanguage()
+        setLanguage();
         return ptCode;
     }    
    return lang;
 };
 
-export const setLanguage = (lang: string = ptCode) => {
+export const setLanguage = (lang: string = ptCode) : void => {
    if(lang !== ptCode && lang !== enCode)
    {
          lang = ptCode;
@@ -61,19 +61,19 @@ export const setLanguage = (lang: string = ptCode) => {
    cookies.set(langCookie, lang, { path: pageHome });
 };
 
-export const getCurrentUser = () => {
+export const getCurrentUser = () : IcurrentUser => {
     return cookies.get(userCookie);  
 };
 
-export const setCurrentUser = (userData: IcurrentUser ) => {
+export const setCurrentUser = (userData: IcurrentUser ) : void => {
    cookies.set(userCookie, userData, { path: pageHome }) 
 };
 
-export const cookieLogout = () => {
+export const cookieLogout = () : void => {
    cookies.remove(userCookie, { path: pageHome });
 };
 
-export const checkLogin = () => {
+export const checkLogin = () : boolean => {
    return getCurrentUser() !== null && getCurrentUser() !== undefined;
 };
 
@@ -82,6 +82,7 @@ interface IIndexable {
    [key: string]: any;
 }
 
-export function GetPropertyValue(object: IIndexable,dataToRetrieve: string){
+export function GetPropertyValue(object: IIndexable,dataToRetrieve: string) : any
+{
    return object[dataToRetrieve];
 }

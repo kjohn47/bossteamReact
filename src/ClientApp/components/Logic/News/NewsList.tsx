@@ -17,7 +17,7 @@ interface INewsListLoading {
 type INewsReduxProps = IAppSettings & InewsActions & InewsListRedux & INewsListLoading;
 
 
-function newsListLogic (WrappedComponent:React.ComponentType<ICardItem>, shortList: boolean = false)
+function newsListLogic (WrappedComponent:React.ComponentType<ICardItem>, shortList: boolean = false): React.ComponentType
 {
     class NewsListLogic extends React.Component<INewsReduxProps,{}>{
         componentWillUnmount(){
@@ -68,16 +68,16 @@ function newsListLogic (WrappedComponent:React.ComponentType<ICardItem>, shortLi
         }
     }
 
-    const mapStateToProps = (state:Istore) => {
+    const mapStateToProps = (state:Istore): IAppSettings & InewsListRedux & INewsListLoading => {
         return {
             newsLanguage: state.appSettings.newsLanguage,
             newsList: state.news.newsList,
             presentationLanguage: state.appSettings.presentationLanguage,
-            loading: state.appSettings.fetchData.loading.localLoading.loadHomeNews     
+            loading: state.appSettings.fetchData.loading.localLoading.loadHomeNews              
          };
     };
 
-    const mapDispatchToProps = (dispatch:Function) => ({
+    const mapDispatchToProps = (dispatch:Function) : InewsActions => ({
         getNewsList: (language: string) => dispatch(getNewsList(language)),
         getNewsListShort: (language: string) => dispatch(getNewsListShort(language)),        
         changeNewsLanguage: (language: string) => dispatch(changeNewsLanguage(language)),

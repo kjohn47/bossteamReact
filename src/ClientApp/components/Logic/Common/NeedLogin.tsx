@@ -5,7 +5,7 @@ import {IAppSettings} from '../../../interfaces/appSettings';
 import { Alert } from 'reactstrap';
 import PageHeader from '../../View/Common/PageHeader';
 
-function needLoginLogic ( WrappedComponent:React.ComponentType<{}> )
+function needLoginLogic ( WrappedComponent:React.ComponentType ): React.ComponentType
 {
     class NeedLoginLogic extends React.Component<IAppSettings>{
 
@@ -24,7 +24,7 @@ function needLoginLogic ( WrappedComponent:React.ComponentType<{}> )
         }
     }    
 
-    const mapStateToProps = ( state: Istore ) => {
+    const mapStateToProps = ( state: Istore ) : IAppSettings => {
         return {
             isLogged: state.appSettings.isLogged,
             loggedUser: state.appSettings.loggedUser,

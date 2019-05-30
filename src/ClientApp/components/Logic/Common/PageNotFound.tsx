@@ -15,7 +15,7 @@ const Status = ({ code, children }) => (
     }}/>
   )
 
-function pageNotFoundLogic ( WrappedComponent:React.ComponentType<IErrorHandlingText> )
+function pageNotFoundLogic ( WrappedComponent:React.ComponentType<IErrorHandlingText> ): React.ComponentType
 {
     class PageNotFoundLogic extends React.Component<IAppSettings>{
 
@@ -28,7 +28,7 @@ function pageNotFoundLogic ( WrappedComponent:React.ComponentType<IErrorHandling
         }
     }    
 
-    const mapStateToProps = ( state: Istore ) => {
+    const mapStateToProps = ( state: Istore ) : IAppSettings => {
         return {       
           pageNotFoundText: state.appSettings.pageNotFoundText
         }

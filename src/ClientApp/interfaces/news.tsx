@@ -26,14 +26,14 @@ export interface InewsAction{
 }
 
 export interface InewsActions{
-    getNewsList: Function;
-    getNewsListShort: Function;
-    changeNewsLanguage: Function;
-    resetNewsList:Function;
+    getNewsList ( language: string ) : Function;
+    getNewsListShort ( language: string ) : Function;
+    changeNewsLanguage ( language: string ) : Function;
+    resetNewsList () : Function;
 }
 
 export interface Ipayload {
-    language: string;
+    language?: string;
     newsList?: INewsData[];
     newsData?: IViewNewsDataServer;
     comments?: ICommentData[];
@@ -58,9 +58,9 @@ export interface InewsServerDataText {
 //// Interfaces for View News
 
 export interface IViewNews {
-    newsData: IViewNewsData;
-    newsID: number;
-    addCommentAction?: Function;    
+    newsData?: IViewNewsData;
+    newsID?: number;
+    addCommentAction?( comment: string ): void;    
     logedIn?: boolean;
 }
 
@@ -86,10 +86,10 @@ export interface IViewNewsDataServer {
 }
 
 export interface IViewNewsActions{
-    getNewsData: Function;
-    changeNewsDataLanguage: Function;
-    addNewsComment: Function;
-    resetNewsData:Function;
+    getNewsData( language: string, ID: number ) : Function;
+    changeNewsDataLanguage( language: string ) : Function;
+    addNewsComment( newsID: number, comment: string, user:IcurrentUser ) : Function;
+    resetNewsData() : Function;
 }
 
 export interface IViewNewsAction{

@@ -34,11 +34,9 @@ export interface IHomeAction{
 }
 
 export interface IHomeActions {
-    getHomeImage?: Function;
-    getPresentationData?: Function;
-    changePresentationLanguage?: Function;
-    getHomeData?: Function;
-    resetHomeData?: Function;
+    changePresentationLanguage? ( language: string ): Function;
+    getHomeData? ( language: string ): Function;
+    resetHomeData? (): Function;
 }
 
 export interface IHomeRedux {

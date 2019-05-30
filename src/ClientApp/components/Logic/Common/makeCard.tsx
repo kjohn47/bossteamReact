@@ -1,6 +1,6 @@
 import {IcardMainData, ICardData} from '../../../interfaces/common';
 
-function makeCard( items:IcardMainData[], link: string, buttonText: string)
+function makeCard( items:IcardMainData[], link: string, buttonText: string) : ICardData[]
 {
     let cards: ICardData[] = [];
     items.forEach(element => {

@@ -8,7 +8,7 @@ import { ERROR_HOME_PAGE, getDataFromServer, restServer } from '../../../setting
 
 //// HOMEPAGE
 
-export async function getHomeDataFromServer()
+export async function getHomeDataFromServer() : Promise<any>
 {
     ////mocked server data -- replace with server call
     /*
