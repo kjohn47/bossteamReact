@@ -1,4 +1,5 @@
 import { IcurrentUser } from "./currentUser";
+import { any } from "prop-types";
 
 //login Menu
 export interface IloginMenu {
@@ -25,7 +26,8 @@ export interface ILogin {
 export interface ILoginActions {
     handleUser?: Function;
     handlePassword?: Function;
-    makeLogin?: Function;  
+    makeLogin?: Function; 
+    handleKeyPress?(event: any, focus: string, submit?:boolean): void;
     state?: ILoginState;  
 }
 

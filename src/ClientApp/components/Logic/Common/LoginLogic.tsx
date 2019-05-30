@@ -17,6 +17,7 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
             this.makeLogout = this.makeLogout.bind(this);
             this.handlePassword = this.handlePassword.bind(this);
             this.handleUser = this.handleUser.bind(this);
+            this.handleKeyPress = this.handleKeyPress.bind(this);
             this.state =
                 {
                     user: '',
@@ -54,6 +55,20 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
                     password: event.target.value,
                     loginAttempt: false
                 });
+        }
+
+        handleKeyPress(event: any, focus: string, submit?:boolean) {
+            if(event.key === "Enter"){
+                if(submit)
+                {
+                    this.makeLogin();
+                }
+                else
+                {
+                //@ts-ignore
+                    document.getElementById(focus).focus();
+                }
+              }
         }
 
         makeLogin() {
@@ -111,7 +126,8 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
             const loginActions: ILoginActions = {
                 handlePassword: (event: any) => this.handlePassword(event),
                 handleUser: (event: any) => this.handleUser(event),
-                makeLogin: () => this.makeLogin(),                
+                makeLogin: () => this.makeLogin(),   
+                handleKeyPress: (event, focus, submit) => this.handleKeyPress(event, focus, submit),
                 state: {
                     user: this.state.user,
                     password: this.state.password,
