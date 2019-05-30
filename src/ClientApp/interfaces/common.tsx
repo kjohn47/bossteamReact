@@ -1,4 +1,24 @@
+////Header Interfaces
+export interface IPageHeader {
+    title: string;
+}
+
+export interface IPageTop {
+    image: Iimage;
+    presentation: IpresentationData;
+}
+
+export interface IpresentationData {
+    title:string;
+    introduction: string;
+    description:string;
+}
+
 ////Cards interfaces
+
+export interface ICardItem {
+    data?: ICardData;
+}
 
 export interface ICardData {
     title:string;
@@ -34,16 +54,23 @@ export interface Iimage {
 export interface ICommentData {
     ID: number;
     Owner: string;
+    OwnerID?: string;
     Time: string;
     Comment: string;
+    Mine?: boolean;
 }
 
-export interface IAddComment {
-    addCommentAction?: Function;
-    handleCommentText?: Function;
+export interface IAddComment {    
+    addComment? (): void;
+    handleCommentText?( event: any ): void;
     commentValue?: string;
     loading?:boolean;
     emptyComment?: boolean;
+}
+
+export interface IAddCommentAction
+{
+    addCommentAction?( comment: string ): void; 
 }
 
 export interface IAddCommentText {
@@ -93,6 +120,11 @@ export interface IErrorHandlingText {
 }
 
 export interface IErrorHandlingTextTranslation {
+    PT?: IErrorHandlingText;
+    EN?: IErrorHandlingText;
+}
+
+export interface IPageNotFoundTextTranslation {
     PT?: IErrorHandlingText;
     EN?: IErrorHandlingText;
 }

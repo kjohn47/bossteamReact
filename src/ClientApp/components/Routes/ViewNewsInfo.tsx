@@ -1,6 +1,6 @@
 import * as React from 'react';
-import ViewNews from './View/News/ViewNews';
-import viewNewsLogic from './Logic/News/ViewNews';
+import ViewNews from '../View/News/ViewNews';
+import viewNewsLogic from '../Logic/News/ViewNews';
 import {Row, Col} from 'reactstrap';
 
 const NewsView = viewNewsLogic(ViewNews);

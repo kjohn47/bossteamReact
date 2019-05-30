@@ -9,7 +9,7 @@ import {ptCode, enCode} from '../../../settings';
 
 interface ILanguageMenu {
     languageText?: ILanguageText;
-    appGetLanguage: Function;
+    appGetLanguage(language: string): Function;
 }
 
 class Language extends React.PureComponent<ILanguageMenu,{}>{

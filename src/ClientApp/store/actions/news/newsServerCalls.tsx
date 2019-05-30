@@ -9,7 +9,7 @@ import { ERROR_ADD_COMMENT, ERROR_GET_NEWS_DATA, ERROR_GET_NEWS_LIST, getDataFro
 
 //// NEWS
 
-export async function getNewsListFromServer( short: boolean = false )
+export async function getNewsListFromServer( short: boolean = false ) : Promise<any>
 {
     return await serverResolve( () =>
     {
@@ -42,7 +42,7 @@ export async function getNewsListFromServer( short: boolean = false )
     }, ERROR_GET_NEWS_LIST)
 }
 
-export async function getNewsDataFromServer( ID:number )
+export async function getNewsDataFromServer( ID:number ) : Promise<any>
 {
     return await serverResolve( () =>
     {
@@ -62,7 +62,7 @@ export async function getNewsDataFromServer( ID:number )
     }, ERROR_GET_NEWS_DATA)
 }
 
-export async function addNewsCommentToServer( newsArg: InewsDataArg )
+export async function addNewsCommentToServer( newsArg: InewsDataArg ) : Promise<any>
 {    
     return await serverResolve( () =>
     {
@@ -70,7 +70,8 @@ export async function addNewsCommentToServer( newsArg: InewsDataArg )
             Comment: newsArg.comment,
             Owner: newsArg.user.name + " " + newsArg.user.surname,
             Time: new Date().toISOString(),
-            ID:123
+            ID:123,
+            OwnerID: newsArg.user.uuid
         }  
         
         if( !getDataFromServer ) {

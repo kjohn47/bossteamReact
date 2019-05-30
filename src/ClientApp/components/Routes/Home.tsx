@@ -1,13 +1,12 @@
 import * as React from 'react';
-import Image from './View/Common/Image';
-import Presentation from './View/Home/Presentation';
-import NewsList from './View/News/NewsList';
-import newsListLogic from './Logic/News/NewsList';
+import ListItem from '../View/Common/ListItem';
+import newsListLogic from '../Logic/News/NewsList';
 import {Row, Col} from 'reactstrap';
-import homeLogic from './Logic/Home/Home';
+import homeLogic from '../Logic/Home/Home';
+import PageTop from '../View/Common/PageTop';
 
-const HomeTop = homeLogic(Presentation, Image);
-const NewsListShort = newsListLogic(NewsList, true);
+const HomeTop = homeLogic(PageTop);
+const NewsListShort = newsListLogic(ListItem, true);
 
 class Home extends React.Component{
     render(){

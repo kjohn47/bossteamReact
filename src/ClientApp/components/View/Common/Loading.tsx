@@ -1,4 +1,3 @@
-//@ts-ignore
 import { Spinner } from 'reactstrap';
 import * as React from 'react';
 import { ILoading } from '../../../interfaces/common';

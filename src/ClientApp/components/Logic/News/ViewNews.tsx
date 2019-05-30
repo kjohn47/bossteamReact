@@ -8,10 +8,14 @@ import { IcurrentUser } from '../../../interfaces/currentUser';
 
 type INewsReduxProps = IAppSettings & IViewNewsActions & IViewNews;
 
-function viewNewsLogic (WrappedComponent:React.ComponentType<IViewNews>)
+interface viewNewsLogigProps {
+    newsID?: number;
+}
+
+function viewNewsLogic (WrappedComponent:React.ComponentType<IViewNews>): React.ComponentType<viewNewsLogigProps>
 {
     class ViewNewsLogic extends React.Component<INewsReduxProps,{}>{                 
-        constructor(props:any){
+        constructor(props:INewsReduxProps){
             super(props);
             this.addCommentAction = this.addCommentAction.bind(this);
         }
@@ -31,7 +35,7 @@ function viewNewsLogic (WrappedComponent:React.ComponentType<IViewNews>)
             }
           }
         
-        addCommentAction(comment: string) {
+        addCommentAction(comment: string) : void {
             this.props.addNewsComment(this.props.newsID, comment, this.props.loggedUser);
         }
 
@@ -48,7 +52,7 @@ function viewNewsLogic (WrappedComponent:React.ComponentType<IViewNews>)
         }
     }
 
-    const mapStateToProps = (state:Istore) => {
+    const mapStateToProps = (state:Istore) : IAppSettings & IViewNews => {
         return {
             presentationLanguage: state.appSettings.presentationLanguage,
             loggedUser: state.appSettings.loggedUser,
@@ -57,7 +61,7 @@ function viewNewsLogic (WrappedComponent:React.ComponentType<IViewNews>)
          };
     };
 
-    const mapDispatchToProps = (dispatch:Function) => ({
+    const mapDispatchToProps = (dispatch:Function): IViewNewsActions => ({
         getNewsData: (language: string, ID: number) => dispatch(getNewsData(language, ID)),      
         resetNewsData: () => dispatch(resetNewsData()),  
         changeNewsDataLanguage: (language: string) => dispatch(changeNewsDataLanguage(language)),

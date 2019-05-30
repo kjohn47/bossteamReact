@@ -8,26 +8,30 @@ import { makeLogin, makeLogout, resetLoginStatus } from '../../../store/actions/
 import { results } from '../../../settings';
 import { IcurrentUser } from '../../../interfaces/currentUser';
 
+type loginPropsType = IAppSettings & IappActions & ILogin;
 
-function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedComponentLoggedIn?: React.ComponentType<IUserMenu>) {
-    class LoginLogic extends React.Component<IAppSettings & IappActions & ILogin, ILoginState>{
-        constructor(props: any) {
+function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedComponentLoggedIn?: React.ComponentType<IUserMenu> ) : React.ComponentType 
+{
+    class LoginLogic extends React.Component<loginPropsType, ILoginState>{
+        constructor(props: loginPropsType) {
             super(props);
             this.makeLogin = this.makeLogin.bind(this);
             this.makeLogout = this.makeLogout.bind(this);
             this.handlePassword = this.handlePassword.bind(this);
             this.handleUser = this.handleUser.bind(this);
+            this.handleKeyPress = this.handleKeyPress.bind(this);
             this.state =
                 {
                     user: '',
                     password: '',
                     invalidUser: false,
                     emptyUser: false,
-                    emptyPassword:false
+                    emptyPassword:false,
+                    loginAttempt: false
                 };
         }
 
-        handleUser(event: any) {
+        handleUser(event: any) : void {
             let newText: string = event.target.value;
             var format = /^[!@#$%^&*()ºª_+\-=\[\]{};':"\\|,.<>\/?]*$/;
             if( ( newText !== '' && 
@@ -40,21 +44,40 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
                 {
                     emptyUser: false,
                     invalidUser: false,
-                    user: newText
+                    user: newText,
+                    loginAttempt: false
                 });
         }
 
-        handlePassword(event: any) {
+        handlePassword(event: any) : void {
             this.setState(
                 {                    
                     emptyPassword: false,
                     invalidUser: false,
-                    password: event.target.value
+                    password: event.target.value,
+                    loginAttempt: false
                 });
         }
 
-        makeLogin() {
+        handleKeyPress(event: any, focus: string, submit?:boolean) : void {
+            if(event.key === "Enter"){
+                if(submit)
+                {
+                    this.makeLogin();
+                }
+                else
+                {
+                //@ts-ignore
+                    document.getElementById(focus).focus();
+                }
+              }
+        }
+
+        makeLogin() : void {
             let withError = false;
+            this.setState({
+                loginAttempt: true
+            });
             if (this.state.user.trim() === '') {                
                 this.setState({
                     emptyUser: true
@@ -72,7 +95,7 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
             }
         }
 
-        makeLogout() {
+        makeLogout() : void {
             if (this.props.isLogged) {
                 this.props.makeLogout( this.props.loggedUser );                
             }
@@ -93,7 +116,8 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
                         this.setState(
                         {
                             user: '',
-                            password: ''                        
+                            password: '',
+                            loginAttempt: false                        
                         });
                     }                        
                 }
@@ -104,13 +128,15 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
             const loginActions: ILoginActions = {
                 handlePassword: (event: any) => this.handlePassword(event),
                 handleUser: (event: any) => this.handleUser(event),
-                makeLogin: () => this.makeLogin(),                
+                makeLogin: () => this.makeLogin(),   
+                handleKeyPress: (event, focus, submit) => this.handleKeyPress(event, focus, submit),
                 state: {
                     user: this.state.user,
                     password: this.state.password,
                     invalidUser: this.state.invalidUser,
                     emptyUser: this.state.emptyUser,
-                    emptyPassword: this.state.emptyPassword
+                    emptyPassword: this.state.emptyPassword,
+                    loginAttempt: this.state.loginAttempt
                 }
             }
 
@@ -130,7 +156,7 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
             );
         }
     }
-    const mapStateToProps = (state: Istore) => {
+    const mapStateToProps = (state: Istore): IAppSettings & ILogin => {
         return {
             menuText: state.appSettings.menuText,
             loginForm: state.appSettings.loginForm,
@@ -141,11 +167,10 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
         }
     };
 
-    const mapDispatchToProps = (dispatch: Function) => (
-    {
-        makeLogin: (user: string, password: string) => dispatch(makeLogin(user, password)),
-        makeLogout: ( user: IcurrentUser) => dispatch(makeLogout(user)),
-        resetLoginStatus: () => dispatch(resetLoginStatus())
+    const mapDispatchToProps = (dispatch: Function): IappActions =>({
+        makeLogin: ( user: string, password: string ) => dispatch( makeLogin( user, password ) ),
+        makeLogout: ( user: IcurrentUser) => dispatch( makeLogout( user ) ),
+        resetLoginStatus: () => dispatch( resetLoginStatus() )
     });
 
     return connect(mapStateToProps, mapDispatchToProps)(LoginLogic);

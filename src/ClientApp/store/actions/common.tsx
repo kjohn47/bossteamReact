@@ -11,7 +11,7 @@ export function commonServerAction( dispatch: Function,
                                     isLocalLoad: boolean = false, 
                                     localLoad: string = '',
                                     runBeforeSuccess: Function = null,
-                                    runAfterFinish:Function = null)
+                                    runAfterFinish:Function = null) : Promise<any>
 {    
     dispatch( startServerCommunication( isLocalLoad, localLoad ) );    
     return new Promise( async (resolve, reject) => {
@@ -32,7 +32,7 @@ export function commonServerAction( dispatch: Function,
     } )    
 }
 
-export async function serverResolve( serverCall: Function, errorCode: string = ERROR_GENERIC )
+export async function serverResolve( serverCall: Function, errorCode: string = ERROR_GENERIC ) : Promise<any>
 {
     return new Promise( (resolve, reject) => {
         let serverReturn = serverCall();

@@ -8,7 +8,7 @@ import { serverResolve } from '../common';
 import { ERROR_LOGIN, ERROR_LOGOUT } from '../../../settings';
 
 //// APP
-export async function makeLoginOnServer( loginArg: ILoginState ){
+export async function makeLoginOnServer( loginArg: ILoginState ) : Promise<any>{
     return await serverResolve( () =>
     {
         let userServer:ILoginResponse = {
@@ -33,7 +33,7 @@ export async function makeLoginOnServer( loginArg: ILoginState ){
 }
 //// APP
 
-export async function makeLogoutOnServer( user: IcurrentUser ){
+export async function makeLogoutOnServer( user: IcurrentUser ) : Promise<any>{
     return await serverResolve( () =>
     {
         if(user === null )

@@ -3,16 +3,20 @@ import {Istore} from '../../../interfaces/store';
 import {connect} from 'react-redux';
 import {ICommentData, ICommentText} from '../../../interfaces/common';
 
-interface ICommentArray {
-    commentList: ICommentData[];
+interface ICommentStore {
     commentText?: ICommentText;
+    userUUID?: string;
 };
+
+interface IcommentLogicProps {
+    commentList?: ICommentData[];
+}
 
 type IcommentProps = ICommentData & ICommentText;
 
-function commentLogic (WrappedComponent:React.ComponentType<IcommentProps>)
+function commentLogic (WrappedComponent:React.ComponentType<IcommentProps>) : React.ComponentType<IcommentLogicProps>
 {
-    class Comment extends React.Component<ICommentArray,{}>{
+    class Comment extends React.Component<ICommentStore & IcommentLogicProps,{}>{
         render(){
             const comments = this.props.commentList;
             return(
@@ -27,8 +31,9 @@ function commentLogic (WrappedComponent:React.ComponentType<IcommentProps>)
                                     Owner ={item.Owner} 
                                     Time = {item.Time}   
                                     ownerText = {this.props.commentText.ownerText}
-                                    dateText = {this.props.commentText.dateText}                          
-                                />
+                                    dateText = {this.props.commentText.dateText}     
+                                    Mine = {this.props.userUUID === item.OwnerID}                     
+                                />                                
                             )
                     }
                 </div>
@@ -36,9 +41,10 @@ function commentLogic (WrappedComponent:React.ComponentType<IcommentProps>)
         }
     }
     
-    const mapStateToProps = ( state: Istore ) => {
+    const mapStateToProps = ( state: Istore ) : ICommentStore => {
         return {
             commentText: state.appSettings.commentText,
+            userUUID: state.appSettings.loggedUser !== null && state.appSettings.loggedUser !== undefined ? state.appSettings.loggedUser.uuid : ''
         }
     };
     

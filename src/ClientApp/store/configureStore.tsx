@@ -9,7 +9,7 @@ export default function
         return createStore(
             reducers,
             initialState,
-            //applyMiddleware(thunk, axiosMiddleware(axios.create({baseURL:'http://localhost:4000/rest'})),myInvariant) //For development only - check reducer for mutations
+            //applyMiddleware(thunk, myInvariant) //For development only - check reducer for mutations
             applyMiddleware( thunk )
         );
     }

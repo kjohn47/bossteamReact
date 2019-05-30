@@ -43,7 +43,7 @@ class AddComment extends React.PureComponent<IAddCommentProps,{}>{
                                             outline 
                                             color="secondary" 
                                             className="add-comment-button" 
-                                            onClick = { () => this.props.addCommentAction() }
+                                            onClick = { () => this.props.addComment() }
                                         >
                                             {this.props.submitBtnText}
                                         </Button>
