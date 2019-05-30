@@ -24,10 +24,10 @@ export interface IappAction{
 }
 
 export interface IappActions{
-    appGetLanguage?: Function;
-    makeLogin?: Function;
-    makeLogout?: Function;
-    resetLoginStatus?: Function;
+    appGetLanguage?(language: string ): Function;
+    makeLogin?( user: string, password: string ): Function;
+    makeLogout?( user: IcurrentUser ): Function;
+    resetLoginStatus?(): Function;
 }
 
 interface Ipayload {

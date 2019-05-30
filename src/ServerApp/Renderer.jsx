@@ -1,8 +1,7 @@
 import React from 'react';
 import {renderToString} from 'react-dom/server';
 import {StaticRouter as Router} from 'react-router-dom';
-import {renderRoutes} from 'react-router-config';
-import Routes from '../ClientApp/Routes';
+import App from '../ClientApp/components/App';
 import { Provider } from 'react-redux';
 import serialize from 'serialize-javascript';
 //takes the incoming request route and renders the static page
@@ -12,7 +11,7 @@ export default (req, store, context) => {
     const content = renderToString(
         <Provider store = {store}>
             <Router location={req.path} context={context}>
-                {renderRoutes(Routes)}
+                <App />
             </Router>
         </Provider>
     );
@@ -22,7 +21,7 @@ export default (req, store, context) => {
         <!DOCTYPE html>
             <html>
                 <head>
-                    <title>MyTest</title>
+                    <title>BossTeam</title>
                     <link rel="stylesheet" href="/layout/site.css" type="text/css">
                     <meta http-equiv="Content-Type" content="text/html">
                 </head>

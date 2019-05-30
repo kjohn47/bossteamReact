@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {Istore} from '../../../interfaces/store';
 import {connect} from 'react-redux';
-import {IAddComment, IAddCommentText} from '../../../interfaces/common';
+import {IAddComment, IAddCommentText, IAddCommentAction} from '../../../interfaces/common';
 import {IAppSettings} from '../../../interfaces/appSettings';
 
-type IAddCommentProps = IAppSettings & IAddComment & IAddCommentText;
+type IAddCommentProps = IAppSettings & IAddComment & IAddCommentText & IAddCommentAction;
 
-function addCommentLogic ( WrappedComponent:React.ComponentType<IAddCommentProps> )
+function addCommentLogic ( WrappedComponent:React.ComponentType<IAddCommentProps> ) : React.ComponentType<IAddCommentAction>
 {
     interface IAddCommentState {
         commentText: string;
@@ -24,7 +24,7 @@ function addCommentLogic ( WrappedComponent:React.ComponentType<IAddCommentProps
             }
         }
 
-        addComment() {      
+        addComment() : void {      
             if( this.state.commentText.trim() === '' )
             {
                 this.setState({
@@ -36,11 +36,11 @@ function addCommentLogic ( WrappedComponent:React.ComponentType<IAddCommentProps
                 this.props.addCommentAction( this.state.commentText );
                 this.setState({
                     commentText: ''
-            });
+                });
             }
         }
 
-        handleCommentText( event: any ){
+        handleCommentText( event: any ) : void {
             this.setState({
                 emptyComment:false,
                 commentText: event.target.value
@@ -50,7 +50,7 @@ function addCommentLogic ( WrappedComponent:React.ComponentType<IAddCommentProps
         render(){
             return(
                 <WrappedComponent 
-                    addCommentAction = { this.addComment } 
+                    addComment = { this.addComment } 
                     submitBtnText = { this.props.addCommentText.submitBtnText }
                     handleCommentText = { this.handleCommentText }
                     commentValue = { this.state.commentText }
@@ -62,10 +62,10 @@ function addCommentLogic ( WrappedComponent:React.ComponentType<IAddCommentProps
         }
     }    
 
-    const mapStateToProps = ( state: Istore ) => {
+    const mapStateToProps = ( state: Istore ) : IAddCommentProps => {
         return {
             addCommentText: state.appSettings.addCommentText,
-            loading: state.appSettings.fetchData.loading.localLoading.loadComment
+            loading: state.appSettings.fetchData.loading.localLoading.loadComment,            
         }
     };
 

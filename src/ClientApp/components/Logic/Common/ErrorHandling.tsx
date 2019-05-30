@@ -9,12 +9,12 @@ import { resetError } from '../../../store/actions/appSettings';
 interface IHistory extends RouteComponentProps<any> {};
 
 interface IErrorAction {
-    resetError: Function;
+    resetError() : Function;
 }
 
 type ErrorHandlingType = IFetchData & ILoading & IHistory & IErrorAction;
 
-function errorHandlingLogic (ErrorHandlingView:React.ComponentType<IErrorHandlingText>, LoadingView:React.ComponentType<ILoading>)
+function errorHandlingLogic (ErrorHandlingView:React.ComponentType<IErrorHandlingText>, LoadingView:React.ComponentType<ILoading>) :React.ComponentType
 {
     class ErrorHandling extends React.Component<ErrorHandlingType>{
         constructor(props:ErrorHandlingType) {
@@ -52,16 +52,16 @@ function errorHandlingLogic (ErrorHandlingView:React.ComponentType<IErrorHandlin
         }
     }
     
-    const mapStateToProps = ( state: Istore ) => {
+    const mapStateToProps = ( state: Istore ) : IFetchData => {
         return {
             error: state.appSettings.fetchData.error,
             loading: state.appSettings.fetchData.loading
         }
     };
 
-    const mapDispatchToProps = (dispatch: Function) => (
+    const mapDispatchToProps = (dispatch: Function) : IErrorAction => (
         {
-            resetError: () => dispatch(resetError())
+            resetError: () => dispatch( resetError() )
         });
     
 

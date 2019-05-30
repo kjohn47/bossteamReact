@@ -16,8 +16,9 @@ class Login extends React.PureComponent<ILogin,{}>{
                     <Label>{loginText.username}</Label>
                     <Input 
                         type="text" 
-                        name="user" 
-                        id="user" 
+                        name="user_page" 
+                        id="user_page" 
+                        onKeyDown = { ( event:any ) => this.props.loginAction.handleKeyPress( event, 'password_page', false ) }
                         onChange = { ( event:any ) => this.props.loginAction.handleUser( event ) }
                         value = { this.props.loginAction.state.user }  
                         invalid = { this.props.loginAction.state.loginAttempt && ( this.props.loginAction.state.emptyUser || this.props.loginAction.state.invalidUser ) }  
@@ -34,8 +35,9 @@ class Login extends React.PureComponent<ILogin,{}>{
                     <Label>{loginText.password}</Label>
                     <Input 
                         type="password" 
-                        name="password" 
-                        id="password" 
+                        name="password_page" 
+                        id="password_page" 
+                        onKeyDown = { ( event:any ) => this.props.loginAction.handleKeyPress( event, '', true ) }
                         onChange = { ( event:any ) => this.props.loginAction.handlePassword( event ) }
                         value = { this.props.loginAction.state.password }    
                         invalid = {  this.props.loginAction.state.loginAttempt && ( this.props.loginAction.state.emptyPassword || this.props.loginAction.state.invalidUser ) }  

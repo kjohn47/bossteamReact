@@ -9,21 +9,36 @@ import {
         RESET_SERVER_ERROR
         } from '../../actionTypes';
 
-import {ptCode, LOAD_LOGIN_MENU, setCurrentUser, setLanguage, cookieLogout, pageHome, newsRoute, viewsNewsRoute} from '../../../settings';
-import { makeLoginOnServer, makeLogoutOnServer } from './appServerCalls';
+import { 
+    ptCode, 
+    LOAD_LOGIN_MENU, 
+    setCurrentUser, 
+    setLanguage, 
+    cookieLogout, 
+    pageHome, 
+    newsRoute, 
+    viewsNewsRoute
+    } from '../../../settings';
+
+import { 
+    makeLoginOnServer, 
+    makeLogoutOnServer 
+    } from './appServerCalls';
+    
 import { IErrorHandling } from '../../../interfaces/common';
 import { ILoginResponse } from '../../../interfaces/login';
 import { IcurrentUser } from '../../../interfaces/currentUser';
 import { commonServerAction } from '../common';
+import { IappAction } from '../../../interfaces/appSettings';
 
-export function appGetLanguage( language: string = ptCode ){
+export function appGetLanguage( language: string = ptCode ) : Function {
     return (dispatch: Function) => {
         setLanguage(language);
         dispatch(changeLanguage(language));
     }
 }
 
-function changeLanguage(language: string){
+function changeLanguage(language: string) : IappAction {
     return {
         type: APP_GET_LANGUAGE,
         payload: {
@@ -32,13 +47,13 @@ function changeLanguage(language: string){
     }
 }
 
-export function makeLogin( user: string, password: string ){
+export function makeLogin( user: string, password: string )  : Function {
     return (dispatch: Function) =>  { 
         commonServerAction( dispatch, makeLoginOnServer, makeLoginSuccess, {user, password}, null , true, LOAD_LOGIN_MENU, updateLoginToken );
     }
 }
 
-function updateLoginToken( result: ILoginResponse )
+function updateLoginToken( result: ILoginResponse ) : void
 {
     if(result.success)
     {
@@ -46,7 +61,7 @@ function updateLoginToken( result: ILoginResponse )
     }
 }
 
-function makeLoginSuccess( result: ILoginResponse ){
+function makeLoginSuccess( result: ILoginResponse ) : IappAction {
     return {
         type: MAKE_LOGIN,
         payload: {
@@ -55,32 +70,32 @@ function makeLoginSuccess( result: ILoginResponse ){
     }
 }
 
-export function makeLogout( user: IcurrentUser){
+export function makeLogout( user: IcurrentUser) : Function {
     return (dispatch: Function) =>  
     {     
         commonServerAction( dispatch, makeLogoutOnServer, logout, user, null , true, LOAD_LOGIN_MENU, null, logoutFunctions );
     } 
 }
 
-function logoutFunctions(){
+function logoutFunctions() : void {
     cookieLogout();  
     if(window.location.pathname !== pageHome && window.location.pathname !== newsRoute && window.location.pathname.substring( 0, viewsNewsRoute.length ) !== viewsNewsRoute )  
         {window.location.assign(pageHome); }  
 }
 
-function logout(result:any){
+function logout(result:any) : IappAction {
     return {
         type: MAKE_LOGOUT
     }
 }
 
-export function resetLoginStatus(){
+export function resetLoginStatus() : IappAction {
     return {
         type: RESET_LOGIN_STATUS
     }
 }
 
-export function startServerCommunication( isLocalized:boolean = false, loadLocalization:string = "" ){
+export function startServerCommunication( isLocalized:boolean = false, loadLocalization:string = "" ) : IappAction {
     return {
         type: START_SERVER_COMUNICATION,
         payload: {
@@ -90,7 +105,7 @@ export function startServerCommunication( isLocalized:boolean = false, loadLocal
     }
 }
 
-export function endServerCommunication( isLocalized:boolean = false, loadLocalization:string = "" ){
+export function endServerCommunication( isLocalized:boolean = false, loadLocalization:string = "" ) : IappAction {
     return {
         type: END_SERVER_COMUNICATION,
         payload: {
@@ -100,7 +115,7 @@ export function endServerCommunication( isLocalized:boolean = false, loadLocaliz
     }
 }
 
-export function serverCommunicationError( error: IErrorHandling ){
+export function serverCommunicationError( error: IErrorHandling ) : IappAction {
     return {
         type: SERVER_COMUNICATION_FAIL,
         payload: {
@@ -109,7 +124,7 @@ export function serverCommunicationError( error: IErrorHandling ){
     }
 }
 
-export function resetError() {
+export function resetError() : IappAction {
     return {
         type: RESET_SERVER_ERROR        
     }

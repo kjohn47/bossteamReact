@@ -9,25 +9,25 @@ import {
 } from '../../actionTypes';
 import {ptCode, LOAD_NEW_COMMENT, LOAD_HOME_NEWS} from '../../../settings';
 import {IcurrentUser} from '../../../interfaces/currentUser';
-import { INewsData, IViewNewsDataServer } from '../../../interfaces/news';
+import { INewsData, IViewNewsDataServer, InewsAction } from '../../../interfaces/news';
 import { getNewsListFromServer, getNewsDataFromServer, addNewsCommentToServer} from './newsServerCalls';
 import { ICommentData } from '../../../interfaces/common';
 import { commonServerAction } from '../common';
 //// Actions for News List
 
-export function getNewsList( language: string = ptCode ){    
+export function getNewsList( language: string = ptCode ) : Function {    
     return (dispatch: Function) =>  {   
         commonServerAction( dispatch, getNewsListFromServer, getNewsListSuccess, null, language );
     }
 }
 
-export function getNewsListShort( language: string = ptCode ){
+export function getNewsListShort( language: string = ptCode ) :Function {
     return (dispatch: Function) =>  {  
         commonServerAction( dispatch, getNewsListFromServer, getNewsListSuccess, true, language , true, LOAD_HOME_NEWS );
     }
 }
 
-function getNewsListSuccess( result: INewsData[], language: string  )
+function getNewsListSuccess( result: INewsData[], language: string  ) : InewsAction
 {
     return {
         type: GET_NEWS_LIST,
@@ -38,7 +38,7 @@ function getNewsListSuccess( result: INewsData[], language: string  )
     }
 }
 
-export function changeNewsLanguage( language: string = ptCode ){
+export function changeNewsLanguage( language: string = ptCode ) : InewsAction {
     return {
         type: CHANGE_NEWS_LANGUAGE,
         payload: {
@@ -47,7 +47,7 @@ export function changeNewsLanguage( language: string = ptCode ){
     }
 }
 
-export function resetNewsList()
+export function resetNewsList() : InewsAction
 {
     return {
         type: RESET_NEWS_LIST
@@ -56,14 +56,14 @@ export function resetNewsList()
 
 //// Actions for view news
 
-export function getNewsData ( language: string = ptCode, ID: number )
+export function getNewsData ( language: string = ptCode, ID: number ) : Function
 {
     return (dispatch: Function) =>  {     
         commonServerAction( dispatch, getNewsDataFromServer, getNewsDataSuccess, ID, language );
     }
 }
 
-function getNewsDataSuccess ( result: IViewNewsDataServer, language: string )
+function getNewsDataSuccess ( result: IViewNewsDataServer, language: string ) : InewsAction
 {
     return {
         type: GET_NEWS_DATA,
@@ -74,7 +74,7 @@ function getNewsDataSuccess ( result: IViewNewsDataServer, language: string )
     }
 }
 
-export function changeNewsDataLanguage ( language: string = ptCode )
+export function changeNewsDataLanguage ( language: string = ptCode ) : InewsAction
 {
     return {
         type: CHANGE_NEWS_DATA_LANGUAGE,
@@ -84,7 +84,7 @@ export function changeNewsDataLanguage ( language: string = ptCode )
     }
 }
 
-export function resetNewsData()
+export function resetNewsData() : InewsAction
 {
     return {
         type: RESET_NEWS_DATA
@@ -93,14 +93,14 @@ export function resetNewsData()
 
 //Actions for adding comments
 
-export function addNewsComment (newsID: number, comment: string, user:IcurrentUser)
+export function addNewsComment (newsID: number, comment: string, user:IcurrentUser) : Function
 {
     return (dispatch: Function) =>  {
         commonServerAction( dispatch, addNewsCommentToServer, addNewsCommentSuccess, { newsID, comment, user }, newsID, true, LOAD_NEW_COMMENT );
     }
 }
 
-function addNewsCommentSuccess ( result: ICommentData[] , newsID: number )
+function addNewsCommentSuccess ( result: ICommentData[] , newsID: number ) : InewsAction
 {
     return {
         type: ADD_NEWS_COMMENT,

@@ -7,12 +7,11 @@ import { appGetLanguage } from '../../../store/actions/appSettings';
 
 type ImenuReduxProps = IappActions & IAppSettings;
 
-function menuLogic (WrappedComponent:React.ComponentType<ImenuProps>)
+function menuLogic (WrappedComponent:React.ComponentType<ImenuProps>): React.ComponentType
 {
     class MenuLogic extends React.Component<ImenuReduxProps,{}>{    
         componentDidMount(){
-                //@ts-ignore
-                this.props.appGetLanguage(this.props.presentationLanguage);
+            this.props.appGetLanguage(this.props.presentationLanguage);
         };
 
         render(){
@@ -26,7 +25,7 @@ function menuLogic (WrappedComponent:React.ComponentType<ImenuProps>)
         }
     }
 
-    const mapStateToProps = (state:Istore) => {
+    const mapStateToProps = (state:Istore) : IAppSettings => {
         return {
             menuText: state.appSettings.menuText,
             isLogged: state.appSettings.isLogged,

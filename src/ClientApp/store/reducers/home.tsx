@@ -1,6 +1,7 @@
 import { CHANGE_PRESENTATION_LANGUAGE, GET_HOME_DATA, RESET_HOME_DATA } from '../actionTypes';
-import { IHomeAction, IHomeRedux, IpresentationData, IpresentationServer } from '../../interfaces/home';
+import { IHomeAction, IHomeRedux, IpresentationServer } from '../../interfaces/home';
 import { GetPropertyValue } from '../../settings';
+import { IpresentationData } from '../../interfaces/common';
 
 //// -- Default homepage presentation state
 const defaultState: IHomeRedux = {
@@ -20,7 +21,7 @@ const defaultState: IHomeRedux = {
 
 //// -- Homepage presentation
 
-function changePresentationLanguage(language:string, presentationServer: IpresentationServer)
+function changePresentationLanguage(language:string, presentationServer: IpresentationServer) : IpresentationData
 {
     let translatedPresentation: IpresentationData = GetPropertyValue(presentationServer, language);
     if( translatedPresentation === null || translatedPresentation === undefined )
@@ -39,7 +40,7 @@ function changePresentationLanguage(language:string, presentationServer: Ipresen
 //// -- Homepage presentation
 
 //// -- Homepage presentation reducer
-export function home(state:IHomeRedux = defaultState, action:IHomeAction) {
+export function home(state:IHomeRedux = defaultState, action:IHomeAction) : IHomeRedux {
 
     switch (action.type) {
         case CHANGE_PRESENTATION_LANGUAGE: {  

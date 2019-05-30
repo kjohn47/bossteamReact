@@ -5,7 +5,7 @@ export interface ImenuProps {
     isLogged : boolean;
     currentUsr? : IcurrentUser;
     menuText? : ImenuText;
-    appGetLanguage: Function;
+    appGetLanguage( language: string ): Function;
 }
 
 // Menu states
@@ -78,6 +78,6 @@ export interface ILanguageText {
 export interface IUserMenu {
     userMnText?: IusrMnText;
     user?: IcurrentUser;
-    userMenuAction?: Function;
+    userMenuAction?(): void;
     loading?:boolean;
 }

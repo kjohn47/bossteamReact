@@ -60,12 +60,17 @@ export interface ICommentData {
     Mine?: boolean;
 }
 
-export interface IAddComment {
-    addCommentAction?: Function;
-    handleCommentText?: Function;
+export interface IAddComment {    
+    addComment? (): void;
+    handleCommentText?( event: any ): void;
     commentValue?: string;
     loading?:boolean;
     emptyComment?: boolean;
+}
+
+export interface IAddCommentAction
+{
+    addCommentAction?( comment: string ): void; 
 }
 
 export interface IAddCommentText {

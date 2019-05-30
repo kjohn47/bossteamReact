@@ -58,7 +58,7 @@ const defaultState: IAppSettings = {
     } 
 }
 
-function getLoadingState(isLocalLoading: boolean, pageLoading: ILoading, loadLocalization: string)
+function getLoadingState( isLocalLoading: boolean, pageLoading: ILoading, loadLocalization: string ) : ILoading
 {
     let loading: ILoading = {
         isPageLoading: isLocalLoading ? pageLoading.isPageLoading : true,
@@ -71,7 +71,7 @@ function getLoadingState(isLocalLoading: boolean, pageLoading: ILoading, loadLoc
     return {...loading};
 }
 
-function endLoadingState(isLocalLoading: boolean, pageLoading: ILoading, loadLocalization: string)
+function endLoadingState( isLocalLoading: boolean, pageLoading: ILoading, loadLocalization: string ) : ILoading
 {
     let loading: ILoading = {
         isPageLoading: isLocalLoading ? pageLoading.isPageLoading : false,
@@ -84,7 +84,7 @@ function endLoadingState(isLocalLoading: boolean, pageLoading: ILoading, loadLoc
     return {...loading};
 }
 
-function getTranslatedError( language: string, error: IErrorHandling )
+function getTranslatedError( language: string, error: IErrorHandling ) : IErrorHandling
 {
     let recievedCode = error.errorCode;
     let errorData: IErrorHandlingTextTranslation = GetPropertyValue(ERRORS, recievedCode);
@@ -122,7 +122,7 @@ function getTranslatedError( language: string, error: IErrorHandling )
     return errorOut;
 }
 
-export function appSettings(state:IAppSettings = defaultState, action:IappAction) {
+export function appSettings(state:IAppSettings = defaultState, action:IappAction) : IAppSettings {
 
     switch (action.type) {
         case APP_GET_LANGUAGE: {            

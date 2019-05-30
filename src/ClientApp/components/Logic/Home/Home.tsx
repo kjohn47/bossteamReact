@@ -8,7 +8,7 @@ import { IPageTop } from '../../../interfaces/common';
 
 type IpresentationReduxProps = IAppSettings & IHomeActions & IHomeRedux;
 
-function homeLogic (WrappedComponent:React.ComponentType<IPageTop>)
+function homeLogic (WrappedComponent:React.ComponentType<IPageTop>): React.ComponentType
 {
     class HomeLogic extends React.Component<IpresentationReduxProps,{}>{
 
@@ -35,7 +35,7 @@ function homeLogic (WrappedComponent:React.ComponentType<IPageTop>)
             );
         }
     }
-    const mapStateToProps = (state:Istore) => {
+    const mapStateToProps = (state:Istore) : IAppSettings & IHomeRedux => {
         return {
             presentationLanguage: state.appSettings.presentationLanguage,
             presentationData: state.home.presentationData,
@@ -43,7 +43,7 @@ function homeLogic (WrappedComponent:React.ComponentType<IPageTop>)
          };
     };
 
-    const mapDispatchToProps = (dispatch:Function) => ({
+    const mapDispatchToProps = (dispatch:Function) : IHomeActions => ({
         getHomeData: (language: string) => dispatch(getHomeData(language)),                
         changePresentationLanguage: (language: string) => dispatch(changePresentationLanguage(language)),
         resetHomeData: () => dispatch(resetHomeData())

@@ -36,7 +36,7 @@ const defaultState: InewsListRedux = {
 
 //// -- News List
 
-function changeNewsLanguage(language:string, newsList:INewsData[]):IcardMainData[]
+function changeNewsLanguage(language:string, newsList:INewsData[]) : IcardMainData[]
 {
     let myNews:IcardMainData[] = [];
     newsList.forEach(news => {
@@ -62,7 +62,7 @@ function changeNewsLanguage(language:string, newsList:INewsData[]):IcardMainData
 
 //// -- View news data
 
-function changeNewsDataLanguage(language:string, newsServer: IViewNewsDataServer)
+function changeNewsDataLanguage(language:string, newsServer: IViewNewsDataServer) : IViewNewsData
 {   
     let translatedNewsData: InewsServerDataText = GetPropertyValue(newsServer, language);
     if( translatedNewsData === null || translatedNewsData === undefined )
@@ -84,7 +84,7 @@ function changeNewsDataLanguage(language:string, newsServer: IViewNewsDataServer
     return newsData;
 }
 
-function addCommentToNews( newsDataLocal: IViewNewsData, newsDataServer: IViewNewsDataServer, comments: ICommentData[] )
+function addCommentToNews( newsDataLocal: IViewNewsData, newsDataServer: IViewNewsDataServer, comments: ICommentData[] ) : InewsListRedux
 {   
     newsDataServer.comments = [...comments]; 
     newsDataLocal.comments = newsDataServer.comments;
@@ -100,7 +100,7 @@ function addCommentToNews( newsDataLocal: IViewNewsData, newsDataServer: IViewNe
 
 //// -- News Reducer
 
-export function news(state:InewsListRedux = defaultState, action:InewsAction) {
+export function news(state:InewsListRedux = defaultState, action:InewsAction) : InewsListRedux {
 
     switch (action.type) {
         case GET_NEWS_LIST: {  
