@@ -11,7 +11,7 @@ import {ptCode, LOAD_NEW_COMMENT, LOAD_HOME_NEWS} from '../../../settings';
 import {IcurrentUser} from '../../../interfaces/currentUser';
 import { INewsData, IViewNewsDataServer, InewsAction } from '../../../interfaces/news';
 import { getNewsListFromServer, getNewsDataFromServer, addNewsCommentToServer} from './newsServerCalls';
-import { ICommentData } from '../../../interfaces/common';
+import { ICommentData, IServerPayload } from '../../../interfaces/common';
 import { commonServerAction } from '../common';
 //// Actions for News List
 
@@ -27,13 +27,13 @@ export function getNewsListShort( language: string = ptCode ) :Function {
     }
 }
 
-function getNewsListSuccess( result: INewsData[], language: string  ) : InewsAction
+function getNewsListSuccess( result: IServerPayload, language: string  ) : InewsAction
 {
     return {
         type: GET_NEWS_LIST,
         payload: {
             language: language,
-            newsList: result
+            newsList: result.newsList
         }
     }
 }
@@ -63,13 +63,13 @@ export function getNewsData ( language: string = ptCode, ID: number ) : Function
     }
 }
 
-function getNewsDataSuccess ( result: IViewNewsDataServer, language: string ) : InewsAction
+function getNewsDataSuccess ( result: IServerPayload, language: string ) : InewsAction
 {
     return {
         type: GET_NEWS_DATA,
         payload: {
             language: language,
-            newsData: result
+            newsData: result.newsData
         }
     }
 }
@@ -100,12 +100,12 @@ export function addNewsComment (newsID: number, comment: string, user:IcurrentUs
     }
 }
 
-function addNewsCommentSuccess ( result: ICommentData[] , newsID: number ) : InewsAction
+function addNewsCommentSuccess ( result: IServerPayload , newsID: number ) : InewsAction
 {
     return {
         type: ADD_NEWS_COMMENT,
         payload: {
-            comments: result,
+            comments: result.comments,
             newsID: newsID
         }
     }

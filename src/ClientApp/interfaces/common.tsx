@@ -1,3 +1,8 @@
+import { INewsData, IViewNewsDataServer } from "./news";
+import { IhomeDataServer } from "./home";
+import { ILoginResponse } from "./login";
+import { IRegistrationResult, ICheckUsernameResult } from "./registration";
+
 ////Header Interfaces
 export interface IPageHeader {
     title: string;
@@ -118,6 +123,22 @@ export interface IErrorHandling {
 export interface IErrorHandlingText {
     errorMessage?: string;
     errorTitle?:string;    
+}
+
+export interface IServerResponse {
+    payload?: IServerPayload;
+    hasError: boolean;
+    errorMessage?: string;
+}
+
+export interface IServerPayload {
+    homedata?: IhomeDataServer;
+    newsList?: INewsData[];
+    newsData?: IViewNewsDataServer;
+    comments?: ICommentData[];
+    loginData?: ILoginResponse;
+    registrationData?: IRegistrationResult;
+    checkUsernameResponse?: ICheckUsernameResult;
 }
 
 export interface IErrorHandlingTextTranslation {

@@ -3,6 +3,7 @@ import { CHECK_USERNAME, MAKE_REGISTRATION, RESET_REGISTRATION } from "../../act
 import { commonServerAction } from "../common";
 import { LOAD_REGISTRATION } from "../../../settings";
 import { checkUsenameExists, registrateUserInServer } from "./registrationServerCalls";
+import { IServerPayload } from "../../../interfaces/common";
 
 export function checkUserNameRegistration( username: string ) : Function {
     return (dispatch: Function) =>  {   
@@ -10,11 +11,11 @@ export function checkUserNameRegistration( username: string ) : Function {
     }
 }
 
-function checkUserNameRegistrationSuccess( result: ICheckUsernameResult ): IRegistrationAction {
+function checkUserNameRegistrationSuccess( result: IServerPayload ): IRegistrationAction {
     return {        
         type: CHECK_USERNAME,
         payload: {
-            usernameInUse: result.usernameInUse
+            usernameInUse: result.checkUsernameResponse.usernameInUse
         }        
     }
 }
@@ -32,12 +33,12 @@ export function makeUserRegistration ( name: string, surname: string, email: str
     }
 }
 
-function makeUserRegistrationSuccess( result: IRegistrationResult ): IRegistrationAction {
+function makeUserRegistrationSuccess( result: IServerPayload ): IRegistrationAction {
     return {        
         type: MAKE_REGISTRATION,
         payload: {
-            usernameInUse: result.usernameInUse,
-            registrationSuccess: result.registrationSuccess
+            usernameInUse: result.registrationData.usernameInUse,
+            registrationSuccess: result.registrationData.registrationSuccess
         }        
     }
 }
