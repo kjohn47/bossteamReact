@@ -3,21 +3,27 @@ import axios from 'axios';
 
 import {tempUser} from '../../../pageData/mock/user';
 import { IcurrentUser } from '../../../interfaces/currentUser';
-import { ILoginResponse, ILoginState } from '../../../interfaces/login';
+import { ILoginState } from '../../../interfaces/login';
 import { serverResolve } from '../common';
 import { ERROR_LOGIN, ERROR_LOGOUT } from '../../../settings';
+import { IServerResponse } from '../../../interfaces/common';
 
 //// APP
 export async function makeLoginOnServer( loginArg: ILoginState ) : Promise<any>{
     return await serverResolve( () =>
     {
-        let userServer:ILoginResponse = {
-            success: false        
+        let serverReturn:IServerResponse = {
+            hasError: false,
+            payload: {
+                loginData: {
+                    success: false
+                }
+            }                  
         };
 
         if( loginArg.user === "abc" && loginArg.password === "123")////To replace with server call -- mock abc/123
         {
-            userServer = {
+            serverReturn.payload.loginData = {
                 success: true,
                 user: tempUser
             };
@@ -25,7 +31,7 @@ export async function makeLoginOnServer( loginArg: ILoginState ) : Promise<any>{
         
         return new Promise( (resolve: Function) => { 
             setTimeout( () => {
-                resolve(userServer)
+                resolve(serverReturn)
                 }, 1000 )
         })
         
@@ -36,6 +42,10 @@ export async function makeLoginOnServer( loginArg: ILoginState ) : Promise<any>{
 export async function makeLogoutOnServer( user: IcurrentUser ) : Promise<any>{
     return await serverResolve( () =>
     {
+        let serverReturn: IServerResponse = {
+            hasError: false
+        }
+        
         if(user === null )
         {
             throw new Error("Invalid user");
@@ -44,7 +54,7 @@ export async function makeLogoutOnServer( user: IcurrentUser ) : Promise<any>{
         {            
             return new Promise( (resolve: Function) => { 
                 setTimeout( () => {
-                    resolve(true)
+                    resolve( serverReturn )
                     }, 800 )
             })
         }

@@ -25,8 +25,7 @@ import {
     makeLogoutOnServer 
     } from './appServerCalls';
     
-import { IErrorHandling } from '../../../interfaces/common';
-import { ILoginResponse } from '../../../interfaces/login';
+import { IErrorHandling, IServerPayload } from '../../../interfaces/common';
 import { IcurrentUser } from '../../../interfaces/currentUser';
 import { commonServerAction } from '../common';
 import { IappAction } from '../../../interfaces/appSettings';
@@ -53,19 +52,19 @@ export function makeLogin( user: string, password: string )  : Function {
     }
 }
 
-function updateLoginToken( result: ILoginResponse ) : void
+function updateLoginToken( result: IServerPayload ) : void
 {
-    if(result.success)
+    if(result.loginData.success)
     {
-        setCurrentUser(result.user);
+        setCurrentUser(result.loginData.user);
     }
 }
 
-function makeLoginSuccess( result: ILoginResponse ) : IappAction {
+function makeLoginSuccess( result: IServerPayload ) : IappAction {
     return {
         type: MAKE_LOGIN,
         payload: {
-                login: result
+                login: result.loginData
             }
     }
 }
@@ -83,7 +82,7 @@ function logoutFunctions() : void {
         {window.location.assign(pageHome); }  
 }
 
-function logout(result:any) : IappAction {
+function logout(result:IServerPayload) : IappAction {
     return {
         type: MAKE_LOGOUT
     }
