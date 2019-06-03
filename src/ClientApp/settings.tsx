@@ -19,6 +19,7 @@ export const ERROR_LOGOUT = 'ERROR_LOGOUT';
 export const ERROR_HOME_PAGE = 'ERROR_HOME_PAGE';
 export const ERROR_GET_NEWS_LIST = 'ERROR_GET_NEWS_LIST';
 export const ERROR_GET_NEWS_DATA = 'ERROR_GET_NEWS_DATA';
+export const ERROR_USER_REGISTRATION = 'ERROR_USER_REGISTRATION';
 
 //APP
 export const Show_Error_Detailed = true;////set true to dev, false to prd

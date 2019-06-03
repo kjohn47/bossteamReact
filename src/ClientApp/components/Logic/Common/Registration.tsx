@@ -6,11 +6,14 @@ import {
     IRegistrationPropsRedux, 
     IRegistrationActions, 
     IRegistrationStateLogic, 
-    RegistrationLogicType 
+    RegistrationLogicType, 
+    IRegistrationSuccessPropsView
     } from '../../../interfaces/registration';
-import { checkRegexText, REGEX_FIELD } from '../../../settings';
+import { checkRegexText, REGEX_FIELD, pageHome } from '../../../settings';
+import { checkUserNameRegistration, makeUserRegistration, resetRegistration } from '../../../store/actions/registration';
+import { Redirect } from 'react-router';
 
-function registrationLogic( WrappedComponent: React.ComponentType<IRegistrationPropsView>) : React.ComponentType
+function registrationLogic( WrappedComponent: React.ComponentType<IRegistrationPropsView>, SuccessComponent: React.ComponentType<IRegistrationSuccessPropsView> ) : React.ComponentType
 {
     class RegistrationLogic extends React.Component< RegistrationLogicType, IRegistrationStateLogic >
     {
@@ -34,9 +37,16 @@ function registrationLogic( WrappedComponent: React.ComponentType<IRegistrationP
                 surnameIsEmpty: false,
                 emailIsNotValid: false,
                 usernameIsEmpty: false,
-                passwordIsEmpty: false
+                passwordIsEmpty: false,
+                triedSubmit: false,
+                validatingUsername: false
             }
-        }        
+        }       
+        
+        componentWillUnmount() {
+            this.props.resetRegistration();
+        }
+
 
         handleName( event: any ): void {
             let newText = checkRegexText( event.target.value, this.state.name, REGEX_FIELD.NAME );
@@ -66,12 +76,18 @@ function registrationLogic( WrappedComponent: React.ComponentType<IRegistrationP
             let newText = checkRegexText( event.target.value, this.state.username, REGEX_FIELD.USERNAME );
             this.setState({
                 username: newText,
-                usernameIsEmpty: false
+                usernameIsEmpty: false,
+                validatingUsername: false
             })
         }
 
         checkUsername(): void {
-            this.props.checkUserNameRegistration( this.state.username );
+            if( this.state.username.length > 0 ) {
+                this.props.checkUserNameRegistration( this.state.username );
+            }
+            this.setState({
+                validatingUsername: true
+            })
         }
 
         handlePassword( event: any ): void {
@@ -87,15 +103,11 @@ function registrationLogic( WrappedComponent: React.ComponentType<IRegistrationP
             if( this.state.username.trim() === '' )
             {
                 this.setState({
-                    usernameIsEmpty: true
+                    usernameIsEmpty: true,
+                    validatingUsername: false
                 });
                 isvalid = false;
             }     
-            else
-            {
-                this.checkUsername();
-                isvalid = !this.props.usernameInUse;
-            }
 
             if( this.state.name.trim() === '' )
             {
@@ -131,35 +143,51 @@ function registrationLogic( WrappedComponent: React.ComponentType<IRegistrationP
                 isvalid = false;
             }     
 
-            if( !this.props.usernameInUse && isvalid )
-            {
+            if( isvalid && !this.props.usernameInUse )
+            {                
                 this.props.makeUserRegistration( this.state.name, this.state.surname, this.state.email, this.state.username, this.state.password );
+                this.setState({
+                    triedSubmit: true
+                });
             }
         }
 
         render(){
             return(
-                <WrappedComponent 
-                    name = { this.state.name }
-                    surname = { this.state.surname }
-                    email = { this.state.email }
-                    username = { this.state.username }
-                    password = { this.state.password }
-                    nameIsEmpty = { this.state.nameIsEmpty }
-                    surnameIsEmpty = { this.state.surnameIsEmpty }
-                    emailIsNotValid = { this.state.emailIsNotValid }
-                    usernameIsEmpty = { this.state.usernameIsEmpty }
-                    usernameIsInUse = { this.props.usernameInUse }
-                    passwordIsEmpty = { this.state.passwordIsEmpty }                  
-                    handleName = { this.handleName }
-                    handleSurname = { this.handleSurname }
-                    handleEmail = { this.handleEmail }
-                    handleUsername = { this.handleUsername }
-                    handlePassword = { this.handlePassword }
-                    handleSubmit = { this.handleSubmit }
-                    registrationText = { this.props.registrationText }
-                    isUsernameLoading = { this.props.isUsernameLoading }
-                />
+                this.props.isLogged?
+                    <Redirect to = { pageHome } />
+                :
+                    this.state.triedSubmit && this.props.registrationSuccess?
+                        <SuccessComponent 
+                            title = { this.props.registrationText.title }
+                            successText = { this.props.registrationText.successText }
+                            username = { this.state.username }
+                        />
+                    :
+                        <WrappedComponent 
+                            name = { this.state.name }
+                            surname = { this.state.surname }
+                            email = { this.state.email }
+                            username = { this.state.username }
+                            password = { this.state.password }
+                            nameIsEmpty = { this.state.nameIsEmpty }
+                            surnameIsEmpty = { this.state.surnameIsEmpty }
+                            emailIsNotValid = { this.state.emailIsNotValid }
+                            usernameIsEmpty = { this.state.usernameIsEmpty }
+                            usernameIsInUse = { this.props.usernameInUse }
+                            passwordIsEmpty = { this.state.passwordIsEmpty }                  
+                            handleName = { this.handleName }
+                            handleSurname = { this.handleSurname }
+                            handleEmail = { this.handleEmail }
+                            handleUsername = { this.handleUsername }
+                            handlePassword = { this.handlePassword }
+                            handleSubmit = { this.handleSubmit }
+                            registrationText = { this.props.registrationText }
+                            isUsernameLoading = { this.props.isUsernameLoading }   
+                            checkUsername = { this.checkUsername }    
+                            failedToRegist = { this.state.triedSubmit && !this.props.registrationSuccess }      
+                            validUsername = { this.state.validatingUsername && !this.props.usernameInUse && !this.props.isUsernameLoading }                                   
+                        />
             )
         }
     }
@@ -168,14 +196,16 @@ function registrationLogic( WrappedComponent: React.ComponentType<IRegistrationP
         return {
             isLogged: state.appSettings.isLogged,
             registrationText: state.appSettings.registrationText,
-            usernameInUse: false, ////state.registration.usernameInUse,
-            isUsernameLoading: state.appSettings.fetchData.loading.localLoading.loadUserRegistration
+            usernameInUse: state.registration.usernameInUse,
+            isUsernameLoading: state.appSettings.fetchData.loading.localLoading.loadUserRegistration,
+            registrationSuccess: state.registration.registrationSuccess
         }
     }
 
     const mapDispatchToProps = (dispatch: Function): IRegistrationActions => ({
-        makeUserRegistration: ( name: string, surname: string, email: string, username: string, password: string ) => dispatch( ()=>{} ),
-        checkUserNameRegistration: ( username: string ) => dispatch( ()=>{} )
+        makeUserRegistration: ( name: string, surname: string, email: string, username: string, password: string ) => dispatch( makeUserRegistration( name, surname, email, username, password ) ),
+        checkUserNameRegistration: ( username: string ) => dispatch( checkUserNameRegistration( username ) ),
+        resetRegistration: () => dispatch( resetRegistration() )
     })
 
     return connect(mapStateToProps, mapDispatchToProps)(RegistrationLogic)

@@ -9,6 +9,8 @@ export interface IRegistrationText {
     emptyValidation: string;
     invalidEmail: string;
     userInUse: string;
+    successText: string;
+    failedRegistration: string;
 }
 
 export interface IRegistrationTextTranslations {
@@ -21,17 +23,15 @@ export interface IRegistrationAction {
     payload?: IRegistrationPayload;
 }
 
-export interface IRegistrationPayload {
-    name: string;
-    surname: string;
-    email: string;
-    username: string;
-    password: string;    
+export interface IRegistrationPayload { 
+    usernameInUse?: boolean;
+    registrationSuccess?: boolean;
 }
 
 export interface IRegistrationActions {
     makeUserRegistration( name: string, surname:string, email:string, username: string, password: string ): Function;
     checkUserNameRegistration( username: string ): Function;
+    resetRegistration(): Function;
 }
 
 export interface IRegistrationPropsView {
@@ -41,6 +41,7 @@ export interface IRegistrationPropsView {
     handleSurname( event: any ): void;
     handlePassword( event: any ): void;
     handleSubmit(): void;
+    checkUsername(): void;
     registrationText: IRegistrationText;
     name: string;
     surname: string;
@@ -54,6 +55,14 @@ export interface IRegistrationPropsView {
     usernameIsInUse: boolean;
     passwordIsEmpty: boolean;
     isUsernameLoading: boolean;
+    failedToRegist: boolean;
+    validUsername: boolean;
+}
+
+export interface IRegistrationSuccessPropsView {
+    username: string;
+    title: string;
+    successText: string;
 }
 
 export interface IRegistrationStateLogic {
@@ -67,6 +76,8 @@ export interface IRegistrationStateLogic {
     emailIsNotValid: boolean;
     usernameIsEmpty: boolean;
     passwordIsEmpty: boolean;
+    triedSubmit: boolean;
+    validatingUsername: boolean;
 }
 
 export interface IRegistrationPropsRedux {
@@ -74,10 +85,29 @@ export interface IRegistrationPropsRedux {
     isLogged: boolean;
     usernameInUse: boolean;
     isUsernameLoading: boolean;
+    registrationSuccess: boolean;
 }
 
 export interface IRegistrationReduxState {
     usernameInUse: boolean;
+    registrationSuccess: boolean;
 }
 
 export type RegistrationLogicType = IRegistrationPropsRedux & IRegistrationActions;
+
+export interface ICheckUsernameResult {
+    usernameInUse: boolean;
+}
+
+export interface IRegistrationResult {
+    usernameInUse: boolean;
+    registrationSuccess: boolean;
+}
+
+export interface IUserRegistrationArg {
+    name: string;
+    surname: string;
+    email: string;
+    username: string;
+    password: string;
+}

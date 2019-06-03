@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Form, FormGroup, Label, Input, FormFeedback, Col, Button } from 'reactstrap';
+import { Form, FormGroup, Label, Input, FormFeedback, Col, Button, Spinner, Alert } from 'reactstrap';
 import PageHeader from './PageHeader';
 import { IRegistrationPropsView } from '../../../interfaces/registration';
 
@@ -9,6 +9,7 @@ class RegistrationView extends React.PureComponent<IRegistrationPropsView,{}>
         return(
             <Form>
                 <PageHeader title={ this.props.registrationText.title } />
+                { this.props.failedToRegist && <Alert color="danger" >{ this.props.registrationText.failedRegistration }</Alert> }
                 <FormGroup row>
                     <Label xl = {1} sm = {2} >{ this.props.registrationText.name }</Label>
                     <Col xl = {11} sm = {10} >
@@ -64,10 +65,13 @@ class RegistrationView extends React.PureComponent<IRegistrationPropsView,{}>
                             type="text" 
                             name="registration_username" 
                             id="registration_username"
+                            valid = { this.props.validUsername }
                             invalid = {this.props.usernameIsEmpty || this.props.usernameIsInUse}         
-                            onChange= { (event) => this.props.handleUsername(event) }
-                            value= {this.props.username}                   
+                            onChange = { (event) => this.props.handleUsername(event) }
+                            onBlur = { () => this.props.checkUsername() }
+                            value= { this.props.username }                   
                         />
+                        { this.props.isUsernameLoading && <Spinner size="sm" color="secondary" className="loginSpinner"/>}                        
                         <FormFeedback>
                         { this.props.usernameIsInUse? 
                             this.props.registrationText.userInUse 
