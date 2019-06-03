@@ -105,6 +105,7 @@ interface ILocalLoading {
     loadLogin?: boolean;
     loadComment?: boolean;
     loadHomeNews?: boolean;
+    loadUserRegistration?: boolean;
 }
 
 export interface IErrorHandling {

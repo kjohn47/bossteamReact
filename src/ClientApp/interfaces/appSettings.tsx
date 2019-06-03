@@ -3,13 +3,15 @@ import {InewsLanguage} from './news';
 import {IAddCommentText, ICommentText, IErrorHandling, ILoading, IErrorHandlingText} from './common';
 import {IcurrentUser} from './currentUser';
 import { IloginMenu, ILoginResponse, IloginFormHeader } from './login';
+import { IRegistrationText } from './registration';
 export interface IAppSettings {
     loginForm?: IloginMenu; 
     loginFormHeader?: IloginFormHeader;
+    registrationText?: IRegistrationText;
     menuText?: ImenuText;
     newsLanguage?: InewsLanguage;
     addCommentText?: IAddCommentText;
-    commentText?:ICommentText;
+    commentText?:ICommentText;    
     presentationLanguage?: string;
     isLogged?: boolean;
     loggedUser?: IcurrentUser;

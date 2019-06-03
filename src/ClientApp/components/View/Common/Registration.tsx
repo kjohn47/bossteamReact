@@ -1,86 +1,100 @@
 import * as React from 'react';
 import { Form, FormGroup, Label, Input, FormFeedback, Col, Button } from 'reactstrap';
 import PageHeader from './PageHeader';
+import { IRegistrationPropsView } from '../../../interfaces/registration';
 
-class RegistrationView extends React.PureComponent<{},{}> 
+class RegistrationView extends React.PureComponent<IRegistrationPropsView,{}> 
 {
     render(){
         return(
             <Form>
-                <PageHeader title="Registration:" />
+                <PageHeader title={ this.props.registrationText.title } />
                 <FormGroup row>
-                    <Label xl = {1} sm = {2} >Name:</Label>
+                    <Label xl = {1} sm = {2} >{ this.props.registrationText.name }</Label>
                     <Col xl = {11} sm = {10} >
                         <Input 
                             type="text" 
                             name="registration_name" 
                             id="registration_name"
-                            invalid = {false}
+                            invalid = {this.props.nameIsEmpty}
+                            onChange= { (event) => this.props.handleName(event) }
+                            value= {this.props.name}
                         />
-                    </Col>
-                    <FormFeedback>
-                        Invalid Text
-                    </FormFeedback>
+                        <FormFeedback>
+                        { this.props.registrationText.emptyValidation.replace("[FIELD]", this.props.registrationText.name) }
+                        </FormFeedback>
+                    </Col>                    
                 </FormGroup> 
                 <FormGroup row>
-                    <Label xl = {1} sm = {2} >Surname:</Label>
+                    <Label xl = {1} sm = {2} >{ this.props.registrationText.surname }</Label>
                     <Col xl = {11} sm = {10} >
                         <Input 
                             type="text" 
                             name="registration_surname" 
                             id="registration_surname"
-                            invalid = {false}
+                            invalid = {this.props.surnameIsEmpty}
+                            onChange= { (event) => this.props.handleSurname(event) }
+                            value= {this.props.surname}
                         />
-                    </Col>
-                    <FormFeedback>
-                        Invalid Text
-                    </FormFeedback>
+                        <FormFeedback>
+                        { this.props.registrationText.emptyValidation.replace("[FIELD]", this.props.registrationText.surname) }
+                        </FormFeedback>
+                    </Col>                    
                 </FormGroup> 
                 <FormGroup row>
-                    <Label xl = {1} sm = {2} >Email:</Label>
+                    <Label xl = {1} sm = {2} >{ this.props.registrationText.email }</Label>
                     <Col xl = {11} sm = {10} >
                         <Input 
-                            type="email" 
+                            type="text" 
                             name="registration_email" 
                             id="registration_email"                            
-                            invalid = {false}
+                            invalid = {this.props.emailIsNotValid}
+                            onChange= { (event) => this.props.handleEmail(event) }
+                            value= {this.props.email}
                         />
+                        <FormFeedback>
+                        { this.props.registrationText.invalidEmail }
+                        </FormFeedback>
                     </Col>
-                    <FormFeedback>
-                        Invalid Text
-                    </FormFeedback>
                 </FormGroup> 
                 <FormGroup row>
-                    <Label xl = {1} sm = {2} >Username:</Label>
+                    <Label xl = {1} sm = {2} >{ this.props.registrationText.username }</Label>
                     <Col xl = {11} sm = {10} >
                         <Input 
                             type="text" 
                             name="registration_username" 
                             id="registration_username"
-                            invalid = {false}
+                            invalid = {this.props.usernameIsEmpty || this.props.usernameIsInUse}         
+                            onChange= { (event) => this.props.handleUsername(event) }
+                            value= {this.props.username}                   
                         />
-                    </Col>
-                    <FormFeedback>
-                        Invalid Text
-                    </FormFeedback>
+                        <FormFeedback>
+                        { this.props.usernameIsInUse? 
+                            this.props.registrationText.userInUse 
+                            : 
+                            this.props.registrationText.emptyValidation.replace("[FIELD]", this.props.registrationText.username) }
+                        </FormFeedback>
+                    </Col>                    
                 </FormGroup> 
                 <FormGroup row>
-                    <Label xl = {1} sm = {2} >Password:</Label>
+                    <Label xl = {1} sm = {2} >{ this.props.registrationText.password }</Label>
                     <Col xl = {11} sm = {10} >
                         <Input 
                             type="password" 
                             name="registration_password" 
                             id="registration_password"
-                            invalid = {false}
+                            invalid = {this.props.passwordIsEmpty}
+                            onChange= { (event) => this.props.handlePassword(event) }
+                            value= {this.props.password}
                         />
+                        <FormFeedback>
+                        { this.props.registrationText.emptyValidation.replace("[FIELD]", this.props.registrationText.password) }
+                        </FormFeedback>
                     </Col>
-                    <FormFeedback>
-                        Invalid Text
-                    </FormFeedback>
                 </FormGroup> 
                 <FormGroup row>
                 <Col xl={{ size: 11, offset: 1 }} sm={{ size: 10, offset: 2 }}>
-                    <Button onClick = { () => {} } >Submit</Button>
+                    <Button onClick = { () => {} } >{ this.props.registrationText.submit }</Button>
                 </Col>
                 </FormGroup>
             </Form>
