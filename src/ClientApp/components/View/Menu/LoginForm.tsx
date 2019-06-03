@@ -2,6 +2,7 @@ import * as React from 'react';
 import {NavItem, NavLink, Button, Form, FormGroup, Label, Input, Spinner, FormFeedback } from 'reactstrap';
 import {ILogin} from '../../../interfaces/login';
 import {NavLink as RouterLink} from 'react-router-dom';
+import { registrationRoute } from '../../../settings';
 
 class LoginForm extends React.PureComponent<ILogin,{}>{
 
@@ -56,7 +57,7 @@ class LoginForm extends React.PureComponent<ILogin,{}>{
                     { this.props.loading ?
                             <div className="nav-link registLink">{loginText.register}</div>
                         :
-                            <RouterLink className="nav-link registLink" to="/">{loginText.register}</RouterLink>
+                            <RouterLink className="nav-link registLink" to={registrationRoute}>{loginText.register}</RouterLink>
                     }
                     </NavItem>
                 </div>

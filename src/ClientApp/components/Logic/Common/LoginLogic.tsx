@@ -5,7 +5,7 @@ import { Istore } from '../../../interfaces/store';
 import { IUserMenu } from '../../../interfaces/menu';
 import { IAppSettings, IappActions } from '../../../interfaces/appSettings';
 import { makeLogin, makeLogout, resetLoginStatus } from '../../../store/actions/appSettings';
-import { results } from '../../../settings';
+import { results, REGEX_FIELD, checkRegexText } from '../../../settings';
 import { IcurrentUser } from '../../../interfaces/currentUser';
 
 type loginPropsType = IAppSettings & IappActions & ILogin;
@@ -32,14 +32,7 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
         }
 
         handleUser(event: any) : void {
-            let newText: string = event.target.value;
-            var format = /^[!@#$%^&*()ºª_+\-=\[\]{};':"\\|,.<>\/?]*$/;
-            if( ( newText !== '' && 
-                    newText.charAt(newText.length - 1).match(format) ) ||
-                ( newText.length === 1 &&
-                    !isNaN(newText as unknown as number) ) ){
-                newText = this.state.user;           
-            }
+            let newText: string = checkRegexText( event.target.value, this.state.user, REGEX_FIELD.USERNAME );
             this.setState(
                 {
                     emptyUser: false,
