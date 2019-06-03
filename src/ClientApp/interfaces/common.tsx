@@ -105,6 +105,7 @@ interface ILocalLoading {
     loadLogin?: boolean;
     loadComment?: boolean;
     loadHomeNews?: boolean;
+    loadUserRegistration?: boolean;
 }
 
 export interface IErrorHandling {
@@ -137,4 +138,5 @@ export interface IErrorHandlingErrors {
     ERROR_HOME_PAGE: IErrorHandlingTextTranslation;
     ERROR_GET_NEWS_LIST: IErrorHandlingTextTranslation;
     ERROR_GET_NEWS_DATA: IErrorHandlingTextTranslation;
+    ERROR_USER_REGISTRATION: IErrorHandlingTextTranslation;
 }

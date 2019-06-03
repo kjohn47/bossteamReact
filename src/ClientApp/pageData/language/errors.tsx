@@ -81,5 +81,15 @@ export const ERRORS: IErrorHandlingErrors = {
             errorMessage: "An error occurred when ending the session",
             errorTitle: "Error: Logout"
         }
-    }
+    },
+    ERROR_USER_REGISTRATION: {
+        PT: {
+            errorMessage: "Ocurreu um erro a registar o utilizador",
+            errorTitle: "Erro: Registo"
+        },
+        EN: {
+            errorMessage: "An error occurred when making user registration",
+            errorTitle: "Error: Registration"
+        }
+    }    
 }

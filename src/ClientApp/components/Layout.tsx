@@ -15,11 +15,11 @@ class Layout extends React.Component<{},{}>{
                 <Menu />
             </header>
             <section className="row main-content">
-                <div className="col-md-1 hidden-sm OuterColLayout"></div>
+                <div className="col-md-1 d-none d-md-block OuterColLayout"></div>
                     <ErrorHandling >
                         {this.props.children}
                     </ErrorHandling>
-                <div className="col-md-1 hidden-sm OuterColLayout"></div>
+                <div className="col-md-1 d-none d-md-block  OuterColLayout"></div>
             </section>
             <div className="row separatorRow">
                 <div className="col-xs-12">&nbsp;</div>

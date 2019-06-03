@@ -22,9 +22,11 @@ import {
     LOAD_NEW_COMMENT,
     LOAD_HOME_NEWS,
     Show_Error_Detailed,
-    GetPropertyValue} from '../../settings';
+    GetPropertyValue,
+    LOAD_REGISTRATION} from '../../settings';
 import { ILoading, IErrorHandling, IErrorHandlingText, IErrorHandlingTextTranslation } from '../../interfaces/common';
 import { ERRORS, TEXT_PAGE_NOT_FOUND } from '../../pageData/language/errors';
+import { TEXT_REGISTRATION } from '../../pageData/language/registration';
 
 const startLang = currentLanguage();
 
@@ -36,6 +38,7 @@ const defaultState: IAppSettings = {
     loginForm: GetPropertyValue(TEXT_LOGIN_MENU, startLang),
     loginFormHeader: GetPropertyValue(TEXT_NEED_LOGIN, startLang),
     pageNotFoundText: GetPropertyValue(TEXT_PAGE_NOT_FOUND, startLang),
+    registrationText: GetPropertyValue(TEXT_REGISTRATION, startLang),
     presentationLanguage: startLang,
     isLogged: checkLogin(),
     loggedUser: getCurrentUser(),
@@ -52,7 +55,8 @@ const defaultState: IAppSettings = {
             localLoading: {
                 loadComment: false,
                 loadLogin: false,
-                loadHomeNews: false
+                loadHomeNews: false,
+                loadUserRegistration: false
             }
         }
     } 
@@ -65,7 +69,8 @@ function getLoadingState( isLocalLoading: boolean, pageLoading: ILoading, loadLo
         localLoading: {
             loadLogin: isLocalLoading  && loadLocalization === LOAD_LOGIN_MENU ? true : pageLoading.localLoading.loadLogin,
             loadComment: isLocalLoading  && loadLocalization === LOAD_NEW_COMMENT ? true : pageLoading.localLoading.loadComment,
-            loadHomeNews: isLocalLoading  && loadLocalization === LOAD_HOME_NEWS ? true : pageLoading.localLoading.loadHomeNews
+            loadHomeNews: isLocalLoading  && loadLocalization === LOAD_HOME_NEWS ? true : pageLoading.localLoading.loadHomeNews,
+            loadUserRegistration: isLocalLoading && loadLocalization === LOAD_REGISTRATION ? true : pageLoading.localLoading.loadUserRegistration
         }        
     }
     return {...loading};
@@ -78,7 +83,8 @@ function endLoadingState( isLocalLoading: boolean, pageLoading: ILoading, loadLo
         localLoading: {
             loadLogin: (isLocalLoading  && loadLocalization === LOAD_LOGIN_MENU) ? false : pageLoading.localLoading.loadLogin,
             loadComment: (isLocalLoading  && loadLocalization === LOAD_NEW_COMMENT) ? false : pageLoading.localLoading.loadComment,
-            loadHomeNews: (isLocalLoading  && loadLocalization === LOAD_HOME_NEWS) ? false : pageLoading.localLoading.loadHomeNews
+            loadHomeNews: (isLocalLoading  && loadLocalization === LOAD_HOME_NEWS) ? false : pageLoading.localLoading.loadHomeNews,
+            loadUserRegistration: isLocalLoading && loadLocalization === LOAD_REGISTRATION ? false : pageLoading.localLoading.loadUserRegistration
         }
     }
     return {...loading};
@@ -144,6 +150,7 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
                 loginFormHeader: GetPropertyValue(TEXT_NEED_LOGIN, lang),
                 loginForm: GetPropertyValue(TEXT_LOGIN_MENU, lang),
                 pageNotFoundText: GetPropertyValue(TEXT_PAGE_NOT_FOUND, lang),
+                registrationText: GetPropertyValue(TEXT_REGISTRATION, lang),
                 presentationLanguage: lang,                
                 fetchData: {...state.fetchData, 
                     error: errorData
