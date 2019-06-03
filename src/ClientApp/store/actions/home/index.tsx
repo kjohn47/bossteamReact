@@ -3,6 +3,7 @@ import {ptCode} from '../../../settings';
 import { getHomeDataFromServer } from './homeServerCalls';
 import { IhomeDataServer, IHomeAction } from '../../../interfaces/home';
 import { commonServerAction } from '../common';
+import { IServerPayload } from '../../../interfaces/common';
 
 export function getHomeData( language: string = ptCode ) : Function {        
     return (dispatch: Function) =>  { 
@@ -10,14 +11,14 @@ export function getHomeData( language: string = ptCode ) : Function {
     }     
 };
 
-function getHomeDataSuccess( result: IhomeDataServer, language: string) : IHomeAction
+function getHomeDataSuccess( result: IServerPayload, language: string) : IHomeAction
 {
     return {
         type: GET_HOME_DATA,
         payload: {
             language: language,
-            presentation: result.presentation,
-            image: result.image
+            presentation: result.homedata.presentation,
+            image: result.homedata.image
         }
     }
 }

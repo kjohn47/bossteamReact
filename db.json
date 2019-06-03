@@ -1,216 +1,262 @@
 {
   "homePage": {
-    "presentation": {
-      "PT": {
-        "description": "Aqui é para quem se destina a página.",
-        "introduction": "Isto é a página de introdução da bossteam, alguma info sobre a página aqui.",
-        "title": "BossTeam"
-      },
-      "EN": {
-        "description": "This is for who this page is.",
-        "introduction": "This is bossteam intro page, some info of the page here.",
-        "title": "BossTeam"
+    "hasError": false,
+    "payload": {
+      "homedata": {
+        "presentation": {
+          "PT": {
+            "description": "Aqui é para quem se destina a página.",
+            "introduction": "Isto é a página de introdução da bossteam, alguma info sobre a página aqui.",
+            "title": "BossTeam"
+          },
+          "EN": {
+            "description": "This is for who this page is.",
+            "introduction": "This is bossteam intro page, some info of the page here.",
+            "title": "BossTeam"
+          }
+        },
+        "image": {
+          "src": "/images/480x360.png",
+          "alt": "HomeImg"
+        }
       }
-    },
-    "image": {
-      "src": "/images/480x360.png",
-      "alt": "HomeImg"
     }
   },
-  "newsList": [
-    {
-      "date": "1990-01-10T00:00:00Z",
-      "outlineColor": "info",
-      "id": 1,
-      "imgLink": "/images/318x180.png",
-      "PT": {
-        "title": "Cartão teste 1",
-        "description": "Isto é um teste de ojecto de dados cartão"
-      },
-      "EN": {
-        "title": "Card Test 1",
-        "description": "This is a test of card data object"
-      }
-    },
-    {
-      "date": "1990-01-10T00:00:00Z",
-      "outlineColor": "info",
-      "id": 2,
-      "imgLink": "/images/318x180.png",
-      "PT": {
-        "title": "Cartão teste 2",
-        "description": "Isto é um teste de ojecto de dados cartão"
-      },
-      "EN": {
-        "title": "Card Test 2",
-        "description": "This is a test of card data object"
-      }
-    },
-    {
-      "date": "1990-01-10T00:00:00Z",
-      "outlineColor": "info",
-      "id": 3,
-      "imgLink": "/images/318x180.png",
-      "PT": {
-        "title": "Cartão teste 3",
-        "description": "Isto é um teste de ojecto de dados cartão"
-      },
-      "EN": {
-        "title": "Card Test 3",
-        "description": "This is a test of card data object"
-      }
-    },
-    {
-      "date": "1990-01-10T00:00:00Z",
-      "outlineColor": "info",
-      "id": 4,
-      "imgLink": "/images/318x180.png",
-      "PT": {
-        "title": "Cartão teste 4",
-        "description": "Isto é um teste de ojecto de dados cartão"
-      }
+  "newsList": {
+    "hasError": false,
+    "payload": {
+      "newsList": [
+        {
+          "date": "1990-01-10T00:00:00Z",
+          "outlineColor": "info",
+          "id": 1,
+          "imgLink": "/images/318x180.png",
+          "PT": {
+            "title": "Cartão teste 1",
+            "description": "Isto é um teste de ojecto de dados cartão"
+          },
+          "EN": {
+            "title": "Card Test 1",
+            "description": "This is a test of card data object"
+          }
+        },
+        {
+          "date": "1990-01-10T00:00:00Z",
+          "outlineColor": "info",
+          "id": 2,
+          "imgLink": "/images/318x180.png",
+          "PT": {
+            "title": "Cartão teste 2",
+            "description": "Isto é um teste de ojecto de dados cartão"
+          },
+          "EN": {
+            "title": "Card Test 2",
+            "description": "This is a test of card data object"
+          }
+        },
+        {
+          "date": "1990-01-10T00:00:00Z",
+          "outlineColor": "info",
+          "id": 3,
+          "imgLink": "/images/318x180.png",
+          "PT": {
+            "title": "Cartão teste 3",
+            "description": "Isto é um teste de ojecto de dados cartão"
+          },
+          "EN": {
+            "title": "Card Test 3",
+            "description": "This is a test of card data object"
+          }
+        },
+        {
+          "date": "1990-01-10T00:00:00Z",
+          "outlineColor": "info",
+          "id": 4,
+          "imgLink": "/images/318x180.png",
+          "PT": {
+            "title": "Cartão teste 4",
+            "description": "Isto é um teste de ojecto de dados cartão"
+          }
+        }
+      ]
     }
-  ],
-  "newsListShort": [
-    {
-      "date": "1990-01-10T00:00:00Z",
-      "outlineColor": "info",
-      "id": 2,
-      "imgLink": "/images/318x180.png",
-      "PT": {
-        "title": "Cartão teste 2",
-        "description": "Isto é um teste de ojecto de dados cartão"
-      },
-      "EN": {
-        "title": "Card Test 2",
-        "description": "This is a test of card data object"
-      }
-    },
-    {
-      "date": "1990-01-10T00:00:00Z",
-      "outlineColor": "info",
-      "id": 3,
-      "imgLink": "/images/318x180.png",
-      "PT": {
-        "title": "Cartão teste 3",
-        "description": "Isto é um teste de ojecto de dados cartão"
-      },
-      "EN": {
-        "title": "Card Test 3",
-        "description": "This is a test of card data object"
-      }
-    },
-    {
-      "date": "1990-01-10T00:00:00Z",
-      "outlineColor": "info",
-      "id": 4,
-      "imgLink": "/images/318x180.png",
-      "PT": {
-        "title": "Cartão teste 4",
-        "description": "Isto é um teste de ojecto de dados cartão"
-      }
+  },
+  "newsListShort": {
+    "hasError": false,
+    "payload": {
+      "newsList": [
+        {
+          "date": "1990-01-10T00:00:00Z",
+          "outlineColor": "info",
+          "id": 2,
+          "imgLink": "/images/318x180.png",
+          "PT": {
+            "title": "Cartão teste 2",
+            "description": "Isto é um teste de ojecto de dados cartão"
+          },
+          "EN": {
+            "title": "Card Test 2",
+            "description": "This is a test of card data object"
+          }
+        },
+        {
+          "date": "1990-01-10T00:00:00Z",
+          "outlineColor": "info",
+          "id": 3,
+          "imgLink": "/images/318x180.png",
+          "PT": {
+            "title": "Cartão teste 3",
+            "description": "Isto é um teste de ojecto de dados cartão"
+          },
+          "EN": {
+            "title": "Card Test 3",
+            "description": "This is a test of card data object"
+          }
+        },
+        {
+          "date": "1990-01-10T00:00:00Z",
+          "outlineColor": "info",
+          "id": 4,
+          "imgLink": "/images/318x180.png",
+          "PT": {
+            "title": "Cartão teste 4",
+            "description": "Isto é um teste de ojecto de dados cartão"
+          }
+        }
+      ]
     }
-  ],
+  },
   "newsData": [
     {
       "id": 1,
-      "date": "1990-01-10T00:00:00Z",
-      "imgLink": "/images/480x360.png",
-      "allowComments": true,
-      "PT": {
-        "title": "OLA 1",
-        "description": "Noticia de teste 1",
-        "content": "Blablabla teste 1 2 3 4 5 6 blaaa"
-      },
-      "EN": {
-        "title": "Hello 1",
-        "description": "Test News 1",
-        "content": "Blablabla test 1 2 3 4 5 6 blaaa"
-      },
-      "comments": [
-        {
-          "Comment": "Comment 1",
-          "ID": 1,
-          "Owner": "Me",
-          "Time": "1990-01-10T00:00:00Z"
-        },
-        {
-          "Comment": "Comment 2",
-          "ID": 2,
-          "Owner": "Me",
-          "Time": "1990-01-19T00:10:00Z"
-        },
-        {
-          "Comment": "teste",
-          "Owner": "John Doe",
-          "Time": "2019-05-27T10:50:36.762Z",
-          "ID": 123
-        },
-        {
-          "Comment": "try comment with uuid identification",
-          "Owner": "John Doe",
-          "Time": "2019-05-29T11:43:50.238Z",
-          "ID": 123,
-          "OwnerID": "ljdfnln-fdgdf-fgdgfd"
-        },
-        {
-          "Comment": "ghjh",
-          "Owner": "John Doe",
-          "Time": "2019-05-29T13:52:07.719Z",
-          "ID": 123,
-          "OwnerID": "ljdfnln-fdgdf-fgdgfd"
+      "hasError": false,
+      "payload": {
+        "newsData": {
+          "id": 1,
+          "date": "1990-01-10T00:00:00Z",
+          "imgLink": "/images/480x360.png",
+          "allowComments": true,
+          "PT": {
+            "title": "OLA 1",
+            "description": "Noticia de teste 1",
+            "content": "Blablabla teste 1 2 3 4 5 6 blaaa"
+          },
+          "EN": {
+            "title": "Hello 1",
+            "description": "Test News 1",
+            "content": "Blablabla test 1 2 3 4 5 6 blaaa"
+          },
+          "comments": [
+            {
+              "Comment": "Comment 1",
+              "ID": 1,
+              "Owner": "Me",
+              "Time": "1990-01-10T00:00:00Z"
+            },
+            {
+              "Comment": "Comment 2",
+              "ID": 2,
+              "Owner": "Me",
+              "Time": "1990-01-19T00:10:00Z"
+            },
+            {
+              "Comment": "teste",
+              "Owner": "John Doe",
+              "Time": "2019-05-27T10:50:36.762Z",
+              "ID": 123
+            },
+            {
+              "Comment": "try comment with uuid identification",
+              "Owner": "John Doe",
+              "Time": "2019-05-29T11:43:50.238Z",
+              "ID": 123,
+              "OwnerID": "ljdfnln-fdgdf-fgdgfd"
+            },
+            {
+              "Comment": "ghjh",
+              "Owner": "John Doe",
+              "Time": "2019-05-29T13:52:07.719Z",
+              "ID": 123,
+              "OwnerID": "ljdfnln-fdgdf-fgdgfd"
+            },
+            {
+              "Comment": "abcde",
+              "Owner": "John Doe",
+              "Time": "2019-06-03T16:24:58.170Z",
+              "ID": 123,
+              "OwnerID": "ljdfnln-fdgdf-fgdgfd"
+            }
+          ]
         }
-      ]
+      }
     },
     {
       "id": 2,
-      "date": "1990-01-10T00:00:00Z",
-      "imgLink": "/images/480x360.png",
-      "allowComments": false,
-      "PT": {
-        "title": "OLA 2",
-        "description": "Noticia de teste 2",
-        "content": "Blablabla teste 1 2 3 4 5 6 blaaa"
-      },
-      "EN": {
-        "title": "Hello 2",
-        "description": "Test News 2",
-        "content": "Blablabla test 1 2 3 4 5 6 blaaa"
+      "hasError": false,
+      "payload": {
+        "newsData": {
+          "id": 2,
+          "date": "1990-01-10T00:00:00Z",
+          "imgLink": "/images/480x360.png",
+          "allowComments": false,
+          "PT": {
+            "title": "OLA 2",
+            "description": "Noticia de teste 2",
+            "content": "Blablabla teste 1 2 3 4 5 6 blaaa"
+          },
+          "EN": {
+            "title": "Hello 2",
+            "description": "Test News 2",
+            "content": "Blablabla test 1 2 3 4 5 6 blaaa"
+          }
+        }
       }
     },
     {
       "id": 3,
-      "date": "1990-01-10T00:00:00Z",
-      "imgLink": "/images/480x360.png",
-      "allowComments": true,
-      "PT": {
-        "title": "OLA 3",
-        "description": "Noticia de teste 3",
-        "content": "Blablabla teste 1 2 3 4 5 6 blaaa"
-      },
-      "EN": {
-        "title": "Hello 3",
-        "description": "Test News 3",
-        "content": "Blablabla test 1 2 3 4 5 6 blaaa"
-      },
-      "comments": [
-        {
-          "Comment": "The first comment i add here xD",
-          "Owner": "John Doe",
-          "Time": "2019-05-27T11:04:55.062Z",
-          "ID": 123
+      "hasError": false,
+      "payload": {
+        "newsData": {
+          "id": 3,
+          "date": "1990-01-10T00:00:00Z",
+          "imgLink": "/images/480x360.png",
+          "allowComments": true,
+          "PT": {
+            "title": "OLA 3",
+            "description": "Noticia de teste 3",
+            "content": "Blablabla teste 1 2 3 4 5 6 blaaa"
+          },
+          "EN": {
+            "title": "Hello 3",
+            "description": "Test News 3",
+            "content": "Blablabla test 1 2 3 4 5 6 blaaa"
+          },
+          "comments": [
+            {
+              "Comment": "The first comment i add here xD",
+              "Owner": "John Doe",
+              "Time": "2019-05-27T11:04:55.062Z",
+              "ID": 123
+            }
+          ]
         }
-      ]
+      }
     },
     {
       "id": 4,
-      "date": "1990-01-10T00:00:00Z",
-      "imgLink": "/images/480x360.png",
-      "allowComments": false,
-      "PT": {
-        "title": "OLA 4",
-        "description": "Noticia de teste 4",
-        "content": "Blablabla teste 1 2 3 4 5 6 blaaa"
+      "hasError": false,
+      "payload": {
+        "newsData": {
+          "id": 4,
+          "date": "1990-01-10T00:00:00Z",
+          "imgLink": "/images/480x360.png",
+          "allowComments": false,
+          "PT": {
+            "title": "OLA 4",
+            "description": "Noticia de teste 4",
+            "content": "Blablabla teste 1 2 3 4 5 6 blaaa"
+          }
+        }
       }
     }
   ]

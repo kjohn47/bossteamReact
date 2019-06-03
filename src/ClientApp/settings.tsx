@@ -26,7 +26,6 @@ export const Show_Error_Detailed = true;////set true to dev, false to prd
 
 //SERVER
 export const restServer = 'http://localhost:4000/rest/';
-export const getDataFromServer = true;
 
 //ROUTES
 export const pageHome = '/';
