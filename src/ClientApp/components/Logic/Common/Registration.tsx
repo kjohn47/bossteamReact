@@ -81,10 +81,10 @@ function registrationLogic( WrappedComponent: React.ComponentType<IRegistrationP
             })
         }
 
-        handleSubmit(): void {            
+        handleSubmit(): void {      
             let isvalid = true;
 
-            if( this.state.username.trim() !== '' )
+            if( this.state.username.trim() === '' )
             {
                 this.setState({
                     usernameIsEmpty: true
@@ -97,7 +97,7 @@ function registrationLogic( WrappedComponent: React.ComponentType<IRegistrationP
                 isvalid = !this.props.usernameInUse;
             }
 
-            if( this.state.name.trim() !== '' )
+            if( this.state.name.trim() === '' )
             {
                 this.setState({
                     nameIsEmpty: true
@@ -105,7 +105,7 @@ function registrationLogic( WrappedComponent: React.ComponentType<IRegistrationP
                 isvalid = false;
             }
 
-            if( this.state.surname.trim() !== '' )
+            if( this.state.surname.trim() === '' )
             {
                 this.setState({
                     surnameIsEmpty: true
@@ -113,9 +113,9 @@ function registrationLogic( WrappedComponent: React.ComponentType<IRegistrationP
                 isvalid = false;
             }          
             
-            var emailRegex = /^[a-zA-Z0-9]+[a-zA-Z]+[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/
+            var emailRegex = /^[\.a-zA-Z0-9]+@+[a-zA-Z0-9\.]+\.+[A-Za-z]+$/
 
-            if( this.state.email.trim() !== '' || !emailRegex.test( this.state.email ) )
+            if( this.state.email.trim() === '' || !emailRegex.test( this.state.email ) )
             {
                 this.setState({
                     emailIsNotValid: true
@@ -123,7 +123,7 @@ function registrationLogic( WrappedComponent: React.ComponentType<IRegistrationP
                 isvalid = false;
             }     
 
-            if( this.state.password.trim() !== '' )
+            if( this.state.password.trim() === '' )
             {
                 this.setState({
                     passwordIsEmpty: true
@@ -146,11 +146,11 @@ function registrationLogic( WrappedComponent: React.ComponentType<IRegistrationP
                     username = { this.state.username }
                     password = { this.state.password }
                     nameIsEmpty = { this.state.nameIsEmpty }
-                    surnameIsEmpty = { this.state.nameIsEmpty }
-                    emailIsNotValid = { this.state.nameIsEmpty }
-                    usernameIsEmpty = { this.state.nameIsEmpty }
+                    surnameIsEmpty = { this.state.surnameIsEmpty }
+                    emailIsNotValid = { this.state.emailIsNotValid }
+                    usernameIsEmpty = { this.state.usernameIsEmpty }
                     usernameIsInUse = { this.props.usernameInUse }
-                    passwordIsEmpty = { this.state.nameIsEmpty }                  
+                    passwordIsEmpty = { this.state.passwordIsEmpty }                  
                     handleName = { this.handleName }
                     handleSurname = { this.handleSurname }
                     handleEmail = { this.handleEmail }

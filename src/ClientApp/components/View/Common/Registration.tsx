@@ -94,7 +94,7 @@ class RegistrationView extends React.PureComponent<IRegistrationPropsView,{}>
                 </FormGroup> 
                 <FormGroup row>
                 <Col xl={{ size: 11, offset: 1 }} sm={{ size: 10, offset: 2 }}>
-                    <Button onClick = { () => {} } >{ this.props.registrationText.submit }</Button>
+                    <Button onClick = { () => this.props.handleSubmit() } >{ this.props.registrationText.submit }</Button>
                 </Col>
                 </FormGroup>
             </Form>
