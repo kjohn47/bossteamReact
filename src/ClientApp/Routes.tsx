@@ -1,5 +1,3 @@
-import * as React from 'react';
-import {Route} from 'react-router-dom';
 import Home from './components/Routes/Home';
 import News from './components/Routes/News';
 import ViewNewsInfo from './components/Routes/ViewNewsInfo';
@@ -10,10 +8,12 @@ import {
   newsRoute, 
   viewsNewsRoute, 
   blogsListAllRoute, 
-  registrationRoute
+  registrationRoute,
+  myAccountRoute
   } from './settings';
 import ErrorHandlingView from './components/View/Common/ErrorHandling';
 import pageNotFoundLogic from './components/Logic/Common/PageNotFound';
+import MyAccount from './components/Routes/MyAccount';
 
 const NotFound = pageNotFoundLogic(ErrorHandlingView);
 
@@ -52,6 +52,7 @@ const getComponentRoute = (component:any, path:string, actions:any[] = []) => {
 const routes = [
         getComponentRoute(Home, pageHome), //or call directly the function.. atention to not use {} in this case
         getComponentRoute(Registration, registrationRoute), 
+        getComponentRoute(MyAccount, myAccountRoute),
         getComponentRoute(News, newsRoute), 
         getComponentRoute(ViewNewsInfo, viewsNewsRoute + '/:ID'), 
         getComponentRoute(BlogsListAll, blogsListAllRoute),    

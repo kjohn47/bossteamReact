@@ -30,6 +30,7 @@ export const restServer = 'http://localhost:4000/rest/';
 //ROUTES
 export const pageHome = '/';
 export const registrationRoute = '/registration';
+export const myAccountRoute = '/myaccount';
 export const newsRoute = '/news';
 export const viewsNewsRoute = '/viewnews';
 export const blogsListAllRoute = '/listallblogs';
