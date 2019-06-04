@@ -9,9 +9,9 @@ import {
 } from '../../actionTypes';
 import {ptCode, LOAD_NEW_COMMENT, LOAD_HOME_NEWS} from '../../../settings';
 import {IcurrentUser} from '../../../interfaces/currentUser';
-import { INewsData, IViewNewsDataServer, InewsAction } from '../../../interfaces/news';
+import { InewsAction } from '../../../interfaces/news';
 import { getNewsListFromServer, getNewsDataFromServer, addNewsCommentToServer} from './newsServerCalls';
-import { ICommentData, IServerPayload } from '../../../interfaces/common';
+import { IServerPayload } from '../../../interfaces/common';
 import { commonServerAction } from '../common';
 //// Actions for News List
 
