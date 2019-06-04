@@ -185,6 +185,20 @@
               "Time": "2019-06-03T16:24:58.170Z",
               "ID": 123,
               "OwnerID": "ljdfnln-fdgdf-fgdgfd"
+            },
+            {
+              "Comment": "test of new comment handle",
+              "Owner": "Jane Doe",
+              "Time": "2019-06-04T12:03:34.353Z",
+              "ID": 123,
+              "OwnerID": "EEEE-FFFF-GGGG-HHHH"
+            },
+            {
+              "Comment": "A comment with user created",
+              "Owner": "Albert Casanova",
+              "Time": "2019-06-04T13:24:12.449Z",
+              "ID": 123,
+              "OwnerID": "casanova@gmail.comcasanova"
             }
           ]
         }
@@ -256,6 +270,59 @@
             "title": "OLA 4",
             "description": "Noticia de teste 4",
             "content": "Blablabla teste 1 2 3 4 5 6 blaaa"
+          }
+        }
+      }
+    }
+  ],
+  "Users": [
+    {
+      "id": 1,
+      "hasError": false,
+      "username": "abc",
+      "password": "40bd001563085fc35165329ea1ff5c5ecbdbbeef",
+      "payload": {
+        "loginData": {
+          "success": true,
+          "user": {
+            "name": "John",
+            "surname": "Doe",
+            "uuid": "AAAA-BBBB-CCCC-DDDD",
+            "permission": 1
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "hasError": false,
+      "username": "def",
+      "password": "40bd001563085fc35165329ea1ff5c5ecbdbbeef",
+      "payload": {
+        "loginData": {
+          "success": true,
+          "user": {
+            "name": "Jane",
+            "surname": "Doe",
+            "uuid": "EEEE-FFFF-GGGG-HHHH",
+            "permission": 1
+          }
+        }
+      }
+    },
+    {
+      "id": 3,
+      "hasError": false,
+      "username": "casanova",
+      "password": "40bd001563085fc35165329ea1ff5c5ecbdbbeef",
+      "payload": {
+        "loginData": {
+          "success": true,
+          "user": {
+            "name": "Albert",
+            "surname": "Casanova",
+            "permission": 1,
+            "uuid": "casanova@gmail.comcasanova"
           }
         }
       }

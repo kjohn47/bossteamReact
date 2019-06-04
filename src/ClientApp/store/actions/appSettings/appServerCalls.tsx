@@ -1,18 +1,17 @@
-//@ts-ignore
-import axios from 'axios';
-
-import {tempUser} from '../../../pageData/mock/user';
 import { IcurrentUser } from '../../../interfaces/currentUser';
 import { ILoginState } from '../../../interfaces/login';
 import { serverResolve } from '../common';
-import { ERROR_LOGIN, ERROR_LOGOUT } from '../../../settings';
+import { ERROR_LOGIN, ERROR_LOGOUT, restServer } from '../../../settings';
 import { IServerResponse } from '../../../interfaces/common';
+import axios from 'axios';
+import sha1 from 'sha1';
 
 //// APP
 export async function makeLoginOnServer( loginArg: ILoginState ) : Promise<any>{
     return await serverResolve( () =>
     {
-        let serverReturn:IServerResponse = {
+        //this should come from server
+        let loginFailReturn:IServerResponse = {
             hasError: false,
             payload: {
                 loginData: {
@@ -21,19 +20,15 @@ export async function makeLoginOnServer( loginArg: ILoginState ) : Promise<any>{
             }                  
         };
 
-        if( loginArg.user === "abc" && loginArg.password === "123")////To replace with server call -- mock abc/123
-        {
-            serverReturn.payload.loginData = {
-                success: true,
-                user: tempUser
-            };
-        }
-        
-        return new Promise( (resolve: Function) => { 
-            setTimeout( () => {
-                resolve(serverReturn)
-                }, 1000 )
-        })
+        return axios.get(restServer + "Users?username_like=" + loginArg.user + "&password_like=" + sha1( loginArg.password ) ).then( (response) => {
+            let userFromServer: IServerResponse[] = response.data;
+            if( userFromServer !== null && userFromServer !== undefined && userFromServer.length > 0 )
+            {
+                return userFromServer[0];
+            }
+
+            return loginFailReturn;
+        }); 
         
     }, ERROR_LOGIN)
 }
