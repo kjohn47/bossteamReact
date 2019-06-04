@@ -84,10 +84,10 @@ function registrationLogic( WrappedComponent: React.ComponentType<IRegistrationP
         checkUsername(): void {
             if( this.state.username.length > 0 ) {
                 this.props.checkUserNameRegistration( this.state.username );
+                this.setState({
+                    validatingUsername: true
+                })
             }
-            this.setState({
-                validatingUsername: true
-            })
         }
 
         handlePassword( event: any ): void {

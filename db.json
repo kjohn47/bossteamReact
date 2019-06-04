@@ -192,7 +192,8 @@
     },
     {
       "id": 2,
-      "hasError": false,
+      "hasError": true,
+      "errorMessage": "The server failed to retrieve data from database",
       "payload": {
         "newsData": {
           "id": 2,
