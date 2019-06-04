@@ -1,6 +1,6 @@
 //@ts-ignore
 import axios from 'axios';
-import { IViewNewsDataServer, InewsDataArg } from '../../../interfaces/news';
+import { InewsDataArg } from '../../../interfaces/news';
 import { ICommentData, IServerResponse } from '../../../interfaces/common';
 import { serverResolve } from '../common';
 import { ERROR_ADD_COMMENT, ERROR_GET_NEWS_DATA, ERROR_GET_NEWS_LIST, restServer } from '../../../settings';

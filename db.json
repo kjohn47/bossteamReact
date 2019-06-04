@@ -260,5 +260,41 @@
         }
       }
     }
+  ],
+  "Users": [
+    {
+      "id":1,
+      "hasError": false,
+      "username": "abc",
+      "password": "123",
+      "payload": {
+        "loginData": {
+          "success": true,
+          "user": {
+            "name": "John",
+            "surname": "Doe",
+            "uuid": "AAAA-BBBB-CCCC-DDDD",
+            "permission": 1
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "hasError": false,
+      "username": "def",
+      "password": "456",
+      "payload": {
+        "loginData": {
+          "success": true,
+          "user": {
+            "name": "Jane",
+            "surname": "Doe",
+            "uuid": "EEEE-FFFF-GGGG-HHHH",
+            "permission": 1
+          }
+        }
+      }
+    }
   ]
 }
