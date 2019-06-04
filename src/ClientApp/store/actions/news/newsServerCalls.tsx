@@ -1,9 +1,8 @@
-//@ts-ignore
-import axios from 'axios';
-import { IViewNewsDataServer, InewsDataArg } from '../../../interfaces/news';
+import { InewsDataArg } from '../../../interfaces/news';
 import { ICommentData, IServerResponse } from '../../../interfaces/common';
 import { serverResolve } from '../common';
 import { ERROR_ADD_COMMENT, ERROR_GET_NEWS_DATA, ERROR_GET_NEWS_LIST, restServer } from '../../../settings';
+import axios from 'axios';
 
 //// NEWS
 
@@ -44,14 +43,17 @@ export async function addNewsCommentToServer( newsArg: InewsDataArg ) : Promise<
         return axios.get(restServer + "newsData/" + newsArg.newsID).then( (response) => {
             let serverData:IServerResponse = response.data;
             serverData.payload.newsData.comments !== null && serverData.payload.newsData.comments !== undefined ? serverData.payload.newsData.comments.push(newComment) : serverData.payload.newsData.comments = [newComment];
-            axios.put(restServer + "newsData/" + newsArg.newsID, {...serverData});
-            let serverResponse: IServerResponse = {
-                hasError: false,
-                payload: {
-                    comments: serverData.payload.newsData.comments
+            
+            return axios.put(restServer + "newsData/" + newsArg.newsID, {...serverData}).then( () => {
+                let serverResponse: IServerResponse = {
+                    hasError: false,
+                    payload: {
+                        comments: serverData.payload.newsData.comments
+                    }
                 }
-            }
-            return serverResponse;
+                return serverResponse;
+            })           
+                 
         });
     }, ERROR_ADD_COMMENT)
 }

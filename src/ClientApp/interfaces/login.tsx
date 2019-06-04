@@ -1,5 +1,4 @@
 import { IcurrentUser } from "./currentUser";
-import { any } from "prop-types";
 
 //login Menu
 export interface IloginMenu {
