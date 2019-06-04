@@ -1,10 +1,10 @@
-//@ts-ignore
-import axios from 'axios';
 import { IcurrentUser } from '../../../interfaces/currentUser';
 import { ILoginState } from '../../../interfaces/login';
 import { serverResolve } from '../common';
 import { ERROR_LOGIN, ERROR_LOGOUT, restServer } from '../../../settings';
 import { IServerResponse } from '../../../interfaces/common';
+import axios from 'axios';
+import sha1 from 'sha1';
 
 //// APP
 export async function makeLoginOnServer( loginArg: ILoginState ) : Promise<any>{
@@ -20,7 +20,7 @@ export async function makeLoginOnServer( loginArg: ILoginState ) : Promise<any>{
             }                  
         };
 
-        return axios.get(restServer + "Users?username_like=" + loginArg.user + "&password_like=" + loginArg.password ).then( (response) => {
+        return axios.get(restServer + "Users?username_like=" + loginArg.user + "&password_like=" + sha1( loginArg.password ) ).then( (response) => {
             let userFromServer: IServerResponse[] = response.data;
             if( userFromServer !== null && userFromServer !== undefined && userFromServer.length > 0 )
             {

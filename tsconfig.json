@@ -6,7 +6,8 @@
         "module": "commonjs",
         "target": "es6",
         "lib": [ "es2018","es2018.promise","es5", "dom" ],
-        "jsx": "react"
+        "jsx": "react",
+        "esModuleInterop": true
     },
     "include": [
         "./src/**/*"

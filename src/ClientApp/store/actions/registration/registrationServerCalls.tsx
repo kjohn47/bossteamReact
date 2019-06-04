@@ -1,9 +1,9 @@
-//@ts-ignore
-import axios from 'axios';
 import { IUserRegistrationArg } from "../../../interfaces/registration";
 import { serverResolve } from "../common";
 import { ERROR_USER_REGISTRATION, restServer } from "../../../settings";
 import { IServerResponse } from "../../../interfaces/common";
+import axios from 'axios';
+import sha1 from 'sha1';
 
 export async function checkUsenameExists( username: string ): Promise<any> {
     return await serverResolve( () =>
@@ -59,7 +59,7 @@ export async function registrateUserInServer( registrationArg: IUserRegistration
                         id: userListServer.length + 1,
                         hasError: false,
                         username: registrationArg.username,
-                        password: registrationArg.password,
+                        password: sha1( registrationArg.password ),
                         payload: {
                             loginData: {
                                 success: true,

@@ -1,7 +1,6 @@
-//@ts-ignore
-import axios from 'axios';
 import { serverResolve } from '../common';
 import { ERROR_HOME_PAGE, restServer } from '../../../settings';
+import axios from 'axios';
 
 //// HOMEPAGE
 
