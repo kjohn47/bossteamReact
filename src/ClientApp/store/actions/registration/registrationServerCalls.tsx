@@ -49,38 +49,38 @@ export async function registrateUserInServer( registrationArg: IUserRegistration
             if( userFromServer !== null && userFromServer !== undefined && userFromServer.length > 0 )
             {
                 serverData.payload.registrationData.usernameInUse = true;
-            }
-
-        }).then( () => {
-            if ( serverData.payload.registrationData.usernameInUse )
-            {
                 return serverData;
             }
             else
             {
-                let newUser: IServerResponse = {
-                    id: 10,
-                    hasError: false,
-                    username: registrationArg.username,
-                    password: registrationArg.password,
-                    payload: {
-                        loginData: {
-                            success: true,
-                            user: {
-                                name: registrationArg.name,
-                                surname: registrationArg.surname,
-                                permission: 1,
-                                uuid: registrationArg.email + registrationArg.username
+                return axios.get(restServer + "Users").then( (usersList) => {
+                    let userListServer: IServerResponse[] = usersList.data;
+                    let newUser: IServerResponse = {
+                        id: userListServer.length + 1,
+                        hasError: false,
+                        username: registrationArg.username,
+                        password: registrationArg.password,
+                        payload: {
+                            loginData: {
+                                success: true,
+                                user: {
+                                    name: registrationArg.name,
+                                    surname: registrationArg.surname,
+                                    permission: 1,
+                                    uuid: registrationArg.email + registrationArg.username
+                                }
                             }
                         }
-                    }
-                }               
-
-                return axios.post(restServer + "Users", newUser ).then( (response) => {                    
-                    console.log(response.data);
-                    serverData.payload.registrationData.registrationSuccess = true;
-                    return serverData;
-                })                 
+                    }               
+    
+                    return axios.post(restServer + "Users", newUser ).then( (response) => {                    
+                        if ( response.data !== null && response.data !== undefined )
+                            {
+                                serverData.payload.registrationData.registrationSuccess = true
+                            }
+                        return serverData;
+                    }) 
+                } )                                
             }
         })
 
