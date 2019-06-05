@@ -10,6 +10,7 @@ class RegistrationView extends React.PureComponent<IRegistrationPropsView,{}>
             <Form>
                 <PageHeader title={ this.props.registrationText.title } />
                 { this.props.failedToRegist && <Alert color="danger" >{ this.props.registrationText.failedRegistration }</Alert> }
+                { this.props.successToRegist && <Alert color="success" >{ this.props.registrationText.successText.replace( '[USERNAME]', this.props.submitedUsername ) }</Alert> }
                 <FormGroup row>
                     <Label xl = {1} sm = {2} >{ this.props.registrationText.name }</Label>
                     <Col xl = {11} sm = {10} >
