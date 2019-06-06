@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { Form, Alert, Toast, ToastHeader, ToastBody, FormGroup, Label, Col, Input, FormFeedback, Button, Tooltip } from 'reactstrap';
+import { IMyAccountCloseViewProps } from '../../../interfaces/myAccount';
 
 interface ICloseAccountState {
     toolTipCloseAccount: boolean;
     toolTipDisableAccount: boolean;
 }
 
-export default class CloseAccount extends React.PureComponent<any, ICloseAccountState> {
-    constructor(props: any) {
+export default class CloseAccount extends React.PureComponent<IMyAccountCloseViewProps, ICloseAccountState> {
+    constructor(props: IMyAccountCloseViewProps) {
         super(props);
     
         this.toggle = this.toggle.bind(this);
@@ -18,7 +19,7 @@ export default class CloseAccount extends React.PureComponent<any, ICloseAccount
     }
     
     toggle(id:number) {
-        if(id === 1)
+        if(id === 2)
         {
             this.setState({
                 toolTipCloseAccount: !this.state.toolTipCloseAccount
@@ -35,73 +36,74 @@ export default class CloseAccount extends React.PureComponent<any, ICloseAccount
     render() {
         return (
             <Form>                    
-                { false && <Alert color="danger" >Something bad happened</Alert> }
-                { false && <Alert color="success" >Something good happened</Alert> }
+                { this.props.updateFail && <Alert color="danger" >{ this.props.text.fail }</Alert> }
+                { this.props.updateSuccess && <Alert color="success" >{ this.props.text.success }</Alert> }
                 <Toast className="news-content">                
                     <ToastHeader>        
-                        Close Account                 
+                        { this.props.text.title }
                     </ToastHeader>
                     <ToastBody>
                     <FormGroup row>
-                    <Label xl = {1} sm = {2} >Password:</Label>
+                    <Label xl = {1} sm = {2} >{ this.props.text.password }</Label>
                             <Col xl = {11} sm = {10} >
                                 <Input 
                                     type="password" 
                                     name="account_password" 
                                     id="account_password"
-                                    invalid = {false}
-                                    onChange= { (event) => {} }
-                                    value= ""
+                                    invalid = { this.props.emptyPassword }
+                                    onChange = { (event) => this.props.passwordHandle( event ) }
+                                    value = { this.props.password }
                                 />
                                 <FormFeedback>
-                                    Empty Field
+                                    { this.props.text.emptyField.replace( "[FIELD]", this.props.text.password ) }
                                 </FormFeedback>
                             </Col>                 
                         </FormGroup> 
                         <FormGroup row>
-                            <Label xl = {1} sm = {2} >Repeat:</Label>
+                            <Label xl = {1} sm = {2} >{ this.props.text.repeatPassword }</Label>
                             <Col xl = {11} sm = {10} >
                                 <Input 
                                     type="password" 
                                     name="account_password_repeat" 
                                     id="account_password_repeat"
-                                    invalid = {false}
-                                    onChange= { (event) => {} }
-                                    value= ""
+                                    invalid = { this.props.passwordNotMatch }
+                                    onChange = { (event) => this.props.repeatPasswordHandle( event ) }
+                                    value = { this.props.repeatPassword }
+                                    onBlur = { () => this.props.repeatPasswordCheck() }
                                 />
                                 <FormFeedback>
-                                    Empty Field
+                                    { this.props.text.passwordNotMatch }
                                 </FormFeedback>
                             </Col>                    
                         </FormGroup> 
                         <FormGroup row>
-                            <Label xl = {1} sm = {2} >Email:</Label>
+                            <Label xl = {1} sm = {2} >{ this.props.text.email }</Label>
                             <Col xl = {11} sm = {10} >
                                 <Input 
                                     type="text" 
                                     name="account_email" 
-                                    id="account_email"
-                                    invalid = {false}
-                                    onChange= { (event) => {} }
-                                    value= ""
+                                    id="account_email"                                    
+                                    invalid = { this.props.invalidEmail || this.props.checkEmail }
+                                    onChange = { (event) => this.props.emailHandle( event ) }
+                                    onBlur = { () => this.props.checkEmailHandle() }
+                                    value = { this.props.email }
                                 />
                                 <FormFeedback>
-                                    Empty Field
+                                    { this.props.checkEmail ? this.props.text.emailNotEqual : this.props.text.invalidEmail }
                                 </FormFeedback>
                             </Col>                    
                         </FormGroup> 
                         <FormGroup row>
                             <Col xl={{ size: 11, offset: 1 }} sm={{ size: 10, offset: 2 }}>
-                                <Tooltip placement="top" isOpen={this.state.toolTipDisableAccount} autohide={false} target="disableAccountButton" toggle={() => this.toggle(1)}>  
-                                    You wont be able to login and all your posts will be hidden but no data is lost, comments on other posts will stay visible
-                                    You can reactivate your account with the link sent to your email.
+                                <Tooltip placement="top" isOpen={this.state.toolTipDisableAccount} autohide={true} target="disableAccountButton" toggle={() => this.toggle(1)}>  
+                                    { this.props.text.disableTooltip }
                                 </Tooltip>      
-                                <Button id="disableAccountButton" className = "buttonMargin" onClick = { () => {} } >Disable Account</Button>                                
+                                <Button id="disableAccountButton" className = "buttonMargin" onClick = { () => this.props.disableHandle() } >{ this.props.text.disable }</Button>                                
                                 <span className = "spacerSpan"></span>
-                                <Tooltip placement="top" isOpen={this.state.toolTipCloseAccount} autohide={false} target="closeAccountButton" toggle={() => this.toggle(2)}>  
-                                    Your account and all your data will be removed and the username will be available for creating new account
+                                <Tooltip placement="top" isOpen={this.state.toolTipCloseAccount} autohide={true} target="closeAccountButton" toggle={() => this.toggle(2)}>  
+                                    { this.props.text.closeTooltip }
                                 </Tooltip>   
-                                <Button id="closeAccountButton" className = "buttonMargin" onClick = { () => {} } >Close Account</Button>
+                                <Button id="closeAccountButton" className = "buttonMargin" onClick = { () => this.props.closeHandle() } >{ this.props.text.close }</Button>
                             </Col>
                             </FormGroup>
                     </ToastBody>

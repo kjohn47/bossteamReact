@@ -69,6 +69,7 @@ export interface IMyAccountCloseViewProps {
     repeatPasswordHandle( event:any ): void;
     repeatPasswordCheck(): void;
     emailHandle( event:any ): void;
+    checkEmailHandle(): void;
     disableHandle(): void;
     closeHandle(): void;
 }
@@ -94,6 +95,8 @@ export interface IMyAccountViewProps {
     changeName: IMyAccountChangeNameViewProps;
     changePassword: IMyAccountChangePasswordViewProps;
     closeAccount: IMyAccountCloseViewProps;
+    myAccountText: IMyAccountText;
+    changeTabHandle(): void;
 }
 
 interface IMyAccountText {
@@ -114,3 +117,17 @@ export interface IMyAccountTranslations {
     PT: IMyAccountAllText;
     EN: IMyAccountAllText;
 }
+
+export interface IMyAccountLogicState {
+
+}
+
+export interface IMyAccountLogicProps {
+    myAccountText: IMyAccountAllText;
+}
+
+export interface IMyAccountLogicActions {
+
+}
+
+export type MyAccountLogicType = IMyAccountLogicProps & IMyAccountLogicActions;
