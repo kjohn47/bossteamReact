@@ -1,8 +1,17 @@
-import Home from './components/Routes/Home';
-import News from './components/Routes/News';
-import ViewNewsInfo from './components/Routes/ViewNewsInfo';
-import BlogsListAll from './components/Routes/BlogsListAll';
-import Registration from './components/Routes/Registration';
+import React from 'react';
+//import Home from './components/Routes/Home';
+const Home = React.lazy(() => import('./components/Routes/Home'));
+//import News from './components/Routes/News';
+const News = React.lazy(() => import('./components/Routes/News'));
+//import ViewNewsInfo from './components/Routes/ViewNewsInfo';
+const ViewNewsInfo = React.lazy(() => import('./components/Routes/ViewNewsInfo'));
+//import BlogsListAll from './components/Routes/BlogsListAll';
+const BlogsListAll = React.lazy(() => import('./components/Routes/BlogsListAll'));
+//import Registration from './components/Routes/Registration';
+const Registration = React.lazy(() => import('./components/Routes/Registration'));
+//import MyAccount from './components/Routes/MyAccount';
+const MyAccount = React.lazy(() => import('./components/Routes/MyAccount'));
+
 import { 
   pageHome, 
   newsRoute, 
@@ -11,9 +20,10 @@ import {
   registrationRoute,
   myAccountRoute
   } from './settings';
+
 import ErrorHandlingView from './components/View/Common/ErrorHandling';
 import pageNotFoundLogic from './components/Logic/Common/PageNotFound';
-import MyAccount from './components/Routes/MyAccount';
+
 
 const NotFound = pageNotFoundLogic(ErrorHandlingView);
 
