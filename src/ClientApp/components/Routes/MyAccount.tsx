@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Row, Col} from 'reactstrap';
-import myAccountLogic from '../Logic/Common/MyAccount';
-import MyAccountView from '../View/Common/MyAccount';
+import myAccountLogic from '../Logic/MyAccount/MyAccount';
+import MyAccountView from '../View/MyAccount/MyAccount';
 import needLoginLogic from '../Logic/Common/NeedLogin';
 import loginLogic from '../Logic/Common/LoginLogic';
 import Login from '../View/Common/Login';
