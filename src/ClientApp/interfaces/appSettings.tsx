@@ -4,6 +4,7 @@ import {IAddCommentText, ICommentText, IErrorHandling, ILoading, IErrorHandlingT
 import {IcurrentUser} from './currentUser';
 import { IloginMenu, ILoginResponse, IloginFormHeader } from './login';
 import { IRegistrationText } from './registration';
+import { IMyAccountAllText } from './myAccount';
 export interface IAppSettings {
     loginForm?: IloginMenu; 
     loginFormHeader?: IloginFormHeader;
@@ -11,7 +12,8 @@ export interface IAppSettings {
     menuText?: ImenuText;
     newsLanguage?: InewsLanguage;
     addCommentText?: IAddCommentText;
-    commentText?:ICommentText;    
+    commentText?: ICommentText;   
+    myAccountText?: IMyAccountAllText; 
     presentationLanguage?: string;
     isLogged?: boolean;
     loggedUser?: IcurrentUser;

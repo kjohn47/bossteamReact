@@ -5,7 +5,11 @@ import ChangeName from './ChangeName';
 import ChangePassword from './ChangePassword';
 import CloseAccount from './CloseAccount';
 
-class MyAccountView extends React.PureComponent<any,any>{
+interface MyAccountViewState {
+  activeTab: string;
+}
+
+class MyAccountView extends React.PureComponent<any,MyAccountViewState>{
 
     constructor(props:any) {
         super(props);

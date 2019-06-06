@@ -1,14 +1,19 @@
 import * as React from 'react';
 import { Form, Alert, Toast, ToastHeader, ToastBody, FormGroup, Label, Col, Input, FormFeedback, Button, Tooltip } from 'reactstrap';
 
-export default class CloseAccount extends React.PureComponent<any, any> {
+interface ICloseAccountState {
+    toolTipCloseAccount: boolean;
+    toolTipDisableAccount: boolean;
+}
+
+export default class CloseAccount extends React.PureComponent<any, ICloseAccountState> {
     constructor(props: any) {
         super(props);
     
         this.toggle = this.toggle.bind(this);
         this.state = {
-          tooltipOpen1: false,
-          tooltipOpen2: false
+            toolTipCloseAccount: false,
+            toolTipDisableAccount: false
         };
     }
     
@@ -16,13 +21,13 @@ export default class CloseAccount extends React.PureComponent<any, any> {
         if(id === 1)
         {
             this.setState({
-                tooltipOpen1: !this.state.tooltipOpen1
+                toolTipCloseAccount: !this.state.toolTipCloseAccount
             });
         }
         else
         {
             this.setState({
-                tooltipOpen2: !this.state.tooltipOpen2
+                toolTipDisableAccount: !this.state.toolTipDisableAccount
             });
         }
     }
@@ -87,13 +92,13 @@ export default class CloseAccount extends React.PureComponent<any, any> {
                         </FormGroup> 
                         <FormGroup row>
                             <Col xl={{ size: 11, offset: 1 }} sm={{ size: 10, offset: 2 }}>
-                                <Tooltip placement="top" isOpen={this.state.tooltipOpen1} autohide={false} target="disableAccountButton" toggle={() => this.toggle(1)}>  
+                                <Tooltip placement="top" isOpen={this.state.toolTipDisableAccount} autohide={false} target="disableAccountButton" toggle={() => this.toggle(1)}>  
                                     You wont be able to login and all your posts will be hidden but no data is lost, comments on other posts will stay visible
                                     You can reactivate your account with the link sent to your email.
                                 </Tooltip>      
                                 <Button id="disableAccountButton" className = "buttonMargin" onClick = { () => {} } >Disable Account</Button>                                
                                 <span className = "spacerSpan"></span>
-                                <Tooltip placement="top" isOpen={this.state.tooltipOpen2} autohide={false} target="closeAccountButton" toggle={() => this.toggle(2)}>  
+                                <Tooltip placement="top" isOpen={this.state.toolTipCloseAccount} autohide={false} target="closeAccountButton" toggle={() => this.toggle(2)}>  
                                     Your account and all your data will be removed and the username will be available for creating new account
                                 </Tooltip>   
                                 <Button id="closeAccountButton" className = "buttonMargin" onClick = { () => {} } >Close Account</Button>

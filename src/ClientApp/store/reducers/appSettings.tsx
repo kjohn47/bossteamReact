@@ -27,6 +27,7 @@ import {
 import { ILoading, IErrorHandling, IErrorHandlingText, IErrorHandlingTextTranslation } from '../../interfaces/common';
 import { ERRORS, TEXT_PAGE_NOT_FOUND } from '../../pageData/language/errors';
 import { TEXT_REGISTRATION } from '../../pageData/language/registration';
+import { TEXT_MY_ACCOUNT } from '../../pageData/language/myAccount';
 
 const startLang = currentLanguage();
 
@@ -39,6 +40,7 @@ const defaultState: IAppSettings = {
     loginFormHeader: GetPropertyValue(TEXT_NEED_LOGIN, startLang),
     pageNotFoundText: GetPropertyValue(TEXT_PAGE_NOT_FOUND, startLang),
     registrationText: GetPropertyValue(TEXT_REGISTRATION, startLang),
+    myAccountText: GetPropertyValue(TEXT_MY_ACCOUNT, startLang),
     presentationLanguage: startLang,
     isLogged: checkLogin(),
     loggedUser: getCurrentUser(),
@@ -151,6 +153,7 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
                 loginForm: GetPropertyValue(TEXT_LOGIN_MENU, lang),
                 pageNotFoundText: GetPropertyValue(TEXT_PAGE_NOT_FOUND, lang),
                 registrationText: GetPropertyValue(TEXT_REGISTRATION, lang),
+                myAccountText: GetPropertyValue(TEXT_MY_ACCOUNT, lang),
                 presentationLanguage: lang,                
                 fetchData: {...state.fetchData, 
                     error: errorData
