@@ -18,7 +18,7 @@ export async function checkUsenameExists( username: string ): Promise<any> {
         };
 
         ////Just a mock, needs to be different in case of real server call
-        return axios.get(restServer + "Users?username_like=" + username ).then( (response) => {
+        return axios.get(restServer + "Users?username=" + username ).then( (response) => {
             let userFromServer: IServerResponse[] = response.data;
             if( userFromServer !== null && userFromServer !== undefined && userFromServer.length > 0 )
             {
@@ -44,7 +44,7 @@ export async function registrateUserInServer( registrationArg: IUserRegistration
             }            
         };
 
-        return axios.get(restServer + "Users?username_like=" + registrationArg.username ).then( (response) => {
+        return axios.get(restServer + "Users?username=" + registrationArg.username ).then( (response) => {
             let userFromServer: IServerResponse[] = response.data;
             if( userFromServer !== null && userFromServer !== undefined && userFromServer.length > 0 )
             {

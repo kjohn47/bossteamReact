@@ -20,7 +20,7 @@ export async function makeLoginOnServer( loginArg: ILoginState ) : Promise<any>{
             }                  
         };
 
-        return axios.get(restServer + "Users?username_like=" + loginArg.user + "&password_like=" + sha1( loginArg.password ) ).then( (response) => {
+        return axios.get(restServer + "Users?username=" + loginArg.user + "&password=" + sha1( loginArg.password ) ).then( (response) => {
             let userFromServer: IServerResponse[] = response.data;
             if( userFromServer !== null && userFromServer !== undefined && userFromServer.length > 0 )
             {
