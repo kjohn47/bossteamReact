@@ -289,7 +289,8 @@
             "surname": "Doe",
             "uuid": "AAAA-BBBB-CCCC-DDDD",
             "permission": 1,
-            "email": "abc@gmail.com"
+            "email": "abc@gmail.com",
+            "disabled": false
           }
         }
       }
@@ -307,7 +308,8 @@
             "surname": "Doe",
             "uuid": "EEEE-FFFF-GGGG-HHHH",
             "permission": 1,
-            "email": "def@gmail.com"
+            "email": "def@gmail.com",
+            "disabled": false
           }
         }
       }
@@ -325,7 +327,8 @@
             "surname": "Casanova",
             "permission": 1,
             "uuid": "casanova@gmail.comcasanova",
-            "email": "casanova@gmail.com"
+            "email": "casanova@gmail.com",
+            "disabled": false
           }
         }
       }

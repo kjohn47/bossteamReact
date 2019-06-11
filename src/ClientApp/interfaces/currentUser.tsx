@@ -4,4 +4,5 @@ export interface IcurrentUser {
     uuid: string;
     permission: number;
     email: string;
+    disabled: boolean;
 }

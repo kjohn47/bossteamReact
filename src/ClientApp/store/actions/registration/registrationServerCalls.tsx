@@ -68,7 +68,8 @@ export async function registrateUserInServer( registrationArg: IUserRegistration
                                     surname: registrationArg.surname,
                                     permission: 1,
                                     uuid: registrationArg.email + registrationArg.username,
-                                    email: registrationArg.email
+                                    email: registrationArg.email,
+                                    disabled: false
                                 }
                             }
                         }
