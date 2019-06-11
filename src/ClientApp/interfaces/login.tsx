@@ -9,6 +9,7 @@ export interface IloginMenu {
     emptyUser: string;
     emptyPassword: string;
     invalidLogin: string;
+    passwordRecover: string;
 }
 
 export interface IloginMenuTranslations {

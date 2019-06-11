@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {NavItem, NavLink, Button, Form, FormGroup, Label, Input, Spinner, FormFeedback } from 'reactstrap';
+import {NavItem, NavLink, Button, Form, FormGroup, Input, Spinner, FormFeedback } from 'reactstrap';
 import {ILogin} from '../../../interfaces/login';
 import {NavLink as RouterLink} from 'react-router-dom';
 import { registrationRoute } from '../../../settings';
@@ -37,11 +37,10 @@ class LoginForm extends React.PureComponent<ILogin,{}>{
                         value = { this.props.loginAction.state.password }    
                         invalid = { this.props.loginAction.state.loginAttempt && ( this.props.loginAction.state.emptyPassword || this.props.loginAction.state.invalidUser ) }  
                     />
-                    {
-                        this.props.loginAction.state.emptyPassword && 
-                            <FormFeedback tooltip>
-                                { this.props.loginText.emptyPassword }
-                            </FormFeedback>
+                    {                        
+                        <FormFeedback tooltip>
+                            { this.props.loginAction.state.emptyPassword ? this.props.loginText.emptyPassword : <RouterLink to="/" className="nav-link loginPassRecover">{ this.props.loginText.passwordRecover }</RouterLink> }
+                        </FormFeedback>
                      }
                 </FormGroup>
                 <div className="login_form_btn">

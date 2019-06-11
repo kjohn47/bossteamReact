@@ -99,6 +99,13 @@ body{
     display: flex;
 }
 
+.loginPassRecover {
+    max-height: 10px;
+    color: white !important;
+    padding: 0 !important;
+    display: inline !important;
+}
+
 .registLink{
     margin-left: 8px;
 }
@@ -247,6 +254,10 @@ body{
 .login_form_big {
     padding-top: 25px;
     padding-left: 15px;
+}
+
+.TabMouseOver {
+    cursor: pointer !important;
 }
 
 @media(max-width: 768px)

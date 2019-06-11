@@ -35,25 +35,25 @@ class MyAccountView extends React.PureComponent<IMyAccountViewProps, MyAccountVi
           <React.Fragment>
             <PageHeader title = { this.props.myAccountText.title }/>
             <Nav tabs>
-              <NavItem>
+              <NavItem className="TabMouseOver">
                 <NavLink
-                  className = { this.state.activeTab === '1'? 'active' : '' }
+                  className = { this.state.activeTab ==='1' && "active" }
                   onClick={() => { this.toggle('1'); }}
                 >
                   { this.props.myAccountText.nameTab }
                 </NavLink>
               </NavItem>
-              <NavItem>
+              <NavItem className="TabMouseOver">
                 <NavLink
-                  className = { this.state.activeTab === '2'? 'active' : '' }
+                  className = { this.state.activeTab ==='2' && "active" }
                   onClick={() => { this.toggle('2'); }}
                 >
                   { this.props.myAccountText.passwordTab }
                 </NavLink>
               </NavItem>
-              <NavItem>
+              <NavItem className="TabMouseOver">
                 <NavLink
-                  className = { this.state.activeTab === '3'? 'active' : '' }
+                  className = { this.state.activeTab ==='3' && "active" }
                   onClick={() => { this.toggle('3'); }}
                 >
                   { this.props.myAccountText.closeTab }
