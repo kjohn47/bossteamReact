@@ -290,7 +290,7 @@
             "uuid": "AAAA-BBBB-CCCC-DDDD",
             "permission": 1,
             "email": "abc@gmail.com",
-            "disabled": false
+            "enabled": true
           }
         }
       }
@@ -309,7 +309,7 @@
             "uuid": "EEEE-FFFF-GGGG-HHHH",
             "permission": 1,
             "email": "def@gmail.com",
-            "disabled": false
+            "enabled": true
           }
         }
       }
@@ -328,7 +328,7 @@
             "permission": 1,
             "uuid": "casanova@gmail.comcasanova",
             "email": "casanova@gmail.com",
-            "disabled": false
+            "enabled": true
           }
         }
       }
