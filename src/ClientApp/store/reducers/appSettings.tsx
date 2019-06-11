@@ -172,7 +172,7 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
             return{...state,
                 isLogged: action.payload.login.success,
                 loggedUser: action.payload.login.user,
-                tryLogin: action.payload.login.success ? results.success : results.failure               
+                tryLogin: action.payload.login.success ? results.success : results.failure
             };
         }
         

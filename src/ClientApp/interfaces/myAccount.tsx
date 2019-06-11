@@ -16,6 +16,7 @@ export interface IMyAccountChangeNameViewStates {
     surname: string;
     emptySurname:boolean;
     email:string;
+    loading: boolean;
 }
 
 export interface IMyAccountChangeNameViewMethods {
@@ -55,6 +56,7 @@ export interface IMyAccountChangePasswordViewStates {
     emptynewPassword: boolean;
     repeatPassword:string;
     notMatchPassword: boolean;
+    loading: boolean;
 }
 
 export interface IMyAccountChangePasswordViewMethods {
@@ -99,6 +101,7 @@ export interface IMyAccountCloseViewStates {
     email:string;
     invalidEmail: boolean;
     checkEmail: boolean;
+    loading: boolean;
 }
 
 export interface IMyAccountCloseViewMethods {
@@ -174,12 +177,45 @@ export interface IMyAccountLogicState {
 export interface IMyAccountLogicProps {
     myAccountText: IMyAccountAllText;
     currentUser: IcurrentUser;
+    changeNameSuccess: string;
+    changePasswordSuccess: string;
+    closeAccountSuccess: string;
 }
 
 export interface IMyAccountLogicActions {
-
+    changeName( name: string, surname: string, uuid: string ) : Function;
 }
 
 export type MyAccountLogicType = IMyAccountLogicProps & IMyAccountLogicActions;
 
 //// MyAccount Logic
+
+//// Reduder
+export interface IMyAccountReduxState {
+    changeName: IchangeNameReduxState;
+    changePassword: IchangePasswordReduxState;
+    closeAccount: IcloseAccountReduxState;
+}
+
+interface IchangeNameReduxState {
+    success: string;
+}
+
+interface IchangePasswordReduxState {
+    success: string;
+}
+
+interface IcloseAccountReduxState {
+    success: string;
+}
+
+export interface IMyAccountAction {
+    type: string;
+    payload?: IMyAccountActionPayload;
+}
+
+interface IMyAccountActionPayload {
+    success: string;
+}
+
+//// Reducer

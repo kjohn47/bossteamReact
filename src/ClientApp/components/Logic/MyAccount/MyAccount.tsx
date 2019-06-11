@@ -8,7 +8,7 @@ import {
     IMyAccountLogicActions, 
     IMyAccountLogicState 
     } from '../../../interfaces/myAccount';
-import { checkRegexText, REGEX_FIELD } from '../../../settings';
+import { checkRegexText, REGEX_FIELD, results } from '../../../settings';
 
 function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewProps> ): React.ComponentType
 {
@@ -25,7 +25,8 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                     emptyName: false,
                     emptySurname: false,
                     updateFail: false,
-                    updateSuccess: false
+                    updateSuccess: false,
+                    loading: false
                 },
                 changePassword: {
                     oldPassword: "",
@@ -36,7 +37,8 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                     notMatchPassword: false,
                     wrongOldPassword: false,
                     updateFail: false,
-                    updateSuccess: false
+                    updateSuccess: false,
+                    loading: false
                 },
                 closeAccount: {
                     password: "",
@@ -47,7 +49,8 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                     checkEmail: false,
                     passwordNotMatch: false,
                     updateFail: false,
-                    updateSuccess: false
+                    updateSuccess: false,
+                    loading: false
                 }
             }
             this.state = {...this._defaultState};            
@@ -61,6 +64,71 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
         changeTabHandle() {
             this.setState({...this._defaultState});
         }
+
+        componentDidUpdate( prevProps: MyAccountLogicType ) {
+            //// Change name:
+            if( prevProps.changeNameSuccess !== this.props.changeNameSuccess && this.props.changeNameSuccess !== results.default )
+            {
+                if( this.props.changeNameSuccess === results.success ) {
+                    this.setState({
+                        changeName: { ...this.state.changeName,
+                            updateSuccess: true
+                        }
+                    });
+                }
+                else if( this.props.changeNameSuccess === results.failure ) {
+                    this.setState({
+                        changeName: { ...this.state.changeName,
+                            updateFail: true
+                        }
+                    });
+                }
+                ////reset to default action
+            }
+            //// Change name
+
+            //// Change password:
+            if( prevProps.changePasswordSuccess !== this.props.changePasswordSuccess && this.props.changePasswordSuccess !== results.default )
+            {
+                if( this.props.changePasswordSuccess === results.success ) {
+                    this.setState({
+                        changePassword: { ...this.state.changePassword,
+                            updateSuccess: true
+                        }
+                    });
+                }
+                else if( this.props.changePasswordSuccess === results.failure ) {
+                    this.setState({
+                        changePassword: { ...this.state.changePassword,
+                            updateFail: true
+                        }
+                    });
+                }
+                ////reset to default action
+            }
+            //// Change password
+
+            //// Close Account:
+            if( prevProps.closeAccountSuccess !== this.props.closeAccountSuccess && this.props.closeAccountSuccess !== results.default )
+            {
+                if( this.props.closeAccountSuccess === results.success ) {
+                    this.setState({
+                        closeAccount: { ...this.state.closeAccount,
+                            updateSuccess: true
+                        }
+                    });
+                }
+                else if( this.props.closeAccountSuccess === results.failure ) {
+                    this.setState({
+                        closeAccount: { ...this.state.closeAccount,
+                            updateFail: true
+                        }
+                    });
+                }
+                ////reset to default action
+            }
+            //// Close Account
+        }
         //// MyAccount methods
 
         //// Change name methods
@@ -68,7 +136,8 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
             let newText = checkRegexText( event.target.value, this.state.changeName.name, REGEX_FIELD.NAME );
             this.setState({
                 changeName: { ...this.state.changeName,
-                    name: newText                                       
+                    name: newText,
+                    emptyName: false                                     
                 }
             });
         }
@@ -77,13 +146,46 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
             let newText = checkRegexText( event.target.value, this.state.changeName.surname, REGEX_FIELD.NAME );
             this.setState({
                 changeName: { ...this.state.changeName,
-                    surname: newText                                       
+                    surname: newText,
+                    emptySurname: false                                       
                 }
             });
         }
 
         changeName_submitHandle(): void {
-            // change name action
+            this.setState({
+                changeName: { ...this.state.changeName,
+                    updateFail: false,
+                    updateSuccess: false
+                }
+            });
+
+            let success = true;
+            if( this.state.changeName.name.trim() === '' )
+            {
+                success = false;
+                this.setState({
+                    changeName: { ...this.state.changeName,
+                        emptyName: true,
+                        updateFail: true
+                    }
+                })
+            }
+
+            if( this.state.changeName.surname.trim() === '' )
+            {
+                success = false;
+                this.setState({
+                    changeName: { ...this.state.changeName,
+                        emptySurname: true,
+                        updateFail: true
+                    }
+                })
+            }
+
+            if ( success && this.state.changeName.name !== this.props.currentUser.name && this.state.changeName.surname !== this.props.currentUser.surname ) {
+                this.props.changeName( this.state.changeName.name, this.state.changeName.surname, this.props.currentUser.uuid );
+            }                                 
         }
         //// Change name methods
 
@@ -101,7 +203,8 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                         updateFail: this.state.changeName.updateFail,
                         nameHandle: this.changeName_nameHandle,
                         surnameHandle: this.changeName_surnameHandle,
-                        submitHandle: this.changeName_submitHandle
+                        submitHandle: this.changeName_submitHandle,
+                        loading: this.state.changeName.loading
                     }}
                     changePassword = {{
                         text: this.props.myAccountText.changePasswordText,
@@ -114,6 +217,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                         wrongOldPassword: this.state.changePassword.wrongOldPassword,
                         updateSuccess: this.state.changePassword.updateSuccess,
                         updateFail: this.state.changePassword.updateFail,
+                        loading: this.state.changePassword.loading,
                         oldPasswordHandle: () => {},
                         oldPasswordCheck: () => {},
                         newPasswordHandle: () => {},
@@ -133,6 +237,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                         invalidEmail: this.state.closeAccount.invalidEmail,
                         updateSuccess: this.state.closeAccount.updateSuccess,
                         updateFail: this.state.closeAccount.updateFail,
+                        loading: this.state.closeAccount.loading,
                         passwordHandle: () => {},
                         repeatPasswordHandle: () => {},
                         repeatPasswordCheck: () => {},
@@ -149,13 +254,16 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
     }
 
     const mapDispatchToProps = ( dispatch: Function ) : IMyAccountLogicActions => ({
-
+        changeName: ( name: string, surname: string, uuid: string ) => dispatch( () => {} )
     });
 
     const mapStateToProps = ( state: Istore ) : IMyAccountLogicProps => {
         return {       
             myAccountText: state.appSettings.myAccountText,
-            currentUser: state.appSettings.loggedUser
+            currentUser: state.appSettings.loggedUser,
+            changeNameSuccess: state.myAccount.changeName.success,
+            changePasswordSuccess: state.myAccount.changePassword.success,
+            closeAccountSuccess: state.myAccount.closeAccount.success
         }
     };
 
