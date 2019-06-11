@@ -12,9 +12,11 @@ import {
 function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewProps> ): React.ComponentType
 {
     class MyAccountLogic extends React.Component<MyAccountLogicType,IMyAccountLogicState>{
+        _defaultState: IMyAccountLogicState;
+
         constructor( props: MyAccountLogicType ) {
             super( props );
-            this.state = {
+            this._defaultState = {
                 changeName: {
                     name: this.props.currentUser.name,
                     surname: this.props.currentUser.surname,
@@ -47,6 +49,12 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                     updateSuccess: false
                 }
             }
+            this.state = {...this._defaultState};            
+            this.changeTabHandle = this.changeTabHandle.bind( this );
+        }
+
+        changeTabHandle() {
+            this.setState({...this._defaultState});
         }
 
         render(){            
@@ -104,7 +112,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                         checkEmailHandle: () => {}
                     }}
                     myAccountText = { this.props.myAccountText.myAccountText }
-                    changeTabHandle = { () => {} }
+                    changeTabHandle = { this.changeTabHandle }
                  />
             );
         }
