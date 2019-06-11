@@ -12,35 +12,70 @@ import {
 function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewProps> ): React.ComponentType
 {
     class MyAccountLogic extends React.Component<MyAccountLogicType,IMyAccountLogicState>{
+        constructor( props: MyAccountLogicType ) {
+            super( props );
+            this.state = {
+                changeName: {
+                    name: this.props.currentUser.name,
+                    surname: this.props.currentUser.surname,
+                    email: this.props.currentUser.email,
+                    emptyName: false,
+                    emptySurname: false,
+                    updateFail: false,
+                    updateSuccess: false
+                },
+                changePassword: {
+                    oldPassword: "",
+                    newPassword: "",
+                    repeatPassword: "",
+                    emptyOldPassword: false,
+                    emptynewPassword: false,
+                    notMatchPassword: false,
+                    wrongOldPassword: false,
+                    updateFail: false,
+                    updateSuccess: false
+                },
+                closeAccount: {
+                    password: "",
+                    repeatPassword: "",
+                    email: "",
+                    emptyPassword: false,
+                    invalidEmail: false,
+                    checkEmail: false,
+                    passwordNotMatch: false,
+                    updateFail: false,
+                    updateSuccess: false
+                }
+            }
+        }
 
         render(){            
             return(     
                  <WrappedComponent 
                     changeName = {{
                         text: this.props.myAccountText.changeNameText,
-                        email: "mail@test.com",
-                        name: "",
-                        surname: "",
-                        emptyName: false,
-                        emptySurname: false,
-                        updateSuccess: false,
-                        updateFail: false,
+                        email: this.state.changeName.email,
+                        name: this.state.changeName.name,
+                        surname: this.state.changeName.surname,
+                        emptyName: this.state.changeName.emptyName,
+                        emptySurname: this.state.changeName.emptySurname,
+                        updateSuccess: this.state.changeName.updateSuccess,
+                        updateFail: this.state.changeName.updateFail,
                         nameHandle: () => {},
                         surnameHandle: () => {},
                         submitHandle: () => {}
-
                     }}
                     changePassword = {{
                         text: this.props.myAccountText.changePasswordText,
-                        oldPassword: "",
-                        newPassword: "",
-                        repeatPassword: "",
-                        emptyOldPassword: false,
-                        emptynewPassword: false,
-                        notMatchPassword: false,
-                        wrongOldPassword: false,
-                        updateSuccess: false,
-                        updateFail: false,
+                        oldPassword: this.state.changePassword.oldPassword,
+                        newPassword: this.state.changePassword.newPassword,
+                        repeatPassword: this.state.changePassword.repeatPassword,
+                        emptyOldPassword: this.state.changePassword.emptyOldPassword,
+                        emptynewPassword: this.state.changePassword.emptynewPassword,
+                        notMatchPassword: this.state.changePassword.notMatchPassword,
+                        wrongOldPassword: this.state.changePassword.wrongOldPassword,
+                        updateSuccess: this.state.changePassword.updateSuccess,
+                        updateFail: this.state.changePassword.updateFail,
                         oldPasswordHandle: () => {},
                         oldPasswordCheck: () => {},
                         newPasswordHandle: () => {},
@@ -50,16 +85,16 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                     }}
                     closeAccount = {{
                         text: this.props.myAccountText.closeAccountText,
-                        userEnabled: true,
-                        password: "",
-                        repeatPassword: "",
-                        email: "",
-                        emptyPassword: false,
-                        passwordNotMatch: false,
-                        checkEmail: false,
-                        invalidEmail: false,
-                        updateSuccess: false,
-                        updateFail: false,
+                        userEnabled: this.props.currentUser.enabled,
+                        password: this.state.closeAccount.password,
+                        repeatPassword: this.state.closeAccount.repeatPassword,
+                        email: this.state.closeAccount.email,
+                        emptyPassword: this.state.closeAccount.emptyPassword,
+                        passwordNotMatch: this.state.closeAccount.passwordNotMatch,
+                        checkEmail: this.state.closeAccount.checkEmail,
+                        invalidEmail: this.state.closeAccount.invalidEmail,
+                        updateSuccess: this.state.closeAccount.updateSuccess,
+                        updateFail: this.state.closeAccount.updateFail,
                         passwordHandle: () => {},
                         repeatPasswordHandle: () => {},
                         repeatPasswordCheck: () => {},
@@ -73,7 +108,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                  />
             );
         }
-    }    
+    }
 
     const mapDispatchToProps = ( dispatch: Function ) : IMyAccountLogicActions => ({
 
@@ -81,7 +116,8 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
 
     const mapStateToProps = ( state: Istore ) : IMyAccountLogicProps => {
         return {       
-            myAccountText: state.appSettings.myAccountText          
+            myAccountText: state.appSettings.myAccountText,
+            currentUser: state.appSettings.loggedUser
         }
     };
 

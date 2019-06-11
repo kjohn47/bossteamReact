@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { Form, Alert, Toast, ToastHeader, ToastBody, FormGroup, Label, Col, Input, FormFeedback, Button, Tooltip } from 'reactstrap';
-import { IMyAccountCloseViewProps } from '../../../interfaces/myAccount';
+import { IMyAccountCloseViewType } from '../../../interfaces/myAccount';
 
 interface ICloseAccountState {
     toolTipCloseAccount: boolean;
     toolTipDisableAccount: boolean;
 }
 
-export default class CloseAccount extends React.PureComponent<IMyAccountCloseViewProps, ICloseAccountState> {
-    constructor(props: IMyAccountCloseViewProps) {
+export default class CloseAccount extends React.PureComponent<IMyAccountCloseViewType, ICloseAccountState> {
+    constructor(props: IMyAccountCloseViewType) {
         super(props);
     
         this.toggle = this.toggle.bind(this);

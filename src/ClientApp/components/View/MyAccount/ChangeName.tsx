@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Form, Alert, Toast, ToastHeader, ToastBody, FormGroup, Label, Col, Input, FormFeedback, Button } from 'reactstrap';
-import { IMyAccountChangeNameViewProps } from '../../../interfaces/myAccount';
+import { IMyAccountChangeNameViewType } from '../../../interfaces/myAccount';
 
-export default class ChangeName extends React.PureComponent<IMyAccountChangeNameViewProps> {
+export default class ChangeName extends React.PureComponent<IMyAccountChangeNameViewType> {
     render() {
         return (
             <Form>                    

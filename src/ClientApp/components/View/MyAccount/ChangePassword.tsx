@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Form, Alert, Toast, ToastHeader, ToastBody, FormGroup, Label, Col, Input, FormFeedback, Button } from 'reactstrap';
-import { IMyAccountChangePasswordViewProps } from '../../../interfaces/myAccount';
+import { IMyAccountChangePasswordViewType } from '../../../interfaces/myAccount';
 
-export default class ChangePassword extends React.PureComponent<IMyAccountChangePasswordViewProps> {
+export default class ChangePassword extends React.PureComponent<IMyAccountChangePasswordViewType> {
     render() {
         return (
             <Form>                    

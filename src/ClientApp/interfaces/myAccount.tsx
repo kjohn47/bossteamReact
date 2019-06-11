@@ -1,4 +1,14 @@
+import { IcurrentUser } from "./currentUser";
+
+//// Change Name
+
+export type IMyAccountChangeNameViewType = IMyAccountChangeNameViewProps & IMyAccountChangeNameViewStates & IMyAccountChangeNameViewMethods;
+
 export interface IMyAccountChangeNameViewProps {
+    text:IMyAccountChangeNameViewText;
+}
+
+export interface IMyAccountChangeNameViewStates {
     updateFail:boolean;
     updateSuccess:boolean;
     name: string;
@@ -6,7 +16,9 @@ export interface IMyAccountChangeNameViewProps {
     surname: string;
     emptySurname:boolean;
     email:string;
-    text:IMyAccountChangeNameViewText;
+}
+
+export interface IMyAccountChangeNameViewMethods {
     nameHandle( event:any ): void;
     surnameHandle( event:any ): void;
     submitHandle(): void;
@@ -23,7 +35,17 @@ interface IMyAccountChangeNameViewText {
     submit: string;
 }
 
+//// Change Name
+
+//// Change Password
+
+export type IMyAccountChangePasswordViewType = IMyAccountChangePasswordViewProps & IMyAccountChangePasswordViewStates & IMyAccountChangePasswordViewMethods;
+
 export interface IMyAccountChangePasswordViewProps {
+    text:IMyAccountChangePasswordViewText;
+}
+
+export interface IMyAccountChangePasswordViewStates {
     updateFail:boolean;
     updateSuccess:boolean;
     oldPassword: string;
@@ -33,7 +55,9 @@ export interface IMyAccountChangePasswordViewProps {
     emptynewPassword: boolean;
     repeatPassword:string;
     notMatchPassword: boolean;
-    text:IMyAccountChangePasswordViewText;
+}
+
+export interface IMyAccountChangePasswordViewMethods {
     oldPasswordHandle( event:any ): void;
     oldPasswordCheck(): void;
     newPasswordHandle( event:any) : void;
@@ -54,7 +78,18 @@ interface IMyAccountChangePasswordViewText {
     submit: string;
 }
 
+//// Change Password
+
+//// Close Account
+
+export type IMyAccountCloseViewType = IMyAccountCloseViewProps & IMyAccountCloseViewStates & IMyAccountCloseViewMethods;
+
 export interface IMyAccountCloseViewProps {
+    text:IMyAccountCloseViewText;
+    userEnabled:boolean;
+}
+
+export interface IMyAccountCloseViewStates {
     updateFail:boolean;
     updateSuccess:boolean;
     password: string;
@@ -64,8 +99,9 @@ export interface IMyAccountCloseViewProps {
     email:string;
     invalidEmail: boolean;
     checkEmail: boolean;
-    text:IMyAccountCloseViewText;
-    userEnabled:boolean;
+}
+
+export interface IMyAccountCloseViewMethods {
     passwordHandle( event:any ): void;
     repeatPasswordHandle( event:any ): void;
     repeatPasswordCheck(): void;
@@ -94,10 +130,14 @@ interface IMyAccountCloseViewText {
     enable: string;
 }
 
+//// Close Account
+
+//// My Account View
+
 export interface IMyAccountViewProps {
-    changeName: IMyAccountChangeNameViewProps;
-    changePassword: IMyAccountChangePasswordViewProps;
-    closeAccount: IMyAccountCloseViewProps;
+    changeName: IMyAccountChangeNameViewType;
+    changePassword: IMyAccountChangePasswordViewType;
+    closeAccount: IMyAccountCloseViewType;
     myAccountText: IMyAccountText;
     changeTabHandle(): void;
 }
@@ -121,12 +161,19 @@ export interface IMyAccountTranslations {
     EN: IMyAccountAllText;
 }
 
-export interface IMyAccountLogicState {
+//// My Account View
 
+//// MyAccount Logic
+
+export interface IMyAccountLogicState {
+    changeName: IMyAccountChangeNameViewStates;
+    changePassword: IMyAccountChangePasswordViewStates;
+    closeAccount: IMyAccountCloseViewStates;
 }
 
 export interface IMyAccountLogicProps {
     myAccountText: IMyAccountAllText;
+    currentUser: IcurrentUser;
 }
 
 export interface IMyAccountLogicActions {
@@ -134,3 +181,5 @@ export interface IMyAccountLogicActions {
 }
 
 export type MyAccountLogicType = IMyAccountLogicProps & IMyAccountLogicActions;
+
+//// MyAccount Logic
