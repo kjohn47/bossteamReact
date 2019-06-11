@@ -8,6 +8,7 @@ import {
     IMyAccountLogicActions, 
     IMyAccountLogicState 
     } from '../../../interfaces/myAccount';
+import { checkRegexText, REGEX_FIELD } from '../../../settings';
 
 function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewProps> ): React.ComponentType
 {
@@ -51,11 +52,40 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
             }
             this.state = {...this._defaultState};            
             this.changeTabHandle = this.changeTabHandle.bind( this );
+            this.changeName_nameHandle = this.changeName_nameHandle.bind( this );
+            this.changeName_surnameHandle = this.changeName_surnameHandle.bind( this );
+            this.changeName_submitHandle = this.changeName_submitHandle.bind( this );
         }
 
+        //// MyAccount methods
         changeTabHandle() {
             this.setState({...this._defaultState});
         }
+        //// MyAccount methods
+
+        //// Change name methods
+        changeName_nameHandle( event: any ): void {
+            let newText = checkRegexText( event.target.value, this.state.changeName.name, REGEX_FIELD.NAME );
+            this.setState({
+                changeName: { ...this.state.changeName,
+                    name: newText                                       
+                }
+            });
+        }
+
+        changeName_surnameHandle( event: any ): void {
+            let newText = checkRegexText( event.target.value, this.state.changeName.surname, REGEX_FIELD.NAME );
+            this.setState({
+                changeName: { ...this.state.changeName,
+                    surname: newText                                       
+                }
+            });
+        }
+
+        changeName_submitHandle(): void {
+            // change name action
+        }
+        //// Change name methods
 
         render(){            
             return(     
@@ -69,9 +99,9 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                         emptySurname: this.state.changeName.emptySurname,
                         updateSuccess: this.state.changeName.updateSuccess,
                         updateFail: this.state.changeName.updateFail,
-                        nameHandle: () => {},
-                        surnameHandle: () => {},
-                        submitHandle: () => {}
+                        nameHandle: this.changeName_nameHandle,
+                        surnameHandle: this.changeName_surnameHandle,
+                        submitHandle: this.changeName_submitHandle
                     }}
                     changePassword = {{
                         text: this.props.myAccountText.changePasswordText,

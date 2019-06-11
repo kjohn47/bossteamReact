@@ -52,7 +52,7 @@ export function makeLogin( user: string, password: string )  : Function {
     }
 }
 
-function updateLoginToken( result: IServerPayload ) : void
+function updateLoginToken( result: IServerPayload, serverCallArg: any, successCallArg: any, dispatch: Function ) : void
 {
     if(result.loginData.success)
     {
@@ -76,7 +76,7 @@ export function makeLogout( user: IcurrentUser) : Function {
     } 
 }
 
-function logoutFunctions() : void {
+function logoutFunctions( serverCallArg: any, successCallArg: any, dispatch: Function ) : void {
     cookieLogout();  
     if(window.location.pathname !== pageHome && window.location.pathname !== newsRoute && window.location.pathname.substring( 0, viewsNewsRoute.length ) !== viewsNewsRoute )  
         {window.location.assign(pageHome); }  
