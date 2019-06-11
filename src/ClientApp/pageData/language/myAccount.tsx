@@ -37,13 +37,15 @@ export const TEXT_MY_ACCOUNT: IMyAccountTranslations = {
             close: "Fechar",
             disable: "Desativar",
             closeTooltip: "Ao fechar a conta, todos os seus dados serão eliminados e o login será libertado para nova conta. Vai ocorrer um logout após fecho da conta.",
-            disableTooltip: "Ao desativar a conta, os dados não serão perdidos, serão desactivados todos os seus posts, comentários em outros posts permanecem. Será enviado para o email os passos para reactivação.",
+            disableTooltip: "Ao desativar a conta, os dados não serão perdidos, serão desactivados todos os seus posts, comentários em outros posts permanecem. Poderá fazer login e reactivar a conta posteriormente.",
+            enableToolTip: "Clique aqui para reactivar a conta",
             emptyField: "O campo [FIELD] tem de ser preenchido",
             emailNotEqual: "O email colocado não coicide com o email do utilizador",
             invalidEmail: "Formato e-mail inválido. 'aaa@bbb.com'",
             passwordNotMatch: "A password colocada não coicide ou está incorreta", 
             success: "A conta foi desativada com sucesso",
-            fail: "Ocorreu um erro a fechar/desativar a conta"
+            fail: "Ocorreu um erro a fechar/desativar a conta",
+            enable: "Activar"
         }
     },
     EN: {
@@ -82,13 +84,15 @@ export const TEXT_MY_ACCOUNT: IMyAccountTranslations = {
             close: "Close",
             disable: "Disable",
             closeTooltip: "By closing the account, all your data will be deleted and your login will be free for new account creation. Logout will happen after closure.",
-            disableTooltip: "By disabling your account, you wont loose any data. All your posts will be hidden, comments on other posts will stay visible. You will recieve an email with reactivation steps.",
+            disableTooltip: "By disabling your account, you wont loose any data. All your posts will be hidden, comments on other posts will stay visible. You can make login and re-enable your account.",
+            enableToolTip: "Click here to enable your account",
             emptyField: "The field [FIELD] cannot be empty",
             emailNotEqual: "The email doesn't match with your user account",
             invalidEmail: "Invalid e-mail format. 'aaa@bbb.com'",
             passwordNotMatch: "The password didn't match or is wrong", 
             success: "The account was disabled with success",
-            fail: "There was an error during account disabling/closure"
+            fail: "There was an error during account disabling/closure",
+            enable: "Enable"
         }
     }
 }

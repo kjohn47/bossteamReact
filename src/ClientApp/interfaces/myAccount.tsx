@@ -65,6 +65,7 @@ export interface IMyAccountCloseViewProps {
     invalidEmail: boolean;
     checkEmail: boolean;
     text:IMyAccountCloseViewText;
+    userEnabled:boolean;
     passwordHandle( event:any ): void;
     repeatPasswordHandle( event:any ): void;
     repeatPasswordCheck(): void;
@@ -87,8 +88,10 @@ interface IMyAccountCloseViewText {
     passwordNotMatch: string;
     disableTooltip: string;
     closeTooltip: string;
+    enableToolTip: string;
     disable: string;
     close: string;
+    enable: string;
 }
 
 export interface IMyAccountViewProps {

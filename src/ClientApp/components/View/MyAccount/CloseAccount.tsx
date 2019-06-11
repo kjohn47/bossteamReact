@@ -96,9 +96,9 @@ export default class CloseAccount extends React.PureComponent<IMyAccountCloseVie
                         <FormGroup row>
                             <Col xl={{ size: 11, offset: 1 }} sm={{ size: 10, offset: 2 }}>
                                 <Tooltip placement="top" isOpen={this.state.toolTipDisableAccount} autohide={true} target="disableAccountButton" toggle={() => this.toggle(1)}>  
-                                    { this.props.text.disableTooltip }
+                                    {  this.props.userEnabled? this.props.text.disableTooltip : this.props.text.enableToolTip }
                                 </Tooltip>      
-                                <Button id="disableAccountButton" className = "buttonMargin" onClick = { () => this.props.disableHandle() } >{ this.props.text.disable }</Button>                                
+                                <Button id="disableAccountButton" className = "buttonMargin" onClick = { () => this.props.disableHandle() } >{ this.props.userEnabled? this.props.text.disable : this.props.text.enable }</Button>                                
                                 <span className = "spacerSpan"></span>
                                 <Tooltip placement="top" isOpen={this.state.toolTipCloseAccount} autohide={true} target="closeAccountButton" toggle={() => this.toggle(2)}>  
                                     { this.props.text.closeTooltip }

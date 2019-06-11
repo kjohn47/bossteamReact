@@ -50,6 +50,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                     }}
                     closeAccount = {{
                         text: this.props.myAccountText.closeAccountText,
+                        userEnabled: true,
                         password: "",
                         repeatPassword: "",
                         email: "",
