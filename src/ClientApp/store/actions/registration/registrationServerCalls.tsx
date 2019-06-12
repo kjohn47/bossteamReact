@@ -55,8 +55,10 @@ export async function registrateUserInServer( registrationArg: IUserRegistration
             {
                 return axios.get(restServer + "Users").then( (usersList) => {
                     let userListServer: IServerResponse[] = usersList.data;
+                    let uuid: string = registrationArg.email + registrationArg.username;
                     let newUser: IServerResponse = {
                         id: userListServer.length + 1,
+                        uuid: uuid,
                         hasError: false,
                         username: registrationArg.username,
                         password: sha1( registrationArg.password ),
@@ -67,7 +69,7 @@ export async function registrateUserInServer( registrationArg: IUserRegistration
                                     name: registrationArg.name,
                                     surname: registrationArg.surname,
                                     permission: 1,
-                                    uuid: registrationArg.email + registrationArg.username,
+                                    uuid: uuid,
                                     email: registrationArg.email,
                                     enabled: true
                                 }

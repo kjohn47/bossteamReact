@@ -281,6 +281,7 @@
       "hasError": false,
       "username": "abc",
       "password": "40bd001563085fc35165329ea1ff5c5ecbdbbeef",
+      "uuid": "AAAA-BBBB-CCCC-DDDD",
       "payload": {
         "loginData": {
           "success": true,
@@ -300,6 +301,7 @@
       "hasError": false,
       "username": "def",
       "password": "40bd001563085fc35165329ea1ff5c5ecbdbbeef",
+      "uuid": "EEEE-FFFF-GGGG-HHHH",
       "payload": {
         "loginData": {
           "success": true,
@@ -319,6 +321,7 @@
       "hasError": false,
       "username": "casanova",
       "password": "40bd001563085fc35165329ea1ff5c5ecbdbbeef",
+      "uuid": "casanova@gmail.comcasanova",
       "payload": {
         "loginData": {
           "success": true,
@@ -329,6 +332,26 @@
             "uuid": "casanova@gmail.comcasanova",
             "email": "casanova@gmail.com",
             "enabled": false
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "uuid": "testUser@gmail.comtest",
+      "hasError": false,
+      "username": "test",
+      "password": "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3",
+      "payload": {
+        "loginData": {
+          "success": true,
+          "user": {
+            "name": "teste",
+            "surname": "user",
+            "permission": 1,
+            "uuid": "testUser@gmail.comtest",
+            "email": "testUser@gmail.com",
+            "enabled": true
           }
         }
       }
