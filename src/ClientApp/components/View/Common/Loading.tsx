@@ -13,7 +13,9 @@ class LoadingView extends React.PureComponent<ILoading,{}>{
                 {this.props.isPageLoading &&                                   
                         <Spinner color="secondary" className = {spinnerClasses} />                   
                 }
-                {this.props.children}
+                <React.Suspense fallback={<Spinner color="secondary" className = {spinnerClasses} /> }>
+                    {this.props.children}
+                </React.Suspense>
             </React.Fragment>
         )};
 }

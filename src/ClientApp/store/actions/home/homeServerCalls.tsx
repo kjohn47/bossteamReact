@@ -1,4 +1,4 @@
-import { serverResolve } from '../common';
+import { serverResolve } from '../appSettings/common';
 import { ERROR_HOME_PAGE, restServer } from '../../../settings';
 import axios from 'axios';
 

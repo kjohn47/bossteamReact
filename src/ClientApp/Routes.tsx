@@ -1,19 +1,29 @@
-import * as React from 'react';
-import {Route} from 'react-router-dom';
-import Home from './components/Routes/Home';
-import News from './components/Routes/News';
-import ViewNewsInfo from './components/Routes/ViewNewsInfo';
-import BlogsListAll from './components/Routes/BlogsListAll';
-import Registration from './components/Routes/Registration';
+import React from 'react';
+//import Home from './components/Routes/Home';
+const Home = React.lazy(() => import('./components/Routes/Home'));
+//import News from './components/Routes/News';
+const News = React.lazy(() => import('./components/Routes/News'));
+//import ViewNewsInfo from './components/Routes/ViewNewsInfo';
+const ViewNewsInfo = React.lazy(() => import('./components/Routes/ViewNewsInfo'));
+//import BlogsListAll from './components/Routes/BlogsListAll';
+const BlogsListAll = React.lazy(() => import('./components/Routes/BlogsListAll'));
+//import Registration from './components/Routes/Registration';
+const Registration = React.lazy(() => import('./components/Routes/Registration'));
+//import MyAccount from './components/Routes/MyAccount';
+const MyAccount = React.lazy(() => import('./components/Routes/MyAccount'));
+
 import { 
   pageHome, 
   newsRoute, 
   viewsNewsRoute, 
   blogsListAllRoute, 
-  registrationRoute
+  registrationRoute,
+  myAccountRoute
   } from './settings';
+
 import ErrorHandlingView from './components/View/Common/ErrorHandling';
 import pageNotFoundLogic from './components/Logic/Common/PageNotFound';
+
 
 const NotFound = pageNotFoundLogic(ErrorHandlingView);
 
@@ -52,6 +62,7 @@ const getComponentRoute = (component:any, path:string, actions:any[] = []) => {
 const routes = [
         getComponentRoute(Home, pageHome), //or call directly the function.. atention to not use {} in this case
         getComponentRoute(Registration, registrationRoute), 
+        getComponentRoute(MyAccount, myAccountRoute),
         getComponentRoute(News, newsRoute), 
         getComponentRoute(ViewNewsInfo, viewsNewsRoute + '/:ID'), 
         getComponentRoute(BlogsListAll, blogsListAllRoute),    

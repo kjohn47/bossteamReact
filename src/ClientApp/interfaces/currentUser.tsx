@@ -1,6 +1,8 @@
 export interface IcurrentUser {
-    name : string;
+    name: string;
     surname: string;
     uuid: string;
-    permission : number;
+    permission: number;
+    email: string;
+    enabled: boolean;
 }

@@ -1,7 +1,6 @@
-import { startServerCommunication, serverCommunicationError, endServerCommunication } from "./appSettings";
-import { IErrorHandling, IServerResponse } from "../../interfaces/common";
-import { ERROR_GENERIC } from "../../settings";
-
+import { startServerCommunication, serverCommunicationError, endServerCommunication } from ".";
+import { IErrorHandling, IServerResponse } from "../../../interfaces/common";
+import { ERROR_GENERIC } from "../../../settings";
 
 export function commonServerAction( dispatch: Function, 
                                     serverCall:Function, 
@@ -11,7 +10,7 @@ export function commonServerAction( dispatch: Function,
                                     isLocalLoad: boolean = false, 
                                     localLoad: string = '',
                                     runBeforeSuccess: Function = null,
-                                    runAfterFinish:Function = null) : Promise<any>
+                                    runAfterFinish: Function = null) : Promise<any>
 {    
     dispatch( startServerCommunication( isLocalLoad, localLoad ) );    
     return new Promise( async (resolve, reject) => {
@@ -22,13 +21,13 @@ export function commonServerAction( dispatch: Function,
         }
         resolve( serverData )
     }).then( ( result:IServerResponse ) => { 
-        runBeforeSuccess !== null && runBeforeSuccess( result.payload );
+        runBeforeSuccess !== null && runBeforeSuccess( result.payload, serverCallArg, successCallArg, dispatch );
         dispatch( successCall( result.payload, successCallArg ) )
     }).catch( ( err: IErrorHandling ) => {
         dispatch( serverCommunicationError( { ...err } ) )
     }).finally ( () => {                
         dispatch(endServerCommunication( isLocalLoad, localLoad ) );        
-        runAfterFinish !== null && runAfterFinish();
+        runAfterFinish !== null && runAfterFinish( serverCallArg, successCallArg, dispatch );
     } )    
 }
 

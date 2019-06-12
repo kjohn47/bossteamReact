@@ -1,5 +1,5 @@
 import { IUserRegistrationArg } from "../../../interfaces/registration";
-import { serverResolve } from "../common";
+import { serverResolve } from "../appSettings/common";
 import { ERROR_USER_REGISTRATION, restServer } from "../../../settings";
 import { IServerResponse } from "../../../interfaces/common";
 import axios from 'axios';
@@ -18,7 +18,7 @@ export async function checkUsenameExists( username: string ): Promise<any> {
         };
 
         ////Just a mock, needs to be different in case of real server call
-        return axios.get(restServer + "Users?username_like=" + username ).then( (response) => {
+        return axios.get(restServer + "Users?username=" + username ).then( (response) => {
             let userFromServer: IServerResponse[] = response.data;
             if( userFromServer !== null && userFromServer !== undefined && userFromServer.length > 0 )
             {
@@ -44,7 +44,7 @@ export async function registrateUserInServer( registrationArg: IUserRegistration
             }            
         };
 
-        return axios.get(restServer + "Users?username_like=" + registrationArg.username ).then( (response) => {
+        return axios.get(restServer + "Users?username=" + registrationArg.username ).then( (response) => {
             let userFromServer: IServerResponse[] = response.data;
             if( userFromServer !== null && userFromServer !== undefined && userFromServer.length > 0 )
             {
@@ -55,8 +55,10 @@ export async function registrateUserInServer( registrationArg: IUserRegistration
             {
                 return axios.get(restServer + "Users").then( (usersList) => {
                     let userListServer: IServerResponse[] = usersList.data;
+                    let uuid: string = registrationArg.email + registrationArg.username;
                     let newUser: IServerResponse = {
                         id: userListServer.length + 1,
+                        uuid: uuid,
                         hasError: false,
                         username: registrationArg.username,
                         password: sha1( registrationArg.password ),
@@ -67,7 +69,9 @@ export async function registrateUserInServer( registrationArg: IUserRegistration
                                     name: registrationArg.name,
                                     surname: registrationArg.surname,
                                     permission: 1,
-                                    uuid: registrationArg.email + registrationArg.username
+                                    uuid: uuid,
+                                    email: registrationArg.email,
+                                    enabled: true
                                 }
                             }
                         }

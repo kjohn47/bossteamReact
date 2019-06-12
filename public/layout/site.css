@@ -77,6 +77,11 @@ body{
     font-size: 27px;
 }
 
+.spacerSpan {
+    display: inline-block;
+    width:10px;
+}
+
 .loginSpinner {
     margin-left: 19px;
     margin-right: 29px;
@@ -92,6 +97,13 @@ body{
 .login_form_btn{
     margin-left: 8px;
     display: flex;
+}
+
+.loginPassRecover {
+    max-height: 10px;
+    color: white !important;
+    padding: 0 !important;
+    display: inline !important;
 }
 
 .registLink{
@@ -244,6 +256,10 @@ body{
     padding-left: 15px;
 }
 
+.TabMouseOver {
+    cursor: pointer !important;
+}
+
 @media(max-width: 768px)
 {
     .HomePageImage{
@@ -287,5 +303,9 @@ body{
     .login_form_btn{
         padding-top: 0px !important;
         padding-bottom: 7px !important;
+    }
+
+    .buttonMargin {
+        margin-bottom: 10px;
     }
 }

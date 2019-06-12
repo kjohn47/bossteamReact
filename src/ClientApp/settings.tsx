@@ -20,6 +20,7 @@ export const ERROR_HOME_PAGE = 'ERROR_HOME_PAGE';
 export const ERROR_GET_NEWS_LIST = 'ERROR_GET_NEWS_LIST';
 export const ERROR_GET_NEWS_DATA = 'ERROR_GET_NEWS_DATA';
 export const ERROR_USER_REGISTRATION = 'ERROR_USER_REGISTRATION';
+export const ERROR_MYACCOUNT_CHANGENAME = 'ERROR_MYACCOUNT_CHANGENAME';
 
 //APP
 export const Show_Error_Detailed = true;////set true to dev, false to prd
@@ -30,6 +31,7 @@ export const restServer = 'http://localhost:4000/rest/';
 //ROUTES
 export const pageHome = '/';
 export const registrationRoute = '/registration';
+export const myAccountRoute = '/myaccount';
 export const newsRoute = '/news';
 export const viewsNewsRoute = '/viewnews';
 export const blogsListAllRoute = '/listallblogs';
@@ -43,6 +45,7 @@ export const LOAD_LOGIN_MENU = 'LOAD_LOGIN_MENU';
 export const LOAD_NEW_COMMENT = 'LOAD_NEW_COMMENT';
 export const LOAD_HOME_NEWS = 'LOAD_HOME_NEWS';
 export const LOAD_REGISTRATION = 'LOAD_REGISTRATION';
+export const LOAD_MYACCOUNT_CHANGENAME = 'LOAD_MYACCOUNT_CHANGENAME';
 
 // COOKIE METHODS -- Do not change
 export const currentLanguage = () : string => {
@@ -70,6 +73,15 @@ export const getCurrentUser = () : IcurrentUser => {
 export const setCurrentUser = (userData: IcurrentUser ) : void => {
    cookies.set(userCookie, userData, { path: pageHome }) 
 };
+
+export const updateCurrentUserNames = ( name: string, surname: string ): void => {
+   let user: IcurrentUser = getCurrentUser();
+   user = {...user,
+      name: name,
+      surname: surname
+   };
+   setCurrentUser( user );
+}
 
 export const cookieLogout = () : void => {
    cookies.remove(userCookie, { path: pageHome });

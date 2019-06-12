@@ -49,6 +49,7 @@ function addCommentLogic ( WrappedComponent:React.ComponentType<IAddCommentProps
 
         render(){
             return(
+                this.props.isLogged && this.props.loggedUser.enabled ? 
                 <WrappedComponent 
                     addComment = { this.addComment } 
                     submitBtnText = { this.props.addCommentText.submitBtnText }
@@ -58,6 +59,8 @@ function addCommentLogic ( WrappedComponent:React.ComponentType<IAddCommentProps
                     invalidCommentText = { this.props.addCommentText.invalidCommentText }
                     emptyComment = { this.state.emptyComment }
                 />
+                :
+                null
             );
         }
     }    
@@ -65,7 +68,9 @@ function addCommentLogic ( WrappedComponent:React.ComponentType<IAddCommentProps
     const mapStateToProps = ( state: Istore ) : IAddCommentProps => {
         return {
             addCommentText: state.appSettings.addCommentText,
-            loading: state.appSettings.fetchData.loading.localLoading.loadComment,            
+            loading: state.appSettings.fetchData.loading.localLoading.loadComment,     
+            loggedUser: state.myAccount.loggedUser,            
+            isLogged: state.myAccount.isLogged
         }
     };
 
