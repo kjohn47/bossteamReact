@@ -17,7 +17,8 @@ import {
     LOAD_HOME_NEWS,
     Show_Error_Detailed,
     GetPropertyValue,
-    LOAD_REGISTRATION} from '../../settings';
+    LOAD_REGISTRATION,
+    LOAD_MYACCOUNT_CHANGENAME} from '../../settings';
 import { ILoading, IErrorHandling, IErrorHandlingText, IErrorHandlingTextTranslation } from '../../interfaces/common';
 import { ERRORS, TEXT_PAGE_NOT_FOUND } from '../../pageData/language/errors';
 import { TEXT_REGISTRATION } from '../../pageData/language/registration';
@@ -49,7 +50,8 @@ const defaultState: IAppSettings = {
                 loadComment: false,
                 loadLogin: false,
                 loadHomeNews: false,
-                loadUserRegistration: false
+                loadUserRegistration: false,
+                loadMyAccountChangeName: false
             }
         }
     } 
@@ -63,7 +65,8 @@ function getLoadingState( isLocalLoading: boolean, pageLoading: ILoading, loadLo
             loadLogin: isLocalLoading  && loadLocalization === LOAD_LOGIN_MENU ? true : pageLoading.localLoading.loadLogin,
             loadComment: isLocalLoading  && loadLocalization === LOAD_NEW_COMMENT ? true : pageLoading.localLoading.loadComment,
             loadHomeNews: isLocalLoading  && loadLocalization === LOAD_HOME_NEWS ? true : pageLoading.localLoading.loadHomeNews,
-            loadUserRegistration: isLocalLoading && loadLocalization === LOAD_REGISTRATION ? true : pageLoading.localLoading.loadUserRegistration
+            loadUserRegistration: isLocalLoading && loadLocalization === LOAD_REGISTRATION ? true : pageLoading.localLoading.loadUserRegistration,
+            loadMyAccountChangeName: isLocalLoading && loadLocalization === LOAD_MYACCOUNT_CHANGENAME ? true : pageLoading.localLoading.loadMyAccountChangeName
         }        
     }
     return {...loading};
@@ -77,7 +80,8 @@ function endLoadingState( isLocalLoading: boolean, pageLoading: ILoading, loadLo
             loadLogin: (isLocalLoading  && loadLocalization === LOAD_LOGIN_MENU) ? false : pageLoading.localLoading.loadLogin,
             loadComment: (isLocalLoading  && loadLocalization === LOAD_NEW_COMMENT) ? false : pageLoading.localLoading.loadComment,
             loadHomeNews: (isLocalLoading  && loadLocalization === LOAD_HOME_NEWS) ? false : pageLoading.localLoading.loadHomeNews,
-            loadUserRegistration: isLocalLoading && loadLocalization === LOAD_REGISTRATION ? false : pageLoading.localLoading.loadUserRegistration
+            loadUserRegistration: isLocalLoading && loadLocalization === LOAD_REGISTRATION ? false : pageLoading.localLoading.loadUserRegistration,
+            loadMyAccountChangeName: isLocalLoading && loadLocalization === LOAD_MYACCOUNT_CHANGENAME ? false : pageLoading.localLoading.loadMyAccountChangeName
         }
     }
     return {...loading};

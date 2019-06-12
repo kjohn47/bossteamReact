@@ -116,6 +116,7 @@ interface ILocalLoading {
     loadComment?: boolean;
     loadHomeNews?: boolean;
     loadUserRegistration?: boolean;
+    loadMyAccountChangeName?: boolean;
 }
 
 export interface IErrorHandling {
@@ -169,4 +170,5 @@ export interface IErrorHandlingErrors {
     ERROR_GET_NEWS_LIST: IErrorHandlingTextTranslation;
     ERROR_GET_NEWS_DATA: IErrorHandlingTextTranslation;
     ERROR_USER_REGISTRATION: IErrorHandlingTextTranslation;
+    ERROR_MYACCOUNT_CHANGENAME: IErrorHandlingTextTranslation;
 }

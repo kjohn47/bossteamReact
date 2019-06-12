@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Form, Alert, Toast, ToastHeader, ToastBody, FormGroup, Label, Col, Input, FormFeedback, Button } from 'reactstrap';
+import { Form, Alert, Toast, ToastHeader, ToastBody, FormGroup, Label, Col, Input, FormFeedback, Button, Spinner } from 'reactstrap';
 import { IMyAccountChangeNameViewType } from '../../../interfaces/myAccount';
 
 export default class ChangeName extends React.PureComponent<IMyAccountChangeNameViewType> {
@@ -51,7 +51,12 @@ export default class ChangeName extends React.PureComponent<IMyAccountChangeName
                         </FormGroup> 
                         <FormGroup row>
                             <Col xl={{ size: 11, offset: 1 }} sm={{ size: 10, offset: 2 }}>
+                            { 
+                                this.props.loading ? 
+                                <Spinner size="sm" color="secondary" className="loginSpinner"/>
+                            :
                                 <Button onClick = { () => this.props.submitHandle() } >{ this.props.text.submit }</Button>
+                            }
                             </Col>
                             </FormGroup>
                     </ToastBody>

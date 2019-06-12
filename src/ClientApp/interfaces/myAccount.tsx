@@ -8,6 +8,7 @@ export type IMyAccountChangeNameViewType = IMyAccountChangeNameViewProps & IMyAc
 export interface IMyAccountChangeNameViewProps {
     text:IMyAccountChangeNameViewText;
     email:string;
+    loading: boolean;
 }
 
 export interface IMyAccountChangeNameViewStates {
@@ -17,7 +18,6 @@ export interface IMyAccountChangeNameViewStates {
     emptyName: boolean;
     surname: string;
     emptySurname:boolean;
-    loading: boolean;
 }
 
 export interface IMyAccountChangeNameViewMethods {
@@ -45,6 +45,7 @@ export type IMyAccountChangePasswordViewType = IMyAccountChangePasswordViewProps
 
 export interface IMyAccountChangePasswordViewProps {
     text:IMyAccountChangePasswordViewText;
+    loading: boolean;
 }
 
 export interface IMyAccountChangePasswordViewStates {
@@ -57,7 +58,6 @@ export interface IMyAccountChangePasswordViewStates {
     emptynewPassword: boolean;
     repeatPassword:string;
     notMatchPassword: boolean;
-    loading: boolean;
 }
 
 export interface IMyAccountChangePasswordViewMethods {
@@ -90,6 +90,7 @@ export type IMyAccountCloseViewType = IMyAccountCloseViewProps & IMyAccountClose
 export interface IMyAccountCloseViewProps {
     text:IMyAccountCloseViewText;
     userEnabled:boolean;
+    loading: boolean;
 }
 
 export interface IMyAccountCloseViewStates {
@@ -102,7 +103,6 @@ export interface IMyAccountCloseViewStates {
     email:string;
     invalidEmail: boolean;
     checkEmail: boolean;
-    loading: boolean;
 }
 
 export interface IMyAccountCloseViewMethods {
@@ -181,6 +181,7 @@ export interface IMyAccountLogicProps {
     changeNameSuccess: string;
     changePasswordSuccess: string;
     closeAccountSuccess: string;
+    changeNameLoading: boolean;
 }
 
 export interface IMyAccountLogicActions {

@@ -25,8 +25,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                     emptyName: false,
                     emptySurname: false,
                     updateFail: false,
-                    updateSuccess: false,
-                    loading: false
+                    updateSuccess: false
                 },
                 changePassword: {
                     oldPassword: "",
@@ -37,8 +36,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                     notMatchPassword: false,
                     wrongOldPassword: false,
                     updateFail: false,
-                    updateSuccess: false,
-                    loading: false
+                    updateSuccess: false
                 },
                 closeAccount: {
                     password: "",
@@ -49,8 +47,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                     checkEmail: false,
                     passwordNotMatch: false,
                     updateFail: false,
-                    updateSuccess: false,
-                    loading: false
+                    updateSuccess: false
                 }
             }
             this.state = {...this._defaultState};
@@ -203,7 +200,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                         nameHandle: this.changeName_nameHandle,
                         surnameHandle: this.changeName_surnameHandle,
                         submitHandle: this.changeName_submitHandle,
-                        loading: this.state.changeName.loading
+                        loading: this.props.changeNameLoading
                     }}
                     changePassword = {{
                         text: this.props.myAccountText.changePasswordText,
@@ -216,7 +213,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                         wrongOldPassword: this.state.changePassword.wrongOldPassword,
                         updateSuccess: this.state.changePassword.updateSuccess,
                         updateFail: this.state.changePassword.updateFail,
-                        loading: this.state.changePassword.loading,
+                        loading: false,
                         oldPasswordHandle: () => {},
                         oldPasswordCheck: () => {},
                         newPasswordHandle: () => {},
@@ -236,7 +233,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                         invalidEmail: this.state.closeAccount.invalidEmail,
                         updateSuccess: this.state.closeAccount.updateSuccess,
                         updateFail: this.state.closeAccount.updateFail,
-                        loading: this.state.closeAccount.loading,
+                        loading: false,
                         passwordHandle: () => {},
                         repeatPasswordHandle: () => {},
                         repeatPasswordCheck: () => {},
@@ -263,7 +260,8 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
             currentUser: state.myAccount.loggedUser,
             changeNameSuccess: state.myAccount.changeName.success,
             changePasswordSuccess: state.myAccount.changePassword.success,
-            closeAccountSuccess: state.myAccount.closeAccount.success
+            closeAccountSuccess: state.myAccount.closeAccount.success,
+            changeNameLoading: state.appSettings.fetchData.loading.localLoading.loadMyAccountChangeName
         }
     };
 

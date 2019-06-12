@@ -91,5 +91,15 @@ export const ERRORS: IErrorHandlingErrors = {
             errorMessage: "An error occurred when making user registration",
             errorTitle: "Error: Registration"
         }
-    }    
+    },
+    ERROR_MYACCOUNT_CHANGENAME: {
+        PT: {
+            errorMessage: "Ocurreu um erro a alterar o nome do utilizador",
+            errorTitle: "Erro: A Minha Conta - Alterar Nome"
+        },
+        EN: {
+            errorMessage: "An error occurred when changing user name",
+            errorTitle: "Error: My Account - Change Name"
+        }
+    }
 }

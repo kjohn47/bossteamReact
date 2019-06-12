@@ -20,6 +20,7 @@ export const ERROR_HOME_PAGE = 'ERROR_HOME_PAGE';
 export const ERROR_GET_NEWS_LIST = 'ERROR_GET_NEWS_LIST';
 export const ERROR_GET_NEWS_DATA = 'ERROR_GET_NEWS_DATA';
 export const ERROR_USER_REGISTRATION = 'ERROR_USER_REGISTRATION';
+export const ERROR_MYACCOUNT_CHANGENAME = 'ERROR_MYACCOUNT_CHANGENAME';
 
 //APP
 export const Show_Error_Detailed = true;////set true to dev, false to prd
@@ -44,6 +45,7 @@ export const LOAD_LOGIN_MENU = 'LOAD_LOGIN_MENU';
 export const LOAD_NEW_COMMENT = 'LOAD_NEW_COMMENT';
 export const LOAD_HOME_NEWS = 'LOAD_HOME_NEWS';
 export const LOAD_REGISTRATION = 'LOAD_REGISTRATION';
+export const LOAD_MYACCOUNT_CHANGENAME = 'LOAD_MYACCOUNT_CHANGENAME';
 
 // COOKIE METHODS -- Do not change
 export const currentLanguage = () : string => {

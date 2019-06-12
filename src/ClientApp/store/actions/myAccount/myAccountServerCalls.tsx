@@ -1,7 +1,7 @@
 import { IcurrentUser } from '../../../interfaces/currentUser';
 import { ILoginState } from '../../../interfaces/login';
 import { serverResolve } from '../appSettings/common';
-import { ERROR_LOGIN, ERROR_LOGOUT, restServer, results } from '../../../settings';
+import { ERROR_LOGIN, ERROR_LOGOUT, restServer, results, ERROR_MYACCOUNT_CHANGENAME } from '../../../settings';
 import { IServerResponse } from '../../../interfaces/common';
 import axios from 'axios';
 import sha1 from 'sha1';
@@ -55,13 +55,13 @@ export async function makeLogoutOnServer( user: IcurrentUser ) : Promise<any>{
     }, ERROR_LOGOUT)
 }
 
-interface IchangeNamerArg {
+interface IchangeNameArg {
     name: string;
     surname: string;
     uuid: string;
 }
 
-export async function changeNameServerCall( changeNameArg: IchangeNamerArg ) : Promise<any> {
+export async function changeNameServerCall( changeNameArg: IchangeNameArg ) : Promise<any> {
     return await serverResolve( () => 
     {
         let changeName: IMyAccountChangeNameResponse = {
@@ -82,5 +82,5 @@ export async function changeNameServerCall( changeNameArg: IchangeNamerArg ) : P
                 resolve( serverReturn )
             }, 250 )
         })
-    });    
+    }, ERROR_MYACCOUNT_CHANGENAME );    
 }
