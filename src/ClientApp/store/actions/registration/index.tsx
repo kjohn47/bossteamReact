@@ -1,6 +1,6 @@
 import { IRegistrationAction, ICheckUsernameResult, IRegistrationResult, IUserRegistrationArg } from "../../../interfaces/registration";
 import { CHECK_USERNAME, MAKE_REGISTRATION, RESET_REGISTRATION } from "../../actionTypes";
-import { commonServerAction } from "../common";
+import { commonServerAction } from "../appSettings/common";
 import { LOAD_REGISTRATION } from "../../../settings";
 import { checkUsenameExists, registrateUserInServer } from "./registrationServerCalls";
 import { IServerPayload } from "../../../interfaces/common";

@@ -56,13 +56,9 @@ export interface IRegistrationPropsView {
     passwordIsEmpty: boolean;
     isUsernameLoading: boolean;
     failedToRegist: boolean;
+    successToRegist: boolean;
     validUsername: boolean;
-}
-
-export interface IRegistrationSuccessPropsView {
-    username: string;
-    title: string;
-    successText: string;
+    submitedUsername: string;
 }
 
 export interface IRegistrationStateLogic {
@@ -70,6 +66,7 @@ export interface IRegistrationStateLogic {
     surname: string;
     email: string;
     username: string;
+    submitedUsername: string;
     password: string;
     nameIsEmpty: boolean;
     surnameIsEmpty: boolean;

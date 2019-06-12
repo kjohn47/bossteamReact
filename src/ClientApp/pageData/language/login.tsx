@@ -8,7 +8,8 @@ export const TEXT_LOGIN_MENU: IloginMenuTranslations = {
                 submit : 'Entrar',
                 emptyUser: 'Campo Utilizador Vazio',
                 emptyPassword: 'Campo Password Vazio',
-                invalidLogin: 'Utilizador ou Password Inválido'
+                invalidLogin: 'Utilizador ou Password Inválido',
+                passwordRecover: 'Clique aqui para recuperar a password'
         },
         EN: {
                 username : 'Username',
@@ -17,7 +18,8 @@ export const TEXT_LOGIN_MENU: IloginMenuTranslations = {
                 submit : 'Enter',
                 emptyUser: 'Empty User Field',
                 emptyPassword: 'Empty Password Field',
-                invalidLogin: 'Invalid User or Password'
+                invalidLogin: 'Invalid User or Password',
+                passwordRecover: 'Click here to recover password'
         }
 }
 

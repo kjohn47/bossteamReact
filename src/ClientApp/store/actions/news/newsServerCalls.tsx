@@ -1,6 +1,6 @@
 import { InewsDataArg } from '../../../interfaces/news';
 import { ICommentData, IServerResponse } from '../../../interfaces/common';
-import { serverResolve } from '../common';
+import { serverResolve } from '../appSettings/common';
 import { ERROR_ADD_COMMENT, ERROR_GET_NEWS_DATA, ERROR_GET_NEWS_LIST, restServer } from '../../../settings';
 import axios from 'axios';
 

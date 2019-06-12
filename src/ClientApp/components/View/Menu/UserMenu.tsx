@@ -7,6 +7,7 @@ import {
     DropdownItem, 
     Spinner} from 'reactstrap';
 import {NavLink as RouterLink} from 'react-router-dom';
+import { myAccountRoute } from '../../../settings';
 
 
 
@@ -25,7 +26,7 @@ class UserMenu extends React.PureComponent<IUserMenu,{}>{
                 <DropdownToggle nav caret>{userName}</DropdownToggle>
                 <DropdownMenu right>
                     <DropdownItem>{userMnText.administration}</DropdownItem>
-                    <DropdownItem>{userMnText.account}</DropdownItem>
+                    <RouterLink to = {myAccountRoute}><DropdownItem>{userMnText.account}</DropdownItem></RouterLink>
                     <DropdownItem divider />
                     <DropdownItem onClick= {() => this.props.userMenuAction()}>{userMnText.logout}</DropdownItem>
                 </DropdownMenu>

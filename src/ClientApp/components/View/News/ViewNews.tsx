@@ -44,7 +44,7 @@ class ViewNews extends React.PureComponent<IViewNews,{}>{
                 </Row>
                 <Row>
                     {
-                        newsData.allowComments && this.props.logedIn && 
+                        newsData.allowComments && 
                             <AddComments addCommentAction = { this.props.addCommentAction }/>                  
                     }
                 </Row>

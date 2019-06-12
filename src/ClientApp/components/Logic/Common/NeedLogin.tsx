@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {Istore} from '../../../interfaces/store';
 import {connect} from 'react-redux';
-import {IAppSettings} from '../../../interfaces/appSettings';
 import { Alert } from 'reactstrap';
 import PageHeader from '../../View/Common/PageHeader';
+import { INeddLoginReduxProps } from '../../../interfaces/login';
 
 function needLoginLogic ( WrappedComponent:React.ComponentType ): React.ComponentType
 {
-    class NeedLoginLogic extends React.Component<IAppSettings>{
+    class NeedLoginLogic extends React.Component<INeddLoginReduxProps>{
 
         render(){
             const isLogged = this.props.isLogged && this.props.loggedUser !== null && this.props.loggedUser.uuid !== undefined && this.props.loggedUser.uuid !== '';
@@ -24,10 +24,10 @@ function needLoginLogic ( WrappedComponent:React.ComponentType ): React.Componen
         }
     }    
 
-    const mapStateToProps = ( state: Istore ) : IAppSettings => {
+    const mapStateToProps = ( state: Istore ) : INeddLoginReduxProps => {
         return {
-            isLogged: state.appSettings.isLogged,
-            loggedUser: state.appSettings.loggedUser,
+            isLogged: state.myAccount.isLogged,
+            loggedUser: state.myAccount.loggedUser,
             loginFormHeader: state.appSettings.loginFormHeader            
         }
     };

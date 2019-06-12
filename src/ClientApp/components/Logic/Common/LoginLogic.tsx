@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { ILogin, ILoginActions, ILoginState } from '../../../interfaces/login';
+import { ILogin, ILoginActions, ILoginState, ILoginReduxActions } from '../../../interfaces/login';
 import { connect } from 'react-redux';
 import { Istore } from '../../../interfaces/store';
 import { IUserMenu } from '../../../interfaces/menu';
 import { IAppSettings, IappActions } from '../../../interfaces/appSettings';
-import { makeLogin, makeLogout, resetLoginStatus } from '../../../store/actions/appSettings';
+import { makeLogin, makeLogout, resetLoginStatus } from '../../../store/actions/myAccount';
 import { results, REGEX_FIELD, checkRegexText } from '../../../settings';
 import { IcurrentUser } from '../../../interfaces/currentUser';
 
-type loginPropsType = IAppSettings & IappActions & ILogin;
+type loginPropsType = IAppSettings & ILoginReduxActions & ILogin;
 
 function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedComponentLoggedIn?: React.ComponentType<IUserMenu> ) : React.ComponentType 
 {
@@ -94,7 +94,7 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
             }
         }
 
-        componentDidUpdate( prevProps: IAppSettings & IappActions) {
+        componentDidUpdate( prevProps: loginPropsType) {
             if ( this.props.tryLogin !== prevProps.tryLogin ) {
                 if ( this.props.tryLogin === results.failure || this.props.tryLogin === results.success )
                 {
@@ -153,14 +153,14 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
         return {
             menuText: state.appSettings.menuText,
             loginForm: state.appSettings.loginForm,
-            isLogged: state.appSettings.isLogged,
-            loggedUser: state.appSettings.loggedUser,
-            tryLogin: state.appSettings.tryLogin,
+            isLogged: state.myAccount.isLogged,
+            loggedUser: state.myAccount.loggedUser,
+            tryLogin: state.myAccount.tryLogin,
             loading: state.appSettings.fetchData.loading.localLoading.loadLogin
         }
     };
 
-    const mapDispatchToProps = (dispatch: Function): IappActions =>({
+    const mapDispatchToProps = (dispatch: Function): ILoginReduxActions =>({
         makeLogin: ( user: string, password: string ) => dispatch( makeLogin( user, password ) ),
         makeLogout: ( user: IcurrentUser) => dispatch( makeLogout( user ) ),
         resetLoginStatus: () => dispatch( resetLoginStatus() )

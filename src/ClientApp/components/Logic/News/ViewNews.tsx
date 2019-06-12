@@ -46,7 +46,7 @@ function viewNewsLogic (WrappedComponent:React.ComponentType<IViewNews>): React.
                     newsData = { newsData } 
                     newsID = {this.props.newsID}
                     addCommentAction = {this.addCommentAction}
-                    logedIn = {this.props.isLogged}
+                    logedIn = {this.props.logedIn}
                 />
             );
         }
@@ -55,8 +55,8 @@ function viewNewsLogic (WrappedComponent:React.ComponentType<IViewNews>): React.
     const mapStateToProps = (state:Istore) : IAppSettings & IViewNews => {
         return {
             presentationLanguage: state.appSettings.presentationLanguage,
-            loggedUser: state.appSettings.loggedUser,
-            isLogged: state.appSettings.isLogged,
+            loggedUser: state.myAccount.loggedUser,
+            logedIn: state.myAccount.isLogged,
             newsData: state.news.newsViewData
          };
     };

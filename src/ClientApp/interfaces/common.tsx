@@ -2,6 +2,8 @@ import { INewsData, IViewNewsDataServer } from "./news";
 import { IhomeDataServer } from "./home";
 import { ILoginResponse } from "./login";
 import { IRegistrationResult, ICheckUsernameResult } from "./registration";
+import { IcurrentUser } from "./currentUser";
+import { IMyAccountChangeNameResponse } from "./myAccount";
 
 ////Header Interfaces
 export interface IPageHeader {
@@ -71,6 +73,9 @@ export interface IAddComment {
     commentValue?: string;
     loading?:boolean;
     emptyComment?: boolean;
+    loggedUser?: IcurrentUser;
+    isLogged?: boolean;
+
 }
 
 export interface IAddCommentAction
@@ -111,6 +116,7 @@ interface ILocalLoading {
     loadComment?: boolean;
     loadHomeNews?: boolean;
     loadUserRegistration?: boolean;
+    loadMyAccountChangeName?: boolean;
 }
 
 export interface IErrorHandling {
@@ -127,6 +133,7 @@ export interface IErrorHandlingText {
 
 export interface IServerResponse {
     id?: number; ////Just for json server mock
+    uuid?: string; //// Just for json server mock
     username?: string; ////Just for json server mock
     password?:string; ////Just for json server mock
     payload?: IServerPayload;
@@ -142,6 +149,7 @@ export interface IServerPayload {
     loginData?: ILoginResponse;
     registrationData?: IRegistrationResult;
     checkUsernameResponse?: ICheckUsernameResult;
+    changeName?: IMyAccountChangeNameResponse;
 }
 
 export interface IErrorHandlingTextTranslation {
@@ -163,4 +171,5 @@ export interface IErrorHandlingErrors {
     ERROR_GET_NEWS_LIST: IErrorHandlingTextTranslation;
     ERROR_GET_NEWS_DATA: IErrorHandlingTextTranslation;
     ERROR_USER_REGISTRATION: IErrorHandlingTextTranslation;
+    ERROR_MYACCOUNT_CHANGENAME: IErrorHandlingTextTranslation;
 }

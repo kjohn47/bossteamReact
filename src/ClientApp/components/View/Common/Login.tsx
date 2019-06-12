@@ -11,7 +11,7 @@ class Login extends React.PureComponent<ILogin,{}>{
             <Form>
                 {
                      this.props.loginAction.state.loginAttempt && this.props.loginAction.state.invalidUser &&
-                    <Alert color = "danger">{this.props.loginText.invalidLogin}</Alert>
+                    <Alert color = "danger">{ this.props.loginText.invalidLogin }<br /><RouterLink to="/" className="nav-link">{ this.props.loginText.passwordRecover }</RouterLink></Alert>
                 }
                 <FormGroup  className="mb-2 mr-sm-2 mb-sm-0">
                     <Label>{loginText.username}</Label>

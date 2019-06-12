@@ -1,7 +1,4 @@
 import { APP_GET_LANGUAGE, 
-    MAKE_LOGOUT, 
-    MAKE_LOGIN, 
-    RESET_LOGIN_STATUS, 
     START_SERVER_COMUNICATION, 
     END_SERVER_COMUNICATION, 
     SERVER_COMUNICATION_FAIL, 
@@ -15,18 +12,17 @@ import {
     enCode, 
     ptCode, 
     currentLanguage,
-    checkLogin,
-    getCurrentUser,    
-    results,
     LOAD_LOGIN_MENU,
     LOAD_NEW_COMMENT,
     LOAD_HOME_NEWS,
     Show_Error_Detailed,
     GetPropertyValue,
-    LOAD_REGISTRATION} from '../../settings';
+    LOAD_REGISTRATION,
+    LOAD_MYACCOUNT_CHANGENAME} from '../../settings';
 import { ILoading, IErrorHandling, IErrorHandlingText, IErrorHandlingTextTranslation } from '../../interfaces/common';
 import { ERRORS, TEXT_PAGE_NOT_FOUND } from '../../pageData/language/errors';
 import { TEXT_REGISTRATION } from '../../pageData/language/registration';
+import { TEXT_MY_ACCOUNT } from '../../pageData/language/myAccount';
 
 const startLang = currentLanguage();
 
@@ -39,10 +35,8 @@ const defaultState: IAppSettings = {
     loginFormHeader: GetPropertyValue(TEXT_NEED_LOGIN, startLang),
     pageNotFoundText: GetPropertyValue(TEXT_PAGE_NOT_FOUND, startLang),
     registrationText: GetPropertyValue(TEXT_REGISTRATION, startLang),
+    myAccountText: GetPropertyValue(TEXT_MY_ACCOUNT, startLang),
     presentationLanguage: startLang,
-    isLogged: checkLogin(),
-    loggedUser: getCurrentUser(),
-    tryLogin: results.default,
     fetchData: {
         error: {
             hasError: false,
@@ -56,7 +50,8 @@ const defaultState: IAppSettings = {
                 loadComment: false,
                 loadLogin: false,
                 loadHomeNews: false,
-                loadUserRegistration: false
+                loadUserRegistration: false,
+                loadMyAccountChangeName: false
             }
         }
     } 
@@ -70,7 +65,8 @@ function getLoadingState( isLocalLoading: boolean, pageLoading: ILoading, loadLo
             loadLogin: isLocalLoading  && loadLocalization === LOAD_LOGIN_MENU ? true : pageLoading.localLoading.loadLogin,
             loadComment: isLocalLoading  && loadLocalization === LOAD_NEW_COMMENT ? true : pageLoading.localLoading.loadComment,
             loadHomeNews: isLocalLoading  && loadLocalization === LOAD_HOME_NEWS ? true : pageLoading.localLoading.loadHomeNews,
-            loadUserRegistration: isLocalLoading && loadLocalization === LOAD_REGISTRATION ? true : pageLoading.localLoading.loadUserRegistration
+            loadUserRegistration: isLocalLoading && loadLocalization === LOAD_REGISTRATION ? true : pageLoading.localLoading.loadUserRegistration,
+            loadMyAccountChangeName: isLocalLoading && loadLocalization === LOAD_MYACCOUNT_CHANGENAME ? true : pageLoading.localLoading.loadMyAccountChangeName
         }        
     }
     return {...loading};
@@ -84,7 +80,8 @@ function endLoadingState( isLocalLoading: boolean, pageLoading: ILoading, loadLo
             loadLogin: (isLocalLoading  && loadLocalization === LOAD_LOGIN_MENU) ? false : pageLoading.localLoading.loadLogin,
             loadComment: (isLocalLoading  && loadLocalization === LOAD_NEW_COMMENT) ? false : pageLoading.localLoading.loadComment,
             loadHomeNews: (isLocalLoading  && loadLocalization === LOAD_HOME_NEWS) ? false : pageLoading.localLoading.loadHomeNews,
-            loadUserRegistration: isLocalLoading && loadLocalization === LOAD_REGISTRATION ? false : pageLoading.localLoading.loadUserRegistration
+            loadUserRegistration: isLocalLoading && loadLocalization === LOAD_REGISTRATION ? false : pageLoading.localLoading.loadUserRegistration,
+            loadMyAccountChangeName: isLocalLoading && loadLocalization === LOAD_MYACCOUNT_CHANGENAME ? false : pageLoading.localLoading.loadMyAccountChangeName
         }
     }
     return {...loading};
@@ -151,32 +148,12 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
                 loginForm: GetPropertyValue(TEXT_LOGIN_MENU, lang),
                 pageNotFoundText: GetPropertyValue(TEXT_PAGE_NOT_FOUND, lang),
                 registrationText: GetPropertyValue(TEXT_REGISTRATION, lang),
+                myAccountText: GetPropertyValue(TEXT_MY_ACCOUNT, lang),
                 presentationLanguage: lang,                
                 fetchData: {...state.fetchData, 
                     error: errorData
                 }        
             };
-        }
-        
-        case MAKE_LOGOUT: {
-            return{...state,
-                isLogged: false,
-                loggedUser: null
-            };
-        }
-        
-        case MAKE_LOGIN: {
-            return{...state,
-                isLogged: action.payload.login.success,
-                loggedUser: action.payload.login.user,
-                tryLogin: action.payload.login.success ? results.success : results.failure               
-            };
-        }
-        
-        case RESET_LOGIN_STATUS: {
-            return{...state,
-                tryLogin: results.default
-            }
         }
         
         case START_SERVER_COMUNICATION: {

@@ -1,15 +1,12 @@
 import * as React from 'react';
-import { ImenuProps, ImenuText } from "../../../interfaces/menu";
-import {IAppSettings, IappActions} from '../../../interfaces/appSettings';
+import { ImenuProps } from "../../../interfaces/menu";
 import { Istore } from '../../../interfaces/store';
 import {connect} from 'react-redux';
 import { appGetLanguage } from '../../../store/actions/appSettings';
 
-type ImenuReduxProps = IappActions & IAppSettings;
-
 function menuLogic (WrappedComponent:React.ComponentType<ImenuProps>): React.ComponentType
 {
-    class MenuLogic extends React.Component<ImenuReduxProps,{}>{    
+    class MenuLogic extends React.Component<ImenuProps,{}>{    
         componentDidMount(){
             this.props.appGetLanguage(this.props.presentationLanguage);
         };
@@ -19,17 +16,17 @@ function menuLogic (WrappedComponent:React.ComponentType<ImenuProps>): React.Com
                 <WrappedComponent 
                     isLogged = {this.props.isLogged} 
                     menuText = {this.props.menuText} 
-                    currentUsr = {this.props.loggedUser} 
+                    currentUsr = {this.props.currentUsr} 
                     appGetLanguage = {this.props.appGetLanguage}/>
             );
         }
     }
 
-    const mapStateToProps = (state:Istore) : IAppSettings => {
+    const mapStateToProps = (state:Istore) : ImenuProps => {
         return {
             menuText: state.appSettings.menuText,
-            isLogged: state.appSettings.isLogged,
-            loggedUser: state.appSettings.loggedUser,
+            isLogged: state.myAccount.isLogged,
+            currentUsr: state.myAccount.loggedUser,
             presentationLanguage: state.appSettings.presentationLanguage
          };
     };
