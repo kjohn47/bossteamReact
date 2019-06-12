@@ -1,8 +1,8 @@
 import { commonServerAction } from "../appSettings/common";
 import { makeLoginOnServer, makeLogoutOnServer } from "./myAccountServerCalls";
-import { LOAD_LOGIN_MENU, setCurrentUser, cookieLogout, pageHome, newsRoute, viewsNewsRoute } from "../../../settings";
+import { LOAD_LOGIN_MENU, setCurrentUser, cookieLogout, pageHome, newsRoute, viewsNewsRoute, results, updateCurrentUserNames } from "../../../settings";
 import { IServerPayload } from "../../../interfaces/common";
-import { MAKE_LOGIN, MAKE_LOGOUT, RESET_LOGIN_STATUS } from "../../actionTypes";
+import { MAKE_LOGIN, MAKE_LOGOUT, RESET_LOGIN_STATUS, RESET_MYACCOUNT_STATUS, CHANGE_MYACCOUNT_NAME } from "../../actionTypes";
 import { IMyAccountAction } from "../../../interfaces/myAccount";
 import { IcurrentUser } from "../../../interfaces/currentUser";
 
@@ -51,5 +51,31 @@ function logout(result:IServerPayload) : IMyAccountAction {
 export function resetLoginStatus() : IMyAccountAction {
     return {
         type: RESET_LOGIN_STATUS
+    }
+}
+
+export function resetMyAccountStatus() : IMyAccountAction {
+    return {
+        type: RESET_MYACCOUNT_STATUS        
+    }
+}
+
+export function changeName ( name: string, surname: string, uuid: string ) : Function {
+    return ( dispatch: Function ) => {
+        dispatch( changeNameSuccess( { name, surname } ) );
+        updateCurrentUserNames( name, surname );
+    }
+}
+
+function changeNameSuccess( result: any ): IMyAccountAction {
+    return {
+        type: CHANGE_MYACCOUNT_NAME,
+        payload: {
+            success: results.success,
+            changeName: {
+                name: result.name,
+                surname: result.surname
+            }
+        }
     }
 }

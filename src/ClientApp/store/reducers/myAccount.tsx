@@ -1,6 +1,6 @@
-import { IMyAccountReduxState, IMyAccountAction } from "../../interfaces/myAccount";
+import { IMyAccountReduxState, IMyAccountAction, IMyAccountChangeNamePayload } from "../../interfaces/myAccount";
 import { results, checkLogin, getCurrentUser } from "../../settings";
-import { MAKE_LOGOUT, MAKE_LOGIN, RESET_LOGIN_STATUS } from "../actionTypes";
+import { MAKE_LOGOUT, MAKE_LOGIN, RESET_LOGIN_STATUS, RESET_MYACCOUNT_STATUS, CHANGE_MYACCOUNT_NAME } from "../actionTypes";
 
 //// -- Default myAccount state
 const defaultState: IMyAccountReduxState = {
@@ -45,10 +45,41 @@ export function myAccount( state:IMyAccountReduxState = defaultState, action:IMy
             }
         }
 
-        case "CHANGE_MYACCOUNT_NAME": {  
+        case RESET_MYACCOUNT_STATUS: {              
             return {...state,
                 changeName: {...state.changeName,
-                    success: action.payload.success
+                    success: results.default
+                },
+                changePassword: {...state.changePassword,
+                    success: results.default
+                },
+                closeAccount: {...state.closeAccount,
+                    success: results.default
+                }
+            };
+        }
+
+        case CHANGE_MYACCOUNT_NAME: {            
+            let nameData: IMyAccountChangeNamePayload = {
+                name: state.loggedUser.name,
+                surname: state.loggedUser.surname
+            };
+
+            if( action.payload.changeName !== null && action.payload.changeName !== undefined )
+            {
+                nameData = {
+                    name: action.payload.changeName.name,
+                    surname: action.payload.changeName.surname
+                }
+            }
+
+            return {...state,
+                changeName: {...state.changeName,
+                    success: action.payload.success                
+                },
+                loggedUser: {...state.loggedUser,
+                    name: nameData.name,
+                    surname: nameData.surname
                 }
             };
         }

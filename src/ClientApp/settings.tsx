@@ -72,6 +72,15 @@ export const setCurrentUser = (userData: IcurrentUser ) : void => {
    cookies.set(userCookie, userData, { path: pageHome }) 
 };
 
+export const updateCurrentUserNames = ( name: string, surname: string ): void => {
+   let user: IcurrentUser = getCurrentUser();
+   user = {...user,
+      name: name,
+      surname: surname
+   };
+   setCurrentUser( user );
+}
+
 export const cookieLogout = () : void => {
    cookies.remove(userCookie, { path: pageHome });
 };

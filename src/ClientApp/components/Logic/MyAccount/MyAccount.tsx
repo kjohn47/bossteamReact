@@ -9,6 +9,7 @@ import {
     IMyAccountLogicState 
     } from '../../../interfaces/myAccount';
 import { checkRegexText, REGEX_FIELD, results } from '../../../settings';
+import { resetMyAccountStatus, changeName } from '../../../store/actions/myAccount';
 
 function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewProps> ): React.ComponentType
 {
@@ -21,7 +22,6 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                 changeName: {
                     name: this.props.currentUser.name,
                     surname: this.props.currentUser.surname,
-                    email: this.props.currentUser.email,
                     emptyName: false,
                     emptySurname: false,
                     updateFail: false,
@@ -53,7 +53,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                     loading: false
                 }
             }
-            this.state = {...this._defaultState};            
+            this.state = {...this._defaultState};
             this.changeTabHandle = this.changeTabHandle.bind( this );
             this.changeName_nameHandle = this.changeName_nameHandle.bind( this );
             this.changeName_surnameHandle = this.changeName_surnameHandle.bind( this );
@@ -83,7 +83,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                         }
                     });
                 }
-                ////reset to default action
+                this.props.resetMyAccountStatus();
             }
             //// Change name
 
@@ -104,7 +104,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                         }
                     });
                 }
-                ////reset to default action
+                this.props.resetMyAccountStatus();
             }
             //// Change password
 
@@ -125,7 +125,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                         }
                     });
                 }
-                ////reset to default action
+                this.props.resetMyAccountStatus();
             }
             //// Close Account
         }
@@ -182,8 +182,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                     }
                 })
             }
-
-            if ( success && this.state.changeName.name !== this.props.currentUser.name && this.state.changeName.surname !== this.props.currentUser.surname ) {
+            if ( success && ( this.state.changeName.name !== this.props.currentUser.name || this.state.changeName.surname !== this.props.currentUser.surname ) ) {
                 this.props.changeName( this.state.changeName.name, this.state.changeName.surname, this.props.currentUser.uuid );
             }                                 
         }
@@ -194,7 +193,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                  <WrappedComponent 
                     changeName = {{
                         text: this.props.myAccountText.changeNameText,
-                        email: this.state.changeName.email,
+                        email: this.props.currentUser.email,
                         name: this.state.changeName.name,
                         surname: this.state.changeName.surname,
                         emptyName: this.state.changeName.emptyName,
@@ -254,7 +253,8 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
     }
 
     const mapDispatchToProps = ( dispatch: Function ) : IMyAccountLogicActions => ({
-        changeName: ( name: string, surname: string, uuid: string ) => dispatch( () => {} )
+        changeName: ( name: string, surname: string, uuid: string ) => dispatch( changeName( name, surname, uuid ) ),
+        resetMyAccountStatus: () => dispatch( resetMyAccountStatus() )
     });
 
     const mapStateToProps = ( state: Istore ) : IMyAccountLogicProps => {

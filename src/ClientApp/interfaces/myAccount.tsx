@@ -7,6 +7,7 @@ export type IMyAccountChangeNameViewType = IMyAccountChangeNameViewProps & IMyAc
 
 export interface IMyAccountChangeNameViewProps {
     text:IMyAccountChangeNameViewText;
+    email:string;
 }
 
 export interface IMyAccountChangeNameViewStates {
@@ -16,7 +17,6 @@ export interface IMyAccountChangeNameViewStates {
     emptyName: boolean;
     surname: string;
     emptySurname:boolean;
-    email:string;
     loading: boolean;
 }
 
@@ -184,7 +184,8 @@ export interface IMyAccountLogicProps {
 }
 
 export interface IMyAccountLogicActions {
-    changeName( name: string, surname: string, uuid: string ) : Function;
+    changeName( name: string, surname: string, uuid: string ): Function;
+    resetMyAccountStatus(): Function;
 }
 
 export type MyAccountLogicType = IMyAccountLogicProps & IMyAccountLogicActions;
@@ -221,6 +222,12 @@ export interface IMyAccountAction {
 interface IMyAccountActionPayload {
     success?: string;
     login?: ILoginResponse;
+    changeName?: IMyAccountChangeNamePayload;
+}
+
+export interface IMyAccountChangeNamePayload {
+    name: string;
+    surname: string;
 }
 
 //// Reducer
