@@ -230,4 +230,9 @@ export interface IMyAccountChangeNamePayload {
     surname: string;
 }
 
+export interface IMyAccountChangeNameResponse {
+    success: string,
+    name?: IMyAccountChangeNamePayload;
+}
+
 //// Reducer

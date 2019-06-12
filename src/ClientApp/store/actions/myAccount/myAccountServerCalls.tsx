@@ -1,10 +1,11 @@
 import { IcurrentUser } from '../../../interfaces/currentUser';
 import { ILoginState } from '../../../interfaces/login';
 import { serverResolve } from '../appSettings/common';
-import { ERROR_LOGIN, ERROR_LOGOUT, restServer } from '../../../settings';
+import { ERROR_LOGIN, ERROR_LOGOUT, restServer, results } from '../../../settings';
 import { IServerResponse } from '../../../interfaces/common';
 import axios from 'axios';
 import sha1 from 'sha1';
+import { IMyAccountChangeNameResponse } from '../../../interfaces/myAccount';
 
 export async function makeLoginOnServer( loginArg: ILoginState ) : Promise<any>{
     return await serverResolve( () =>
@@ -52,4 +53,34 @@ export async function makeLogoutOnServer( user: IcurrentUser ) : Promise<any>{
             })
         }
     }, ERROR_LOGOUT)
+}
+
+interface IchangeNamerArg {
+    name: string;
+    surname: string;
+    uuid: string;
+}
+
+export async function changeNameServerCall( changeNameArg: IchangeNamerArg ) : Promise<any> {
+    return await serverResolve( () => 
+    {
+        let changeName: IMyAccountChangeNameResponse = {
+            success: results.success,
+            name: {
+                name: changeNameArg.name,
+                surname: changeNameArg.surname
+            }
+        };   
+        let serverReturn: IServerResponse = {
+            hasError: false,
+            payload: {
+                changeName: changeName
+            }
+        }
+        return new Promise( ( resolve: Function ) => {
+            setTimeout( () => {
+                resolve( serverReturn )
+            }, 250 )
+        })
+    });    
 }

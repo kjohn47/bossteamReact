@@ -3,6 +3,7 @@ import { IhomeDataServer } from "./home";
 import { ILoginResponse } from "./login";
 import { IRegistrationResult, ICheckUsernameResult } from "./registration";
 import { IcurrentUser } from "./currentUser";
+import { IMyAccountChangeNameResponse } from "./myAccount";
 
 ////Header Interfaces
 export interface IPageHeader {
@@ -146,6 +147,7 @@ export interface IServerPayload {
     loginData?: ILoginResponse;
     registrationData?: IRegistrationResult;
     checkUsernameResponse?: ICheckUsernameResult;
+    changeName?: IMyAccountChangeNameResponse;
 }
 
 export interface IErrorHandlingTextTranslation {
