@@ -3,7 +3,7 @@ import { makeLoginOnServer, makeLogoutOnServer, changeNameServerCall } from "./m
 import { LOAD_LOGIN_MENU, setCurrentUser, cookieLogout, pageHome, newsRoute, viewsNewsRoute, results, updateCurrentUserNames, LOAD_MYACCOUNT_CHANGENAME } from "../../../settings";
 import { IServerPayload } from "../../../interfaces/common";
 import { MAKE_LOGIN, MAKE_LOGOUT, RESET_LOGIN_STATUS, RESET_MYACCOUNT_STATUS, CHANGE_MYACCOUNT_NAME } from "../../actionTypes";
-import { IMyAccountAction } from "../../../interfaces/myAccount";
+import { IMyAccountAction, IchangeNameArg } from "../../../interfaces/myAccount";
 import { IcurrentUser } from "../../../interfaces/currentUser";
 
 export function makeLogin( user: string, password: string )  : Function {
@@ -67,7 +67,7 @@ export function changeName ( name: string, surname: string, uuid: string ) : Fun
     } 
 }
 
-function updateCookieName( result: IServerPayload, serverCallArg: any, successCallArg: any, dispatch: Function ): void {
+function updateCookieName( result: IServerPayload, serverCallArg: IchangeNameArg, successCallArg: any, dispatch: Function ): void {
     if( result.changeName.name !== null && result.changeName.name !== undefined ) {
         updateCurrentUserNames( result.changeName.name.name, result.changeName.name.surname );
     }

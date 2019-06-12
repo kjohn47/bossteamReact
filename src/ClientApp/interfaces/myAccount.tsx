@@ -236,4 +236,9 @@ export interface IMyAccountChangeNameResponse {
     name?: IMyAccountChangeNamePayload;
 }
 
+export interface IchangeNameArg {
+    name: string;
+    surname: string;
+    uuid: string;
+}
 //// Reducer

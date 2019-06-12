@@ -5,7 +5,7 @@ import { ERROR_LOGIN, ERROR_LOGOUT, restServer, results, ERROR_MYACCOUNT_CHANGEN
 import { IServerResponse } from '../../../interfaces/common';
 import axios from 'axios';
 import sha1 from 'sha1';
-import { IMyAccountChangeNameResponse } from '../../../interfaces/myAccount';
+import { IMyAccountChangeNameResponse, IchangeNameArg } from '../../../interfaces/myAccount';
 
 export async function makeLoginOnServer( loginArg: ILoginState ) : Promise<any>{
     return await serverResolve( () =>
@@ -55,32 +55,50 @@ export async function makeLogoutOnServer( user: IcurrentUser ) : Promise<any>{
     }, ERROR_LOGOUT)
 }
 
-interface IchangeNameArg {
-    name: string;
-    surname: string;
-    uuid: string;
-}
+
 
 export async function changeNameServerCall( changeNameArg: IchangeNameArg ) : Promise<any> {
     return await serverResolve( () => 
     {
         let changeName: IMyAccountChangeNameResponse = {
-            success: results.success,
-            name: {
-                name: changeNameArg.name,
-                surname: changeNameArg.surname
-            }
-        };   
+            success: results.failure
+        }; 
+
         let serverReturn: IServerResponse = {
             hasError: false,
             payload: {
                 changeName: changeName
             }
         }
-        return new Promise( ( resolve: Function ) => {
-            setTimeout( () => {
-                resolve( serverReturn )
-            }, 250 )
-        })
+        return axios.get( restServer + "Users?uuid=" + changeNameArg.uuid )
+        .then( ( response ) => {
+            let userFromServerArray: IServerResponse[] = response.data;
+            if( userFromServerArray === null || userFromServerArray === undefined || userFromServerArray.length <= 0 )
+            {
+                return serverReturn;
+            }
+
+            let newUserData: IServerResponse = userFromServerArray[0];
+            newUserData.payload.loginData.user.name = changeNameArg.name;
+            newUserData.payload.loginData.user.surname = changeNameArg.surname;
+            return axios.put( restServer + "Users/" + newUserData.id, {...newUserData} )
+            .then ( () => {
+                changeName = {
+                    success: results.success,
+                    name: {
+                        name: changeNameArg.name,
+                        surname: changeNameArg.surname
+                    }
+                };
+                serverReturn = {...serverReturn,
+                    payload: {...serverReturn.payload,
+                        changeName: changeName
+                    }
+                };
+
+                return serverReturn;
+            })
+        });
+
     }, ERROR_MYACCOUNT_CHANGENAME );    
 }
