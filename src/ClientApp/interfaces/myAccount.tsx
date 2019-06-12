@@ -1,4 +1,5 @@
 import { IcurrentUser } from "./currentUser";
+import { ILoginResponse } from "./login";
 
 //// Change Name
 
@@ -192,6 +193,9 @@ export type MyAccountLogicType = IMyAccountLogicProps & IMyAccountLogicActions;
 
 //// Reduder
 export interface IMyAccountReduxState {
+    isLogged?: boolean;
+    loggedUser?: IcurrentUser;
+    tryLogin?: string;
     changeName: IchangeNameReduxState;
     changePassword: IchangePasswordReduxState;
     closeAccount: IcloseAccountReduxState;
@@ -215,7 +219,8 @@ export interface IMyAccountAction {
 }
 
 interface IMyAccountActionPayload {
-    success: string;
+    success?: string;
+    login?: ILoginResponse;
 }
 
 //// Reducer

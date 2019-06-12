@@ -2,6 +2,7 @@ import { INewsData, IViewNewsDataServer } from "./news";
 import { IhomeDataServer } from "./home";
 import { ILoginResponse } from "./login";
 import { IRegistrationResult, ICheckUsernameResult } from "./registration";
+import { IcurrentUser } from "./currentUser";
 
 ////Header Interfaces
 export interface IPageHeader {
@@ -71,6 +72,9 @@ export interface IAddComment {
     commentValue?: string;
     loading?:boolean;
     emptyComment?: boolean;
+    loggedUser?: IcurrentUser;
+    isLogged?: boolean;
+
 }
 
 export interface IAddCommentAction

@@ -62,6 +62,7 @@ export interface IViewNews {
     newsID?: number;
     addCommentAction?( comment: string ): void;    
     logedIn?: boolean;
+    loggedUser?: IcurrentUser;
 }
 
 export interface IViewNewsData {

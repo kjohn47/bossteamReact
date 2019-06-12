@@ -1,8 +1,5 @@
 import { 
         APP_GET_LANGUAGE,
-        MAKE_LOGIN,
-        MAKE_LOGOUT,
-        RESET_LOGIN_STATUS,
         START_SERVER_COMUNICATION,
         SERVER_COMUNICATION_FAIL,
         END_SERVER_COMUNICATION,
@@ -11,23 +8,10 @@ import {
 
 import { 
     ptCode, 
-    LOAD_LOGIN_MENU, 
-    setCurrentUser, 
     setLanguage, 
-    cookieLogout, 
-    pageHome, 
-    newsRoute, 
-    viewsNewsRoute
     } from '../../../settings';
-
-import { 
-    makeLoginOnServer, 
-    makeLogoutOnServer 
-    } from './appServerCalls';
     
-import { IErrorHandling, IServerPayload } from '../../../interfaces/common';
-import { IcurrentUser } from '../../../interfaces/currentUser';
-import { commonServerAction } from '../common';
+import { IErrorHandling } from '../../../interfaces/common';
 import { IappAction } from '../../../interfaces/appSettings';
 
 export function appGetLanguage( language: string = ptCode ) : Function {
@@ -43,54 +27,6 @@ function changeLanguage(language: string) : IappAction {
         payload: {
             language: language
         }
-    }
-}
-
-export function makeLogin( user: string, password: string )  : Function {
-    return (dispatch: Function) =>  { 
-        commonServerAction( dispatch, makeLoginOnServer, makeLoginSuccess, {user, password}, null , true, LOAD_LOGIN_MENU, updateLoginToken );
-    }
-}
-
-function updateLoginToken( result: IServerPayload, serverCallArg: any, successCallArg: any, dispatch: Function ) : void
-{
-    if(result.loginData.success)
-    {
-        setCurrentUser(result.loginData.user);
-    }
-}
-
-function makeLoginSuccess( result: IServerPayload ) : IappAction {
-    return {
-        type: MAKE_LOGIN,
-        payload: {
-                login: result.loginData
-            }
-    }
-}
-
-export function makeLogout( user: IcurrentUser) : Function {
-    return (dispatch: Function) =>  
-    {     
-        commonServerAction( dispatch, makeLogoutOnServer, logout, user, null , true, LOAD_LOGIN_MENU, null, logoutFunctions );
-    } 
-}
-
-function logoutFunctions( serverCallArg: any, successCallArg: any, dispatch: Function ) : void {
-    cookieLogout();  
-    if(window.location.pathname !== pageHome && window.location.pathname !== newsRoute && window.location.pathname.substring( 0, viewsNewsRoute.length ) !== viewsNewsRoute )  
-        {window.location.assign(pageHome); }  
-}
-
-function logout(result:IServerPayload) : IappAction {
-    return {
-        type: MAKE_LOGOUT
-    }
-}
-
-export function resetLoginStatus() : IappAction {
-    return {
-        type: RESET_LOGIN_STATUS
     }
 }
 

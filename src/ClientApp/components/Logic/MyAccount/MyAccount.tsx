@@ -260,7 +260,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
     const mapStateToProps = ( state: Istore ) : IMyAccountLogicProps => {
         return {       
             myAccountText: state.appSettings.myAccountText,
-            currentUser: state.appSettings.loggedUser,
+            currentUser: state.myAccount.loggedUser,
             changeNameSuccess: state.myAccount.changeName.success,
             changePasswordSuccess: state.myAccount.changePassword.success,
             closeAccountSuccess: state.myAccount.closeAccount.success

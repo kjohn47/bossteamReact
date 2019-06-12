@@ -69,8 +69,8 @@ function addCommentLogic ( WrappedComponent:React.ComponentType<IAddCommentProps
         return {
             addCommentText: state.appSettings.addCommentText,
             loading: state.appSettings.fetchData.loading.localLoading.loadComment,     
-            loggedUser: state.appSettings.loggedUser,            
-            isLogged: state.appSettings.isLogged
+            loggedUser: state.myAccount.loggedUser,            
+            isLogged: state.myAccount.isLogged
         }
     };
 

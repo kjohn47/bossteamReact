@@ -12,7 +12,7 @@ import {IcurrentUser} from '../../../interfaces/currentUser';
 import { InewsAction } from '../../../interfaces/news';
 import { getNewsListFromServer, getNewsDataFromServer, addNewsCommentToServer} from './newsServerCalls';
 import { IServerPayload } from '../../../interfaces/common';
-import { commonServerAction } from '../common';
+import { commonServerAction } from '../appSettings/common';
 //// Actions for News List
 
 export function getNewsList( language: string = ptCode ) : Function {    

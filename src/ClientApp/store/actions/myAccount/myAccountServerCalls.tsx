@@ -1,12 +1,11 @@
 import { IcurrentUser } from '../../../interfaces/currentUser';
 import { ILoginState } from '../../../interfaces/login';
-import { serverResolve } from '../common';
+import { serverResolve } from '../appSettings/common';
 import { ERROR_LOGIN, ERROR_LOGOUT, restServer } from '../../../settings';
 import { IServerResponse } from '../../../interfaces/common';
 import axios from 'axios';
 import sha1 from 'sha1';
 
-//// APP
 export async function makeLoginOnServer( loginArg: ILoginState ) : Promise<any>{
     return await serverResolve( () =>
     {
@@ -32,7 +31,6 @@ export async function makeLoginOnServer( loginArg: ILoginState ) : Promise<any>{
         
     }, ERROR_LOGIN)
 }
-//// APP
 
 export async function makeLogoutOnServer( user: IcurrentUser ) : Promise<any>{
     return await serverResolve( () =>

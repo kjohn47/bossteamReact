@@ -213,7 +213,7 @@ function registrationLogic( WrappedComponent: React.ComponentType<IRegistrationP
 
     const mapStateToProps = (state: Istore ): IRegistrationPropsRedux => {
         return {
-            isLogged: state.appSettings.isLogged,
+            isLogged: state.myAccount.isLogged,
             registrationText: state.appSettings.registrationText,
             usernameInUse: state.registration.usernameInUse,
             isUsernameLoading: state.appSettings.fetchData.loading.localLoading.loadUserRegistration,

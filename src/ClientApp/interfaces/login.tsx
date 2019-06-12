@@ -21,6 +21,9 @@ export interface ILogin {
     loginText?: IloginMenu;
     loginAction?: ILoginActions;
     loading?: boolean;
+    loggedUser?: IcurrentUser;
+    isLogged?: boolean;
+    tryLogin?: string;
 }
 
 export interface ILoginActions {
@@ -29,6 +32,12 @@ export interface ILoginActions {
     makeLogin?(): void; 
     handleKeyPress?(event: any, focus: string, submit?:boolean): void;
     state?: ILoginState;  
+}
+
+export interface ILoginReduxActions {
+    makeLogin?( user: string, password: string ): Function;
+    makeLogout?( user: IcurrentUser ): Function;
+    resetLoginStatus?(): Function;
 }
 
 export interface ILoginState {
@@ -53,4 +62,10 @@ export interface IloginFormHeaderTranslations {
 export interface IloginFormHeader {
     title: string;
     warning: string;
+}
+
+export interface INeddLoginReduxProps {
+    isLogged?: boolean;
+    loggedUser?: IcurrentUser;
+    loginFormHeader?: IloginFormHeader;
 }

@@ -1,5 +1,5 @@
 import { IUserRegistrationArg } from "../../../interfaces/registration";
-import { serverResolve } from "../common";
+import { serverResolve } from "../appSettings/common";
 import { ERROR_USER_REGISTRATION, restServer } from "../../../settings";
 import { IServerResponse } from "../../../interfaces/common";
 import axios from 'axios';

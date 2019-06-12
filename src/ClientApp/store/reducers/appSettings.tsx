@@ -1,7 +1,4 @@
 import { APP_GET_LANGUAGE, 
-    MAKE_LOGOUT, 
-    MAKE_LOGIN, 
-    RESET_LOGIN_STATUS, 
     START_SERVER_COMUNICATION, 
     END_SERVER_COMUNICATION, 
     SERVER_COMUNICATION_FAIL, 
@@ -15,9 +12,6 @@ import {
     enCode, 
     ptCode, 
     currentLanguage,
-    checkLogin,
-    getCurrentUser,    
-    results,
     LOAD_LOGIN_MENU,
     LOAD_NEW_COMMENT,
     LOAD_HOME_NEWS,
@@ -42,9 +36,6 @@ const defaultState: IAppSettings = {
     registrationText: GetPropertyValue(TEXT_REGISTRATION, startLang),
     myAccountText: GetPropertyValue(TEXT_MY_ACCOUNT, startLang),
     presentationLanguage: startLang,
-    isLogged: checkLogin(),
-    loggedUser: getCurrentUser(),
-    tryLogin: results.default,
     fetchData: {
         error: {
             hasError: false,
@@ -159,27 +150,6 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
                     error: errorData
                 }        
             };
-        }
-        
-        case MAKE_LOGOUT: {
-            return{...state,
-                isLogged: false,
-                loggedUser: null
-            };
-        }
-        
-        case MAKE_LOGIN: {
-            return{...state,
-                isLogged: action.payload.login.success,
-                loggedUser: action.payload.login.user,
-                tryLogin: action.payload.login.success ? results.success : results.failure
-            };
-        }
-        
-        case RESET_LOGIN_STATUS: {
-            return{...state,
-                tryLogin: results.default
-            }
         }
         
         case START_SERVER_COMUNICATION: {
