@@ -108,7 +108,7 @@ export interface ICommentTranslations {
 export interface ILoading {
     isPageLoading?: boolean;    
     localLoading?: ILocalLoading;
-    lessPriority?: boolean;    
+    lessPriority?: boolean;
 }
 
 interface ILocalLoading {
@@ -117,6 +117,7 @@ interface ILocalLoading {
     loadHomeNews?: boolean;
     loadUserRegistration?: boolean;
     loadMyAccount?: boolean;
+    loadMyAccountPassword?: boolean;
 }
 
 export interface IErrorHandling {

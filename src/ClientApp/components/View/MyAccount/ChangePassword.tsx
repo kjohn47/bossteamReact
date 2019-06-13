@@ -20,6 +20,7 @@ export default class ChangePassword extends React.PureComponent<IMyAccountChange
                                     type="password" 
                                     name="account_old_password" 
                                     id="account_old_password"
+                                    valid = { this.props.validOldPassword }
                                     invalid = { this.props.wrongOldPassword || this.props.emptyOldPassword }
                                     onChange = { (event) => this.props.oldPasswordHandle( event ) }
                                     onBlur = { () => this.props.oldPasswordCheck() }
@@ -38,6 +39,7 @@ export default class ChangePassword extends React.PureComponent<IMyAccountChange
                                     name="account_new_password" 
                                     id="account_new_password"
                                     invalid = { this.props.emptynewPassword }
+                                    valid = { this.props.validPasswordRepeat }
                                     onChange = { (event) => this.props.newPasswordHandle( event ) }
                                     value = { this.props.newPassword }
                                 />
@@ -54,6 +56,7 @@ export default class ChangePassword extends React.PureComponent<IMyAccountChange
                                     name="account_new_password_repeat" 
                                     id="account_new_password_repeat"
                                     invalid = { this.props.notMatchPassword }
+                                    valid = { this.props.validPasswordRepeat }
                                     onChange = { (event) => this.props.repeatPasswordHandle( event ) }
                                     value = { this.props.repeatPassword }
                                     onBlur = { () => this.props.repeatPasswordCheck() }

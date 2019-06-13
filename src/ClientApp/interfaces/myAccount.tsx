@@ -45,7 +45,10 @@ export type IMyAccountChangePasswordViewType = IMyAccountChangePasswordViewProps
 
 export interface IMyAccountChangePasswordViewProps {
     text:IMyAccountChangePasswordViewText;
+    wrongOldPassword: boolean;
+    validOldPassword: boolean;
     loading: boolean;
+    oldPasswordLoading: boolean;
 }
 
 export interface IMyAccountChangePasswordViewStates {
@@ -53,11 +56,11 @@ export interface IMyAccountChangePasswordViewStates {
     updateSuccess:boolean;
     oldPassword: string;
     emptyOldPassword: boolean;
-    wrongOldPassword: boolean;
     newPassword: string;
     emptynewPassword: boolean;
     repeatPassword:string;
     notMatchPassword: boolean;
+    validPasswordRepeat: boolean;
 }
 
 export interface IMyAccountChangePasswordViewMethods {
@@ -182,7 +185,10 @@ export interface IMyAccountLogicProps {
     changeNameSuccess: string;
     changePasswordSuccess: string;
     closeAccountSuccess: string;
+    wrongOldPassword: boolean;
+    validOldPassword: boolean;
     loading: boolean;
+    passwordLoading: boolean;
 }
 
 export interface IMyAccountLogicActions {
@@ -210,6 +216,8 @@ interface IchangeNameReduxState {
 
 interface IchangePasswordReduxState {
     success: string;
+    wrongOldPassword: boolean;
+    validOldPassword: boolean;
 }
 
 interface IcloseAccountReduxState {

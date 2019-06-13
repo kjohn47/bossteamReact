@@ -46,6 +46,7 @@ export const LOAD_NEW_COMMENT = 'LOAD_NEW_COMMENT';
 export const LOAD_HOME_NEWS = 'LOAD_HOME_NEWS';
 export const LOAD_REGISTRATION = 'LOAD_REGISTRATION';
 export const LOAD_MYACCOUNT = 'LOAD_MYACCOUNT';
+export const LOAD_MYACCOUNT_PASSWORD = 'LOAD_MYACCOUNT_PASSWORD';
 
 // COOKIE METHODS -- Do not change
 export const currentLanguage = () : string => {

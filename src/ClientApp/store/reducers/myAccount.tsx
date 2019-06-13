@@ -11,7 +11,9 @@ const defaultState: IMyAccountReduxState = {
         success: results.default
     },
     changePassword: {
-        success: results.default
+        success: results.default,
+        wrongOldPassword: false,
+        validOldPassword: false
     },
     closeAccount: {
         success: results.default
