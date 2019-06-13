@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Form, Alert, Toast, ToastHeader, ToastBody, FormGroup, Label, Col, Input, FormFeedback, Button } from 'reactstrap';
+import { Form, Alert, Toast, ToastHeader, ToastBody, FormGroup, Label, Col, Input, FormFeedback, Button, Spinner } from 'reactstrap';
 import { IMyAccountChangePasswordViewType } from '../../../interfaces/myAccount';
 
 export default class ChangePassword extends React.PureComponent<IMyAccountChangePasswordViewType> {
@@ -26,6 +26,7 @@ export default class ChangePassword extends React.PureComponent<IMyAccountChange
                                     onBlur = { () => this.props.oldPasswordCheck() }
                                     value = { this.props.oldPassword }
                                 />
+                                { this.props.oldPasswordLoading && <Spinner size="sm" color="secondary" className="loginSpinner"/> } 
                                 <FormFeedback>
                                     { this.props.wrongOldPassword ? this.props.text.passwordNotMatch : this.props.text.emptyField.replace( "[FIELD]", this.props.text.oldPassword ) }
                                 </FormFeedback>
@@ -68,7 +69,12 @@ export default class ChangePassword extends React.PureComponent<IMyAccountChange
                         </FormGroup> 
                         <FormGroup row>
                             <Col xl={{ size: 11, offset: 1 }} sm={{ size: 10, offset: 2 }}>
-                                <Button onClick = { () => this.props.submitHandle() } >{ this.props.text.submit }</Button>
+                                {   
+                                    this.props.loading ? 
+                                    <Spinner size="sm" color="secondary" className="loginSpinner"/> 
+                                : 
+                                    <Button onClick = { () => this.props.submitHandle() } >{ this.props.text.submit }</Button>
+                                }
                             </Col>
                             </FormGroup>
                     </ToastBody>

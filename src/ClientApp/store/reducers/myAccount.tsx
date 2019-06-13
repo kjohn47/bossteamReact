@@ -1,6 +1,6 @@
 import { IMyAccountReduxState, IMyAccountAction, IMyAccountChangeNamePayload } from "../../interfaces/myAccount";
 import { results, checkLogin, getCurrentUser } from "../../settings";
-import { MAKE_LOGOUT, MAKE_LOGIN, RESET_LOGIN_STATUS, RESET_MYACCOUNT_STATUS, CHANGE_MYACCOUNT_NAME } from "../actionTypes";
+import { MAKE_LOGOUT, MAKE_LOGIN, RESET_LOGIN_STATUS, RESET_MYACCOUNT_STATUS, CHANGE_MYACCOUNT_NAME, MYACCOUNT_CHECK_OLD_PASSWORD } from "../actionTypes";
 
 //// -- Default myAccount state
 const defaultState: IMyAccountReduxState = {
@@ -47,13 +47,15 @@ export function myAccount( state:IMyAccountReduxState = defaultState, action:IMy
             }
         }
 
-        case RESET_MYACCOUNT_STATUS: {              
+        case RESET_MYACCOUNT_STATUS: {
             return {...state,
                 changeName: {...state.changeName,
                     success: results.default
                 },
                 changePassword: {...state.changePassword,
-                    success: results.default
+                    success: results.default,
+                    validOldPassword: false,
+                    wrongOldPassword: false
                 },
                 closeAccount: {...state.closeAccount,
                     success: results.default
@@ -84,6 +86,15 @@ export function myAccount( state:IMyAccountReduxState = defaultState, action:IMy
                     surname: nameData.surname
                 }
             };
+        }
+
+        case MYACCOUNT_CHECK_OLD_PASSWORD: {
+            return { ...state,
+                changePassword: { ...state.changePassword,
+                    validOldPassword: action.payload.changePassword.validOldPassword,
+                    wrongOldPassword: action.payload.changePassword.wrongOldPassword
+                }
+            }
         }
 
         default: 

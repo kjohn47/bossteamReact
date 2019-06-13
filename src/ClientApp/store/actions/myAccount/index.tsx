@@ -1,9 +1,9 @@
 import { commonServerAction } from "../appSettings/common";
-import { makeLoginOnServer, makeLogoutOnServer, changeNameServerCall } from "./myAccountServerCalls";
-import { LOAD_LOGIN_MENU, setCurrentUser, cookieLogout, pageHome, newsRoute, viewsNewsRoute, results, updateCurrentUserNames, LOAD_MYACCOUNT } from "../../../settings";
+import { makeLoginOnServer, makeLogoutOnServer, changeNameServerCall, checkOldPasswordServerCall } from "./myAccountServerCalls";
+import { LOAD_LOGIN_MENU, setCurrentUser, cookieLogout, pageHome, newsRoute, viewsNewsRoute, results, updateCurrentUserNames, LOAD_MYACCOUNT, LOAD_MYACCOUNT_PASSWORD } from "../../../settings";
 import { IServerPayload } from "../../../interfaces/common";
-import { MAKE_LOGIN, MAKE_LOGOUT, RESET_LOGIN_STATUS, RESET_MYACCOUNT_STATUS, CHANGE_MYACCOUNT_NAME } from "../../actionTypes";
-import { IMyAccountAction, IchangeNameArg } from "../../../interfaces/myAccount";
+import { MAKE_LOGIN, MAKE_LOGOUT, RESET_LOGIN_STATUS, RESET_MYACCOUNT_STATUS, CHANGE_MYACCOUNT_NAME, MYACCOUNT_CHECK_OLD_PASSWORD } from "../../actionTypes";
+import { IMyAccountAction, IchangeNameArg, IMyaccountChangePasswordArg } from "../../../interfaces/myAccount";
 import { IcurrentUser } from "../../../interfaces/currentUser";
 
 export function makeLogin( user: string, password: string )  : Function {
@@ -79,6 +79,25 @@ function changeNameSuccess( result: IServerPayload ): IMyAccountAction {
         payload: {
             success: result.changeName.success,
             changeName: result.changeName.name
+        }
+    }
+}
+
+export function checkOldPassword( password: string, uuid: string ): Function {
+    let checkPwArg: IMyaccountChangePasswordArg = {
+        oldPassword: password,
+        uuid: uuid
+    };
+    return ( dispatch: Function ) => {
+        commonServerAction( dispatch, checkOldPasswordServerCall, checkOldPasswordSuccess, checkPwArg, null , true, LOAD_MYACCOUNT_PASSWORD );
+    }
+}
+
+function checkOldPasswordSuccess( result: IServerPayload ): IMyAccountAction {
+    return {
+        type: MYACCOUNT_CHECK_OLD_PASSWORD,
+        payload: {
+            changePassword: result.checkPassword
         }
     }
 }

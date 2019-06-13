@@ -193,6 +193,8 @@ export interface IMyAccountLogicProps {
 
 export interface IMyAccountLogicActions {
     changeName( name: string, surname: string, uuid: string ): Function;
+    checkOldPassword( password: string, uuid: string ): Function;
+    changePassword( oldPassword: string, newPassword: string, uuid: string ): Function;
     resetMyAccountStatus(): Function;
 }
 
@@ -233,6 +235,7 @@ interface IMyAccountActionPayload {
     success?: string;
     login?: ILoginResponse;
     changeName?: IMyAccountChangeNamePayload;
+    changePassword?: IMyAccountChangePasswordPayload;
 }
 
 export interface IMyAccountChangeNamePayload {
@@ -249,5 +252,16 @@ export interface IchangeNameArg {
     name: string;
     surname: string;
     uuid: string;
+}
+
+export interface IMyAccountChangePasswordPayload {
+    wrongOldPassword: boolean;
+    validOldPassword: boolean;
+}
+
+export interface IMyaccountChangePasswordArg {
+    uuid: string;
+    oldPassword: string;
+    newPassword?:string;    
 }
 //// Reducer

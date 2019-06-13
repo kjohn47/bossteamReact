@@ -5,7 +5,7 @@ import { ERROR_LOGIN, ERROR_LOGOUT, restServer, results, ERROR_MYACCOUNT_CHANGEN
 import { IServerResponse } from '../../../interfaces/common';
 import axios from 'axios';
 import sha1 from 'sha1';
-import { IMyAccountChangeNameResponse, IchangeNameArg } from '../../../interfaces/myAccount';
+import { IMyAccountChangeNameResponse, IchangeNameArg, IMyaccountChangePasswordArg } from '../../../interfaces/myAccount';
 
 export async function makeLoginOnServer( loginArg: ILoginState ) : Promise<any>{
     return await serverResolve( () =>
@@ -55,8 +55,6 @@ export async function makeLogoutOnServer( user: IcurrentUser ) : Promise<any>{
     }, ERROR_LOGOUT)
 }
 
-
-
 export async function changeNameServerCall( changeNameArg: IchangeNameArg ) : Promise<any> {
     return await serverResolve( () => 
     {
@@ -101,4 +99,34 @@ export async function changeNameServerCall( changeNameArg: IchangeNameArg ) : Pr
         });
 
     }, ERROR_MYACCOUNT_CHANGENAME );    
+}
+
+export async function checkOldPasswordServerCall( checkPwArg: IMyaccountChangePasswordArg ): Promise<any> {
+    return await serverResolve( () =>
+    {
+        let validPassword: IServerResponse = { ////This should come from server
+            hasError: false,
+            payload: {
+                checkPassword: {
+                    validOldPassword: false,
+                    wrongOldPassword: true
+                }
+            }            
+        };
+
+        ////Just a mock, needs to be different in case of real server call
+        return axios.get(restServer + "Users?uuid=" + checkPwArg.uuid + "&password=" + sha1( checkPwArg.oldPassword ) ).then( (response) => {
+            let userFromServer: IServerResponse[] = response.data;
+            if( userFromServer !== null && userFromServer !== undefined && userFromServer.length > 0 )
+            {
+                validPassword.payload.checkPassword = {
+                    validOldPassword: true,
+                    wrongOldPassword: false
+                }
+            }
+
+            return validPassword;
+        }); 
+
+    } );
 }

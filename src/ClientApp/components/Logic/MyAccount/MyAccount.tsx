@@ -9,7 +9,7 @@ import {
     IMyAccountLogicState 
     } from '../../../interfaces/myAccount';
 import { checkRegexText, REGEX_FIELD, results } from '../../../settings';
-import { resetMyAccountStatus, changeName } from '../../../store/actions/myAccount';
+import { resetMyAccountStatus, changeName, checkOldPassword } from '../../../store/actions/myAccount';
 
 function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewProps> ): React.ComponentType
 {
@@ -102,7 +102,11 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                 if( this.props.changePasswordSuccess === results.success ) {
                     this.setState({
                         changePassword: { ...this.state.changePassword,
-                            updateSuccess: true
+                            updateSuccess: true,
+                            validPasswordRepeat: false,
+                            oldPassword: '',
+                            newPassword: '',
+                            repeatPassword: ''
                         }
                     });
                 }
@@ -227,8 +231,10 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
             });
         }
 
-        changePassword_oldPasswordCheck() {
-
+        changePassword_oldPasswordCheck() { 
+            if( this.state.changePassword.oldPassword.trim() !== '' ) {
+                this.props.checkOldPassword( this.state.changePassword.oldPassword, this.props.currentUser.uuid );
+            }
         }
 
         changePassword_repeatPasswordCheck() {            
@@ -261,7 +267,46 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
         }
 
         changePassword_submitHandle() {
+            let success: boolean = this.state.changePassword.validPasswordRepeat && this.props.validOldPassword;
+            let emptyOldPw: boolean = false;
+            let emptyNewPw: boolean = false;
+            let pwRepeat: boolean = false;
+            this.setState({
+                changePassword: { ...this.state.changePassword,
+                    updateFail: false,
+                    updateSuccess: false
+                 }
+            });
 
+            if( this.state.changePassword.oldPassword.trim() === '' ) {
+                emptyOldPw = true;
+                success = false;
+            }
+            
+            if( this.state.changePassword.newPassword.trim() === '' ) {
+                emptyNewPw = true;
+                success = false;
+            }
+
+            if( this.state.changePassword.newPassword !== this.state.changePassword.repeatPassword ) {
+                success = false;
+                pwRepeat = true;
+            }
+
+            if( success ) {
+                this.props.changePassword( this.state.changePassword.oldPassword, this.state.changePassword.newPassword, this.props.currentUser.uuid );
+            }
+            else {
+                this.setState({
+                    changePassword: { ...this.state.changePassword,
+                        updateSuccess: false,
+                        updateFail: true,
+                        emptynewPassword: emptyNewPw,
+                        emptyOldPassword: emptyOldPw,
+                        notMatchPassword: pwRepeat
+                    }
+                });
+            }
         }
         //// Change password methods
 
@@ -335,7 +380,9 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
 
     const mapDispatchToProps = ( dispatch: Function ) : IMyAccountLogicActions => ({
         changeName: ( name: string, surname: string, uuid: string ) => dispatch( changeName( name, surname, uuid ) ),
-        resetMyAccountStatus: () => dispatch( resetMyAccountStatus() )
+        resetMyAccountStatus: () => dispatch( resetMyAccountStatus() ),
+        checkOldPassword: ( password: string, uuid: string ) => dispatch( checkOldPassword( password, uuid ) ),
+        changePassword: ( oldPassword: string, newPassword: string, uuid: string ) => dispatch( () => {} )
     });
 
     const mapStateToProps = ( state: Istore ) : IMyAccountLogicProps => {
