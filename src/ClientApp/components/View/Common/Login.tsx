@@ -11,7 +11,12 @@ class Login extends React.PureComponent<ILogin,{}>{
             <Form>
                 {
                      this.props.loginAction.state.loginAttempt && this.props.loginAction.state.invalidUser &&
-                    <Alert color = "danger">{ this.props.loginText.invalidLogin }<br /><RouterLink to="/" className="nav-link">{ this.props.loginText.passwordRecover }</RouterLink></Alert>
+                    <Alert color = "danger">{ this.props.loginText.invalidLogin }
+                        <br />
+                        <RouterLink to="/" className="nav-link">
+                            { this.props.loginText.passwordRecover }
+                        </RouterLink>
+                    </Alert>
                 }
                 <FormGroup  className="mb-2 mr-sm-2 mb-sm-0">
                     <Label>{loginText.username}</Label>
@@ -19,8 +24,8 @@ class Login extends React.PureComponent<ILogin,{}>{
                         type="text" 
                         name="user_page" 
                         id="user_page" 
-                        onKeyDown = { ( event:any ) => this.props.loginAction.handleKeyPress( event, 'password_page', false ) }
-                        onChange = { ( event:any ) => this.props.loginAction.handleUser( event ) }
+                        onKeyDown = { ( event ) => this.props.loginAction.handleKeyPress( event, 'password_page', false ) }
+                        onChange = { ( event ) => this.props.loginAction.handleUser( event ) }
                         value = { this.props.loginAction.state.user }  
                         invalid = { this.props.loginAction.state.loginAttempt && ( this.props.loginAction.state.emptyUser || this.props.loginAction.state.invalidUser ) }  
                     />
@@ -38,8 +43,8 @@ class Login extends React.PureComponent<ILogin,{}>{
                         type="password" 
                         name="password_page" 
                         id="password_page" 
-                        onKeyDown = { ( event:any ) => this.props.loginAction.handleKeyPress( event, '', true ) }
-                        onChange = { ( event:any ) => this.props.loginAction.handlePassword( event ) }
+                        onKeyDown = { ( event ) => this.props.loginAction.handleKeyPress( event, '', true ) }
+                        onChange = { ( event ) => this.props.loginAction.handlePassword( event ) }
                         value = { this.props.loginAction.state.password }    
                         invalid = {  this.props.loginAction.state.loginAttempt && ( this.props.loginAction.state.emptyPassword || this.props.loginAction.state.invalidUser ) }  
                     />

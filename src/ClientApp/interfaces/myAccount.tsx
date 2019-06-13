@@ -143,6 +143,7 @@ export interface IMyAccountViewProps {
     changePassword: IMyAccountChangePasswordViewType;
     closeAccount: IMyAccountCloseViewType;
     myAccountText: IMyAccountText;
+    isLoading: boolean;
     changeTabHandle(): void;
 }
 
@@ -181,7 +182,7 @@ export interface IMyAccountLogicProps {
     changeNameSuccess: string;
     changePasswordSuccess: string;
     closeAccountSuccess: string;
-    changeNameLoading: boolean;
+    loading: boolean;
 }
 
 export interface IMyAccountLogicActions {

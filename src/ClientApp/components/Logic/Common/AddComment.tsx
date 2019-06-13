@@ -40,10 +40,10 @@ function addCommentLogic ( WrappedComponent:React.ComponentType<IAddCommentProps
             }
         }
 
-        handleCommentText( event: any ) : void {
+        handleCommentText( event: React.FormEvent<HTMLInputElement> ) : void {
             this.setState({
                 emptyComment:false,
-                commentText: event.target.value
+                commentText: event.currentTarget.value
             });
         }
 

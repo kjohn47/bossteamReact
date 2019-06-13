@@ -45,7 +45,7 @@ export const LOAD_LOGIN_MENU = 'LOAD_LOGIN_MENU';
 export const LOAD_NEW_COMMENT = 'LOAD_NEW_COMMENT';
 export const LOAD_HOME_NEWS = 'LOAD_HOME_NEWS';
 export const LOAD_REGISTRATION = 'LOAD_REGISTRATION';
-export const LOAD_MYACCOUNT_CHANGENAME = 'LOAD_MYACCOUNT_CHANGENAME';
+export const LOAD_MYACCOUNT = 'LOAD_MYACCOUNT';
 
 // COOKIE METHODS -- Do not change
 export const currentLanguage = () : string => {

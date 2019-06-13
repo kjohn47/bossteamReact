@@ -116,7 +116,7 @@ interface ILocalLoading {
     loadComment?: boolean;
     loadHomeNews?: boolean;
     loadUserRegistration?: boolean;
-    loadMyAccountChangeName?: boolean;
+    loadMyAccount?: boolean;
 }
 
 export interface IErrorHandling {

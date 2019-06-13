@@ -72,6 +72,12 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                             updateSuccess: true
                         }
                     });
+                    this._defaultState = {...this._defaultState,
+                        changeName: {...this._defaultState.changeName,
+                            name: this.props.currentUser.name,
+                            surname: this.props.currentUser.surname
+                        }
+                    }
                 }
                 else if( this.props.changeNameSuccess === results.failure ) {
                     this.setState({
@@ -129,8 +135,8 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
         //// MyAccount methods
 
         //// Change name methods
-        changeName_nameHandle( event: any ): void {
-            let newText = checkRegexText( event.target.value, this.state.changeName.name, REGEX_FIELD.NAME );
+        changeName_nameHandle( event: React.FormEvent<HTMLInputElement> ): void {
+            let newText = checkRegexText( event.currentTarget.value, this.state.changeName.name, REGEX_FIELD.NAME );
             this.setState({
                 changeName: { ...this.state.changeName,
                     name: newText,
@@ -139,8 +145,8 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
             });
         }
 
-        changeName_surnameHandle( event: any ): void {
-            let newText = checkRegexText( event.target.value, this.state.changeName.surname, REGEX_FIELD.NAME );
+        changeName_surnameHandle( event: React.FormEvent<HTMLInputElement> ): void {
+            let newText = checkRegexText( event.currentTarget.value, this.state.changeName.surname, REGEX_FIELD.NAME );
             this.setState({
                 changeName: { ...this.state.changeName,
                     surname: newText,
@@ -185,6 +191,16 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
         }
         //// Change name methods
 
+        //// Change password methods
+        changePassword_oldPasswordHandle( event: React.FormEvent<HTMLInputElement> ): void {
+            this.setState({
+                changePassword: { ...this.state.changePassword,
+                    oldPassword: event.currentTarget.value
+                }
+            })
+        }
+        //// Change password methods
+
         render(){            
             return(     
                  <WrappedComponent 
@@ -200,7 +216,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                         nameHandle: this.changeName_nameHandle,
                         surnameHandle: this.changeName_surnameHandle,
                         submitHandle: this.changeName_submitHandle,
-                        loading: this.props.changeNameLoading
+                        loading: this.props.loading
                     }}
                     changePassword = {{
                         text: this.props.myAccountText.changePasswordText,
@@ -213,7 +229,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                         wrongOldPassword: this.state.changePassword.wrongOldPassword,
                         updateSuccess: this.state.changePassword.updateSuccess,
                         updateFail: this.state.changePassword.updateFail,
-                        loading: false,
+                        loading: this.props.loading,
                         oldPasswordHandle: () => {},
                         oldPasswordCheck: () => {},
                         newPasswordHandle: () => {},
@@ -233,7 +249,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                         invalidEmail: this.state.closeAccount.invalidEmail,
                         updateSuccess: this.state.closeAccount.updateSuccess,
                         updateFail: this.state.closeAccount.updateFail,
-                        loading: false,
+                        loading: this.props.loading,
                         passwordHandle: () => {},
                         repeatPasswordHandle: () => {},
                         repeatPasswordCheck: () => {},
@@ -244,6 +260,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                     }}
                     myAccountText = { this.props.myAccountText.myAccountText }
                     changeTabHandle = { this.changeTabHandle }
+                    isLoading = { this.props.loading }
                  />
             );
         }
@@ -261,7 +278,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
             changeNameSuccess: state.myAccount.changeName.success,
             changePasswordSuccess: state.myAccount.changePassword.success,
             closeAccountSuccess: state.myAccount.closeAccount.success,
-            changeNameLoading: state.appSettings.fetchData.loading.localLoading.loadMyAccountChangeName
+            loading: state.appSettings.fetchData.loading.localLoading.loadMyAccount
         }
     };
 

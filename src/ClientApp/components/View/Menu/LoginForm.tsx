@@ -16,8 +16,8 @@ class LoginForm extends React.PureComponent<ILogin,{}>{
                         name="user_inline" 
                         id="user_inline" 
                         placeholder={loginText.username} 
-                        onChange = { ( event:any ) => this.props.loginAction.handleUser( event ) }
-                        onKeyDown = { ( event:any ) => this.props.loginAction.handleKeyPress( event, 'password_inline', false ) }
+                        onChange = { ( event ) => this.props.loginAction.handleUser( event ) }
+                        onKeyDown = { ( event ) => this.props.loginAction.handleKeyPress( event, 'password_inline', false ) }
                         value = { this.props.loginAction.state.user }  
                         invalid = { this.props.loginAction.state.loginAttempt && ( this.props.loginAction.state.emptyUser || this.props.loginAction.state.invalidUser ) }  
                     />
@@ -32,8 +32,8 @@ class LoginForm extends React.PureComponent<ILogin,{}>{
                         name="password_inline" 
                         id="password_inline" 
                         placeholder={loginText.password} 
-                        onChange = { ( event:any ) => this.props.loginAction.handlePassword( event ) }
-                        onKeyDown = { ( event:any ) => this.props.loginAction.handleKeyPress( event, '', true ) }
+                        onChange = { ( event ) => this.props.loginAction.handlePassword( event ) }
+                        onKeyDown = { ( event ) => this.props.loginAction.handleKeyPress( event, '', true ) }
                         value = { this.props.loginAction.state.password }    
                         invalid = { this.props.loginAction.state.loginAttempt && ( this.props.loginAction.state.emptyPassword || this.props.loginAction.state.invalidUser ) }  
                     />

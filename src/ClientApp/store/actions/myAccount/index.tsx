@@ -1,6 +1,6 @@
 import { commonServerAction } from "../appSettings/common";
 import { makeLoginOnServer, makeLogoutOnServer, changeNameServerCall } from "./myAccountServerCalls";
-import { LOAD_LOGIN_MENU, setCurrentUser, cookieLogout, pageHome, newsRoute, viewsNewsRoute, results, updateCurrentUserNames, LOAD_MYACCOUNT_CHANGENAME } from "../../../settings";
+import { LOAD_LOGIN_MENU, setCurrentUser, cookieLogout, pageHome, newsRoute, viewsNewsRoute, results, updateCurrentUserNames, LOAD_MYACCOUNT } from "../../../settings";
 import { IServerPayload } from "../../../interfaces/common";
 import { MAKE_LOGIN, MAKE_LOGOUT, RESET_LOGIN_STATUS, RESET_MYACCOUNT_STATUS, CHANGE_MYACCOUNT_NAME } from "../../actionTypes";
 import { IMyAccountAction, IchangeNameArg } from "../../../interfaces/myAccount";
@@ -63,7 +63,7 @@ export function resetMyAccountStatus() : IMyAccountAction {
 export function changeName ( name: string, surname: string, uuid: string ) : Function {
     return (dispatch: Function) =>  
     {     
-        commonServerAction( dispatch, changeNameServerCall, changeNameSuccess, { name, surname, uuid }, null , true, LOAD_MYACCOUNT_CHANGENAME, updateCookieName );
+        commonServerAction( dispatch, changeNameServerCall, changeNameSuccess, { name, surname, uuid }, null , true, LOAD_MYACCOUNT, updateCookieName );
     } 
 }
 

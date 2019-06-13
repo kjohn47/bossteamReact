@@ -18,7 +18,7 @@ import {
     Show_Error_Detailed,
     GetPropertyValue,
     LOAD_REGISTRATION,
-    LOAD_MYACCOUNT_CHANGENAME} from '../../settings';
+    LOAD_MYACCOUNT} from '../../settings';
 import { ILoading, IErrorHandling, IErrorHandlingText, IErrorHandlingTextTranslation } from '../../interfaces/common';
 import { ERRORS, TEXT_PAGE_NOT_FOUND } from '../../pageData/language/errors';
 import { TEXT_REGISTRATION } from '../../pageData/language/registration';
@@ -51,7 +51,7 @@ const defaultState: IAppSettings = {
                 loadLogin: false,
                 loadHomeNews: false,
                 loadUserRegistration: false,
-                loadMyAccountChangeName: false
+                loadMyAccount: false
             }
         }
     } 
@@ -66,7 +66,7 @@ function getLoadingState( isLocalLoading: boolean, pageLoading: ILoading, loadLo
             loadComment: isLocalLoading  && loadLocalization === LOAD_NEW_COMMENT ? true : pageLoading.localLoading.loadComment,
             loadHomeNews: isLocalLoading  && loadLocalization === LOAD_HOME_NEWS ? true : pageLoading.localLoading.loadHomeNews,
             loadUserRegistration: isLocalLoading && loadLocalization === LOAD_REGISTRATION ? true : pageLoading.localLoading.loadUserRegistration,
-            loadMyAccountChangeName: isLocalLoading && loadLocalization === LOAD_MYACCOUNT_CHANGENAME ? true : pageLoading.localLoading.loadMyAccountChangeName
+            loadMyAccount: isLocalLoading && loadLocalization === LOAD_MYACCOUNT ? true : pageLoading.localLoading.loadMyAccount
         }        
     }
     return {...loading};
@@ -81,7 +81,7 @@ function endLoadingState( isLocalLoading: boolean, pageLoading: ILoading, loadLo
             loadComment: (isLocalLoading  && loadLocalization === LOAD_NEW_COMMENT) ? false : pageLoading.localLoading.loadComment,
             loadHomeNews: (isLocalLoading  && loadLocalization === LOAD_HOME_NEWS) ? false : pageLoading.localLoading.loadHomeNews,
             loadUserRegistration: isLocalLoading && loadLocalization === LOAD_REGISTRATION ? false : pageLoading.localLoading.loadUserRegistration,
-            loadMyAccountChangeName: isLocalLoading && loadLocalization === LOAD_MYACCOUNT_CHANGENAME ? false : pageLoading.localLoading.loadMyAccountChangeName
+            loadMyAccount: isLocalLoading && loadLocalization === LOAD_MYACCOUNT ? false : pageLoading.localLoading.loadMyAccount
         }
     }
     return {...loading};

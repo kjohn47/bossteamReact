@@ -63,32 +63,32 @@ function registrationLogic( WrappedComponent: React.ComponentType<IRegistrationP
         }
 
 
-        handleName( event: any ): void {
-            let newText = checkRegexText( event.target.value, this.state.name, REGEX_FIELD.NAME );
+        handleName( event: React.FormEvent<HTMLInputElement> ): void {
+            let newText = checkRegexText( event.currentTarget.value, this.state.name, REGEX_FIELD.NAME );
             this.setState({
                 name: newText,
                 nameIsEmpty: false
             });
         }
         
-        handleSurname( event: any ): void {
-            let newText = checkRegexText( event.target.value, this.state.surname, REGEX_FIELD.NAME );
+        handleSurname( event: React.FormEvent<HTMLInputElement> ): void {
+            let newText = checkRegexText( event.currentTarget.value, this.state.surname, REGEX_FIELD.NAME );
             this.setState({
                 surname: newText,
                 surnameIsEmpty: false
             });
         }
 
-        handleEmail( event: any ): void {
-            let newText = checkRegexText( event.target.value, this.state.email, REGEX_FIELD.EMAIL );
+        handleEmail( event: React.FormEvent<HTMLInputElement> ): void {
+            let newText = checkRegexText( event.currentTarget.value, this.state.email, REGEX_FIELD.EMAIL );
             this.setState({
                 email: newText,
                 emailIsNotValid: false
             })
         }
 
-        handleUsername( event: any ): void {
-            let newText = checkRegexText( event.target.value, this.state.username, REGEX_FIELD.USERNAME );
+        handleUsername( event: React.FormEvent<HTMLInputElement> ): void {
+            let newText = checkRegexText( event.currentTarget.value, this.state.username, REGEX_FIELD.USERNAME );
             this.setState({
                 username: newText,
                 usernameIsEmpty: false,
@@ -109,9 +109,9 @@ function registrationLogic( WrappedComponent: React.ComponentType<IRegistrationP
             }
         }
 
-        handlePassword( event: any ): void {
+        handlePassword( event: React.FormEvent<HTMLInputElement> ): void {
             this.setState({
-                password: event.target.value,
+                password: event.currentTarget.value,
                 passwordIsEmpty: false
             })
         }
