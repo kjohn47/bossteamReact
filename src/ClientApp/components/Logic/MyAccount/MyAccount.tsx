@@ -66,6 +66,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
         //// MyAccount methods
         changeTabHandle() {
             this.setState({...this._defaultState});
+            this.props.resetMyAccountStatus();
         }
 
         componentDidUpdate( prevProps: MyAccountLogicType ) {
