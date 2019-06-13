@@ -101,5 +101,15 @@ export const ERRORS: IErrorHandlingErrors = {
             errorMessage: "An error occurred when changing user name",
             errorTitle: "Error: My Account - Change Name"
         }
+    },
+    ERROR_MYACCOUNT_CHANGEPASSWORD: {
+        PT: {
+            errorMessage: "Ocurreu um erro a alterar a password do utilizador",
+            errorTitle: "Erro: A Minha Conta - Alterar Password"
+        },
+        EN: {
+            errorMessage: "An error occurred when changing user password",
+            errorTitle: "Error: My Account - Change Password"
+        }
     }
 }

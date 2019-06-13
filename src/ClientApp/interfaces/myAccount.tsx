@@ -243,9 +243,10 @@ export interface IMyAccountChangeNamePayload {
     surname: string;
 }
 
-export interface IMyAccountChangeNameResponse {
+export interface IMyAccountResponse {
     success: string,
     name?: IMyAccountChangeNamePayload;
+    password?: IMyAccountChangePasswordPayload;
 }
 
 export interface IchangeNameArg {

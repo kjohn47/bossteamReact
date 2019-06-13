@@ -1,11 +1,11 @@
 import { IcurrentUser } from '../../../interfaces/currentUser';
 import { ILoginState } from '../../../interfaces/login';
 import { serverResolve } from '../appSettings/common';
-import { ERROR_LOGIN, ERROR_LOGOUT, restServer, results, ERROR_MYACCOUNT_CHANGENAME } from '../../../settings';
+import { ERROR_LOGIN, ERROR_LOGOUT, restServer, results, ERROR_MYACCOUNT_CHANGENAME, ERROR_MYACCOUNT_CHANGEPASSWORD } from '../../../settings';
 import { IServerResponse } from '../../../interfaces/common';
 import axios from 'axios';
 import sha1 from 'sha1';
-import { IMyAccountChangeNameResponse, IchangeNameArg, IMyaccountChangePasswordArg } from '../../../interfaces/myAccount';
+import { IMyAccountResponse, IchangeNameArg, IMyaccountChangePasswordArg } from '../../../interfaces/myAccount';
 
 export async function makeLoginOnServer( loginArg: ILoginState ) : Promise<any>{
     return await serverResolve( () =>
@@ -58,14 +58,14 @@ export async function makeLogoutOnServer( user: IcurrentUser ) : Promise<any>{
 export async function changeNameServerCall( changeNameArg: IchangeNameArg ) : Promise<any> {
     return await serverResolve( () => 
     {
-        let changeName: IMyAccountChangeNameResponse = {
+        let changeName: IMyAccountResponse = {
             success: results.failure
         }; 
 
         let serverReturn: IServerResponse = {
             hasError: false,
             payload: {
-                changeName: changeName
+                myAccount: changeName
             }
         }
         return axios.get( restServer + "Users?uuid=" + changeNameArg.uuid )
@@ -90,7 +90,7 @@ export async function changeNameServerCall( changeNameArg: IchangeNameArg ) : Pr
                 };
                 serverReturn = {...serverReturn,
                     payload: {...serverReturn.payload,
-                        changeName: changeName
+                        myAccount: changeName
                     }
                 };
 
@@ -107,11 +107,14 @@ export async function checkOldPasswordServerCall( checkPwArg: IMyaccountChangePa
         let validPassword: IServerResponse = { ////This should come from server
             hasError: false,
             payload: {
-                checkPassword: {
-                    validOldPassword: false,
-                    wrongOldPassword: true
+                myAccount: {
+                    success: results.success,
+                    password: {
+                        validOldPassword: false,
+                        wrongOldPassword: true
+                    }
                 }
-            }            
+            }
         };
 
         ////Just a mock, needs to be different in case of real server call
@@ -119,7 +122,7 @@ export async function checkOldPasswordServerCall( checkPwArg: IMyaccountChangePa
             let userFromServer: IServerResponse[] = response.data;
             if( userFromServer !== null && userFromServer !== undefined && userFromServer.length > 0 )
             {
-                validPassword.payload.checkPassword = {
+                validPassword.payload.myAccount.password = {
                     validOldPassword: true,
                     wrongOldPassword: false
                 }
@@ -128,5 +131,5 @@ export async function checkOldPasswordServerCall( checkPwArg: IMyaccountChangePa
             return validPassword;
         }); 
 
-    } );
+    }, ERROR_MYACCOUNT_CHANGEPASSWORD );
 }

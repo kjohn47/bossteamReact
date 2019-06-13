@@ -68,8 +68,8 @@ export function changeName ( name: string, surname: string, uuid: string ) : Fun
 }
 
 function updateCookieName( result: IServerPayload, serverCallArg: IchangeNameArg, successCallArg: any, dispatch: Function ): void {
-    if( result.changeName.name !== null && result.changeName.name !== undefined ) {
-        updateCurrentUserNames( result.changeName.name.name, result.changeName.name.surname );
+    if( result.myAccount.name !== null && result.myAccount.name !== undefined ) {
+        updateCurrentUserNames( result.myAccount.name.name, result.myAccount.name.surname );
     }
 }
 
@@ -77,8 +77,8 @@ function changeNameSuccess( result: IServerPayload ): IMyAccountAction {
     return {
         type: CHANGE_MYACCOUNT_NAME,
         payload: {
-            success: result.changeName.success,
-            changeName: result.changeName.name
+            success: result.myAccount.success,
+            changeName: result.myAccount.name
         }
     }
 }
@@ -97,7 +97,7 @@ function checkOldPasswordSuccess( result: IServerPayload ): IMyAccountAction {
     return {
         type: MYACCOUNT_CHECK_OLD_PASSWORD,
         payload: {
-            changePassword: result.checkPassword
+            changePassword: result.myAccount.password
         }
     }
 }
