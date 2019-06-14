@@ -14,7 +14,17 @@ export function commonServerAction( dispatch: Function,
 {    
     dispatch( startServerCommunication( isLocalLoad, localLoad ) );    
     return new Promise( async (resolve, reject) => {
-        let serverData:IServerResponse | IErrorHandling = await serverCall( serverCallArg );        
+        let serverData:IServerResponse | IErrorHandling;
+        if( serverCall === null || serverCall === undefined ) {
+            serverData = {
+                hasError: true,
+                errorCode: ERROR_GENERIC,
+                errorDescription: "Invalid server call method"
+            };
+        }
+        else {
+            serverData = await serverCall( serverCallArg );        
+        }
         if( serverData.hasError )
         { 
             reject( serverData )
