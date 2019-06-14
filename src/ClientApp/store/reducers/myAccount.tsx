@@ -1,6 +1,6 @@
 import { IMyAccountReduxState, IMyAccountAction, IMyAccountChangeNamePayload } from "../../interfaces/myAccount";
 import { results, checkLogin, getCurrentUser } from "../../settings";
-import { MAKE_LOGOUT, MAKE_LOGIN, RESET_LOGIN_STATUS, RESET_MYACCOUNT_STATUS, CHANGE_MYACCOUNT_NAME, MYACCOUNT_CHECK_OLD_PASSWORD } from "../actionTypes";
+import { MAKE_LOGOUT, MAKE_LOGIN, RESET_LOGIN_STATUS, RESET_MYACCOUNT_STATUS, CHANGE_MYACCOUNT_NAME, MYACCOUNT_CHECK_OLD_PASSWORD, MYACCOUNT_CHANGE_PASSWORD, MYACCOUNT_CHECK_PASSWORD } from "../actionTypes";
 
 //// -- Default myAccount state
 const defaultState: IMyAccountReduxState = {
@@ -16,7 +16,11 @@ const defaultState: IMyAccountReduxState = {
         validOldPassword: false
     },
     closeAccount: {
-        success: results.default
+        success: results.default,
+        wrongEmail: false,
+        validEmail: false,
+        validPassword: false,
+        wrongPassword: false
     }
 }
 
@@ -58,7 +62,11 @@ export function myAccount( state:IMyAccountReduxState = defaultState, action:IMy
                     wrongOldPassword: false
                 },
                 closeAccount: {...state.closeAccount,
-                    success: results.default
+                    success: results.default,
+                    wrongEmail: false,
+                    validEmail: false,
+                    validPassword: false,
+                    wrongPassword: false
                 }
             };
         }
@@ -91,8 +99,27 @@ export function myAccount( state:IMyAccountReduxState = defaultState, action:IMy
         case MYACCOUNT_CHECK_OLD_PASSWORD: {
             return { ...state,
                 changePassword: { ...state.changePassword,
-                    validOldPassword: action.payload.changePassword.validOldPassword,
-                    wrongOldPassword: action.payload.changePassword.wrongOldPassword
+                    validOldPassword: action.payload.changePassword.validPassword,
+                    wrongOldPassword: action.payload.changePassword.wrongPassword
+                }
+            }
+        }
+
+        case MYACCOUNT_CHANGE_PASSWORD: {
+            return { ...state,
+                changePassword: {
+                    success: action.payload.success,
+                    validOldPassword: action.payload.changePassword.validPassword,
+                    wrongOldPassword: action.payload.changePassword.wrongPassword
+                }
+            }
+        }
+
+        case MYACCOUNT_CHECK_PASSWORD: {
+            return { ...state,
+                closeAccount: { ...state.closeAccount,
+                    wrongPassword: action.payload.closeAccount.wrongPassword,
+                    validPassword: action.payload.closeAccount.validPassword
                 }
             }
         }

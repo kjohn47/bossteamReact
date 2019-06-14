@@ -32,7 +32,6 @@ export const TEXT_MY_ACCOUNT: IMyAccountTranslations = {
         closeAccountText: {
             title: "Fechar ou desativar conta de utilizador:",
             password: "Password:",
-            repeatPassword: "Repetir:",
             email: "Email",
             close: "Fechar",
             disable: "Desativar",
@@ -79,7 +78,6 @@ export const TEXT_MY_ACCOUNT: IMyAccountTranslations = {
         closeAccountText: {
             title: "Close Account:",
             password: "Password:",
-            repeatPassword: "Repeat:",
             email: "Email:",
             close: "Close",
             disable: "Disable",

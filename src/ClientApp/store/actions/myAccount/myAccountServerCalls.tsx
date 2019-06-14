@@ -101,7 +101,7 @@ export async function changeNameServerCall( changeNameArg: IchangeNameArg ) : Pr
     }, ERROR_MYACCOUNT_CHANGENAME );    
 }
 
-export async function checkOldPasswordServerCall( checkPwArg: IMyaccountChangePasswordArg ): Promise<any> {
+export async function checkPasswordServerCall( checkPwArg: IMyaccountChangePasswordArg ): Promise<any> {
     return await serverResolve( () =>
     {
         let validPassword: IServerResponse = { ////This should come from server
@@ -110,22 +110,64 @@ export async function checkOldPasswordServerCall( checkPwArg: IMyaccountChangePa
                 myAccount: {
                     success: results.success,
                     password: {
-                        validOldPassword: false,
-                        wrongOldPassword: true
+                        validPassword: false,
+                        wrongPassword: true
                     }
                 }
             }
         };
 
         ////Just a mock, needs to be different in case of real server call
-        return axios.get(restServer + "Users?uuid=" + checkPwArg.uuid + "&password=" + sha1( checkPwArg.oldPassword ) ).then( (response) => {
+        return axios.get(restServer + "Users?uuid=" + checkPwArg.uuid + "&password=" + sha1( checkPwArg.password ) ).then( (response) => {
             let userFromServer: IServerResponse[] = response.data;
             if( userFromServer !== null && userFromServer !== undefined && userFromServer.length > 0 )
             {
                 validPassword.payload.myAccount.password = {
-                    validOldPassword: true,
-                    wrongOldPassword: false
+                    validPassword: true,
+                    wrongPassword: false
                 }
+            }
+
+            return validPassword;
+        }); 
+
+    } );
+}
+
+export async function changeOldPasswordServerCall( checkPwArg: IMyaccountChangePasswordArg ): Promise<any> {
+    return await serverResolve( () =>
+    {
+        let validPassword: IServerResponse = { ////This should come from server
+            hasError: false,
+            payload: {
+                myAccount: {
+                    success: results.failure,
+                    password: {
+                        validPassword: false,
+                        wrongPassword: true
+                    }
+                }
+            }
+        };
+
+        ////Just a mock, needs to be different in case of real server call
+        return axios.get(restServer + "Users?uuid=" + checkPwArg.uuid + "&password=" + sha1( checkPwArg.password ) ).then( (response) => {
+            let userFromServer: IServerResponse[] = response.data;
+            if( userFromServer !== null && userFromServer !== undefined && userFromServer.length > 0 )
+            {
+                validPassword.payload.myAccount.password = {
+                    validPassword: true,
+                    wrongPassword: false
+                }
+                let user = userFromServer[0];
+                user = { ...user,
+                    password: sha1( checkPwArg.newPassword )
+                }
+
+                return axios.put( restServer + "Users/" + user.id, { ...user } ).then( () => {
+                    validPassword.payload.myAccount.success = results.success;
+                    return validPassword;
+                })
             }
 
             return validPassword;
