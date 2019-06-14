@@ -5,7 +5,7 @@ import { ERROR_LOGIN, ERROR_LOGOUT, restServer, results, ERROR_MYACCOUNT_CHANGEN
 import { IServerResponse } from '../../../interfaces/common';
 import axios from 'axios';
 import sha1 from 'sha1';
-import { IMyAccountResponse, IchangeNameArg, IMyaccountChangePasswordArg } from '../../../interfaces/myAccount';
+import { IMyAccountResponse, IchangeNameArg, IMyaccountChangePasswordArg, IMyaccountCloseArg } from '../../../interfaces/myAccount';
 
 export async function makeLoginOnServer( loginArg: ILoginState ) : Promise<any>{
     return await serverResolve( () =>
@@ -134,7 +134,7 @@ export async function checkPasswordServerCall( checkPwArg: IMyaccountChangePassw
     } );
 }
 
-export async function changeOldPasswordServerCall( checkPwArg: IMyaccountChangePasswordArg ): Promise<any> {
+export async function changePasswordServerCall( checkPwArg: IMyaccountChangePasswordArg ): Promise<any> {
     return await serverResolve( () =>
     {
         let validPassword: IServerResponse = { ////This should come from server
@@ -174,4 +174,36 @@ export async function changeOldPasswordServerCall( checkPwArg: IMyaccountChangeP
         }); 
 
     }, ERROR_MYACCOUNT_CHANGEPASSWORD );
+}
+
+export async function checkEmailServerCall( checkEmailArg: IMyaccountCloseArg ): Promise<any> {
+    return await serverResolve( () =>
+    {
+        let validEmail: IServerResponse = { ////This should come from server
+            hasError: false,
+            payload: {
+                myAccount: {
+                    success: results.success,
+                    email: {
+                        validEmail: false,
+                        wrongEmail: true
+                    }
+                }
+            }
+        };
+
+        ////Just a mock, needs to be different in case of real server call
+        return axios.get(restServer + "Users?uuid=" + checkEmailArg.uuid ).then( (response) => {
+            let userFromServer: IServerResponse[] = response.data;
+            if( userFromServer !== null && userFromServer !== undefined && userFromServer.length > 0 && userFromServer[0].payload.loginData.user.email === checkEmailArg.email )
+            {
+                validEmail.payload.myAccount.email = {
+                    validEmail: true,
+                    wrongEmail: false
+                };                
+            }
+
+            return validEmail;
+        }); 
+    } );
 }

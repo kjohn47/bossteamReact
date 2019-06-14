@@ -1,9 +1,9 @@
 import { commonServerAction } from "../appSettings/common";
-import { makeLoginOnServer, makeLogoutOnServer, changeNameServerCall, checkPasswordServerCall, changeOldPasswordServerCall } from "./myAccountServerCalls";
-import { LOAD_LOGIN_MENU, setCurrentUser, cookieLogout, pageHome, newsRoute, viewsNewsRoute, updateCurrentUserNames, LOAD_MYACCOUNT, LOAD_MYACCOUNT_PASSWORD } from "../../../settings";
+import { makeLoginOnServer, makeLogoutOnServer, changeNameServerCall, checkPasswordServerCall, changePasswordServerCall, checkEmailServerCall } from "./myAccountServerCalls";
+import { LOAD_LOGIN_MENU, setCurrentUser, cookieLogout, pageHome, newsRoute, viewsNewsRoute, updateCurrentUserNames, LOAD_MYACCOUNT, LOAD_MYACCOUNT_PASSWORD, LOAD_MYACCOUNT_EMAIL } from "../../../settings";
 import { IServerPayload } from "../../../interfaces/common";
-import { MAKE_LOGIN, MAKE_LOGOUT, RESET_LOGIN_STATUS, RESET_MYACCOUNT_STATUS, CHANGE_MYACCOUNT_NAME, MYACCOUNT_CHECK_OLD_PASSWORD, MYACCOUNT_CHANGE_PASSWORD, MYACCOUNT_CHECK_PASSWORD } from "../../actionTypes";
-import { IMyAccountAction, IchangeNameArg, IMyaccountChangePasswordArg } from "../../../interfaces/myAccount";
+import { MAKE_LOGIN, MAKE_LOGOUT, RESET_LOGIN_STATUS, RESET_MYACCOUNT_STATUS, CHANGE_MYACCOUNT_NAME, MYACCOUNT_CHECK_OLD_PASSWORD, MYACCOUNT_CHANGE_PASSWORD, MYACCOUNT_CHECK_PASSWORD, MYACCOUNT_CHECK_EMAIL, RESET_MYACCOUNT_SUCCSESS } from "../../actionTypes";
+import { IMyAccountAction, IchangeNameArg, IMyaccountChangePasswordArg, IMyaccountCloseArg } from "../../../interfaces/myAccount";
 import { IcurrentUser } from "../../../interfaces/currentUser";
 
 export function makeLogin( user: string, password: string )  : Function {
@@ -57,6 +57,12 @@ export function resetLoginStatus() : IMyAccountAction {
 export function resetMyAccountStatus() : IMyAccountAction {
     return {
         type: RESET_MYACCOUNT_STATUS        
+    }
+}
+
+export function resetMyAccountSuccess() : IMyAccountAction {
+    return {
+        type: RESET_MYACCOUNT_SUCCSESS       
     }
 }
 
@@ -122,7 +128,7 @@ export function changePassword( oldPassword: string, newPassword: string, uuid: 
         uuid: uuid
     };
     return ( dispatch: Function ) => {
-        commonServerAction( dispatch, changeOldPasswordServerCall, changePasswordSuccess, checkPwArg, null , true, LOAD_MYACCOUNT );
+        commonServerAction( dispatch, changePasswordServerCall, changePasswordSuccess, checkPwArg, null , true, LOAD_MYACCOUNT );
     }
 }
 
@@ -134,4 +140,26 @@ function changePasswordSuccess ( result: IServerPayload ): IMyAccountAction {
             changePassword: result.myAccount.password
         }
     };
+}
+
+export function checkEmail( email: string, uuid: string ): Function {
+    let checkEmailArg: IMyaccountCloseArg = {
+        email: email,
+        uuid: uuid
+    };
+    return ( dispatch: Function ) => {
+        commonServerAction( dispatch, checkEmailServerCall, checkEmailSuccess, checkEmailArg, null , true, LOAD_MYACCOUNT_EMAIL );
+    }
+}
+
+function checkEmailSuccess( result: IServerPayload ): IMyAccountAction {    
+    return {
+        type: MYACCOUNT_CHECK_EMAIL,
+        payload: {
+            closeAccount: {
+                validEmail: result.myAccount.email.validEmail,
+                wrongEmail: result.myAccount.email.wrongEmail
+            }
+        }
+    }    
 }

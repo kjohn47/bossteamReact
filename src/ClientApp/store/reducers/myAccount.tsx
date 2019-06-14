@@ -1,6 +1,6 @@
 import { IMyAccountReduxState, IMyAccountAction, IMyAccountChangeNamePayload } from "../../interfaces/myAccount";
 import { results, checkLogin, getCurrentUser } from "../../settings";
-import { MAKE_LOGOUT, MAKE_LOGIN, RESET_LOGIN_STATUS, RESET_MYACCOUNT_STATUS, CHANGE_MYACCOUNT_NAME, MYACCOUNT_CHECK_OLD_PASSWORD, MYACCOUNT_CHANGE_PASSWORD, MYACCOUNT_CHECK_PASSWORD } from "../actionTypes";
+import { MAKE_LOGOUT, MAKE_LOGIN, RESET_LOGIN_STATUS, RESET_MYACCOUNT_STATUS, CHANGE_MYACCOUNT_NAME, MYACCOUNT_CHECK_OLD_PASSWORD, MYACCOUNT_CHANGE_PASSWORD, MYACCOUNT_CHECK_PASSWORD, MYACCOUNT_CHECK_EMAIL, RESET_MYACCOUNT_SUCCSESS } from "../actionTypes";
 
 //// -- Default myAccount state
 const defaultState: IMyAccountReduxState = {
@@ -53,20 +53,29 @@ export function myAccount( state:IMyAccountReduxState = defaultState, action:IMy
 
         case RESET_MYACCOUNT_STATUS: {
             return {...state,
-                changeName: {...state.changeName,
-                    success: results.default
-                },
                 changePassword: {...state.changePassword,
-                    success: results.default,
                     validOldPassword: false,
                     wrongOldPassword: false
                 },
                 closeAccount: {...state.closeAccount,
-                    success: results.default,
                     wrongEmail: false,
                     validEmail: false,
                     validPassword: false,
                     wrongPassword: false
+                }
+            };
+        }
+
+        case RESET_MYACCOUNT_SUCCSESS: {
+            return {...state,
+                changeName: {...state.changeName,
+                    success: results.default
+                },
+                changePassword: {...state.changePassword,
+                    success: results.default
+                },
+                closeAccount: {...state.closeAccount,
+                    success: results.default
                 }
             };
         }
@@ -120,6 +129,15 @@ export function myAccount( state:IMyAccountReduxState = defaultState, action:IMy
                 closeAccount: { ...state.closeAccount,
                     wrongPassword: action.payload.closeAccount.wrongPassword,
                     validPassword: action.payload.closeAccount.validPassword
+                }
+            }
+        }
+
+        case MYACCOUNT_CHECK_EMAIL: {
+            return { ...state,
+                closeAccount: { ...state.closeAccount,
+                    wrongEmail: action.payload.closeAccount.wrongEmail,
+                    validEmail: action.payload.closeAccount.validEmail
                 }
             }
         }

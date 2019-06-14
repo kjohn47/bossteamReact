@@ -8,7 +8,7 @@ import {
     IRegistrationStateLogic, 
     RegistrationLogicType
     } from '../../../interfaces/registration';
-import { checkRegexText, REGEX_FIELD, pageHome } from '../../../settings';
+import { checkRegexText, REGEX_FIELD, pageHome, checkEmailRegex } from '../../../settings';
 import { checkUserNameRegistration, makeUserRegistration, resetRegistration } from '../../../store/actions/registration';
 import { Redirect } from 'react-router';
 
@@ -146,11 +146,9 @@ function registrationLogic( WrappedComponent: React.ComponentType<IRegistrationP
                     surnameIsEmpty: true
                 });
                 isvalid = false;
-            }          
-            
-            var emailRegex = /^[\.a-zA-Z0-9]+@+[a-zA-Z0-9\.]+\.+[A-Za-z]+$/
+            }                              
 
-            if( this.state.email.trim() === '' || !emailRegex.test( this.state.email ) )
+            if( this.state.email.trim() === '' || !checkEmailRegex( this.state.email ) )
             {
                 this.setState({
                     emailIsNotValid: true

@@ -19,7 +19,8 @@ import {
     GetPropertyValue,
     LOAD_REGISTRATION,
     LOAD_MYACCOUNT,
-    LOAD_MYACCOUNT_PASSWORD} from '../../settings';
+    LOAD_MYACCOUNT_PASSWORD,
+    LOAD_MYACCOUNT_EMAIL} from '../../settings';
 import { ILoading, IErrorHandling, IErrorHandlingText, IErrorHandlingTextTranslation } from '../../interfaces/common';
 import { ERRORS, TEXT_PAGE_NOT_FOUND } from '../../pageData/language/errors';
 import { TEXT_REGISTRATION } from '../../pageData/language/registration';
@@ -53,7 +54,8 @@ const defaultState: IAppSettings = {
                 loadHomeNews: false,
                 loadUserRegistration: false,
                 loadMyAccount: false,
-                loadMyAccountPassword: false
+                loadMyAccountPassword: false,
+                loadMyAccountEmail: false
             }
         }
     } 
@@ -69,7 +71,8 @@ function getLoadingState( isLocalLoading: boolean, pageLoading: ILoading, loadLo
             loadHomeNews: isLocalLoading  && loadLocalization === LOAD_HOME_NEWS ? !end : pageLoading.localLoading.loadHomeNews,
             loadUserRegistration: isLocalLoading && loadLocalization === LOAD_REGISTRATION ? !end : pageLoading.localLoading.loadUserRegistration,
             loadMyAccount: isLocalLoading && loadLocalization === LOAD_MYACCOUNT ? !end : pageLoading.localLoading.loadMyAccount,
-            loadMyAccountPassword: isLocalLoading && loadLocalization === LOAD_MYACCOUNT_PASSWORD ? !end : pageLoading.localLoading.loadMyAccountPassword
+            loadMyAccountPassword: isLocalLoading && loadLocalization === LOAD_MYACCOUNT_PASSWORD ? !end : pageLoading.localLoading.loadMyAccountPassword,
+            loadMyAccountEmail: isLocalLoading && loadLocalization === LOAD_MYACCOUNT_EMAIL ? !end : pageLoading.localLoading.loadMyAccountEmail
         }        
     }
     return {...loading};

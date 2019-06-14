@@ -118,6 +118,7 @@ interface ILocalLoading {
     loadUserRegistration?: boolean;
     loadMyAccount?: boolean;
     loadMyAccountPassword?: boolean;
+    loadMyAccountEmail?: boolean;
 }
 
 export interface IErrorHandling {

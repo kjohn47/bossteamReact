@@ -48,6 +48,7 @@ export const LOAD_HOME_NEWS = 'LOAD_HOME_NEWS';
 export const LOAD_REGISTRATION = 'LOAD_REGISTRATION';
 export const LOAD_MYACCOUNT = 'LOAD_MYACCOUNT';
 export const LOAD_MYACCOUNT_PASSWORD = 'LOAD_MYACCOUNT_PASSWORD';
+export const LOAD_MYACCOUNT_EMAIL = 'LOAD_MYACCOUNT_EMAIL';
 
 // COOKIE METHODS -- Do not change
 export const currentLanguage = () : string => {
@@ -113,6 +114,11 @@ export const REGEX_FIELD: IRegexField = {
    USERNAME: "USERNAME",
    NAME: "NAME",
    EMAIL: "EMAIL"
+}
+
+export function checkEmailRegex( email: string ): boolean {
+   var emailRegex = /^[\.a-zA-Z0-9]+@+[a-zA-Z0-9\.]+\.+[A-Za-z]+$/
+   return emailRegex.test( email );
 }
 
 export function checkRegexText( newText: string, currentText: string, field?: string ) : string

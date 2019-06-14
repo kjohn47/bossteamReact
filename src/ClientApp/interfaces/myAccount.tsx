@@ -202,6 +202,7 @@ export interface IMyAccountLogicActions {
     changePassword( oldPassword: string, newPassword: string, uuid: string ): Function;
     checkEmail( email: string, uuid: string ): Function;
     resetMyAccountStatus(): Function;
+    resetMyAccountSuccess(): Function;
 }
 
 export type MyAccountLogicType = IMyAccountLogicProps & IMyAccountLogicActions;
@@ -281,5 +282,10 @@ export interface IMyaccountChangePasswordArg {
     uuid: string;
     password: string;
     newPassword?:string;    
+}
+
+export interface IMyaccountCloseArg {
+    uuid: string;
+    email: string;  
 }
 //// Reducer
