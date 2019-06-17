@@ -3,7 +3,7 @@ import { IhomeDataServer } from "./home";
 import { ILoginResponse } from "./login";
 import { IRegistrationResult, ICheckUsernameResult } from "./registration";
 import { IcurrentUser } from "./currentUser";
-import { IMyAccountChangeNameResponse } from "./myAccount";
+import { IMyAccountResponse } from "./myAccount";
 
 ////Header Interfaces
 export interface IPageHeader {
@@ -108,7 +108,7 @@ export interface ICommentTranslations {
 export interface ILoading {
     isPageLoading?: boolean;    
     localLoading?: ILocalLoading;
-    lessPriority?: boolean;    
+    lessPriority?: boolean;
 }
 
 interface ILocalLoading {
@@ -116,7 +116,9 @@ interface ILocalLoading {
     loadComment?: boolean;
     loadHomeNews?: boolean;
     loadUserRegistration?: boolean;
-    loadMyAccountChangeName?: boolean;
+    loadMyAccount?: boolean;
+    loadMyAccountPassword?: boolean;
+    loadMyAccountEmail?: boolean;
 }
 
 export interface IErrorHandling {
@@ -149,7 +151,7 @@ export interface IServerPayload {
     loginData?: ILoginResponse;
     registrationData?: IRegistrationResult;
     checkUsernameResponse?: ICheckUsernameResult;
-    changeName?: IMyAccountChangeNameResponse;
+    myAccount?: IMyAccountResponse;    
 }
 
 export interface IErrorHandlingTextTranslation {
@@ -172,4 +174,6 @@ export interface IErrorHandlingErrors {
     ERROR_GET_NEWS_DATA: IErrorHandlingTextTranslation;
     ERROR_USER_REGISTRATION: IErrorHandlingTextTranslation;
     ERROR_MYACCOUNT_CHANGENAME: IErrorHandlingTextTranslation;
+    ERROR_MYACCOUNT_CHANGEPASSWORD: IErrorHandlingTextTranslation;
+    ERROR_MYACCOUNT_CLOSE_DISABLE: IErrorHandlingTextTranslation;
 }

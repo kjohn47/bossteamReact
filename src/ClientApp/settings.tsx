@@ -21,6 +21,8 @@ export const ERROR_GET_NEWS_LIST = 'ERROR_GET_NEWS_LIST';
 export const ERROR_GET_NEWS_DATA = 'ERROR_GET_NEWS_DATA';
 export const ERROR_USER_REGISTRATION = 'ERROR_USER_REGISTRATION';
 export const ERROR_MYACCOUNT_CHANGENAME = 'ERROR_MYACCOUNT_CHANGENAME';
+export const ERROR_MYACCOUNT_CHANGEPASSWORD = 'ERROR_MYACCOUNT_CHANGEPASSWORD';
+export const ERROR_MYACCOUNT_CLOSE_DISABLE = 'ERROR_MYACCOUNT_CLOSE_DISABLE';
 
 //APP
 export const Show_Error_Detailed = true;////set true to dev, false to prd
@@ -45,7 +47,9 @@ export const LOAD_LOGIN_MENU = 'LOAD_LOGIN_MENU';
 export const LOAD_NEW_COMMENT = 'LOAD_NEW_COMMENT';
 export const LOAD_HOME_NEWS = 'LOAD_HOME_NEWS';
 export const LOAD_REGISTRATION = 'LOAD_REGISTRATION';
-export const LOAD_MYACCOUNT_CHANGENAME = 'LOAD_MYACCOUNT_CHANGENAME';
+export const LOAD_MYACCOUNT = 'LOAD_MYACCOUNT';
+export const LOAD_MYACCOUNT_PASSWORD = 'LOAD_MYACCOUNT_PASSWORD';
+export const LOAD_MYACCOUNT_EMAIL = 'LOAD_MYACCOUNT_EMAIL';
 
 // COOKIE METHODS -- Do not change
 export const currentLanguage = () : string => {
@@ -83,6 +87,14 @@ export const updateCurrentUserNames = ( name: string, surname: string ): void =>
    setCurrentUser( user );
 }
 
+export const updateCurrentUserEnabledAccount = ( enabled: boolean ): void => {
+   let user: IcurrentUser = getCurrentUser();
+   user = {...user,
+      enabled: enabled
+   };
+   setCurrentUser( user );
+}
+
 export const cookieLogout = () : void => {
    cookies.remove(userCookie, { path: pageHome });
 };
@@ -111,6 +123,11 @@ export const REGEX_FIELD: IRegexField = {
    USERNAME: "USERNAME",
    NAME: "NAME",
    EMAIL: "EMAIL"
+}
+
+export function checkEmailRegex( email: string ): boolean {
+   var emailRegex = /^[\.a-zA-Z0-9]+@+[a-zA-Z0-9\.]+\.+[A-Za-z]+$/
+   return emailRegex.test( email );
 }
 
 export function checkRegexText( newText: string, currentText: string, field?: string ) : string

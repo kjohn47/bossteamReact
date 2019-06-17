@@ -101,5 +101,25 @@ export const ERRORS: IErrorHandlingErrors = {
             errorMessage: "An error occurred when changing user name",
             errorTitle: "Error: My Account - Change Name"
         }
+    },
+    ERROR_MYACCOUNT_CHANGEPASSWORD: {
+        PT: {
+            errorMessage: "Ocurreu um erro a alterar a password do utilizador",
+            errorTitle: "Erro: A Minha Conta - Alterar Password"
+        },
+        EN: {
+            errorMessage: "An error occurred when changing user password",
+            errorTitle: "Error: My Account - Change Password"
+        }
+    },
+    ERROR_MYACCOUNT_CLOSE_DISABLE: {
+        PT: {
+            errorTitle: "Erro: A Minha Conta - Fechar ou desactivar conta",
+            errorMessage: "Ocurreu um erro durante o processo de fecho, (des)activação da conta"
+        },
+        EN: {
+            errorTitle: "Error: My Account - Close or disable account",
+            errorMessage: "An error occurred when trying to close / enable / disable the account"
+        }
     }
 }

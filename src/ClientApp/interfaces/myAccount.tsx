@@ -45,7 +45,10 @@ export type IMyAccountChangePasswordViewType = IMyAccountChangePasswordViewProps
 
 export interface IMyAccountChangePasswordViewProps {
     text:IMyAccountChangePasswordViewText;
+    wrongOldPassword: boolean;
+    validOldPassword: boolean;
     loading: boolean;
+    oldPasswordLoading: boolean;
 }
 
 export interface IMyAccountChangePasswordViewStates {
@@ -53,11 +56,11 @@ export interface IMyAccountChangePasswordViewStates {
     updateSuccess:boolean;
     oldPassword: string;
     emptyOldPassword: boolean;
-    wrongOldPassword: boolean;
     newPassword: string;
     emptynewPassword: boolean;
     repeatPassword:string;
     notMatchPassword: boolean;
+    validPasswordRepeat: boolean;
 }
 
 export interface IMyAccountChangePasswordViewMethods {
@@ -90,6 +93,12 @@ export type IMyAccountCloseViewType = IMyAccountCloseViewProps & IMyAccountClose
 export interface IMyAccountCloseViewProps {
     text:IMyAccountCloseViewText;
     userEnabled:boolean;
+    passwordNotMatch:boolean;
+    validPassword: boolean;
+    checkEmail: boolean;
+    validEmail: boolean;
+    passwordLoading: boolean;
+    emailLoading: boolean;
     loading: boolean;
 }
 
@@ -98,19 +107,16 @@ export interface IMyAccountCloseViewStates {
     updateSuccess:boolean;
     password: string;
     emptyPassword: boolean;
-    repeatPassword: string;
-    passwordNotMatch:boolean;
     email:string;
     invalidEmail: boolean;
-    checkEmail: boolean;
+
 }
 
 export interface IMyAccountCloseViewMethods {
     passwordHandle( event:any ): void;
-    repeatPasswordHandle( event:any ): void;
-    repeatPasswordCheck(): void;
+    passwordCheck(): void;
     emailHandle( event:any ): void;
-    checkEmailHandle(): void;
+    emailCheck(): void;
     disableHandle(): void;
     closeHandle(): void;
 }
@@ -118,7 +124,6 @@ export interface IMyAccountCloseViewMethods {
 interface IMyAccountCloseViewText {
     title: string;
     password: string;
-    repeatPassword: string;
     email: string;
     success: string;
     fail: string;
@@ -132,6 +137,8 @@ interface IMyAccountCloseViewText {
     disable: string;
     close: string;
     enable: string;
+    cancel: string;
+    closeModalTitle: string;
 }
 
 //// Close Account
@@ -143,6 +150,7 @@ export interface IMyAccountViewProps {
     changePassword: IMyAccountChangePasswordViewType;
     closeAccount: IMyAccountCloseViewType;
     myAccountText: IMyAccountText;
+    isLoading: boolean;
     changeTabHandle(): void;
 }
 
@@ -181,12 +189,25 @@ export interface IMyAccountLogicProps {
     changeNameSuccess: string;
     changePasswordSuccess: string;
     closeAccountSuccess: string;
-    changeNameLoading: boolean;
+    wrongPassword: boolean;
+    validPassword: boolean;
+    loading: boolean;
+    passwordLoading: boolean;
+    emailLoading: boolean;
+    wrongEmail: boolean;
+    validEmail: boolean;
 }
 
 export interface IMyAccountLogicActions {
     changeName( name: string, surname: string, uuid: string ): Function;
+    checkPassword( password: string, uuid: string, passwordChange: boolean ): Function;
+    changePassword( oldPassword: string, newPassword: string, uuid: string ): Function;
+    checkEmail( email: string, uuid: string ): Function;
+    disableAccount( email: string, password: string, uuid: string ): Function;
+    enableAccount( email: string, password: string, uuid: string ): Function;
+    closeAccount( email: string, password: string, uuid: string ): Function;
     resetMyAccountStatus(): Function;
+    resetMyAccountSuccess(): Function;
 }
 
 export type MyAccountLogicType = IMyAccountLogicProps & IMyAccountLogicActions;
@@ -209,10 +230,16 @@ interface IchangeNameReduxState {
 
 interface IchangePasswordReduxState {
     success: string;
+    wrongOldPassword: boolean;
+    validOldPassword: boolean;
 }
 
 interface IcloseAccountReduxState {
     success: string;
+    wrongPassword: boolean;
+    validPassword: boolean;
+    wrongEmail: boolean;
+    validEmail: boolean;
 }
 
 export interface IMyAccountAction {
@@ -224,6 +251,9 @@ interface IMyAccountActionPayload {
     success?: string;
     login?: ILoginResponse;
     changeName?: IMyAccountChangeNamePayload;
+    changePassword?: IMyAccountPasswordPayload;
+    closeAccount?: IMyAccountPasswordPayload & IMyAccountEmailPayload;
+    enabled?: boolean;
 }
 
 export interface IMyAccountChangeNamePayload {
@@ -231,14 +261,39 @@ export interface IMyAccountChangeNamePayload {
     surname: string;
 }
 
-export interface IMyAccountChangeNameResponse {
+export interface IMyAccountResponse {
     success: string,
     name?: IMyAccountChangeNamePayload;
+    password?: IMyAccountPasswordPayload;
+    email?: IMyAccountEmailPayload;
+    enabled?: boolean;
 }
 
 export interface IchangeNameArg {
     name: string;
     surname: string;
     uuid: string;
+}
+
+export interface IMyAccountEmailPayload {
+    wrongEmail?: boolean;
+    validEmail?: boolean;
+}
+
+export interface IMyAccountPasswordPayload {
+    wrongPassword?: boolean;
+    validPassword?: boolean;
+}
+
+export interface IMyaccountChangePasswordArg {
+    uuid: string;
+    password: string;
+    newPassword?:string;    
+}
+
+export interface IMyaccountCloseArg {
+    uuid: string;
+    email: string;  
+    password?: string;
 }
 //// Reducer

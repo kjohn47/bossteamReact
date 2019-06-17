@@ -22,7 +22,7 @@ class MyAccountView extends React.PureComponent<IMyAccountViewProps, MyAccountVi
       }
     
       toggle(tab: string) {
-        if (this.state.activeTab !== tab) {
+        if ( this.state.activeTab !== tab && !this.props.isLoading ) {
           this.props.changeTabHandle();
           this.setState({
             activeTab: tab

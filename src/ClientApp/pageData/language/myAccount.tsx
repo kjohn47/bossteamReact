@@ -32,7 +32,6 @@ export const TEXT_MY_ACCOUNT: IMyAccountTranslations = {
         closeAccountText: {
             title: "Fechar ou desativar conta de utilizador:",
             password: "Password:",
-            repeatPassword: "Repetir:",
             email: "Email",
             close: "Fechar",
             disable: "Desativar",
@@ -43,9 +42,11 @@ export const TEXT_MY_ACCOUNT: IMyAccountTranslations = {
             emailNotEqual: "O email colocado não coicide com o email do utilizador",
             invalidEmail: "Formato e-mail inválido. 'aaa@bbb.com'",
             passwordNotMatch: "A password colocada não coicide ou está incorreta", 
-            success: "A conta foi desativada com sucesso",
-            fail: "Ocorreu um erro a fechar/desativar a conta",
-            enable: "Activar"
+            success: "A conta foi (des)ativada com sucesso",
+            fail: "Ocorreu um erro a fechar/(des)ativar a conta",
+            enable: "Activar",
+            cancel: "Cancelar",
+            closeModalTitle: "Fechar Conta:"
         }
     },
     EN: {
@@ -79,7 +80,6 @@ export const TEXT_MY_ACCOUNT: IMyAccountTranslations = {
         closeAccountText: {
             title: "Close Account:",
             password: "Password:",
-            repeatPassword: "Repeat:",
             email: "Email:",
             close: "Close",
             disable: "Disable",
@@ -90,9 +90,11 @@ export const TEXT_MY_ACCOUNT: IMyAccountTranslations = {
             emailNotEqual: "The email doesn't match with your user account",
             invalidEmail: "Invalid e-mail format. 'aaa@bbb.com'",
             passwordNotMatch: "The password didn't match or is wrong", 
-            success: "The account was disabled with success",
-            fail: "There was an error during account disabling/closure",
-            enable: "Enable"
+            success: "The account was disabled/enabled with success",
+            fail: "There was an error during account disabling/enabling/closure",
+            enable: "Enable",
+            cancel: "Cancel",
+            closeModalTitle: "Close Account:"
         }
     }
 }
