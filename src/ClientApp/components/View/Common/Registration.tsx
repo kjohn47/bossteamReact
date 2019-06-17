@@ -19,9 +19,9 @@ class RegistrationView extends React.PureComponent<IRegistrationPropsView,{}>
                                 type="text" 
                                 name="registration_name" 
                                 id="registration_name"
-                                invalid = {this.props.nameIsEmpty}
-                                onChange= { (event) => this.props.handleName(event) }
-                                value= {this.props.name}
+                                invalid = { this.props.nameIsEmpty }
+                                onChange= { ( event ) => this.props.handleName( event ) }
+                                value= { this.props.name }
                             />
                             <FormFeedback>
                             { this.props.registrationText.emptyValidation.replace("[FIELD]", this.props.registrationText.name) }
@@ -35,9 +35,9 @@ class RegistrationView extends React.PureComponent<IRegistrationPropsView,{}>
                                 type="text" 
                                 name="registration_surname" 
                                 id="registration_surname"
-                                invalid = {this.props.surnameIsEmpty}
-                                onChange= { (event) => this.props.handleSurname(event) }
-                                value= {this.props.surname}
+                                invalid = { this.props.surnameIsEmpty }
+                                onChange= { ( event ) => this.props.handleSurname( event ) }
+                                value= { this.props.surname }
                             />
                             <FormFeedback>
                             { this.props.registrationText.emptyValidation.replace("[FIELD]", this.props.registrationText.surname) }
@@ -51,9 +51,9 @@ class RegistrationView extends React.PureComponent<IRegistrationPropsView,{}>
                                 type="text" 
                                 name="registration_email" 
                                 id="registration_email"                            
-                                invalid = {this.props.emailIsNotValid}
-                                onChange= { (event) => this.props.handleEmail(event) }
-                                value= {this.props.email}
+                                invalid = { this.props.emailIsNotValid }
+                                onChange= { ( event ) => this.props.handleEmail( event ) }
+                                value= { this.props.email }
                             />
                             <FormFeedback>
                             { this.props.registrationText.invalidEmail }
@@ -68,12 +68,12 @@ class RegistrationView extends React.PureComponent<IRegistrationPropsView,{}>
                                 name="registration_username" 
                                 id="registration_username"
                                 valid = { this.props.validUsername }
-                                invalid = {this.props.usernameIsEmpty || this.props.usernameIsInUse}         
-                                onChange = { (event) => this.props.handleUsername(event) }
+                                invalid = { this.props.usernameIsEmpty || this.props.usernameIsInUse }         
+                                onChange = { ( event ) => this.props.handleUsername( event ) }
                                 onBlur = { () => this.props.checkUsername() }
                                 value= { this.props.username }                   
                             />
-                            { this.props.isUsernameLoading && <Spinner size="sm" color="secondary" className="loginSpinner"/>}                        
+                            { this.props.isUsernameLoading && <Spinner size="sm" color="secondary" className="loginSpinner"/> }                        
                             <FormFeedback>
                             { this.props.usernameIsInUse? 
                                 this.props.registrationText.userInUse 
@@ -89,9 +89,9 @@ class RegistrationView extends React.PureComponent<IRegistrationPropsView,{}>
                                 type="password" 
                                 name="registration_password" 
                                 id="registration_password"
-                                invalid = {this.props.passwordIsEmpty}
-                                onChange= { (event) => this.props.handlePassword(event) }
-                                value= {this.props.password}
+                                invalid = { this.props.passwordIsEmpty }
+                                onChange= { ( event ) => this.props.handlePassword( event ) }
+                                value= { this.props.password }
                             />
                             <FormFeedback>
                             { this.props.registrationText.emptyValidation.replace("[FIELD]", this.props.registrationText.password) }
@@ -99,7 +99,7 @@ class RegistrationView extends React.PureComponent<IRegistrationPropsView,{}>
                         </Col>
                     </FormGroup> 
                     <FormGroup row>
-                    <Col xl={{ size: 11, offset: 1 }} sm={{ size: 10, offset: 2 }}>
+                    <Col xl={ { size: 11, offset: 1 } } sm={ { size: 10, offset: 2 } }>
                         <Button onClick = { () => this.props.handleSubmit() } >{ this.props.registrationText.submit }</Button>
                     </Col>
                     </FormGroup>

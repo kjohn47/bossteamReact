@@ -3,7 +3,7 @@ import { ILogin, ILoginActions, ILoginState, ILoginReduxActions } from '../../..
 import { connect } from 'react-redux';
 import { Istore } from '../../../interfaces/store';
 import { IUserMenu } from '../../../interfaces/menu';
-import { IAppSettings, IappActions } from '../../../interfaces/appSettings';
+import { IAppSettings } from '../../../interfaces/appSettings';
 import { makeLogin, makeLogout, resetLoginStatus } from '../../../store/actions/myAccount';
 import { results, REGEX_FIELD, checkRegexText } from '../../../settings';
 import { IcurrentUser } from '../../../interfaces/currentUser';
@@ -31,8 +31,8 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
                 };
         }
 
-        handleUser(event: any) : void {
-            let newText: string = checkRegexText( event.target.value, this.state.user, REGEX_FIELD.USERNAME );
+        handleUser(event: React.FormEvent<HTMLInputElement>) : void {
+            let newText: string = checkRegexText( event.currentTarget.value, this.state.user, REGEX_FIELD.USERNAME );
             this.setState(
                 {
                     emptyUser: false,
@@ -42,17 +42,17 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
                 });
         }
 
-        handlePassword(event: any) : void {
+        handlePassword(event: React.FormEvent<HTMLInputElement>) : void {
             this.setState(
                 {                    
                     emptyPassword: false,
                     invalidUser: false,
-                    password: event.target.value,
+                    password: event.currentTarget.value,
                     loginAttempt: false
                 });
         }
 
-        handleKeyPress(event: any, focus: string, submit?:boolean) : void {
+        handleKeyPress(event: KeyboardEvent, focus: string, submit?:boolean) : void {
             if(event.key === "Enter"){
                 if(submit)
                 {
@@ -119,10 +119,10 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
 
         render() {
             const loginActions: ILoginActions = {
-                handlePassword: (event: any) => this.handlePassword(event),
-                handleUser: (event: any) => this.handleUser(event),
-                makeLogin: () => this.makeLogin(),   
-                handleKeyPress: (event, focus, submit) => this.handleKeyPress(event, focus, submit),
+                handlePassword: this.handlePassword,
+                handleUser: this.handleUser,
+                makeLogin: this.makeLogin,   
+                handleKeyPress: this.handleKeyPress,
                 state: {
                     user: this.state.user,
                     password: this.state.password,

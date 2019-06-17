@@ -8,8 +8,8 @@ import {
     IMyAccountLogicActions, 
     IMyAccountLogicState 
     } from '../../../interfaces/myAccount';
-import { checkRegexText, REGEX_FIELD, results } from '../../../settings';
-import { resetMyAccountStatus, changeName } from '../../../store/actions/myAccount';
+import { checkRegexText, REGEX_FIELD, results, checkEmailRegex } from '../../../settings';
+import { resetMyAccountStatus, changeName, checkPassword, changePassword, checkEmail, resetMyAccountSuccess, disableAccount, enableAccount, closeAccount } from '../../../store/actions/myAccount';
 
 function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewProps> ): React.ComponentType
 {
@@ -34,18 +34,15 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                     emptyOldPassword: false,
                     emptynewPassword: false,
                     notMatchPassword: false,
-                    wrongOldPassword: false,
                     updateFail: false,
-                    updateSuccess: false
+                    updateSuccess: false,
+                    validPasswordRepeat: false
                 },
                 closeAccount: {
                     password: "",
-                    repeatPassword: "",
                     email: "",
                     emptyPassword: false,
                     invalidEmail: false,
-                    checkEmail: false,
-                    passwordNotMatch: false,
                     updateFail: false,
                     updateSuccess: false
                 }
@@ -55,11 +52,26 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
             this.changeName_nameHandle = this.changeName_nameHandle.bind( this );
             this.changeName_surnameHandle = this.changeName_surnameHandle.bind( this );
             this.changeName_submitHandle = this.changeName_submitHandle.bind( this );
+            this.changePassword_oldPasswordHandle = this.changePassword_oldPasswordHandle.bind( this );
+            this.changePassword_newPasswordHandle = this.changePassword_newPasswordHandle.bind( this );
+            this.changePassword_repeatPasswordHandle = this.changePassword_repeatPasswordHandle.bind( this );
+            this.changePassword_oldPasswordCheck = this.changePassword_oldPasswordCheck.bind( this );
+            this.changePassword_repeatPasswordCheck = this.changePassword_repeatPasswordCheck.bind( this );
+            this.changePassword_submitHandle = this.changePassword_submitHandle.bind( this );
+            this.closeAccount_CheckPassword = this.closeAccount_CheckPassword.bind( this );
+            this.closeAccount_passwordHandle = this.closeAccount_passwordHandle.bind( this );
+            this.closeAccount_emailHandle = this.closeAccount_emailHandle.bind( this );
+            this.closeAccount_CheckEmail = this.closeAccount_CheckEmail.bind( this );
+            this.closeAccount_checkValues = this.closeAccount_checkValues.bind( this );
+            this.closeAccount_disableHandle = this.closeAccount_disableHandle.bind( this );
+            this.closeAccount_closeHandle = this.closeAccount_closeHandle.bind( this );
         }
 
         //// MyAccount methods
         changeTabHandle() {
             this.setState({...this._defaultState});
+            this.props.resetMyAccountStatus();
+            this.props.resetMyAccountSuccess();
         }
 
         componentDidUpdate( prevProps: MyAccountLogicType ) {
@@ -72,6 +84,13 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                             updateSuccess: true
                         }
                     });
+                    this._defaultState = {...this._defaultState,
+                        changeName: {...this._defaultState.changeName,
+                            name: this.props.currentUser.name,
+                            surname: this.props.currentUser.surname
+                        }
+                    }
+                    this.props.resetMyAccountStatus();
                 }
                 else if( this.props.changeNameSuccess === results.failure ) {
                     this.setState({
@@ -79,8 +98,8 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                             updateFail: true
                         }
                     });
-                }
-                this.props.resetMyAccountStatus();
+                } 
+                this.props.resetMyAccountSuccess();               
             }
             //// Change name
 
@@ -90,9 +109,14 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                 if( this.props.changePasswordSuccess === results.success ) {
                     this.setState({
                         changePassword: { ...this.state.changePassword,
-                            updateSuccess: true
+                            updateSuccess: true,
+                            validPasswordRepeat: false,
+                            oldPassword: '',
+                            newPassword: '',
+                            repeatPassword: ''
                         }
                     });
+                    this.props.resetMyAccountStatus();
                 }
                 else if( this.props.changePasswordSuccess === results.failure ) {
                     this.setState({
@@ -101,7 +125,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                         }
                     });
                 }
-                this.props.resetMyAccountStatus();
+                this.props.resetMyAccountSuccess();                
             }
             //// Change password
 
@@ -111,9 +135,15 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                 if( this.props.closeAccountSuccess === results.success ) {
                     this.setState({
                         closeAccount: { ...this.state.closeAccount,
-                            updateSuccess: true
+                            updateSuccess: true,
+                            email: "",
+                            password: "",
+                            emptyPassword: false,
+                            invalidEmail: false,
+                            updateFail: false
                         }
                     });
+                    this.props.resetMyAccountStatus();
                 }
                 else if( this.props.closeAccountSuccess === results.failure ) {
                     this.setState({
@@ -122,15 +152,15 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                         }
                     });
                 }
-                this.props.resetMyAccountStatus();
+                this.props.resetMyAccountSuccess();
             }
             //// Close Account
         }
         //// MyAccount methods
 
         //// Change name methods
-        changeName_nameHandle( event: any ): void {
-            let newText = checkRegexText( event.target.value, this.state.changeName.name, REGEX_FIELD.NAME );
+        changeName_nameHandle( event: React.FormEvent<HTMLInputElement> ): void {
+            let newText = checkRegexText( event.currentTarget.value, this.state.changeName.name, REGEX_FIELD.NAME );
             this.setState({
                 changeName: { ...this.state.changeName,
                     name: newText,
@@ -139,8 +169,8 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
             });
         }
 
-        changeName_surnameHandle( event: any ): void {
-            let newText = checkRegexText( event.target.value, this.state.changeName.surname, REGEX_FIELD.NAME );
+        changeName_surnameHandle( event: React.FormEvent<HTMLInputElement> ): void {
+            let newText = checkRegexText( event.currentTarget.value, this.state.changeName.surname, REGEX_FIELD.NAME );
             this.setState({
                 changeName: { ...this.state.changeName,
                     surname: newText,
@@ -185,7 +215,209 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
         }
         //// Change name methods
 
-        render(){            
+        //// Change password methods
+        changePassword_oldPasswordHandle( event: React.FormEvent<HTMLInputElement> ): void {
+            this.setState({
+                changePassword: { ...this.state.changePassword,
+                    oldPassword: event.currentTarget.value,
+                    emptyOldPassword: false
+                }
+            })
+        }
+
+        changePassword_newPasswordHandle( event: React.FormEvent<HTMLInputElement> ): void {
+            this.setState({
+                changePassword: { ...this.state.changePassword,
+                    newPassword: event.currentTarget.value,
+                    repeatPassword: '',
+                    emptynewPassword: false
+                }
+            })
+        }
+
+        changePassword_repeatPasswordHandle( event: React.FormEvent<HTMLInputElement> ): void {
+            this.setState({
+                changePassword: { ...this.state.changePassword,
+                    repeatPassword: event.currentTarget.value,
+                    notMatchPassword: false
+                }
+            });
+        }
+
+        changePassword_oldPasswordCheck(): void { 
+            if( this.state.changePassword.oldPassword.trim() !== '' ) {
+                this.props.checkPassword( this.state.changePassword.oldPassword, this.props.currentUser.uuid, true );
+            }
+        }
+
+        changePassword_repeatPasswordCheck(): void {            
+            if( this.state.changePassword.newPassword.trim() !== '' && this.state.changePassword.repeatPassword.trim() !== '' ) {            
+                if( this.state.changePassword.newPassword === this.state.changePassword.repeatPassword ) {
+                    this.setState({
+                        changePassword: { ...this.state.changePassword,
+                            notMatchPassword: false,
+                            validPasswordRepeat: true
+                        }
+                    });
+                }
+                else {
+                    this.setState({
+                        changePassword: { ...this.state.changePassword,
+                            notMatchPassword: true,
+                            validPasswordRepeat: false
+                        }
+                    });
+                }
+            }
+            else {
+                this.setState({
+                    changePassword: { ...this.state.changePassword,
+                        notMatchPassword: false,
+                        validPasswordRepeat: false
+                    }
+                });
+            }
+        }
+
+        changePassword_submitHandle(): void {
+            let success: boolean = this.state.changePassword.validPasswordRepeat && this.props.validPassword;
+            let emptyOldPw: boolean = false;
+            let emptyNewPw: boolean = false;
+            let pwRepeat: boolean = false;
+            this.setState({
+                changePassword: { ...this.state.changePassword,
+                    updateFail: false,
+                    updateSuccess: false
+                 }
+            });
+
+            if( this.state.changePassword.oldPassword.trim() === '' ) {
+                emptyOldPw = true;
+                success = false;
+            }
+            
+            if( this.state.changePassword.newPassword.trim() === '' ) {
+                emptyNewPw = true;
+                success = false;
+            }
+
+            if( this.state.changePassword.newPassword !== this.state.changePassword.repeatPassword ) {
+                success = false;
+                pwRepeat = true;
+            }
+
+            if( success ) {
+                this.props.changePassword( this.state.changePassword.oldPassword, this.state.changePassword.newPassword, this.props.currentUser.uuid );
+            }
+            else {
+                this.setState({
+                    changePassword: { ...this.state.changePassword,
+                        updateSuccess: false,
+                        updateFail: true,
+                        emptynewPassword: emptyNewPw,
+                        emptyOldPassword: emptyOldPw,
+                        notMatchPassword: pwRepeat
+                    }
+                });
+            }
+        }
+        //// Change password methods
+
+        //// Close Account Methods
+        closeAccount_checkValues(): boolean {
+            let success = this.props.validPassword && this.props.validEmail;
+            let emptyPW = this.state.closeAccount.emptyPassword;
+            let invalidMail = this.state.closeAccount.invalidEmail;
+            this.setState({
+                closeAccount: { ...this.state.closeAccount,
+                    updateFail: false,
+                    updateSuccess: false
+                }
+            });
+
+            if( this.state.closeAccount.password.trim() === '' ) {
+                success = false;
+                emptyPW = true;
+            }
+
+            if( this.state.closeAccount.email.trim() === '' || !checkEmailRegex( this.state.closeAccount.email ) ) {
+                success = false;
+                invalidMail = true;
+            }
+            
+            if( !success ) {
+                this.setState({
+                    closeAccount: { ...this.state.closeAccount,
+                        emptyPassword: emptyPW,
+                        invalidEmail: invalidMail,
+                        updateFail: true,
+                        updateSuccess: false
+                    }
+                });
+            }
+
+            return success;
+        }
+
+        closeAccount_passwordHandle( event: React.FormEvent<HTMLInputElement> ): void {
+            this.setState({
+                closeAccount: { ...this.state.closeAccount,
+                    password: event.currentTarget.value,
+                    emptyPassword: false                    
+                }
+            });
+        }
+
+        closeAccount_emailHandle( event: React.FormEvent<HTMLInputElement> ): void {
+            let newText: string = checkRegexText( event.currentTarget.value, this.state.closeAccount.email, REGEX_FIELD.EMAIL );
+            this.setState({
+                closeAccount: { ...this.state.closeAccount,
+                    email: newText,
+                    invalidEmail: false
+                }
+            });
+        }
+
+        closeAccount_CheckPassword(): void {
+            if( this.state.closeAccount.password.trim() !== '' ) {
+                this.props.checkPassword( this.state.closeAccount.password, this.props.currentUser.uuid, false );
+            }
+        }
+
+        closeAccount_CheckEmail(): void {
+            if( this.state.closeAccount.email.trim() !== '' ) {
+                if( checkEmailRegex( this.state.closeAccount.email ) ) {
+                    this.props.checkEmail( this.state.closeAccount.email, this.props.currentUser.uuid );
+                }
+                else {
+                    this.setState({
+                        closeAccount: { ...this.state.closeAccount,
+                            invalidEmail: true
+                        }
+                    });
+                }                
+            }
+        }
+
+        closeAccount_disableHandle(): void {
+            if( this.closeAccount_checkValues() ) {
+                if( this.props.currentUser.enabled ) {
+                    this.props.disableAccount( this.state.closeAccount.email, this.state.closeAccount.password, this.props.currentUser.uuid );
+                }
+                else {
+                    this.props.enableAccount( this.state.closeAccount.email, this.state.closeAccount.password, this.props.currentUser.uuid );
+                }
+            }
+        }
+
+        closeAccount_closeHandle(): void {
+            if( this.closeAccount_checkValues() ) {
+                this.props.closeAccount( this.state.closeAccount.email, this.state.closeAccount.password, this.props.currentUser.uuid );
+            }
+        }
+        //// Close Account Methods
+
+        render(){
             return(     
                  <WrappedComponent 
                     changeName = {{
@@ -200,7 +432,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                         nameHandle: this.changeName_nameHandle,
                         surnameHandle: this.changeName_surnameHandle,
                         submitHandle: this.changeName_submitHandle,
-                        loading: this.props.changeNameLoading
+                        loading: this.props.loading
                     }}
                     changePassword = {{
                         text: this.props.myAccountText.changePasswordText,
@@ -210,40 +442,46 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
                         emptyOldPassword: this.state.changePassword.emptyOldPassword,
                         emptynewPassword: this.state.changePassword.emptynewPassword,
                         notMatchPassword: this.state.changePassword.notMatchPassword,
-                        wrongOldPassword: this.state.changePassword.wrongOldPassword,
+                        validPasswordRepeat: this.state.changePassword.validPasswordRepeat,
+                        oldPasswordLoading: this.props.passwordLoading,
+                        wrongOldPassword: this.props.wrongPassword,
+                        validOldPassword: this.props.validPassword,
                         updateSuccess: this.state.changePassword.updateSuccess,
                         updateFail: this.state.changePassword.updateFail,
-                        loading: false,
-                        oldPasswordHandle: () => {},
-                        oldPasswordCheck: () => {},
-                        newPasswordHandle: () => {},
-                        repeatPasswordHandle: () => {},
-                        repeatPasswordCheck: () => {},
-                        submitHandle: () => {}
+                        loading: this.props.loading,
+                        oldPasswordHandle: this.changePassword_oldPasswordHandle,
+                        oldPasswordCheck: this.changePassword_oldPasswordCheck,
+                        newPasswordHandle: this.changePassword_newPasswordHandle,
+                        repeatPasswordHandle: this.changePassword_repeatPasswordHandle,
+                        repeatPasswordCheck: this.changePassword_repeatPasswordCheck,
+                        submitHandle: this.changePassword_submitHandle
                     }}
                     closeAccount = {{
                         text: this.props.myAccountText.closeAccountText,
                         userEnabled: this.props.currentUser.enabled,
                         password: this.state.closeAccount.password,
-                        repeatPassword: this.state.closeAccount.repeatPassword,
                         email: this.state.closeAccount.email,
                         emptyPassword: this.state.closeAccount.emptyPassword,
-                        passwordNotMatch: this.state.closeAccount.passwordNotMatch,
-                        checkEmail: this.state.closeAccount.checkEmail,
+                        passwordNotMatch: this.props.wrongPassword,
+                        passwordLoading: this.props.passwordLoading,
+                        emailLoading: this.props.emailLoading,
+                        checkEmail: this.props.wrongEmail,
+                        validPassword: this.props.validPassword,
+                        validEmail: this.props.validEmail,
                         invalidEmail: this.state.closeAccount.invalidEmail,
                         updateSuccess: this.state.closeAccount.updateSuccess,
                         updateFail: this.state.closeAccount.updateFail,
-                        loading: false,
-                        passwordHandle: () => {},
-                        repeatPasswordHandle: () => {},
-                        repeatPasswordCheck: () => {},
-                        emailHandle: () => {},
-                        closeHandle: () => {},
-                        disableHandle: () => {},
-                        checkEmailHandle: () => {}
+                        loading: this.props.loading,
+                        passwordHandle: this.closeAccount_passwordHandle,
+                        passwordCheck: this.closeAccount_CheckPassword,
+                        emailHandle: this.closeAccount_emailHandle,
+                        closeHandle: this.closeAccount_closeHandle,
+                        disableHandle: this.closeAccount_disableHandle,
+                        emailCheck: this.closeAccount_CheckEmail
                     }}
                     myAccountText = { this.props.myAccountText.myAccountText }
                     changeTabHandle = { this.changeTabHandle }
+                    isLoading = { this.props.loading || this.props.emailLoading || this.props.passwordLoading }
                  />
             );
         }
@@ -251,7 +489,14 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
 
     const mapDispatchToProps = ( dispatch: Function ) : IMyAccountLogicActions => ({
         changeName: ( name: string, surname: string, uuid: string ) => dispatch( changeName( name, surname, uuid ) ),
-        resetMyAccountStatus: () => dispatch( resetMyAccountStatus() )
+        resetMyAccountStatus: () => dispatch( resetMyAccountStatus() ),
+        resetMyAccountSuccess: () => dispatch( resetMyAccountSuccess() ),
+        checkPassword: ( password: string, uuid: string, passwordChange: boolean ) => dispatch( checkPassword( password, uuid, passwordChange ) ),
+        changePassword: ( oldPassword: string, newPassword: string, uuid: string ) => dispatch( changePassword( oldPassword, newPassword, uuid ) ),
+        checkEmail: ( email: string, uuid: string ) => dispatch( checkEmail( email, uuid ) ),
+        disableAccount: ( email: string, password: string, uuid: string ) => dispatch( disableAccount( email, password, uuid ) ),
+        enableAccount: ( email: string, password: string, uuid: string ) => dispatch( enableAccount( email, password, uuid ) ),
+        closeAccount: ( email: string, password: string, uuid: string ) => dispatch( closeAccount( email, password, uuid ) )
     });
 
     const mapStateToProps = ( state: Istore ) : IMyAccountLogicProps => {
@@ -261,7 +506,13 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
             changeNameSuccess: state.myAccount.changeName.success,
             changePasswordSuccess: state.myAccount.changePassword.success,
             closeAccountSuccess: state.myAccount.closeAccount.success,
-            changeNameLoading: state.appSettings.fetchData.loading.localLoading.loadMyAccountChangeName
+            loading: state.appSettings.fetchData.loading.localLoading.loadMyAccount,
+            passwordLoading: state.appSettings.fetchData.loading.localLoading.loadMyAccountPassword,
+            wrongPassword: state.myAccount.changePassword.wrongOldPassword || state.myAccount.closeAccount.wrongPassword,
+            validPassword: state.myAccount.changePassword.validOldPassword || state.myAccount.closeAccount.validPassword,
+            wrongEmail: state.myAccount.closeAccount.wrongEmail,
+            validEmail: state.myAccount.closeAccount.validEmail,
+            emailLoading: state.appSettings.fetchData.loading.localLoading.loadMyAccountEmail
         }
     };
 
