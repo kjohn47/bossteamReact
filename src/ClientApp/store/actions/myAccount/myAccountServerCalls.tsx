@@ -317,23 +317,41 @@ export async function closeAccountServerCall( closeAccountArg: IMyaccountCloseAr
             hasError: false,
             payload: {
                 myAccount: {
-                    success: results.success,
+                    success: results.failure,
                     email: {
-                        validEmail: true,
+                        validEmail: false,
                         wrongEmail: false
                     },
                     password: {
-                        validPassword: true,
-                        wrongPassword: false
+                        validPassword: false,
+                        wrongPassword: true
                     }
                 }
             }
         };
                        
-        return new Promise( (resolve: Function) => { 
-            setTimeout( () => {
-                resolve( serverReturn )
-                }, 800 )
+        return axios.get( restServer + "Users?uuid=" + closeAccountArg.uuid + "&password=" + sha1( closeAccountArg.password ) )
+        .then( ( response ) => {
+            let userFromServerArray: IServerResponse[] = response.data;
+            if( userFromServerArray === null || userFromServerArray === undefined || userFromServerArray.length <= 0 ) {
+                return serverReturn;
+            }
+
+            let newUserData: IServerResponse = userFromServerArray[0];
+            serverReturn.payload.myAccount.password.wrongPassword = false;
+            serverReturn.payload.myAccount.password.validPassword = true;
+
+            if( newUserData.payload.loginData.user.email !== closeAccountArg.email ) {
+                serverReturn.payload.myAccount.email.wrongEmail = true;
+                return serverReturn;
+            }
+            else {
+                serverReturn.payload.myAccount.email.validEmail = true;
+            }
+            return axios.delete( restServer + "Users/" + newUserData.id ).then( ( response ) => {
+                serverReturn.payload.myAccount.success = results.success;
+                return serverReturn;
+            })
         });
-    })
+    });
 }

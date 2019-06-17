@@ -14,6 +14,7 @@ export default class CloseAccount extends React.PureComponent<IMyAccountCloseVie
     
         this.toggle = this.toggle.bind(this);
         this.modalToggle = this.modalToggle.bind( this );
+        this.closeAccount = this.closeAccount.bind( this );
         this.state = {
             toolTipCloseAccount: false,
             toolTipDisableAccount: false,
@@ -42,6 +43,11 @@ export default class CloseAccount extends React.PureComponent<IMyAccountCloseVie
           }));
     }
 
+    closeAccount(): void {
+        this.modalToggle();
+        this.props.closeHandle();
+    }
+
     render() {
         return (
             <Form>                    
@@ -58,8 +64,8 @@ export default class CloseAccount extends React.PureComponent<IMyAccountCloseVie
                             { this.props.text.closeTooltip }
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="primary" onClick={ () => this.props.closeHandle() }>{ this.props.text.close }</Button>{' '}
-                            <Button color="secondary" onClick={this.modalToggle}>{ this.props.text.cancel }</Button>
+                            <Button color="primary" onClick={ this.closeAccount }>{ this.props.text.close }</Button>{' '}
+                            <Button color="secondary" onClick={ this.modalToggle }>{ this.props.text.cancel }</Button>
                         </ModalFooter>
                     </Modal>
                     <FormGroup row>
