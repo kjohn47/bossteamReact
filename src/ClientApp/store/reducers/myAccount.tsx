@@ -1,6 +1,19 @@
 import { IMyAccountReduxState, IMyAccountAction, IMyAccountChangeNamePayload } from "../../interfaces/myAccount";
 import { results, checkLogin, getCurrentUser } from "../../settings";
-import { MAKE_LOGOUT, MAKE_LOGIN, RESET_LOGIN_STATUS, RESET_MYACCOUNT_STATUS, CHANGE_MYACCOUNT_NAME, MYACCOUNT_CHECK_OLD_PASSWORD, MYACCOUNT_CHANGE_PASSWORD, MYACCOUNT_CHECK_PASSWORD, MYACCOUNT_CHECK_EMAIL, RESET_MYACCOUNT_SUCCSESS } from "../actionTypes";
+import { 
+    MAKE_LOGOUT,
+    MAKE_LOGIN,
+    RESET_LOGIN_STATUS,
+    RESET_MYACCOUNT_STATUS,
+    CHANGE_MYACCOUNT_NAME,
+    MYACCOUNT_CHECK_OLD_PASSWORD,
+    MYACCOUNT_CHANGE_PASSWORD,
+    MYACCOUNT_CHECK_PASSWORD, 
+    MYACCOUNT_CHECK_EMAIL,
+    RESET_MYACCOUNT_SUCCSESS,
+    MYACCOUNT_CLOSE_ACCOUNT,
+    MYACCOUNT_ENABLE_ACCOUNT
+} from "../actionTypes";
 
 //// -- Default myAccount state
 const defaultState: IMyAccountReduxState = {
@@ -30,7 +43,7 @@ export function myAccount( state:IMyAccountReduxState = defaultState, action:IMy
 
     switch (action.type) {
         
-        case MAKE_LOGOUT: {
+        case MAKE_LOGOUT: {            
             return{...state,
                 isLogged: false,
                 loggedUser: null
@@ -140,6 +153,26 @@ export function myAccount( state:IMyAccountReduxState = defaultState, action:IMy
                     validEmail: action.payload.closeAccount.validEmail
                 }
             }
+        }
+
+        case MYACCOUNT_ENABLE_ACCOUNT: {
+            return {...state,
+                loggedUser: { ...state.loggedUser,
+                    enabled: action.payload.enabled
+                }
+            }
+        }
+
+        case MYACCOUNT_CLOSE_ACCOUNT: {
+            return {...state,
+                closeAccount: {
+                    success: action.payload.success,
+                    validEmail: action.payload.closeAccount.validEmail,
+                    validPassword: action.payload.closeAccount.validPassword,
+                    wrongEmail: action.payload.closeAccount.wrongEmail,
+                    wrongPassword: action.payload.closeAccount.wrongPassword
+                }
+            };
         }
 
         default: 

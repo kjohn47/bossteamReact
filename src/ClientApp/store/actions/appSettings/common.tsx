@@ -32,13 +32,17 @@ export function commonServerAction( dispatch: Function,
         resolve( serverData )
     }).then( ( result:IServerResponse ) => { 
         runBeforeSuccess !== null && runBeforeSuccess( result.payload, serverCallArg, successCallArg, dispatch );
-        dispatch( successCall( result.payload, successCallArg ) )
+        return result;
+    }).then( ( result:IServerResponse ) => { 
+        dispatch( successCall( result.payload, successCallArg ) );
+        return result;
+    }).then( ( result:IServerResponse ) => { 
+        runAfterFinish !== null && runAfterFinish( result.payload, serverCallArg, successCallArg, dispatch );
     }).catch( ( err: IErrorHandling ) => {
         dispatch( serverCommunicationError( { ...err } ) )
     }).finally ( () => {                
-        dispatch(endServerCommunication( isLocalLoad, localLoad ) );        
-        runAfterFinish !== null && runAfterFinish( serverCallArg, successCallArg, dispatch );
-    } )    
+        dispatch(endServerCommunication( isLocalLoad, localLoad ) );                
+    } )
 }
 
 export async function serverResolve( serverCall: Function, errorCode: string = ERROR_GENERIC ) : Promise<any>

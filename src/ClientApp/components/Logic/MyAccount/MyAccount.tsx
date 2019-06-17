@@ -9,7 +9,7 @@ import {
     IMyAccountLogicState 
     } from '../../../interfaces/myAccount';
 import { checkRegexText, REGEX_FIELD, results, checkEmailRegex } from '../../../settings';
-import { resetMyAccountStatus, changeName, checkPassword, changePassword, checkEmail, resetMyAccountSuccess } from '../../../store/actions/myAccount';
+import { resetMyAccountStatus, changeName, checkPassword, changePassword, checkEmail, resetMyAccountSuccess, disableAccount, enableAccount, closeAccount } from '../../../store/actions/myAccount';
 
 function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewProps> ): React.ComponentType
 {
@@ -220,8 +220,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
             this.setState({
                 changePassword: { ...this.state.changePassword,
                     oldPassword: event.currentTarget.value,
-                    emptyOldPassword: false,
-                    wrongOldPassword: false
+                    emptyOldPassword: false
                 }
             })
         }
@@ -418,7 +417,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
         }
         //// Close Account Methods
 
-        render(){            
+        render(){
             return(     
                  <WrappedComponent 
                     changeName = {{
@@ -495,9 +494,9 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
         checkPassword: ( password: string, uuid: string, passwordChange: boolean ) => dispatch( checkPassword( password, uuid, passwordChange ) ),
         changePassword: ( oldPassword: string, newPassword: string, uuid: string ) => dispatch( changePassword( oldPassword, newPassword, uuid ) ),
         checkEmail: ( email: string, uuid: string ) => dispatch( checkEmail( email, uuid ) ),
-        disableAccount: ( email: string, password: string, uuid: string ) => dispatch( ()=>{} ),
-        enableAccount: ( email: string, password: string, uuid: string ) => dispatch( ()=>{} ),
-        closeAccount: ( email: string, password: string, uuid: string ) => dispatch( ()=>{} )
+        disableAccount: ( email: string, password: string, uuid: string ) => dispatch( disableAccount( email, password, uuid ) ),
+        enableAccount: ( email: string, password: string, uuid: string ) => dispatch( enableAccount( email, password, uuid ) ),
+        closeAccount: ( email: string, password: string, uuid: string ) => dispatch( closeAccount( email, password, uuid ) )
     });
 
     const mapStateToProps = ( state: Istore ) : IMyAccountLogicProps => {

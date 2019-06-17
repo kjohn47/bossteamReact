@@ -137,6 +137,8 @@ interface IMyAccountCloseViewText {
     disable: string;
     close: string;
     enable: string;
+    cancel: string;
+    closeModalTitle: string;
 }
 
 //// Close Account
@@ -251,6 +253,7 @@ interface IMyAccountActionPayload {
     changeName?: IMyAccountChangeNamePayload;
     changePassword?: IMyAccountPasswordPayload;
     closeAccount?: IMyAccountPasswordPayload & IMyAccountEmailPayload;
+    enabled?: boolean;
 }
 
 export interface IMyAccountChangeNamePayload {
@@ -263,6 +266,7 @@ export interface IMyAccountResponse {
     name?: IMyAccountChangeNamePayload;
     password?: IMyAccountPasswordPayload;
     email?: IMyAccountEmailPayload;
+    enabled?: boolean;
 }
 
 export interface IchangeNameArg {

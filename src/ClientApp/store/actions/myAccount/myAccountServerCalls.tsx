@@ -207,3 +207,133 @@ export async function checkEmailServerCall( checkEmailArg: IMyaccountCloseArg ):
         }); 
     } );
 }
+
+export async function disableAccountServerCall( disableAccountArg: IMyaccountCloseArg ) : Promise<any>{
+    return await serverResolve( () =>
+    {
+        let serverReturn: IServerResponse = {
+            hasError: false,
+            payload: {
+                myAccount: {
+                    success: results.failure,
+                    email: {
+                        validEmail: false,
+                        wrongEmail: false
+                    },
+                    password: {
+                        validPassword: false,
+                        wrongPassword: true
+                    },
+                    enabled: false
+                }
+            }
+        };
+                       
+        return axios.get( restServer + "Users?uuid=" + disableAccountArg.uuid + "&password=" + sha1( disableAccountArg.password ) )
+        .then( ( response ) => {
+            let userFromServerArray: IServerResponse[] = response.data;
+            if( userFromServerArray === null || userFromServerArray === undefined || userFromServerArray.length <= 0 ) {
+                return serverReturn;
+            }
+
+            let newUserData: IServerResponse = userFromServerArray[0];
+            serverReturn.payload.myAccount.password.wrongPassword = false;
+            serverReturn.payload.myAccount.password.validPassword = true;
+
+            if( newUserData.payload.loginData.user.email !== disableAccountArg.email ) {
+                serverReturn.payload.myAccount.email.wrongEmail = true;
+                return serverReturn;
+            }
+            else {
+                serverReturn.payload.myAccount.email.validEmail = true;
+            }
+
+            newUserData.payload.loginData.user.enabled = false;
+
+            return axios.put( restServer + "Users/" + newUserData.id, {...newUserData} )
+            .then ( () => {
+                    serverReturn.payload.myAccount.success = results.success;
+                    return serverReturn;
+            })
+        });
+    })
+}
+
+export async function enableAccountServerCall( enableAccountArg: IMyaccountCloseArg ) : Promise<any>{
+    return await serverResolve( () =>
+    {
+        let serverReturn: IServerResponse = {
+            hasError: false,
+            payload: {
+                myAccount: {
+                    success: results.failure,
+                    email: {
+                        validEmail: false,
+                        wrongEmail: false
+                    },
+                    password: {
+                        validPassword: false,
+                        wrongPassword: true
+                    },
+                    enabled: true
+                }
+            }
+        };
+                       
+        return axios.get( restServer + "Users?uuid=" + enableAccountArg.uuid + "&password=" + sha1( enableAccountArg.password ) )
+        .then( ( response ) => {
+            let userFromServerArray: IServerResponse[] = response.data;
+            if( userFromServerArray === null || userFromServerArray === undefined || userFromServerArray.length <= 0 ) {
+                return serverReturn;
+            }
+
+            let newUserData: IServerResponse = userFromServerArray[0];
+            serverReturn.payload.myAccount.password.wrongPassword = false;
+            serverReturn.payload.myAccount.password.validPassword = true;
+
+            if( newUserData.payload.loginData.user.email !== enableAccountArg.email ) {
+                serverReturn.payload.myAccount.email.wrongEmail = true;
+                return serverReturn;
+            }
+            else {
+                serverReturn.payload.myAccount.email.validEmail = true;
+            }
+
+            newUserData.payload.loginData.user.enabled = true;
+
+            return axios.put( restServer + "Users/" + newUserData.id, {...newUserData} )
+            .then ( () => {
+                    serverReturn.payload.myAccount.success = results.success;
+                    return serverReturn;
+            })
+        });
+    })
+}
+
+export async function closeAccountServerCall( closeAccountArg: IMyaccountCloseArg ) : Promise<any>{
+    return await serverResolve( () =>
+    {
+        let serverReturn: IServerResponse = {
+            hasError: false,
+            payload: {
+                myAccount: {
+                    success: results.success,
+                    email: {
+                        validEmail: true,
+                        wrongEmail: false
+                    },
+                    password: {
+                        validPassword: true,
+                        wrongPassword: false
+                    }
+                }
+            }
+        };
+                       
+        return new Promise( (resolve: Function) => { 
+            setTimeout( () => {
+                resolve( serverReturn )
+                }, 800 )
+        });
+    })
+}

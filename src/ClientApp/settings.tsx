@@ -86,6 +86,14 @@ export const updateCurrentUserNames = ( name: string, surname: string ): void =>
    setCurrentUser( user );
 }
 
+export const updateCurrentUserEnabledAccount = ( enabled: boolean ): void => {
+   let user: IcurrentUser = getCurrentUser();
+   user = {...user,
+      enabled: enabled
+   };
+   setCurrentUser( user );
+}
+
 export const cookieLogout = () : void => {
    cookies.remove(userCookie, { path: pageHome });
 };

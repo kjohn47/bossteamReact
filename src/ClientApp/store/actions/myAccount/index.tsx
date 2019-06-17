@@ -1,9 +1,56 @@
 import { commonServerAction } from "../appSettings/common";
-import { makeLoginOnServer, makeLogoutOnServer, changeNameServerCall, checkPasswordServerCall, changePasswordServerCall, checkEmailServerCall } from "./myAccountServerCalls";
-import { LOAD_LOGIN_MENU, setCurrentUser, cookieLogout, pageHome, newsRoute, viewsNewsRoute, updateCurrentUserNames, LOAD_MYACCOUNT, LOAD_MYACCOUNT_PASSWORD, LOAD_MYACCOUNT_EMAIL } from "../../../settings";
+
+import { 
+    makeLoginOnServer,
+    makeLogoutOnServer,
+    changeNameServerCall,
+    checkPasswordServerCall,
+    changePasswordServerCall,
+    checkEmailServerCall,
+    closeAccountServerCall,
+    enableAccountServerCall,
+    disableAccountServerCall
+    } from "./myAccountServerCalls";
+
+import { 
+    LOAD_LOGIN_MENU,
+    setCurrentUser,
+    cookieLogout,
+    pageHome,
+    newsRoute,
+    viewsNewsRoute,
+    updateCurrentUserNames,
+    LOAD_MYACCOUNT,
+    LOAD_MYACCOUNT_PASSWORD,
+    LOAD_MYACCOUNT_EMAIL,
+    results,
+    updateCurrentUserEnabledAccount
+    } from "../../../settings";
+    
 import { IServerPayload } from "../../../interfaces/common";
-import { MAKE_LOGIN, MAKE_LOGOUT, RESET_LOGIN_STATUS, RESET_MYACCOUNT_STATUS, CHANGE_MYACCOUNT_NAME, MYACCOUNT_CHECK_OLD_PASSWORD, MYACCOUNT_CHANGE_PASSWORD, MYACCOUNT_CHECK_PASSWORD, MYACCOUNT_CHECK_EMAIL, RESET_MYACCOUNT_SUCCSESS, MYACCOUNT_DISABLE_ACCOUNT, MYACCOUNT_ENABLE_ACCOUNT, MYACCOUNT_CLOSE_ACCOUNT } from "../../actionTypes";
-import { IMyAccountAction, IchangeNameArg, IMyaccountChangePasswordArg, IMyaccountCloseArg } from "../../../interfaces/myAccount";
+
+import { 
+    MAKE_LOGIN,
+    MAKE_LOGOUT,
+    RESET_LOGIN_STATUS,
+    RESET_MYACCOUNT_STATUS,
+    CHANGE_MYACCOUNT_NAME,
+    MYACCOUNT_CHECK_OLD_PASSWORD,
+    MYACCOUNT_CHANGE_PASSWORD,
+    MYACCOUNT_CHECK_PASSWORD,
+    MYACCOUNT_CHECK_EMAIL,
+    RESET_MYACCOUNT_SUCCSESS,
+    MYACCOUNT_CLOSE_ACCOUNT,
+    MYACCOUNT_ENABLE_ACCOUNT 
+    } from "../../actionTypes";
+
+import { 
+    IMyAccountAction,
+    IchangeNameArg,
+    IMyaccountChangePasswordArg,
+    IMyaccountCloseArg 
+    } from "../../../interfaces/myAccount";
+    
 import { IcurrentUser } from "../../../interfaces/currentUser";
 
 export function makeLogin( user: string, password: string )  : Function {
@@ -36,13 +83,13 @@ export function makeLogout( user: IcurrentUser) : Function {
     } 
 }
 
-function logoutFunctions( serverCallArg: any, successCallArg: any, dispatch: Function ) : void {
+function logoutFunctions( result?:IServerPayload, serverCallArg?: any, successCallArg?: any, dispatch?: Function ) : void {
     cookieLogout();  
     if(window.location.pathname !== pageHome && window.location.pathname !== newsRoute && window.location.pathname.substring( 0, viewsNewsRoute.length ) !== viewsNewsRoute )  
         {window.location.assign(pageHome); }  
 }
 
-function logout(result:IServerPayload) : IMyAccountAction {
+function logout(result?:IServerPayload) : IMyAccountAction {
     return {
         type: MAKE_LOGOUT
     }
@@ -171,23 +218,8 @@ export function disableAccount( email: string, password: string, uuid: string ):
         uuid: uuid
     };
     return ( dispatch: Function ) => {
-        commonServerAction( dispatch, null, disableAccountSuccess, disableAccountArg, null , true, LOAD_MYACCOUNT );
+        commonServerAction( dispatch, disableAccountServerCall, closeAccountSuccess, disableAccountArg, null , true, LOAD_MYACCOUNT, null, enableAccountChangeSuccess );
     };
-}
-
-function disableAccountSuccess( result: IServerPayload ): IMyAccountAction {
-    return {
-        type: MYACCOUNT_DISABLE_ACCOUNT,
-        payload: {
-            success: result.myAccount.success,
-            closeAccount: {
-                validEmail: result.myAccount.email.validEmail,
-                validPassword: result.myAccount.password.validPassword,
-                wrongEmail: result.myAccount.email.wrongEmail,
-                wrongPassword: result.myAccount.password.wrongPassword
-            }
-        }
-    }
 }
 
 export function enableAccount( email: string, password: string, uuid: string ): Function {
@@ -197,21 +229,23 @@ export function enableAccount( email: string, password: string, uuid: string ): 
         uuid: uuid
     };
     return ( dispatch: Function ) => {
-        commonServerAction( dispatch, null, enableAccountSuccess, enableAccountArg, null , true, LOAD_MYACCOUNT );
+        commonServerAction( dispatch, enableAccountServerCall, closeAccountSuccess, enableAccountArg, null , true, LOAD_MYACCOUNT, null, enableAccountChangeSuccess );
     };
 }
 
-function enableAccountSuccess( result: IServerPayload ): IMyAccountAction {
+function enableAccountChangeSuccess( result: IServerPayload, serverCallArg: IMyaccountCloseArg, successCallArg: any, dispatch: Function ): void {
+    if ( result.myAccount.success === results.success )
+    {        
+        dispatch( changeAccountEnabledStatus( result ) );
+        updateCurrentUserEnabledAccount( result.myAccount.enabled );
+    }
+} 
+
+function changeAccountEnabledStatus( result: IServerPayload ): IMyAccountAction {
     return {
         type: MYACCOUNT_ENABLE_ACCOUNT,
         payload: {
-            success: result.myAccount.success,
-            closeAccount: {
-                validEmail: result.myAccount.email.validEmail,
-                validPassword: result.myAccount.password.validPassword,
-                wrongEmail: result.myAccount.email.wrongEmail,
-                wrongPassword: result.myAccount.password.wrongPassword
-            }
+            enabled: result.myAccount.enabled
         }
     }
 }
@@ -223,18 +257,17 @@ export function closeAccount( email: string, password: string, uuid: string ): F
         uuid: uuid
     };
 
-    let currUser: IcurrentUser = {
-        uuid: uuid, 
-        email:email,
-        name: '',
-        surname: '',
-        enabled: true,
-        permission: 1
-    };
-
     return ( dispatch: Function ) => {
-        commonServerAction( dispatch, null, closeAccountSuccess, closeAccountArg, null , true, LOAD_MYACCOUNT, null, dispatch( makeLogout( currUser ) ) );
+        commonServerAction( dispatch, closeAccountServerCall, closeAccountSuccess, closeAccountArg, null , true, LOAD_MYACCOUNT, null, closeAccountFunctions );
     };
+}
+
+function closeAccountFunctions( result: IServerPayload, serverCallArg: IMyaccountCloseArg, successCallArg: any, dispatch: Function ) : void {
+    if( result.myAccount.success === results.success )
+    {
+        dispatch( logout( result ) );
+        logoutFunctions( result, serverCallArg, successCallArg, dispatch );
+    }
 }
 
 function closeAccountSuccess( result: IServerPayload ): IMyAccountAction {
