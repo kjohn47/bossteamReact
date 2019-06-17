@@ -175,4 +175,5 @@ export interface IErrorHandlingErrors {
     ERROR_USER_REGISTRATION: IErrorHandlingTextTranslation;
     ERROR_MYACCOUNT_CHANGENAME: IErrorHandlingTextTranslation;
     ERROR_MYACCOUNT_CHANGEPASSWORD: IErrorHandlingTextTranslation;
+    ERROR_MYACCOUNT_CLOSE_DISABLE: IErrorHandlingTextTranslation;
 }

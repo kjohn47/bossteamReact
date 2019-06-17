@@ -1,7 +1,7 @@
 import { IcurrentUser } from '../../../interfaces/currentUser';
 import { ILoginState } from '../../../interfaces/login';
 import { serverResolve } from '../appSettings/common';
-import { ERROR_LOGIN, ERROR_LOGOUT, restServer, results, ERROR_MYACCOUNT_CHANGENAME, ERROR_MYACCOUNT_CHANGEPASSWORD } from '../../../settings';
+import { ERROR_LOGIN, ERROR_LOGOUT, restServer, results, ERROR_MYACCOUNT_CHANGENAME, ERROR_MYACCOUNT_CHANGEPASSWORD, ERROR_MYACCOUNT_CLOSE_DISABLE } from '../../../settings';
 import { IServerResponse } from '../../../interfaces/common';
 import axios from 'axios';
 import sha1 from 'sha1';
@@ -256,7 +256,7 @@ export async function disableAccountServerCall( disableAccountArg: IMyaccountClo
                     return serverReturn;
             })
         });
-    })
+    }, ERROR_MYACCOUNT_CLOSE_DISABLE )
 }
 
 export async function enableAccountServerCall( enableAccountArg: IMyaccountCloseArg ) : Promise<any>{
@@ -307,7 +307,7 @@ export async function enableAccountServerCall( enableAccountArg: IMyaccountClose
                     return serverReturn;
             })
         });
-    })
+    }, ERROR_MYACCOUNT_CLOSE_DISABLE )
 }
 
 export async function closeAccountServerCall( closeAccountArg: IMyaccountCloseArg ) : Promise<any>{
@@ -353,5 +353,5 @@ export async function closeAccountServerCall( closeAccountArg: IMyaccountCloseAr
                 return serverReturn;
             })
         });
-    });
+    }, ERROR_MYACCOUNT_CLOSE_DISABLE );
 }
