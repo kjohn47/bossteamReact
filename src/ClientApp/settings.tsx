@@ -1,4 +1,5 @@
 //APP GENERIC -- Do not change, will break app
+// Check language codes to be the same from server
 export const ptCode = 'PT';
 export const enCode = 'EN';
 export const results = {
@@ -27,7 +28,7 @@ export const LOAD_MYACCOUNT = 'LOAD_MYACCOUNT';
 export const LOAD_MYACCOUNT_PASSWORD = 'LOAD_MYACCOUNT_PASSWORD';
 export const LOAD_MYACCOUNT_EMAIL = 'LOAD_MYACCOUNT_EMAIL';
 
-//ERROR CODES KEYS -- do not change or it will break objects for translations
+//ERROR CODES KEYS 
 export const ERROR_GENERIC = 'ERROR_GENERIC';
 export const ERROR_ADD_COMMENT = 'ERROR_ADD_COMMENT';
 export const ERROR_LOGIN = 'ERROR_LOGIN';

@@ -1,5 +1,6 @@
 import { IcurrentUser } from "./currentUser";
 import { ILoginResponse } from "./login";
+import { ptCode, enCode } from "../settings";
 
 //// Change Name
 
@@ -169,8 +170,8 @@ export interface IMyAccountAllText {
 }
 
 export interface IMyAccountTranslations {
-    PT: IMyAccountAllText;
-    EN: IMyAccountAllText;
+    [ptCode]: IMyAccountAllText;
+    [enCode]: IMyAccountAllText;
 }
 
 //// My Account View

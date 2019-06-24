@@ -1,7 +1,7 @@
 
-import { IErrorHandling, ILoading, IErrorHandlingText, IIndexable} from './common';
+import { IErrorHandling, ILoading, IIndexable} from './common';
 import { ILoginResponse } from './login';
-import { IAppText } from '../pageData/language';
+import { IAppText } from '../interfaces/common';
 export interface IAppSettings { 
     appText?: IAppText & IIndexable;
     presentationLanguage?: string;

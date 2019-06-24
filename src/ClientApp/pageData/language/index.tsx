@@ -17,25 +17,7 @@ import {
     TEXT_NEWS_LIST 
     } from "../../settings";
 import { GetPropertyValue } from "../../common/methods";
-import { IloginMenu, IloginFormHeader } from "../../interfaces/login";
-import { IRegistrationText } from "../../interfaces/registration";
-import { ImenuText } from "../../interfaces/menu";
-import { InewsLanguage } from "../../interfaces/news";
-import { IAddCommentText, ICommentText, IErrorHandlingText } from "../../interfaces/common";
-import { IMyAccountAllText } from "../../interfaces/myAccount";
-
-////Add new languages to this interface
-export interface IAppText {
-    TEXT_LOGIN_MENU: IloginMenu; 
-    TEXT_NEED_LOGIN: IloginFormHeader;
-    TEXT_REGISTRATION: IRegistrationText;
-    TEXT_MENU: ImenuText;
-    TEXT_NEWS_LIST: InewsLanguage;
-    TEXT_COMMENT_ADD: IAddCommentText;
-    TEXT_COMMENT: ICommentText;   
-    TEXT_MY_ACCOUNT: IMyAccountAllText; 
-    TEXT_PAGE_NOT_FOUND: IErrorHandlingText;
-}
+import { IAppText } from "../../interfaces/common";
 
 //// Add new text translations here
 export const getTranslatedText = ( language: string ): IAppText => {    

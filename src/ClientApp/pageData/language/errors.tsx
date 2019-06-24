@@ -26,6 +26,7 @@ export const TEXT_PAGE_NOT_FOUND_OBJECT: IPageNotFoundTextTranslation = {
     }
 }
 
+//// Add new errors here
 export const ERRORS: IErrorHandlingErrors = {
     [ERROR_GENERIC]: {
         [ptCode]: {
