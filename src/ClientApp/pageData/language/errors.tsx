@@ -15,7 +15,7 @@ import {
     enCode 
 } from "../../settings";
 
-export const TEXT_PAGE_NOT_FOUND: IPageNotFoundTextTranslation = {
+export const TEXT_PAGE_NOT_FOUND_OBJECT: IPageNotFoundTextTranslation = {
     [ptCode]: {
         errorTitle: "Erro: 404",
         errorMessage: "Página procurada não foi encontrada!"

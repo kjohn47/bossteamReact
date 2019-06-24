@@ -4,34 +4,21 @@ import { APP_GET_LANGUAGE,
     SERVER_COMUNICATION_FAIL, 
     RESET_SERVER_ERROR } from '../actionTypes';
 import { IappAction, IAppSettings, IFetchData } from '../../interfaces/appSettings';
-import { TEXT_MENU } from '../../pageData/language/menu';
-import { TEXT_NEWS_LIST } from '../../pageData/language/news';
-import { TEXT_LOGIN_MENU, TEXT_NEED_LOGIN } from '../../pageData/language/login';
-import { TEXT_COMMENT, TEXT_COMMENT_ADD} from '../../pageData/language/comment';
 import { 
     enCode, 
     ptCode, 
     Show_Error_Detailed,
     } from '../../settings';
 import { ILoading, IErrorHandling, IErrorHandlingText, IErrorHandlingTextTranslation } from '../../interfaces/common';
-import { ERRORS, TEXT_PAGE_NOT_FOUND } from '../../pageData/language/errors';
-import { TEXT_REGISTRATION } from '../../pageData/language/registration';
-import { TEXT_MY_ACCOUNT } from '../../pageData/language/myAccount';
+import { ERRORS } from '../../pageData/language/errors';
 import { currentLanguage } from '../../common/session';
 import { GetPropertyValue } from '../../common/methods';
+import { getTranslatedText } from '../../pageData/language';
 
 const startLang = currentLanguage();
 
 const defaultState: IAppSettings = {
-    menuText : GetPropertyValue(TEXT_MENU, startLang),
-    newsLanguage: GetPropertyValue(TEXT_NEWS_LIST, startLang),
-    addCommentText: GetPropertyValue(TEXT_COMMENT_ADD, startLang),
-    commentText: GetPropertyValue(TEXT_COMMENT, startLang),
-    loginForm: GetPropertyValue(TEXT_LOGIN_MENU, startLang),
-    loginFormHeader: GetPropertyValue(TEXT_NEED_LOGIN, startLang),
-    pageNotFoundText: GetPropertyValue(TEXT_PAGE_NOT_FOUND, startLang),
-    registrationText: GetPropertyValue(TEXT_REGISTRATION, startLang),
-    myAccountText: GetPropertyValue(TEXT_MY_ACCOUNT, startLang),
+    appText: getTranslatedText( startLang ),
     presentationLanguage: startLang,
     fetchData: {
         error: {
@@ -57,7 +44,7 @@ function getLoadingState( isLocalLoading: boolean, pageLoading: ILoading, loadLo
             } :
             { ...pageLoading.localLoading }
     }
-    
+
     return {...loading};
 }
 
@@ -113,16 +100,8 @@ export function appSettings(state:IAppSettings = defaultState, action:IappAction
             {
                 lang = ptCode;
             }
-            return {...state, 
-                menuText: GetPropertyValue(TEXT_MENU, lang),
-                newsLanguage: GetPropertyValue(TEXT_NEWS_LIST, lang),
-                addCommentText: GetPropertyValue(TEXT_COMMENT_ADD, lang),
-                commentText: GetPropertyValue(TEXT_COMMENT, lang),
-                loginFormHeader: GetPropertyValue(TEXT_NEED_LOGIN, lang),
-                loginForm: GetPropertyValue(TEXT_LOGIN_MENU, lang),
-                pageNotFoundText: GetPropertyValue(TEXT_PAGE_NOT_FOUND, lang),
-                registrationText: GetPropertyValue(TEXT_REGISTRATION, lang),
-                myAccountText: GetPropertyValue(TEXT_MY_ACCOUNT, lang),
+            return {...state,
+                appText: getTranslatedText( lang ),
                 presentationLanguage: lang,                
                 fetchData: {...state.fetchData, 
                     error: errorData

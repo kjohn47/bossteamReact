@@ -1,7 +1,8 @@
 import { IMyAccountTranslations } from "../../interfaces/myAccount";
+import { ptCode, enCode } from '../../settings';
 
-export const TEXT_MY_ACCOUNT: IMyAccountTranslations = {
-    PT: {
+export const TEXT_MY_ACCOUNT_OBJECT: IMyAccountTranslations = {
+    [ptCode]: {
         myAccountText: {
             title: "Definições de conta:",
             nameTab: "Alterar Nome",
@@ -49,7 +50,7 @@ export const TEXT_MY_ACCOUNT: IMyAccountTranslations = {
             closeModalTitle: "Fechar Conta:"
         }
     },
-    EN: {
+    [enCode]: {
         myAccountText: {
             title: "Account Settings",
             nameTab: "Change Name",

@@ -12,7 +12,8 @@ import {
     results,
     LOAD_MYACCOUNT_EMAIL, 
     LOAD_MYACCOUNT_PASSWORD, 
-    LOAD_MYACCOUNT 
+    LOAD_MYACCOUNT, 
+    TEXT_MY_ACCOUNT
     } from '../../../settings';
 import {
     REGEX_FIELD, 
@@ -521,7 +522,7 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
 
     const mapStateToProps = ( state: Istore ) : IMyAccountLogicProps => {
         return {       
-            myAccountText: state.appSettings.myAccountText,
+            myAccountText: state.appSettings.appText[TEXT_MY_ACCOUNT],
             currentUser: state.myAccount.loggedUser,
             changeNameSuccess: state.myAccount.changeName.success,
             changePasswordSuccess: state.myAccount.changePassword.success,

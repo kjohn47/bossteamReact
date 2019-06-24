@@ -8,6 +8,15 @@ export const results = {
 }
 
 // TRANSLATION KEYS
+export const TEXT_COMMENT = 'TEXT_COMMENT';
+export const TEXT_COMMENT_ADD = 'TEXT_COMMENT_ADD';
+export const TEXT_PAGE_NOT_FOUND = 'TEXT_PAGE_NOT_FOUND';
+export const TEXT_LOGIN_MENU = 'TEXT_LOGIN_MENU';
+export const TEXT_NEED_LOGIN = 'TEXT_NEED_LOGIN';
+export const TEXT_MENU = 'TEXT_MENU';
+export const TEXT_MY_ACCOUNT = 'TEXT_MY_ACCOUNT';
+export const TEXT_NEWS_LIST = 'TEXT_NEWS_LIST';
+export const TEXT_REGISTRATION = 'TEXT_REGISTRATION';
 
 // LOAD LOCALIZED KEYS
 export const LOAD_LOGIN_MENU = 'LOAD_LOGIN_MENU';

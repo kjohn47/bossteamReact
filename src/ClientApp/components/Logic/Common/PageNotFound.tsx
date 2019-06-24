@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {Route} from 'react-router-dom';
 import { Istore } from '../../../interfaces/store';
-import { IAppSettings } from '../../../interfaces/appSettings';
 import { connect } from 'react-redux';
-import { IErrorHandlingText } from '../../../interfaces/common';
+import { IErrorHandlingText, IPageNotFoundProps } from '../../../interfaces/common';
+import { TEXT_PAGE_NOT_FOUND } from '../../../settings';
 
 //@ts-ignore
 const Status = ({ code, children }) => (
@@ -17,7 +17,7 @@ const Status = ({ code, children }) => (
 
 function pageNotFoundLogic ( WrappedComponent:React.ComponentType<IErrorHandlingText> ): React.ComponentType
 {
-    class PageNotFoundLogic extends React.Component<IAppSettings>{
+    class PageNotFoundLogic extends React.Component<IPageNotFoundProps>{
 
         render(){            
             return(     
@@ -28,9 +28,9 @@ function pageNotFoundLogic ( WrappedComponent:React.ComponentType<IErrorHandling
         }
     }    
 
-    const mapStateToProps = ( state: Istore ) : IAppSettings => {
+    const mapStateToProps = ( state: Istore ) : IPageNotFoundProps => {
         return {       
-          pageNotFoundText: state.appSettings.pageNotFoundText
+          pageNotFoundText: state.appSettings.appText[TEXT_PAGE_NOT_FOUND]
         }
     };
 

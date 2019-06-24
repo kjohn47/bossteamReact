@@ -17,7 +17,8 @@ export interface InewsListRedux {
     newsList?: IcardMainData[];
     newsListFromServer?: INewsData[];
     newsViewData?: IViewNewsData;
-    newsViewDataServer?: IViewNewsDataServer;
+    newsViewDataServer?: IViewNewsDataServer;    
+    newsLanguage?: InewsLanguage; 
 }
 
 export interface InewsAction{

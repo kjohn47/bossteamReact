@@ -75,7 +75,7 @@ export interface IAddComment {
     emptyComment?: boolean;
     loggedUser?: IcurrentUser;
     isLogged?: boolean;
-
+    addCommentText?: IAddCommentText;
 }
 
 export interface IAddCommentAction
@@ -156,6 +156,10 @@ export interface IErrorHandlingTextTranslation {
 export interface IPageNotFoundTextTranslation {
     PT?: IErrorHandlingText;
     EN?: IErrorHandlingText;
+}
+
+export interface IPageNotFoundProps {
+    pageNotFoundText?: IErrorHandlingText; 
 }
 
 export interface IIndexable {

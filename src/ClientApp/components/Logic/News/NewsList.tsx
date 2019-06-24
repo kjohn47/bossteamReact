@@ -7,7 +7,7 @@ import { InewsActions, InewsListRedux } from '../../../interfaces/news';
 import makeCard from '../Common/makeCard';
 import { ICardData, ICardItem } from '../../../interfaces/common';
 import LoadingView from '../../View/Common/Loading';
-import { viewsNewsRoute, LOAD_HOME_NEWS } from '../../../settings';
+import { viewsNewsRoute, LOAD_HOME_NEWS, TEXT_NEWS_LIST } from '../../../settings';
 import PageHeader from '../../View/Common/PageHeader';
 
 interface INewsListLoading {
@@ -70,7 +70,7 @@ function newsListLogic (WrappedComponent:React.ComponentType<ICardItem>, shortLi
 
     const mapStateToProps = (state:Istore): IAppSettings & InewsListRedux & INewsListLoading => {
         return {
-            newsLanguage: state.appSettings.newsLanguage,
+            newsLanguage: state.appSettings.appText[TEXT_NEWS_LIST],
             newsList: state.news.newsList,
             presentationLanguage: state.appSettings.presentationLanguage,
             loading: state.appSettings.fetchData.loading.localLoading[LOAD_HOME_NEWS]              

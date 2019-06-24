@@ -1,21 +1,11 @@
-import {ImenuText} from './menu';
-import {InewsLanguage} from './news';
-import {IAddCommentText, ICommentText, IErrorHandling, ILoading, IErrorHandlingText} from './common';
-import { IloginMenu, ILoginResponse, IloginFormHeader } from './login';
-import { IRegistrationText } from './registration';
-import { IMyAccountAllText } from './myAccount';
-export interface IAppSettings {
-    loginForm?: IloginMenu; 
-    loginFormHeader?: IloginFormHeader;
-    registrationText?: IRegistrationText;
-    menuText?: ImenuText;
-    newsLanguage?: InewsLanguage;
-    addCommentText?: IAddCommentText;
-    commentText?: ICommentText;   
-    myAccountText?: IMyAccountAllText; 
+
+import { IErrorHandling, ILoading, IErrorHandlingText, IIndexable} from './common';
+import { ILoginResponse } from './login';
+import { IAppText } from '../pageData/language';
+export interface IAppSettings { 
+    appText?: IAppText & IIndexable;
     presentationLanguage?: string;
-    fetchData?: IFetchData;
-    pageNotFoundText?: IErrorHandlingText;
+    fetchData?: IFetchData;    
 }
 
 export interface IappAction{

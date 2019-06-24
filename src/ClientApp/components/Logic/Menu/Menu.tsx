@@ -3,6 +3,7 @@ import { ImenuProps } from "../../../interfaces/menu";
 import { Istore } from '../../../interfaces/store';
 import {connect} from 'react-redux';
 import { appGetLanguage } from '../../../store/actions/appSettings';
+import { TEXT_MENU } from '../../../settings';
 
 function menuLogic (WrappedComponent:React.ComponentType<ImenuProps>): React.ComponentType
 {
@@ -24,7 +25,7 @@ function menuLogic (WrappedComponent:React.ComponentType<ImenuProps>): React.Com
 
     const mapStateToProps = (state:Istore) : ImenuProps => {
         return {
-            menuText: state.appSettings.menuText,
+            menuText: state.appSettings.appText[TEXT_MENU],
             isLogged: state.myAccount.isLogged,
             currentUsr: state.myAccount.loggedUser,
             presentationLanguage: state.appSettings.presentationLanguage
