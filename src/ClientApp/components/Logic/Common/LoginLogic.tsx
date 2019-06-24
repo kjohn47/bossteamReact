@@ -5,7 +5,8 @@ import { Istore } from '../../../interfaces/store';
 import { IUserMenu } from '../../../interfaces/menu';
 import { IAppSettings } from '../../../interfaces/appSettings';
 import { makeLogin, makeLogout, resetLoginStatus } from '../../../store/actions/myAccount';
-import { results, REGEX_FIELD, checkRegexText } from '../../../settings';
+import { results, LOAD_LOGIN_MENU } from '../../../settings';
+import { REGEX_FIELD, checkRegexText } from '../../../common/regex';
 import { IcurrentUser } from '../../../interfaces/currentUser';
 
 type loginPropsType = IAppSettings & ILoginReduxActions & ILogin;
@@ -156,7 +157,7 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
             isLogged: state.myAccount.isLogged,
             loggedUser: state.myAccount.loggedUser,
             tryLogin: state.myAccount.tryLogin,
-            loading: state.appSettings.fetchData.loading.localLoading.loadLogin
+            loading: state.appSettings.fetchData.loading.localLoading[LOAD_LOGIN_MENU]
         }
     };
 

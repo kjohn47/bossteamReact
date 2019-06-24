@@ -3,6 +3,7 @@ import {Istore} from '../../../interfaces/store';
 import {connect} from 'react-redux';
 import {IAddComment, IAddCommentText, IAddCommentAction} from '../../../interfaces/common';
 import {IAppSettings} from '../../../interfaces/appSettings';
+import { LOAD_NEW_COMMENT } from '../../../settings';
 
 type IAddCommentProps = IAppSettings & IAddComment & IAddCommentText & IAddCommentAction;
 
@@ -63,12 +64,12 @@ function addCommentLogic ( WrappedComponent:React.ComponentType<IAddCommentProps
                 null
             );
         }
-    }    
+    }
 
     const mapStateToProps = ( state: Istore ) : IAddCommentProps => {
         return {
             addCommentText: state.appSettings.addCommentText,
-            loading: state.appSettings.fetchData.loading.localLoading.loadComment,     
+            loading: state.appSettings.fetchData.loading.localLoading[LOAD_NEW_COMMENT],
             loggedUser: state.myAccount.loggedUser,            
             isLogged: state.myAccount.isLogged
         }

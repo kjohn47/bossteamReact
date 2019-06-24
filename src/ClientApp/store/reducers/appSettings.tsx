@@ -11,20 +11,14 @@ import { TEXT_COMMENT, TEXT_COMMENT_ADD} from '../../pageData/language/comment';
 import { 
     enCode, 
     ptCode, 
-    currentLanguage,
-    LOAD_LOGIN_MENU,
-    LOAD_NEW_COMMENT,
-    LOAD_HOME_NEWS,
     Show_Error_Detailed,
-    GetPropertyValue,
-    LOAD_REGISTRATION,
-    LOAD_MYACCOUNT,
-    LOAD_MYACCOUNT_PASSWORD,
-    LOAD_MYACCOUNT_EMAIL} from '../../settings';
+    } from '../../settings';
 import { ILoading, IErrorHandling, IErrorHandlingText, IErrorHandlingTextTranslation } from '../../interfaces/common';
 import { ERRORS, TEXT_PAGE_NOT_FOUND } from '../../pageData/language/errors';
 import { TEXT_REGISTRATION } from '../../pageData/language/registration';
 import { TEXT_MY_ACCOUNT } from '../../pageData/language/myAccount';
+import { currentLanguage } from '../../common/session';
+import { GetPropertyValue } from '../../common/methods';
 
 const startLang = currentLanguage();
 
@@ -48,15 +42,7 @@ const defaultState: IAppSettings = {
         },
         loading: {
             isPageLoading: false,
-            localLoading: {
-                loadComment: false,
-                loadLogin: false,
-                loadHomeNews: false,
-                loadUserRegistration: false,
-                loadMyAccount: false,
-                loadMyAccountPassword: false,
-                loadMyAccountEmail: false
-            }
+            localLoading: {}
         }
     } 
 }
@@ -65,15 +51,9 @@ function getLoadingState( isLocalLoading: boolean, pageLoading: ILoading, loadLo
 {
     let loading: ILoading = {
         isPageLoading: isLocalLoading ? pageLoading.isPageLoading : !end,
-        localLoading: {
-            loadLogin: isLocalLoading  && loadLocalization === LOAD_LOGIN_MENU ? !end : pageLoading.localLoading.loadLogin,
-            loadComment: isLocalLoading  && loadLocalization === LOAD_NEW_COMMENT ? !end : pageLoading.localLoading.loadComment,
-            loadHomeNews: isLocalLoading  && loadLocalization === LOAD_HOME_NEWS ? !end : pageLoading.localLoading.loadHomeNews,
-            loadUserRegistration: isLocalLoading && loadLocalization === LOAD_REGISTRATION ? !end : pageLoading.localLoading.loadUserRegistration,
-            loadMyAccount: isLocalLoading && loadLocalization === LOAD_MYACCOUNT ? !end : pageLoading.localLoading.loadMyAccount,
-            loadMyAccountPassword: isLocalLoading && loadLocalization === LOAD_MYACCOUNT_PASSWORD ? !end : pageLoading.localLoading.loadMyAccountPassword,
-            loadMyAccountEmail: isLocalLoading && loadLocalization === LOAD_MYACCOUNT_EMAIL ? !end : pageLoading.localLoading.loadMyAccountEmail
-        }        
+        localLoading: { ...pageLoading.localLoading,
+            [loadLocalization]: !end
+        }
     }
     return {...loading};
 }

@@ -8,7 +8,8 @@ import {
     IRegistrationStateLogic, 
     RegistrationLogicType
     } from '../../../interfaces/registration';
-import { checkRegexText, REGEX_FIELD, pageHome, checkEmailRegex } from '../../../settings';
+import { pageHome, LOAD_REGISTRATION } from '../../../settings';
+import { REGEX_FIELD, checkRegexText, checkEmailRegex } from '../../../common/regex';
 import { checkUserNameRegistration, makeUserRegistration, resetRegistration } from '../../../store/actions/registration';
 import { Redirect } from 'react-router';
 
@@ -214,7 +215,7 @@ function registrationLogic( WrappedComponent: React.ComponentType<IRegistrationP
             isLogged: state.myAccount.isLogged,
             registrationText: state.appSettings.registrationText,
             usernameInUse: state.registration.usernameInUse,
-            isUsernameLoading: state.appSettings.fetchData.loading.localLoading.loadUserRegistration,
+            isUsernameLoading: state.appSettings.fetchData.loading.localLoading[LOAD_REGISTRATION],
             registrationSuccess: state.registration.registrationSuccess
         }
     }

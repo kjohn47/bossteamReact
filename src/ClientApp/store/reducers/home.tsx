@@ -1,6 +1,6 @@
 import { CHANGE_PRESENTATION_LANGUAGE, GET_HOME_DATA, RESET_HOME_DATA } from '../actionTypes';
 import { IHomeAction, IHomeRedux, IpresentationServer } from '../../interfaces/home';
-import { GetPropertyValue } from '../../settings';
+import { GetPropertyValue } from '../../common/methods';
 import { IpresentationData } from '../../interfaces/common';
 
 //// -- Default homepage presentation state

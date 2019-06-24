@@ -8,8 +8,28 @@ import {
     IMyAccountLogicActions, 
     IMyAccountLogicState 
     } from '../../../interfaces/myAccount';
-import { checkRegexText, REGEX_FIELD, results, checkEmailRegex } from '../../../settings';
-import { resetMyAccountStatus, changeName, checkPassword, changePassword, checkEmail, resetMyAccountSuccess, disableAccount, enableAccount, closeAccount } from '../../../store/actions/myAccount';
+import { 
+    results,
+    LOAD_MYACCOUNT_EMAIL, 
+    LOAD_MYACCOUNT_PASSWORD, 
+    LOAD_MYACCOUNT 
+    } from '../../../settings';
+import {
+    REGEX_FIELD, 
+    checkRegexText, 
+    checkEmailRegex 
+    } from '../../../common/regex';
+import { 
+    resetMyAccountStatus, 
+    changeName, 
+    checkPassword, 
+    changePassword, 
+    checkEmail, 
+    resetMyAccountSuccess, 
+    disableAccount, 
+    enableAccount, 
+    closeAccount 
+    } from '../../../store/actions/myAccount';
 
 function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewProps> ): React.ComponentType
 {
@@ -506,13 +526,13 @@ function myAccountLogic ( WrappedComponent:React.ComponentType<IMyAccountViewPro
             changeNameSuccess: state.myAccount.changeName.success,
             changePasswordSuccess: state.myAccount.changePassword.success,
             closeAccountSuccess: state.myAccount.closeAccount.success,
-            loading: state.appSettings.fetchData.loading.localLoading.loadMyAccount,
-            passwordLoading: state.appSettings.fetchData.loading.localLoading.loadMyAccountPassword,
+            loading: state.appSettings.fetchData.loading.localLoading[LOAD_MYACCOUNT],
+            passwordLoading: state.appSettings.fetchData.loading.localLoading[LOAD_MYACCOUNT_PASSWORD],
             wrongPassword: state.myAccount.changePassword.wrongOldPassword || state.myAccount.closeAccount.wrongPassword,
             validPassword: state.myAccount.changePassword.validOldPassword || state.myAccount.closeAccount.validPassword,
             wrongEmail: state.myAccount.closeAccount.wrongEmail,
             validEmail: state.myAccount.closeAccount.validEmail,
-            emailLoading: state.appSettings.fetchData.loading.localLoading.loadMyAccountEmail
+            emailLoading: state.appSettings.fetchData.loading.localLoading[LOAD_MYACCOUNT_EMAIL]
         }
     };
 

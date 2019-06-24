@@ -112,13 +112,7 @@ export interface ILoading {
 }
 
 interface ILocalLoading {
-    loadLogin?: boolean;
-    loadComment?: boolean;
-    loadHomeNews?: boolean;
-    loadUserRegistration?: boolean;
-    loadMyAccount?: boolean;
-    loadMyAccountPassword?: boolean;
-    loadMyAccountEmail?: boolean;
+    [LOAD_KEY: string]: boolean;
 }
 
 export interface IErrorHandling {
@@ -164,6 +158,10 @@ export interface IPageNotFoundTextTranslation {
     EN?: IErrorHandlingText;
 }
 
+export interface IIndexable {
+    [key: string]: any;
+ }
+
 export interface IErrorHandlingErrors {
     ERROR_GENERIC: IErrorHandlingTextTranslation;
     ERROR_ADD_COMMENT: IErrorHandlingTextTranslation;
@@ -175,5 +173,5 @@ export interface IErrorHandlingErrors {
     ERROR_USER_REGISTRATION: IErrorHandlingTextTranslation;
     ERROR_MYACCOUNT_CHANGENAME: IErrorHandlingTextTranslation;
     ERROR_MYACCOUNT_CHANGEPASSWORD: IErrorHandlingTextTranslation;
-    ERROR_MYACCOUNT_CLOSE_DISABLE: IErrorHandlingTextTranslation;
+    ERROR_MYACCOUNT_CLOSE_DISABLE: IErrorHandlingTextTranslation;    
 }

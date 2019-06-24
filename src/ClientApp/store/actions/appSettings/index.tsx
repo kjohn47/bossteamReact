@@ -7,12 +7,12 @@ import {
         } from '../../actionTypes';
 
 import { 
-    ptCode, 
-    setLanguage, 
+    ptCode 
     } from '../../../settings';
     
 import { IErrorHandling } from '../../../interfaces/common';
 import { IappAction } from '../../../interfaces/appSettings';
+import { setLanguage } from '../../../common/session';
 
 export function appGetLanguage( language: string = ptCode ) : Function {
     return (dispatch: Function) => {

@@ -16,7 +16,7 @@ import {
     InewsServerDataText
 } from '../../interfaces/news';
 import { IcardMainData, ICommentData} from '../../interfaces/common';
-import { GetPropertyValue } from '../../settings';
+import { GetPropertyValue } from '../../common/methods';
 
 //// -- Default news state
 const defaultState: InewsListRedux = {
