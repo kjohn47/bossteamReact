@@ -51,10 +51,13 @@ function getLoadingState( isLocalLoading: boolean, pageLoading: ILoading, loadLo
 {
     let loading: ILoading = {
         isPageLoading: isLocalLoading ? pageLoading.isPageLoading : !end,
-        localLoading: { ...pageLoading.localLoading,
-            [loadLocalization]: !end
-        }
+        localLoading: isLocalLoading ? 
+            { ...pageLoading.localLoading,
+                [loadLocalization]: !end  
+            } :
+            { ...pageLoading.localLoading }
     }
+    
     return {...loading};
 }
 
