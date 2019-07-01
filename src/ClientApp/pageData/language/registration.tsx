@@ -1,7 +1,8 @@
 import { IRegistrationTextTranslations } from "../../interfaces/registration";
+import { ptCode, enCode } from '../../settings';
 
-export const TEXT_REGISTRATION: IRegistrationTextTranslations = {
-    PT: {
+export const TEXT_REGISTRATION_OBJECT: IRegistrationTextTranslations = {
+    [ptCode]: {
         title: "Registar:",
         name: "Nome:",
         surname: "Sobrenome:",
@@ -15,7 +16,7 @@ export const TEXT_REGISTRATION: IRegistrationTextTranslations = {
         successText: "O utilizador [USERNAME] foi registado com sucesso",
         failedRegistration: "Ocorreu um erro a registar o utilizador"
     },
-    EN: {
+    [enCode]: {
         title: "Registration:",
         name: "Name:",
         surname: "Surname:",

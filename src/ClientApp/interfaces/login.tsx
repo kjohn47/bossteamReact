@@ -1,4 +1,6 @@
 import { IcurrentUser } from "./currentUser";
+import { ImenuText } from "./menu";
+import { ptCode, enCode } from "../settings";
 
 //login Menu
 export interface IloginMenu {
@@ -13,11 +15,12 @@ export interface IloginMenu {
 }
 
 export interface IloginMenuTranslations {
-    PT: IloginMenu;
-    EN: IloginMenu;
+    [ptCode]: IloginMenu;
+    [enCode]: IloginMenu;
 }
 
 export interface ILogin {
+    menuText?: ImenuText;
     loginText?: IloginMenu;
     loginAction?: ILoginActions;
     loading?: boolean;
@@ -55,8 +58,8 @@ export interface ILoginResponse {
 }
 
 export interface IloginFormHeaderTranslations {
-    PT: IloginFormHeader;
-    EN: IloginFormHeader;
+    [ptCode]: IloginFormHeader;
+    [enCode]: IloginFormHeader;
 }
 
 export interface IloginFormHeader {
@@ -64,7 +67,7 @@ export interface IloginFormHeader {
     warning: string;
 }
 
-export interface INeddLoginReduxProps {
+export interface INeedLoginReduxProps {
     isLogged?: boolean;
     loggedUser?: IcurrentUser;
     loginFormHeader?: IloginFormHeader;

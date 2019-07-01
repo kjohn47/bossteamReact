@@ -1,4 +1,5 @@
 import { commonServerAction } from "../appSettings/common";
+import { setCurrentUser, cookieLogout, updateCurrentUserNames, updateCurrentUserEnabledAccount } from "../../../common/session";
 
 import { 
     makeLoginOnServer,
@@ -14,17 +15,13 @@ import {
 
 import { 
     LOAD_LOGIN_MENU,
-    setCurrentUser,
-    cookieLogout,
     pageHome,
     newsRoute,
     viewsNewsRoute,
-    updateCurrentUserNames,
     LOAD_MYACCOUNT,
     LOAD_MYACCOUNT_PASSWORD,
     LOAD_MYACCOUNT_EMAIL,
     results,
-    updateCurrentUserEnabledAccount
     } from "../../../settings";
     
 import { IServerPayload } from "../../../interfaces/common";

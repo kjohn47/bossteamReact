@@ -3,12 +3,12 @@ import { ILogin, ILoginActions, ILoginState, ILoginReduxActions } from '../../..
 import { connect } from 'react-redux';
 import { Istore } from '../../../interfaces/store';
 import { IUserMenu } from '../../../interfaces/menu';
-import { IAppSettings } from '../../../interfaces/appSettings';
 import { makeLogin, makeLogout, resetLoginStatus } from '../../../store/actions/myAccount';
-import { results, REGEX_FIELD, checkRegexText } from '../../../settings';
+import { results, LOAD_LOGIN_MENU, TEXT_MENU, TEXT_LOGIN_MENU } from '../../../settings';
+import { REGEX_FIELD, checkRegexText } from '../../../common/regex';
 import { IcurrentUser } from '../../../interfaces/currentUser';
 
-type loginPropsType = IAppSettings & ILoginReduxActions & ILogin;
+type loginPropsType = ILoginReduxActions & ILogin;
 
 function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedComponentLoggedIn?: React.ComponentType<IUserMenu> ) : React.ComponentType 
 {
@@ -20,8 +20,7 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
             this.handlePassword = this.handlePassword.bind(this);
             this.handleUser = this.handleUser.bind(this);
             this.handleKeyPress = this.handleKeyPress.bind(this);
-            this.state =
-                {
+            this.state = {
                     user: '',
                     password: '',
                     invalidUser: false,
@@ -143,20 +142,20 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
                             loading = { this.props.loading } />
                     :
                     <WrappedComponentLogin 
-                        loginText={this.props.loginForm} 
+                        loginText={this.props.loginText} 
                         loginAction={loginActions} 
                         loading = { this.props.loading } />
             );
         }
     }
-    const mapStateToProps = (state: Istore): IAppSettings & ILogin => {
+    const mapStateToProps = (state: Istore): ILogin => {
         return {
-            menuText: state.appSettings.menuText,
-            loginForm: state.appSettings.loginForm,
+            menuText: state.appSettings.appText[TEXT_MENU],
+            loginText: state.appSettings.appText[TEXT_LOGIN_MENU],
             isLogged: state.myAccount.isLogged,
             loggedUser: state.myAccount.loggedUser,
             tryLogin: state.myAccount.tryLogin,
-            loading: state.appSettings.fetchData.loading.localLoading.loadLogin
+            loading: state.appSettings.fetchData.loading.localLoading[LOAD_LOGIN_MENU]
         }
     };
 

@@ -3,7 +3,7 @@ import * as React from 'react';
 import {IAddComment, IAddCommentText} from '../../../interfaces/common';
 import { IAppSettings } from '../../../interfaces/appSettings';
 
-type IAddCommentProps = IAddCommentText & IAddComment & IAppSettings;
+type IAddCommentProps = IAddCommentText & IAddComment;
 
 class AddComment extends React.PureComponent<IAddCommentProps,{}>{
     constructor(props:IAddCommentProps) {

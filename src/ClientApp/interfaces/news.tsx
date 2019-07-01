@@ -1,5 +1,6 @@
 import {IcardMainData, ICommentData} from './common';
 import { IcurrentUser } from './currentUser';
+import { ptCode, enCode } from '../settings';
 
 //// Interfaces for News List
 
@@ -9,15 +10,16 @@ export interface InewsLanguage {
 }
 
 export interface InewsListTranslations {
-    PT: InewsLanguage;
-    EN: InewsLanguage;
+    [ptCode]: InewsLanguage;
+    [enCode]: InewsLanguage;
 }
 
 export interface InewsListRedux {
     newsList?: IcardMainData[];
     newsListFromServer?: INewsData[];
     newsViewData?: IViewNewsData;
-    newsViewDataServer?: IViewNewsDataServer;
+    newsViewDataServer?: IViewNewsDataServer;    
+    newsLanguage?: InewsLanguage; 
 }
 
 export interface InewsAction{
@@ -45,8 +47,8 @@ export interface INewsData {
     imgLink?:string;
     outlineColor?:string;
     id: number;
-    PT: InewsServerDataText;
-    EN?: InewsServerDataText;
+    [ptCode]: InewsServerDataText;
+    [enCode]?: InewsServerDataText;
 }
 
 export interface InewsServerDataText {
@@ -82,8 +84,8 @@ export interface IViewNewsDataServer {
     id: number;
     allowComments: boolean;
     comments?: ICommentData[];
-    PT: InewsServerDataText;
-    EN?: InewsServerDataText;
+    [ptCode]: InewsServerDataText;
+    [enCode]?: InewsServerDataText;
 }
 
 export interface IViewNewsActions{

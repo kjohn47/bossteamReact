@@ -1,4 +1,5 @@
 import { IcurrentUser } from "./currentUser";
+import { ptCode, enCode } from "../settings";
 
 // Menu props
 export interface ImenuProps {
@@ -26,8 +27,8 @@ export interface ImenuText {
 }
 
 export interface ImenuTranslations {
-    PT: ImenuText;
-    EN: ImenuText;
+    [ptCode]: ImenuText;
+    [enCode]: ImenuText;
 }
 
 //Blogs Menu
