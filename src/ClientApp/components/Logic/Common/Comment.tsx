@@ -2,6 +2,7 @@ import * as React from 'react';
 import {Istore} from '../../../interfaces/store';
 import {connect} from 'react-redux';
 import {ICommentData, ICommentText} from '../../../interfaces/common';
+import { TEXT_COMMENT } from '../../../settings';
 
 interface ICommentStore {
     commentText?: ICommentText;
@@ -43,7 +44,7 @@ function commentLogic (WrappedComponent:React.ComponentType<IcommentProps>) : Re
     
     const mapStateToProps = ( state: Istore ) : ICommentStore => {
         return {
-            commentText: state.appSettings.commentText,
+            commentText: state.appSettings.appText[TEXT_COMMENT],
             userUUID: state.myAccount.loggedUser !== null && state.myAccount.loggedUser !== undefined ? state.myAccount.loggedUser.uuid : ''
         }
     };

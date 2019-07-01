@@ -1,9 +1,41 @@
-import { INewsData, IViewNewsDataServer } from "./news";
+import { INewsData, IViewNewsDataServer, InewsLanguage } from "./news";
 import { IhomeDataServer } from "./home";
-import { ILoginResponse } from "./login";
-import { IRegistrationResult, ICheckUsernameResult } from "./registration";
+import { ILoginResponse, IloginMenu, IloginFormHeader } from "./login";
+import { IRegistrationResult, ICheckUsernameResult, IRegistrationText } from "./registration";
 import { IcurrentUser } from "./currentUser";
-import { IMyAccountResponse } from "./myAccount";
+import { IMyAccountResponse, IMyAccountAllText } from "./myAccount";
+import { ImenuText } from "./menu";
+import { 
+    ptCode, 
+    enCode, 
+    ERROR_ADD_COMMENT, 
+    ERROR_GENERIC, 
+    ERROR_LOGIN, 
+    ERROR_LOGOUT, 
+    ERROR_HOME_PAGE, 
+    ERROR_GET_NEWS_LIST, 
+    ERROR_GET_NEWS_DATA, 
+    ERROR_MYACCOUNT_CHANGENAME, 
+    ERROR_USER_REGISTRATION, 
+    ERROR_MYACCOUNT_CHANGEPASSWORD, 
+    ERROR_MYACCOUNT_CLOSE_DISABLE, 
+    TEXT_LOGIN_MENU,
+    TEXT_NEED_LOGIN,
+    TEXT_REGISTRATION,
+    TEXT_MENU,
+    TEXT_NEWS_LIST,
+    TEXT_COMMENT_ADD,
+    TEXT_COMMENT,
+    TEXT_MY_ACCOUNT,
+    TEXT_PAGE_NOT_FOUND,
+    LOAD_LOGIN_MENU,
+    LOAD_NEW_COMMENT,
+    LOAD_HOME_NEWS,
+    LOAD_REGISTRATION,
+    LOAD_MYACCOUNT,
+    LOAD_MYACCOUNT_PASSWORD,
+    LOAD_MYACCOUNT_EMAIL
+    } from "../settings";
 
 ////Header Interfaces
 export interface IPageHeader {
@@ -75,7 +107,7 @@ export interface IAddComment {
     emptyComment?: boolean;
     loggedUser?: IcurrentUser;
     isLogged?: boolean;
-
+    addCommentText?: IAddCommentText;
 }
 
 export interface IAddCommentAction
@@ -89,8 +121,8 @@ export interface IAddCommentText {
 }
 
 export interface ICommentAddTranslations {
-    PT: IAddCommentText;
-    EN: IAddCommentText;
+    [ptCode]: IAddCommentText;
+    [enCode]: IAddCommentText;
 }
 
 export interface ICommentText {
@@ -99,8 +131,8 @@ export interface ICommentText {
 }
 
 export interface ICommentTranslations {
-    PT: ICommentText;
-    EN: ICommentText;
+    [ptCode]: ICommentText;
+    [enCode]: ICommentText;
 }
 
 ////Error handling interfaces
@@ -109,16 +141,6 @@ export interface ILoading {
     isPageLoading?: boolean;    
     localLoading?: ILocalLoading;
     lessPriority?: boolean;
-}
-
-interface ILocalLoading {
-    loadLogin?: boolean;
-    loadComment?: boolean;
-    loadHomeNews?: boolean;
-    loadUserRegistration?: boolean;
-    loadMyAccount?: boolean;
-    loadMyAccountPassword?: boolean;
-    loadMyAccountEmail?: boolean;
 }
 
 export interface IErrorHandling {
@@ -155,25 +177,58 @@ export interface IServerPayload {
 }
 
 export interface IErrorHandlingTextTranslation {
-    PT?: IErrorHandlingText;
-    EN?: IErrorHandlingText;
+    [ptCode]?: IErrorHandlingText;
+    [enCode]?: IErrorHandlingText;
 }
 
 export interface IPageNotFoundTextTranslation {
-    PT?: IErrorHandlingText;
-    EN?: IErrorHandlingText;
+    [ptCode]?: IErrorHandlingText;
+    [enCode]?: IErrorHandlingText;
 }
 
+export interface IPageNotFoundProps {
+    pageNotFoundText?: IErrorHandlingText; 
+}
+
+export interface IIndexable {
+    [key: string]: any;
+ }
+
+ ////Add new loading keys to this interface
+interface ILocalLoading {
+    [LOAD_LOGIN_MENU]?: boolean;
+    [LOAD_NEW_COMMENT]?: boolean;
+    [LOAD_HOME_NEWS]?: boolean;
+    [LOAD_REGISTRATION]?: boolean;
+    [LOAD_MYACCOUNT]?: boolean;
+    [LOAD_MYACCOUNT_PASSWORD]?: boolean;
+    [LOAD_MYACCOUNT_EMAIL]?: boolean;
+}
+
+//// Add new error keys to this interface
 export interface IErrorHandlingErrors {
-    ERROR_GENERIC: IErrorHandlingTextTranslation;
-    ERROR_ADD_COMMENT: IErrorHandlingTextTranslation;
-    ERROR_LOGIN: IErrorHandlingTextTranslation;
-    ERROR_LOGOUT: IErrorHandlingTextTranslation;
-    ERROR_HOME_PAGE: IErrorHandlingTextTranslation;
-    ERROR_GET_NEWS_LIST: IErrorHandlingTextTranslation;
-    ERROR_GET_NEWS_DATA: IErrorHandlingTextTranslation;
-    ERROR_USER_REGISTRATION: IErrorHandlingTextTranslation;
-    ERROR_MYACCOUNT_CHANGENAME: IErrorHandlingTextTranslation;
-    ERROR_MYACCOUNT_CHANGEPASSWORD: IErrorHandlingTextTranslation;
-    ERROR_MYACCOUNT_CLOSE_DISABLE: IErrorHandlingTextTranslation;
+    [ERROR_GENERIC]: IErrorHandlingTextTranslation;
+    [ERROR_ADD_COMMENT]: IErrorHandlingTextTranslation;
+    [ERROR_LOGIN]: IErrorHandlingTextTranslation;
+    [ERROR_LOGOUT]: IErrorHandlingTextTranslation;
+    [ERROR_HOME_PAGE]: IErrorHandlingTextTranslation;
+    [ERROR_GET_NEWS_LIST]: IErrorHandlingTextTranslation;
+    [ERROR_GET_NEWS_DATA]: IErrorHandlingTextTranslation;
+    [ERROR_USER_REGISTRATION]: IErrorHandlingTextTranslation;
+    [ERROR_MYACCOUNT_CHANGENAME]: IErrorHandlingTextTranslation;
+    [ERROR_MYACCOUNT_CHANGEPASSWORD]: IErrorHandlingTextTranslation;
+    [ERROR_MYACCOUNT_CLOSE_DISABLE]: IErrorHandlingTextTranslation;    
+}
+
+////Add new language keys to this interface
+export interface IAppText {
+    [TEXT_LOGIN_MENU]: IloginMenu; 
+    [TEXT_NEED_LOGIN]: IloginFormHeader;
+    [TEXT_REGISTRATION]: IRegistrationText;
+    [TEXT_MENU]: ImenuText;
+    [TEXT_NEWS_LIST]: InewsLanguage;
+    [TEXT_COMMENT_ADD]: IAddCommentText;
+    [TEXT_COMMENT]: ICommentText;   
+    [TEXT_MY_ACCOUNT]: IMyAccountAllText; 
+    [TEXT_PAGE_NOT_FOUND]: IErrorHandlingText;
 }

@@ -1,4 +1,5 @@
 import { Iimage, IpresentationData } from "./common";
+import { ptCode, enCode } from "../settings";
 
 export interface Ipresentation {
     presentationData: IpresentationData;
@@ -7,8 +8,8 @@ export interface Ipresentation {
 
 
 export interface IpresentationServer {
-    PT: IpresentationServerContent;
-    EN?: IpresentationServerContent;
+    [ptCode]: IpresentationServerContent;
+    [enCode]?: IpresentationServerContent;
 }
 
 export interface IpresentationServerContent {

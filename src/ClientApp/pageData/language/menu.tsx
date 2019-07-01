@@ -1,7 +1,8 @@
 import { ImenuTranslations } from '../../interfaces/menu';
+import { ptCode, enCode } from '../../settings';
 
-export const TEXT_MENU: ImenuTranslations = {
-    PT: {
+export const TEXT_MENU_OBJECT: ImenuTranslations = {
+    [ptCode]: {
         newsTitle : "Notícias",
         blogs : {
             title : "Blogs",
@@ -39,7 +40,7 @@ export const TEXT_MENU: ImenuTranslations = {
             english : 'Inglês'
         }
     },
-    EN: {
+    [enCode]: {
         newsTitle : "News",
         blogs : {
             title : "Blogs",

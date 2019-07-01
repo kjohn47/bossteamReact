@@ -1,7 +1,8 @@
 import { IloginMenuTranslations, IloginFormHeaderTranslations } from "../../interfaces/login";
+import { ptCode, enCode } from '../../settings';
 
-export const TEXT_LOGIN_MENU: IloginMenuTranslations = {
-        PT: {
+export const TEXT_LOGIN_MENU_OBJECT: IloginMenuTranslations = {
+        [ptCode]: {
                 username : 'Nome do Utilizador',
                 password : 'Password',
                 register : 'Registar',
@@ -11,7 +12,7 @@ export const TEXT_LOGIN_MENU: IloginMenuTranslations = {
                 invalidLogin: 'Utilizador ou Password Inválido',
                 passwordRecover: 'Clique aqui para recuperar a password'
         },
-        EN: {
+        [enCode]: {
                 username : 'Username',
                 password : 'Password',
                 register : 'Register',
@@ -23,12 +24,12 @@ export const TEXT_LOGIN_MENU: IloginMenuTranslations = {
         }
 }
 
-export const TEXT_NEED_LOGIN: IloginFormHeaderTranslations = {
-        PT: {
+export const TEXT_NEED_LOGIN_OBJECT: IloginFormHeaderTranslations = {
+        [ptCode]: {
                 title: 'Login:',
                 warning: 'Necessita fazer login para visualizar esta página!'
         },
-        EN: {
+        [enCode]: {
                 title: 'Login',
                 warning: 'You need to make login to be able to see this page!'
         }

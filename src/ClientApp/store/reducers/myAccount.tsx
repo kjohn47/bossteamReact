@@ -1,5 +1,6 @@
 import { IMyAccountReduxState, IMyAccountAction, IMyAccountChangeNamePayload } from "../../interfaces/myAccount";
-import { results, checkLogin, getCurrentUser } from "../../settings";
+import { results } from "../../settings";
+import { checkLogin, getCurrentUser } from "../../common/session";
 import { 
     MAKE_LOGOUT,
     MAKE_LOGIN,

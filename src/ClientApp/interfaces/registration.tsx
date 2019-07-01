@@ -1,3 +1,5 @@
+import { ptCode, enCode } from "../settings";
+
 export interface IRegistrationText {
     title: string;
     name: string;
@@ -14,8 +16,8 @@ export interface IRegistrationText {
 }
 
 export interface IRegistrationTextTranslations {
-    PT: IRegistrationText;
-    EN: IRegistrationText;
+    [ptCode]: IRegistrationText;
+    [enCode]: IRegistrationText;
 }
 
 export interface IRegistrationAction {
