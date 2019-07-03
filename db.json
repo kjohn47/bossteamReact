@@ -283,7 +283,7 @@
         "loginData": {
           "success": true,
           "user": {
-            "name": "John",
+            "name": "Johnny",
             "surname": "Doe",
             "uuid": "AAAA-BBBB-CCCC-DDDD",
             "permission": 1,
@@ -292,7 +292,7 @@
           }
         }
       },
-      "sessionId": "17d8d37a57a26e561d78d4576953037a2286833e"
+      "sessionId": "0b99ab70e31571b78d83c89c0d0d3db14fb1df5e"
     },
     {
       "id": 2,
@@ -332,7 +332,8 @@
             "enabled": false
           }
         }
-      }
+      },
+      "sessionId": "bb3dbc315e2a36bb2649d36999b415bbc4571174"
     },
     {
       "id": 4,

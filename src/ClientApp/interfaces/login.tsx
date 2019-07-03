@@ -13,6 +13,7 @@ export interface IloginMenu {
     emptyPassword: string;
     invalidLogin: string;
     passwordRecover: string;
+    stayLoggedIn: string;
 }
 
 export interface IloginMenuTranslations {
@@ -35,11 +36,12 @@ export interface ILoginActions {
     handlePassword?(event: any): void;
     makeLogin?(): void; 
     handleKeyPress?(event: any, focus: string, submit?:boolean): void;
+    handleIsPermanent?(): void;
     state?: ILoginState;  
 }
 
 export interface ILoginReduxActions {
-    makeLogin?( user: string, password: string ): Function;
+    makeLogin?( user: string, password: string, isPermanent: boolean ): Function;
     makeLogout?( user: IcurrentUser ): Function;
     resetLoginStatus?(): Function;
 }
@@ -51,6 +53,7 @@ export interface ILoginState {
     emptyUser: boolean;
     emptyPassword:boolean;
     loginAttempt: boolean;
+    isPermanent: boolean;
 }
 
 export interface ILoginResponse {

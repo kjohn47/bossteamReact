@@ -51,9 +51,9 @@ import {
     
 import { IcurrentUser, ICurrentUserCookie } from "../../../interfaces/currentUser";
 
-export function makeLogin( user: string, password: string )  : Function {
+export function makeLogin( user: string, password: string, isPermanent: boolean )  : Function {
     return (dispatch: Function) =>  { 
-        commonServerAction( dispatch, makeLoginOnServer, makeLoginSuccess, {user, password}, null , true, LOAD_LOGIN_MENU, updateLoginToken );
+        commonServerAction( dispatch, makeLoginOnServer, makeLoginSuccess, {user, password}, isPermanent , true, LOAD_LOGIN_MENU, updateLoginToken );
     }
 }
 
@@ -62,17 +62,23 @@ export function sessionLogin(): Function {
         if( checkLogin() )
         {
             let session: IUserSession = getCurrentSession();
-            commonServerAction( dispatch, makeLoginWithSession, makeLoginSuccess, session, null, true, LOAD_LOGIN_MENU, updateLoginToken, null, cookieLogout );
+            commonServerAction( dispatch, makeLoginWithSession, makeLoginSuccess, session, null, true, LOAD_LOGIN_MENU, updateLoginToken, null, sessionLogoutError );
         }
         return dispatch( () => {} );
     }
+}
+
+function sessionLogoutError( dispatch: Function )
+{
+    cookieLogout();
+    dispatch( logout() );
 }
 
 function updateLoginToken( result: IServerPayload, serverCallArg: any, successCallArg: any, dispatch: Function ) : void
 {
     if(result.loginData.success)
     {
-        setCurrentSession(result.loginData.session);
+        setCurrentSession(result.loginData.session, successCallArg);
         let userCookie: ICurrentUserCookie = {
             user: result.loginData.user,
             isLogged: true
@@ -93,7 +99,7 @@ function makeLoginSuccess( result: IServerPayload ) : IMyAccountAction {
 export function makeLogout( user: IcurrentUser) : Function {
     return (dispatch: Function) =>  
     {     
-        commonServerAction( dispatch, makeLogoutOnServer, logout, user, null , true, LOAD_LOGIN_MENU, null, logoutFunctions, cookieLogout );
+        commonServerAction( dispatch, makeLogoutOnServer, logout, user, null , true, LOAD_LOGIN_MENU, null, logoutFunctions, logoutFunctions );
     } 
 }
 

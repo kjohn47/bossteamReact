@@ -35,7 +35,7 @@ function errorHandlingLogic (ErrorHandlingView:React.ComponentType<IErrorHandlin
           }
         componentWillMount()
         {
-            !this.props.isLogged && checkLogin() && this.props.sessionLogin();
+            checkLogin() && this.props.sessionLogin();
         }
 
         render(){

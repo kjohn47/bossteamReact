@@ -43,7 +43,7 @@ export function commonServerAction( dispatch: Function,
         runAfterFinish !== null && runAfterFinish( result.payload, serverCallArg, successCallArg, dispatch );
     }).catch( ( err: IErrorHandling ) => {
         dispatch( serverCommunicationError( { ...err } ) );
-        runifError !== null && runifError( err );
+        runifError !== null && runifError( dispatch, err );
     }).finally ( () => {                
         dispatch(endServerCommunication( isLocalLoad, localLoad ) );
     } )
