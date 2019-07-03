@@ -158,6 +158,7 @@ export interface IErrorHandlingText {
 export interface IServerResponse {
     id?: number; ////Just for json server mock
     uuid?: string; //// Just for json server mock
+    sessionId?: string; //// Just for json server mock
     username?: string; ////Just for json server mock
     password?:string; ////Just for json server mock
     payload?: IServerPayload;

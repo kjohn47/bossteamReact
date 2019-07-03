@@ -219,6 +219,7 @@ export type MyAccountLogicType = IMyAccountLogicProps & IMyAccountLogicActions;
 export interface IMyAccountReduxState {
     isLogged?: boolean;
     loggedUser?: IcurrentUser;
+    userSession?: IUserSession;
     tryLogin?: string;
     changeName: IchangeNameReduxState;
     changePassword: IchangePasswordReduxState;
@@ -227,6 +228,11 @@ export interface IMyAccountReduxState {
 
 interface IchangeNameReduxState {
     success: string;
+}
+
+export interface IUserSession {
+    uuid: string;
+    sessionId: string;
 }
 
 interface IchangePasswordReduxState {

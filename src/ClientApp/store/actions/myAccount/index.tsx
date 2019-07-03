@@ -1,5 +1,5 @@
 import { commonServerAction } from "../appSettings/common";
-import { setCurrentUser, cookieLogout, updateCurrentUserNames, updateCurrentUserEnabledAccount } from "../../../common/session";
+import { setCurrentSession, cookieLogout, checkLogin, getCurrentSession, setCurrentUser, getCurrentUser } from "../../../common/session";
 
 import { 
     makeLoginOnServer,
@@ -10,7 +10,8 @@ import {
     checkEmailServerCall,
     closeAccountServerCall,
     enableAccountServerCall,
-    disableAccountServerCall
+    disableAccountServerCall,
+    makeLoginWithSession
     } from "./myAccountServerCalls";
 
 import { 
@@ -43,12 +44,12 @@ import {
 
 import { 
     IMyAccountAction,
-    IchangeNameArg,
     IMyaccountChangePasswordArg,
-    IMyaccountCloseArg 
+    IMyaccountCloseArg, 
+    IUserSession
     } from "../../../interfaces/myAccount";
     
-import { IcurrentUser } from "../../../interfaces/currentUser";
+import { IcurrentUser, ICurrentUserCookie } from "../../../interfaces/currentUser";
 
 export function makeLogin( user: string, password: string )  : Function {
     return (dispatch: Function) =>  { 
@@ -56,11 +57,27 @@ export function makeLogin( user: string, password: string )  : Function {
     }
 }
 
+export function sessionLogin(): Function {
+    return (dispatch: Function) =>  { 
+        if( checkLogin() )
+        {
+            let session: IUserSession = getCurrentSession();
+            commonServerAction( dispatch, makeLoginWithSession, makeLoginSuccess, session, null, true, LOAD_LOGIN_MENU, updateLoginToken, null, cookieLogout );
+        }
+        return dispatch( () => {} );
+    }
+}
+
 function updateLoginToken( result: IServerPayload, serverCallArg: any, successCallArg: any, dispatch: Function ) : void
 {
     if(result.loginData.success)
     {
-        setCurrentUser(result.loginData.user);
+        setCurrentSession(result.loginData.session);
+        let userCookie: ICurrentUserCookie = {
+            user: result.loginData.user,
+            isLogged: true
+        };
+        setCurrentUser( userCookie );
     }
 }
 
@@ -76,7 +93,7 @@ function makeLoginSuccess( result: IServerPayload ) : IMyAccountAction {
 export function makeLogout( user: IcurrentUser) : Function {
     return (dispatch: Function) =>  
     {     
-        commonServerAction( dispatch, makeLogoutOnServer, logout, user, null , true, LOAD_LOGIN_MENU, null, logoutFunctions );
+        commonServerAction( dispatch, makeLogoutOnServer, logout, user, null , true, LOAD_LOGIN_MENU, null, logoutFunctions, cookieLogout );
     } 
 }
 
@@ -113,13 +130,17 @@ export function resetMyAccountSuccess() : IMyAccountAction {
 export function changeName ( name: string, surname: string ) : Function {
     return (dispatch: Function) =>  
     {     
-        commonServerAction( dispatch, changeNameServerCall, changeNameSuccess, { name, surname }, null , true, LOAD_MYACCOUNT, updateCookieName );
+        commonServerAction( dispatch, changeNameServerCall, changeNameSuccess, { name, surname }, null , true, LOAD_MYACCOUNT, changeNameFunctions );
     } 
 }
 
-function updateCookieName( result: IServerPayload, serverCallArg: IchangeNameArg, successCallArg: any, dispatch: Function ): void {
-    if( result.myAccount.name !== null && result.myAccount.name !== undefined ) {
-        updateCurrentUserNames( result.myAccount.name.name, result.myAccount.name.surname );
+function changeNameFunctions ( result: IServerPayload ): void {
+    if( result.myAccount.success === results.success )
+    {
+        let userCookie: ICurrentUserCookie = getCurrentUser();
+        userCookie.user.name = result.myAccount.name.name;
+        userCookie.user.surname = result.myAccount.name.surname;
+        setCurrentUser( userCookie );
     }
 }
 
@@ -228,8 +249,11 @@ export function enableAccount( email: string, password: string ): Function {
 function enableAccountChangeSuccess( result: IServerPayload, serverCallArg: IMyaccountCloseArg, successCallArg: any, dispatch: Function ): void {
     if ( result.myAccount.success === results.success )
     {        
+
+        let userCookie: ICurrentUserCookie = getCurrentUser();
+        userCookie.user.enabled = result.myAccount.enabled;        
+        setCurrentUser( userCookie );
         dispatch( changeAccountEnabledStatus( result ) );
-        updateCurrentUserEnabledAccount( result.myAccount.enabled );
     }
 } 
 

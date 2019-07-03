@@ -1,6 +1,7 @@
-import {IcurrentUser} from '../interfaces/currentUser';
 import Cookies from 'universal-cookie';
-import {langCookie, ptCode, enCode, pageHome, userCookie} from '../settings';
+import {langCookie, ptCode, enCode, pageHome, userCookie, sessionCookie} from '../settings';
+import { IUserSession } from '../interfaces/myAccount';
+import { ICurrentUserCookie } from '../interfaces/currentUser';
 const cookies = new Cookies();
 
 // COOKIE METHODS -- Do not change
@@ -22,35 +23,39 @@ export const currentLanguage = () : string => {
     cookies.set(langCookie, lang, { path: pageHome });
  };
  
- export const getCurrentUser = () : IcurrentUser => {
-     return cookies.get(userCookie);  
+ export const getCurrentSession = () : IUserSession => {
+     //return cookies.get(sessionCookie);  
+     let uuid: string = sessionStorage.getItem(sessionCookie + "uuid");
+     let sessionId: string = sessionStorage.getItem(sessionCookie + "sessionId");
+     if( uuid !== null && uuid !== undefined && sessionId !== null && sessionId !== undefined )
+     {
+        return {
+            sessionId: sessionId,
+            uuid: uuid
+         }
+     }
+     return null;
  };
+
+ export const getCurrentUser = () : ICurrentUserCookie => {
+    return cookies.get(userCookie);
+ }
+
+ export const setCurrentUser = (userData: ICurrentUserCookie ) : void => {
+   cookies.set(userCookie, userData, { path: pageHome }) 
+};
  
- export const setCurrentUser = (userData: IcurrentUser ) : void => {
-    cookies.set(userCookie, userData, { path: pageHome }) 
+ export const setCurrentSession = (userData: IUserSession ) : void => {
+    //cookies.set(sessionCookie, userData, { path: pageHome }) 
+    sessionStorage.setItem(sessionCookie + "uuid", userData.uuid);
+    sessionStorage.setItem(sessionCookie + "sessionId", userData.sessionId);
  };
- 
- export const updateCurrentUserNames = ( name: string, surname: string ): void => {
-    let user: IcurrentUser = getCurrentUser();
-    user = {...user,
-       name: name,
-       surname: surname
-    };
-    setCurrentUser( user );
- }
- 
- export const updateCurrentUserEnabledAccount = ( enabled: boolean ): void => {
-    let user: IcurrentUser = getCurrentUser();
-    user = {...user,
-       enabled: enabled
-    };
-    setCurrentUser( user );
- }
  
  export const cookieLogout = () : void => {
-    cookies.remove(userCookie, { path: pageHome });
+    cookies.remove(sessionCookie, { path: pageHome });
+    cookies.remove(userCookie, { path: pageHome }) 
  };
  
  export const checkLogin = () : boolean => {
-    return getCurrentUser() !== null && getCurrentUser() !== undefined;
+    return getCurrentSession() !== null && getCurrentSession() !== undefined;
  };
