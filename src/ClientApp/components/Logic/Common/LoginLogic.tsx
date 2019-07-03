@@ -20,13 +20,15 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
             this.handlePassword = this.handlePassword.bind(this);
             this.handleUser = this.handleUser.bind(this);
             this.handleKeyPress = this.handleKeyPress.bind(this);
+            this.handleIsPermanent = this.handleIsPermanent.bind(this);
             this.state = {
                     user: '',
                     password: '',
                     invalidUser: false,
                     emptyUser: false,
                     emptyPassword:false,
-                    loginAttempt: false
+                    loginAttempt: false,
+                    isPermanent: true
                 };
         }
 
@@ -49,6 +51,13 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
                     password: event.currentTarget.value,
                     loginAttempt: false
                 });
+        }
+
+        handleIsPermanent(): void {
+            let oldIsPermanent = this.state.isPermanent;
+            this.setState({
+                isPermanent: !oldIsPermanent
+            });
         }
 
         handleKeyPress(event: KeyboardEvent, focus: string, submit?:boolean) : void {
@@ -83,7 +92,7 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
                 withError = true;
             }
             if( !withError ) {
-                this.props.makeLogin(this.state.user, this.state.password);                            
+                this.props.makeLogin(this.state.user, this.state.password, this.state.isPermanent);                            
             }
         }
 
@@ -122,13 +131,15 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
                 handleUser: this.handleUser,
                 makeLogin: this.makeLogin,   
                 handleKeyPress: this.handleKeyPress,
+                handleIsPermanent: this.handleIsPermanent,
                 state: {
                     user: this.state.user,
                     password: this.state.password,
                     invalidUser: this.state.invalidUser,
                     emptyUser: this.state.emptyUser,
                     emptyPassword: this.state.emptyPassword,
-                    loginAttempt: this.state.loginAttempt
+                    loginAttempt: this.state.loginAttempt,
+                    isPermanent: this.state.isPermanent
                 }
             }
 
@@ -160,7 +171,7 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
     };
 
     const mapDispatchToProps = (dispatch: Function): ILoginReduxActions =>({
-        makeLogin: ( user: string, password: string ) => dispatch( makeLogin( user, password ) ),
+        makeLogin: ( user: string, password: string, isPermanent: boolean ) => dispatch( makeLogin( user, password, isPermanent ) ),
         makeLogout: ( user: IcurrentUser) => dispatch( makeLogout( user ) ),
         resetLoginStatus: () => dispatch( resetLoginStatus() )
     });

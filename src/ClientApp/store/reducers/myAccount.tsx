@@ -1,6 +1,5 @@
 import { IMyAccountReduxState, IMyAccountAction, IMyAccountChangeNamePayload } from "../../interfaces/myAccount";
 import { results } from "../../settings";
-import { checkLogin, getCurrentUser } from "../../common/session";
 import { 
     MAKE_LOGOUT,
     MAKE_LOGIN,
@@ -15,11 +14,13 @@ import {
     MYACCOUNT_CLOSE_ACCOUNT,
     MYACCOUNT_ENABLE_ACCOUNT
 } from "../actionTypes";
+import { getCurrentUser, getCurrentSession } from "../../common/session";
 
 //// -- Default myAccount state
 const defaultState: IMyAccountReduxState = {
-    isLogged: checkLogin(),
-    loggedUser: getCurrentUser(),
+    isLogged: getCurrentUser() !== null && getCurrentUser() !== undefined && getCurrentUser().isLogged,
+    loggedUser: getCurrentUser()!== null && getCurrentUser() !== undefined ? getCurrentUser().user : null,
+    userSession: getCurrentSession(),
     tryLogin: results.default,
     changeName: {
         success: results.default
@@ -47,7 +48,8 @@ export function myAccount( state:IMyAccountReduxState = defaultState, action:IMy
         case MAKE_LOGOUT: {            
             return{...state,
                 isLogged: false,
-                loggedUser: null
+                loggedUser: null,
+                userSession: null
             };
         }
         
@@ -55,6 +57,7 @@ export function myAccount( state:IMyAccountReduxState = defaultState, action:IMy
             return{...state,
                 isLogged: action.payload.login.success,
                 loggedUser: action.payload.login.user,
+                userSession: action.payload.login.session,
                 tryLogin: action.payload.login.success ? results.success : results.failure
             };
         }

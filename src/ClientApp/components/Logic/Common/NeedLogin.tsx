@@ -11,7 +11,7 @@ function needLoginLogic ( WrappedComponent:React.ComponentType ): React.Componen
     class NeedLoginLogic extends React.Component<INeedLoginReduxProps>{
 
         render(){
-            const isLogged = this.props.isLogged && this.props.loggedUser !== null && this.props.loggedUser.uuid !== undefined && this.props.loggedUser.uuid !== '';
+            const isLogged = this.props.isLogged && this.props.userSession !== null && this.props.userSession.uuid !== undefined && this.props.userSession.uuid !== '' && this.props.userSession.sessionId != '';
             return(     
                 isLogged?
                     this.props.children            
@@ -28,7 +28,7 @@ function needLoginLogic ( WrappedComponent:React.ComponentType ): React.Componen
     const mapStateToProps = ( state: Istore ) : INeedLoginReduxProps => {
         return {
             isLogged: state.myAccount.isLogged,
-            loggedUser: state.myAccount.loggedUser,
+            userSession: state.myAccount.userSession,
             loginFormHeader: state.appSettings.appText[TEXT_NEED_LOGIN]            
         }
     };

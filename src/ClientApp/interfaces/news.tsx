@@ -91,7 +91,7 @@ export interface IViewNewsDataServer {
 export interface IViewNewsActions{
     getNewsData( language: string, ID: number ) : Function;
     changeNewsDataLanguage( language: string ) : Function;
-    addNewsComment( newsID: number, comment: string, user:IcurrentUser ) : Function;
+    addNewsComment( newsID: number, comment: string ) : Function;
     resetNewsData() : Function;
 }
 
@@ -103,5 +103,4 @@ export interface IViewNewsAction{
 export interface InewsDataArg {
     newsID: number;
     comment:string;
-    user: IcurrentUser
 }

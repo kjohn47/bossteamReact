@@ -45,7 +45,7 @@ function commentLogic (WrappedComponent:React.ComponentType<IcommentProps>) : Re
     const mapStateToProps = ( state: Istore ) : ICommentStore => {
         return {
             commentText: state.appSettings.appText[TEXT_COMMENT],
-            userUUID: state.myAccount.loggedUser !== null && state.myAccount.loggedUser !== undefined ? state.myAccount.loggedUser.uuid : ''
+            userUUID: state.myAccount.userSession !== null && state.myAccount.userSession !== undefined ? state.myAccount.userSession.uuid : ''
         }
     };
     

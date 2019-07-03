@@ -1,6 +1,8 @@
 import { startServerCommunication, serverCommunicationError, endServerCommunication } from ".";
 import { IErrorHandling, IServerResponse } from "../../../interfaces/common";
 import { ERROR_GENERIC } from "../../../settings";
+import { store } from "../../configureStore";
+import { IUserSession } from "../../../interfaces/myAccount";
 
 export function commonServerAction( dispatch: Function, 
                                     serverCall:Function, 
@@ -10,7 +12,8 @@ export function commonServerAction( dispatch: Function,
                                     isLocalLoad: boolean = false, 
                                     localLoad: string = '',
                                     runBeforeSuccess: Function = null,
-                                    runAfterFinish: Function = null) : Promise<any>
+                                    runAfterFinish: Function = null,
+                                    runifError: Function = null) : Promise<any>
 {    
     dispatch( startServerCommunication( isLocalLoad, localLoad ) );    
     return new Promise( async (resolve, reject) => {
@@ -39,16 +42,18 @@ export function commonServerAction( dispatch: Function,
     }).then( ( result:IServerResponse ) => { 
         runAfterFinish !== null && runAfterFinish( result.payload, serverCallArg, successCallArg, dispatch );
     }).catch( ( err: IErrorHandling ) => {
-        dispatch( serverCommunicationError( { ...err } ) )
+        dispatch( serverCommunicationError( { ...err } ) );
+        runifError !== null && runifError( dispatch, err );
     }).finally ( () => {                
-        dispatch(endServerCommunication( isLocalLoad, localLoad ) );                
+        dispatch(endServerCommunication( isLocalLoad, localLoad ) );
     } )
 }
 
 export async function serverResolve( serverCall: Function, errorCode: string = ERROR_GENERIC ) : Promise<any>
 {
+    let currentSession: IUserSession = store.getState().myAccount !== null && store.getState().myAccount !== undefined? store.getState().myAccount.userSession: null;    
     return new Promise( (resolve, reject ) => {
-        let serverReturn: IServerResponse = serverCall();        
+        let serverReturn: IServerResponse = serverCall( currentSession );
         if( serverReturn === null || serverReturn === undefined )
         {
             throw new Error("Empty data from server");

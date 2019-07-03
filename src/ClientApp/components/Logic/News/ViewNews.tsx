@@ -4,7 +4,6 @@ import { Istore } from '../../../interfaces/store';
 import {connect} from 'react-redux';
 import { getNewsData, changeNewsDataLanguage, addNewsComment, resetNewsData } from '../../../store/actions/news';
 import { IViewNews, IViewNewsData, IViewNewsActions } from '../../../interfaces/news';
-import { IcurrentUser } from '../../../interfaces/currentUser';
 
 type INewsReduxProps = IAppSettings & IViewNewsActions & IViewNews;
 
@@ -36,7 +35,7 @@ function viewNewsLogic (WrappedComponent:React.ComponentType<IViewNews>): React.
           }
         
         addCommentAction(comment: string) : void {
-            this.props.addNewsComment(this.props.newsID, comment, this.props.loggedUser);
+            this.props.addNewsComment(this.props.newsID, comment);
         }
 
         render(){
@@ -65,7 +64,7 @@ function viewNewsLogic (WrappedComponent:React.ComponentType<IViewNews>): React.
         getNewsData: (language: string, ID: number) => dispatch(getNewsData(language, ID)),      
         resetNewsData: () => dispatch(resetNewsData()),  
         changeNewsDataLanguage: (language: string) => dispatch(changeNewsDataLanguage(language)),
-        addNewsComment: (newsID: number, Comment:string, user:IcurrentUser) => dispatch(addNewsComment(newsID, Comment, user))
+        addNewsComment: (newsID: number, Comment:string) => dispatch(addNewsComment(newsID, Comment))
       });
     return connect(mapStateToProps, mapDispatchToProps)(ViewNewsLogic);
 }
