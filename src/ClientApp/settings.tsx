@@ -58,3 +58,5 @@ export const blogsListAllRoute = '/listallblogs';
 // COOKIE NAMES
 export const langCookie = 'appLanguage';
 export const userCookie = 'appCurrentUser';
+export const sessionCookieUUID = 'appCurrentSessionUUID';
+export const sessionCookieSESSIONID = 'appCurrentSessionSESSIONID';

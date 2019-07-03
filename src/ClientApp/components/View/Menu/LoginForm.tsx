@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {NavItem, NavLink, Button, Form, FormGroup, Input, Spinner, FormFeedback } from 'reactstrap';
+import {NavItem, NavLink, Button, Form, FormGroup, Input, Spinner, FormFeedback, UncontrolledTooltip } from 'reactstrap';
 import {ILogin} from '../../../interfaces/login';
 import {NavLink as RouterLink} from 'react-router-dom';
 import { registrationRoute } from '../../../settings';
@@ -26,7 +26,7 @@ class LoginForm extends React.PureComponent<ILogin,{}>{
                     </FormFeedback>
                 </FormGroup> 
                 &nbsp;
-                <FormGroup  className="mb-2 mr-sm-2 mb-sm-0">
+                <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                     <Input 
                         type="password" 
                         name="password_inline" 
@@ -42,6 +42,18 @@ class LoginForm extends React.PureComponent<ILogin,{}>{
                             { this.props.loginAction.state.emptyPassword ? this.props.loginText.emptyPassword : <RouterLink to="/" className="nav-link loginPassRecover">{ this.props.loginText.passwordRecover }</RouterLink> }
                         </FormFeedback>
                      }
+                </FormGroup>
+                <FormGroup check>
+                    <Input 
+                        type = "checkbox"
+                        name = "isPermanent_inline"
+                        id = "isPermanent_inline"
+                        checked = {this.props.loginAction.state.isPermanent}
+                        onChange = { () => { this.props.loginAction.handleIsPermanent() } }
+                    />
+                    <UncontrolledTooltip placement="bottom" target="isPermanent_inline">
+                        { this.props.loginText.stayLoggedIn }
+                    </UncontrolledTooltip>
                 </FormGroup>
                 <div className="login_form_btn">
                     { this.props.loading ? 

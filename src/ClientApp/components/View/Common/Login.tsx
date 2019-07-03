@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Form, FormGroup, Input, Spinner, FormFeedback, Alert, Label } from 'reactstrap';
+import { Button, Form, FormGroup, Input, Spinner, FormFeedback, Alert, Label, Col } from 'reactstrap';
 import { ILogin } from '../../../interfaces/login';
 import { NavLink as RouterLink } from 'react-router-dom';
 import { registrationRoute } from '../../../settings';
@@ -54,6 +54,18 @@ class Login extends React.PureComponent<ILogin,{}>{
                                 { this.props.loginText.emptyPassword }
                             </FormFeedback>
                      }
+                </FormGroup>           
+                <br />                    
+                <FormGroup check>
+                <Label check>
+                <Input 
+                    type = "checkbox"
+                    name = "isPermanent_page"
+                    id = "isPermanent_page"
+                    checked = {this.props.loginAction.state.isPermanent}
+                    onChange = { () => { this.props.loginAction.handleIsPermanent() } }
+                /> {' ' + this.props.loginText.stayLoggedIn}
+                </Label>                                     
                 </FormGroup>
                 <div className="login_form_btn login_form_big">
                     { this.props.loading ? 

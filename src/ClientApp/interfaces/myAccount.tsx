@@ -200,13 +200,13 @@ export interface IMyAccountLogicProps {
 }
 
 export interface IMyAccountLogicActions {
-    changeName( name: string, surname: string, uuid: string ): Function;
-    checkPassword( password: string, uuid: string, passwordChange: boolean ): Function;
-    changePassword( oldPassword: string, newPassword: string, uuid: string ): Function;
-    checkEmail( email: string, uuid: string ): Function;
-    disableAccount( email: string, password: string, uuid: string ): Function;
-    enableAccount( email: string, password: string, uuid: string ): Function;
-    closeAccount( email: string, password: string, uuid: string ): Function;
+    changeName( name: string, surname: string ): Function;
+    checkPassword( password: string, passwordChange: boolean ): Function;
+    changePassword( oldPassword: string, newPassword: string ): Function;
+    checkEmail( email: string ): Function;
+    disableAccount( email: string, password: string ): Function;
+    enableAccount( email: string, password: string ): Function;
+    closeAccount( email: string, password: string ): Function;
     resetMyAccountStatus(): Function;
     resetMyAccountSuccess(): Function;
 }
@@ -219,6 +219,7 @@ export type MyAccountLogicType = IMyAccountLogicProps & IMyAccountLogicActions;
 export interface IMyAccountReduxState {
     isLogged?: boolean;
     loggedUser?: IcurrentUser;
+    userSession?: IUserSession;
     tryLogin?: string;
     changeName: IchangeNameReduxState;
     changePassword: IchangePasswordReduxState;
@@ -227,6 +228,11 @@ export interface IMyAccountReduxState {
 
 interface IchangeNameReduxState {
     success: string;
+}
+
+export interface IUserSession {
+    uuid: string;
+    sessionId: string;
 }
 
 interface IchangePasswordReduxState {
@@ -273,7 +279,6 @@ export interface IMyAccountResponse {
 export interface IchangeNameArg {
     name: string;
     surname: string;
-    uuid: string;
 }
 
 export interface IMyAccountEmailPayload {
@@ -287,13 +292,11 @@ export interface IMyAccountPasswordPayload {
 }
 
 export interface IMyaccountChangePasswordArg {
-    uuid: string;
     password: string;
     newPassword?:string;    
 }
 
 export interface IMyaccountCloseArg {
-    uuid: string;
     email: string;  
     password?: string;
 }

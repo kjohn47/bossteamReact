@@ -8,7 +8,6 @@ import {
     RESET_NEWS_LIST
 } from '../../actionTypes';
 import {ptCode, LOAD_NEW_COMMENT, LOAD_HOME_NEWS} from '../../../settings';
-import {IcurrentUser} from '../../../interfaces/currentUser';
 import { InewsAction } from '../../../interfaces/news';
 import { getNewsListFromServer, getNewsDataFromServer, addNewsCommentToServer} from './newsServerCalls';
 import { IServerPayload } from '../../../interfaces/common';
@@ -93,10 +92,10 @@ export function resetNewsData() : InewsAction
 
 //Actions for adding comments
 
-export function addNewsComment (newsID: number, comment: string, user:IcurrentUser) : Function
+export function addNewsComment (newsID: number, comment: string) : Function
 {
     return (dispatch: Function) =>  {
-        commonServerAction( dispatch, addNewsCommentToServer, addNewsCommentSuccess, { newsID, comment, user }, newsID, true, LOAD_NEW_COMMENT );
+        commonServerAction( dispatch, addNewsCommentToServer, addNewsCommentSuccess, { newsID, comment }, newsID, true, LOAD_NEW_COMMENT );
     }
 }
 

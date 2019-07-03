@@ -10,7 +10,8 @@ export const TEXT_LOGIN_MENU_OBJECT: IloginMenuTranslations = {
                 emptyUser: 'Campo Utilizador Vazio',
                 emptyPassword: 'Campo Password Vazio',
                 invalidLogin: 'Utilizador ou Password Inválido',
-                passwordRecover: 'Clique aqui para recuperar a password'
+                passwordRecover: 'Clique aqui para recuperar a password',
+                stayLoggedIn: 'Manter login?'
         },
         [enCode]: {
                 username : 'Username',
@@ -20,7 +21,8 @@ export const TEXT_LOGIN_MENU_OBJECT: IloginMenuTranslations = {
                 emptyUser: 'Empty User Field',
                 emptyPassword: 'Empty Password Field',
                 invalidLogin: 'Invalid User or Password',
-                passwordRecover: 'Click here to recover password'
+                passwordRecover: 'Click here to recover password',
+                stayLoggedIn: 'Stay logged in?'
         }
 }
 
