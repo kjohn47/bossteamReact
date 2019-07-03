@@ -56,7 +56,7 @@ export async function makeLogoutOnServer( user: IcurrentUser ) : Promise<any>{
 }
 
 export async function changeNameServerCall( changeNameArg: IchangeNameArg ) : Promise<any> {
-    return await serverResolve( () => 
+    return await serverResolve( ( currentUser: IcurrentUser ) => 
     {
         let changeName: IMyAccountResponse = {
             success: results.failure
@@ -68,7 +68,7 @@ export async function changeNameServerCall( changeNameArg: IchangeNameArg ) : Pr
                 myAccount: changeName
             }
         }
-        return axios.get( restServer + "Users?uuid=" + changeNameArg.uuid )
+        return axios.get( restServer + "Users?uuid=" + currentUser.uuid )
         .then( ( response ) => {
             let userFromServerArray: IServerResponse[] = response.data;
             if( userFromServerArray === null || userFromServerArray === undefined || userFromServerArray.length <= 0 )
@@ -102,7 +102,7 @@ export async function changeNameServerCall( changeNameArg: IchangeNameArg ) : Pr
 }
 
 export async function checkPasswordServerCall( checkPwArg: IMyaccountChangePasswordArg ): Promise<any> {
-    return await serverResolve( () =>
+    return await serverResolve( ( currentUser: IcurrentUser ) =>
     {
         let validPassword: IServerResponse = { ////This should come from server
             hasError: false,
@@ -118,7 +118,7 @@ export async function checkPasswordServerCall( checkPwArg: IMyaccountChangePassw
         };
 
         ////Just a mock, needs to be different in case of real server call
-        return axios.get(restServer + "Users?uuid=" + checkPwArg.uuid + "&password=" + sha1( checkPwArg.password ) ).then( (response) => {
+        return axios.get(restServer + "Users?uuid=" + currentUser.uuid + "&password=" + sha1( checkPwArg.password ) ).then( (response) => {
             let userFromServer: IServerResponse[] = response.data;
             if( userFromServer !== null && userFromServer !== undefined && userFromServer.length > 0 )
             {
@@ -135,7 +135,7 @@ export async function checkPasswordServerCall( checkPwArg: IMyaccountChangePassw
 }
 
 export async function changePasswordServerCall( checkPwArg: IMyaccountChangePasswordArg ): Promise<any> {
-    return await serverResolve( () =>
+    return await serverResolve( ( currentUser: IcurrentUser ) =>
     {
         let validPassword: IServerResponse = { ////This should come from server
             hasError: false,
@@ -151,7 +151,7 @@ export async function changePasswordServerCall( checkPwArg: IMyaccountChangePass
         };
 
         ////Just a mock, needs to be different in case of real server call
-        return axios.get(restServer + "Users?uuid=" + checkPwArg.uuid + "&password=" + sha1( checkPwArg.password ) ).then( (response) => {
+        return axios.get(restServer + "Users?uuid=" + currentUser.uuid + "&password=" + sha1( checkPwArg.password ) ).then( (response) => {
             let userFromServer: IServerResponse[] = response.data;
             if( userFromServer !== null && userFromServer !== undefined && userFromServer.length > 0 )
             {
@@ -177,7 +177,7 @@ export async function changePasswordServerCall( checkPwArg: IMyaccountChangePass
 }
 
 export async function checkEmailServerCall( checkEmailArg: IMyaccountCloseArg ): Promise<any> {
-    return await serverResolve( () =>
+    return await serverResolve( ( currentUser: IcurrentUser ) =>
     {
         let validEmail: IServerResponse = { ////This should come from server
             hasError: false,
@@ -193,7 +193,7 @@ export async function checkEmailServerCall( checkEmailArg: IMyaccountCloseArg ):
         };
 
         ////Just a mock, needs to be different in case of real server call
-        return axios.get(restServer + "Users?uuid=" + checkEmailArg.uuid ).then( (response) => {
+        return axios.get(restServer + "Users?uuid=" + currentUser.uuid ).then( (response) => {
             let userFromServer: IServerResponse[] = response.data;
             if( userFromServer !== null && userFromServer !== undefined && userFromServer.length > 0 && userFromServer[0].payload.loginData.user.email === checkEmailArg.email )
             {
@@ -209,7 +209,7 @@ export async function checkEmailServerCall( checkEmailArg: IMyaccountCloseArg ):
 }
 
 export async function disableAccountServerCall( disableAccountArg: IMyaccountCloseArg ) : Promise<any>{
-    return await serverResolve( () =>
+    return await serverResolve( ( currentUser: IcurrentUser ) =>
     {
         let serverReturn: IServerResponse = {
             hasError: false,
@@ -229,7 +229,7 @@ export async function disableAccountServerCall( disableAccountArg: IMyaccountClo
             }
         };
                        
-        return axios.get( restServer + "Users?uuid=" + disableAccountArg.uuid + "&password=" + sha1( disableAccountArg.password ) )
+        return axios.get( restServer + "Users?uuid=" + currentUser.uuid + "&password=" + sha1( disableAccountArg.password ) )
         .then( ( response ) => {
             let userFromServerArray: IServerResponse[] = response.data;
             if( userFromServerArray === null || userFromServerArray === undefined || userFromServerArray.length <= 0 ) {
@@ -260,7 +260,7 @@ export async function disableAccountServerCall( disableAccountArg: IMyaccountClo
 }
 
 export async function enableAccountServerCall( enableAccountArg: IMyaccountCloseArg ) : Promise<any>{
-    return await serverResolve( () =>
+    return await serverResolve( ( currentUser: IcurrentUser ) =>
     {
         let serverReturn: IServerResponse = {
             hasError: false,
@@ -280,7 +280,7 @@ export async function enableAccountServerCall( enableAccountArg: IMyaccountClose
             }
         };
                        
-        return axios.get( restServer + "Users?uuid=" + enableAccountArg.uuid + "&password=" + sha1( enableAccountArg.password ) )
+        return axios.get( restServer + "Users?uuid=" + currentUser.uuid + "&password=" + sha1( enableAccountArg.password ) )
         .then( ( response ) => {
             let userFromServerArray: IServerResponse[] = response.data;
             if( userFromServerArray === null || userFromServerArray === undefined || userFromServerArray.length <= 0 ) {
@@ -311,7 +311,7 @@ export async function enableAccountServerCall( enableAccountArg: IMyaccountClose
 }
 
 export async function closeAccountServerCall( closeAccountArg: IMyaccountCloseArg ) : Promise<any>{
-    return await serverResolve( () =>
+    return await serverResolve( ( currentUser: IcurrentUser ) =>
     {
         let serverReturn: IServerResponse = {
             hasError: false,
@@ -330,7 +330,7 @@ export async function closeAccountServerCall( closeAccountArg: IMyaccountCloseAr
             }
         };
                        
-        return axios.get( restServer + "Users?uuid=" + closeAccountArg.uuid + "&password=" + sha1( closeAccountArg.password ) )
+        return axios.get( restServer + "Users?uuid=" + currentUser.uuid + "&password=" + sha1( closeAccountArg.password ) )
         .then( ( response ) => {
             let userFromServerArray: IServerResponse[] = response.data;
             if( userFromServerArray === null || userFromServerArray === undefined || userFromServerArray.length <= 0 ) {

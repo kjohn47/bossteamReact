@@ -110,10 +110,10 @@ export function resetMyAccountSuccess() : IMyAccountAction {
     }
 }
 
-export function changeName ( name: string, surname: string, uuid: string ) : Function {
+export function changeName ( name: string, surname: string ) : Function {
     return (dispatch: Function) =>  
     {     
-        commonServerAction( dispatch, changeNameServerCall, changeNameSuccess, { name, surname, uuid }, null , true, LOAD_MYACCOUNT, updateCookieName );
+        commonServerAction( dispatch, changeNameServerCall, changeNameSuccess, { name, surname }, null , true, LOAD_MYACCOUNT, updateCookieName );
     } 
 }
 
@@ -133,10 +133,9 @@ function changeNameSuccess( result: IServerPayload ): IMyAccountAction {
     }
 }
 
-export function checkPassword( password: string, uuid: string, passwordChange: boolean ): Function {
+export function checkPassword( password: string, passwordChange: boolean ): Function {
     let checkPwArg: IMyaccountChangePasswordArg = {
-        password: password,
-        uuid: uuid
+        password: password
     };
     return ( dispatch: Function ) => {
         commonServerAction( dispatch, checkPasswordServerCall, checkPasswordSuccess, checkPwArg, passwordChange , true, LOAD_MYACCOUNT_PASSWORD );
@@ -165,11 +164,10 @@ function checkPasswordSuccess( result: IServerPayload, passwordChange: boolean )
     }
 }
 
-export function changePassword( oldPassword: string, newPassword: string, uuid: string ): Function {
+export function changePassword( oldPassword: string, newPassword: string ): Function {
     let checkPwArg: IMyaccountChangePasswordArg = {
         password: oldPassword,
-        newPassword: newPassword,
-        uuid: uuid
+        newPassword: newPassword
     };
     return ( dispatch: Function ) => {
         commonServerAction( dispatch, changePasswordServerCall, changePasswordSuccess, checkPwArg, null , true, LOAD_MYACCOUNT );
@@ -186,10 +184,9 @@ function changePasswordSuccess ( result: IServerPayload ): IMyAccountAction {
     };
 }
 
-export function checkEmail( email: string, uuid: string ): Function {
+export function checkEmail( email: string ): Function {
     let checkEmailArg: IMyaccountCloseArg = {
-        email: email,
-        uuid: uuid
+        email: email
     };
     return ( dispatch: Function ) => {
         commonServerAction( dispatch, checkEmailServerCall, checkEmailSuccess, checkEmailArg, null , true, LOAD_MYACCOUNT_EMAIL );
@@ -208,22 +205,20 @@ function checkEmailSuccess( result: IServerPayload ): IMyAccountAction {
     }    
 }
 
-export function disableAccount( email: string, password: string, uuid: string ): Function {
+export function disableAccount( email: string, password: string ): Function {
     let disableAccountArg: IMyaccountCloseArg = {
         password: password,
-        email: email,
-        uuid: uuid
+        email: email
     };
     return ( dispatch: Function ) => {
         commonServerAction( dispatch, disableAccountServerCall, closeAccountSuccess, disableAccountArg, null , true, LOAD_MYACCOUNT, null, enableAccountChangeSuccess );
     };
 }
 
-export function enableAccount( email: string, password: string, uuid: string ): Function {
+export function enableAccount( email: string, password: string ): Function {
     let enableAccountArg: IMyaccountCloseArg = {
         password: password,
-        email: email,
-        uuid: uuid
+        email: email
     };
     return ( dispatch: Function ) => {
         commonServerAction( dispatch, enableAccountServerCall, closeAccountSuccess, enableAccountArg, null , true, LOAD_MYACCOUNT, null, enableAccountChangeSuccess );
@@ -247,11 +242,10 @@ function changeAccountEnabledStatus( result: IServerPayload ): IMyAccountAction 
     }
 }
 
-export function closeAccount( email: string, password: string, uuid: string ): Function {
+export function closeAccount( email: string, password: string ): Function {
     let closeAccountArg: IMyaccountCloseArg = {
         password: password,
-        email: email,
-        uuid: uuid
+        email: email
     };
 
     return ( dispatch: Function ) => {

@@ -1,6 +1,8 @@
 import { startServerCommunication, serverCommunicationError, endServerCommunication } from ".";
 import { IErrorHandling, IServerResponse } from "../../../interfaces/common";
 import { ERROR_GENERIC } from "../../../settings";
+import { IcurrentUser } from "../../../interfaces/currentUser";
+import { store } from "../../configureStore";
 
 export function commonServerAction( dispatch: Function, 
                                     serverCall:Function, 
@@ -47,8 +49,9 @@ export function commonServerAction( dispatch: Function,
 
 export async function serverResolve( serverCall: Function, errorCode: string = ERROR_GENERIC ) : Promise<any>
 {
+    let currentUsr: IcurrentUser = store.getState().myAccount !== null && store.getState().myAccount !== undefined? store.getState().myAccount.loggedUser: null;    
     return new Promise( (resolve, reject ) => {
-        let serverReturn: IServerResponse = serverCall();        
+        let serverReturn: IServerResponse = serverCall( currentUsr );
         if( serverReturn === null || serverReturn === undefined )
         {
             throw new Error("Empty data from server");

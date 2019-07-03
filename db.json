@@ -199,6 +199,13 @@
               "Time": "2019-06-04T13:24:12.449Z",
               "ID": 123,
               "OwnerID": "casanova@gmail.comcasanova"
+            },
+            {
+              "Comment": "Test Comment uuid",
+              "Owner": "John Doe",
+              "Time": "2019-07-03T11:56:08.264Z",
+              "ID": 123,
+              "OwnerID": "AAAA-BBBB-CCCC-DDDD"
             }
           ]
         }
@@ -208,24 +215,7 @@
       "id": 2,
       "hasError": true,
       "errorMessage": "The server failed to retrieve data from database",
-      "payload": {
-        "newsData": {
-          "id": 2,
-          "date": "1990-01-10T00:00:00Z",
-          "imgLink": "/images/480x360.png",
-          "allowComments": false,
-          "PT": {
-            "title": "OLA 2",
-            "description": "Noticia de teste 2",
-            "content": "Blablabla teste 1 2 3 4 5 6 blaaa"
-          },
-          "EN": {
-            "title": "Hello 2",
-            "description": "Test News 2",
-            "content": "Blablabla test 1 2 3 4 5 6 blaaa"
-          }
-        }
-      }
+      "payload": {}
     },
     {
       "id": 3,

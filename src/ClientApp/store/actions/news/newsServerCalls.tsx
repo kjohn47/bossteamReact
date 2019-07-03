@@ -3,6 +3,7 @@ import { ICommentData, IServerResponse } from '../../../interfaces/common';
 import { serverResolve } from '../appSettings/common';
 import { ERROR_ADD_COMMENT, ERROR_GET_NEWS_DATA, ERROR_GET_NEWS_LIST, restServer } from '../../../settings';
 import axios from 'axios';
+import { IcurrentUser } from '../../../interfaces/currentUser';
 
 //// NEWS
 
@@ -29,14 +30,14 @@ export async function getNewsDataFromServer( ID:number ) : Promise<any>
 
 export async function addNewsCommentToServer( newsArg: InewsDataArg ) : Promise<any>
 {    
-    return await serverResolve( () =>
+    return await serverResolve( ( currentUser: IcurrentUser ) =>
     {
         let newComment: ICommentData = {
             Comment: newsArg.comment,
-            Owner: newsArg.user.name + " " + newsArg.user.surname,
+            Owner: currentUser.name + " " + currentUser.surname,
             Time: new Date().toISOString(),
             ID:123,
-            OwnerID: newsArg.user.uuid
+            OwnerID: currentUser.uuid
         } 
         //// when using real rest server this must be adapted correctly using POST but for now:
         //// how it will work: make post with data and return updated news comment list from server
