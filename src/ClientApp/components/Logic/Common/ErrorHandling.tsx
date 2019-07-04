@@ -32,6 +32,13 @@ function errorHandlingLogic (ErrorHandlingView:React.ComponentType<IErrorHandlin
                 {                    
                     this.props.resetError();
                 }
+                if( !checkLogin() && this.props.isLogged ) 
+                {
+                    this.props.makeLogout();
+                }
+                else if(checkLogin() && !this.props.isLogged) {
+                    this.props.sessionLogin();
+                }
             });
           }
         componentWillMount()
