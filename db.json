@@ -285,14 +285,13 @@
           "user": {
             "name": "Johnny",
             "surname": "Doe",
-            "uuid": "AAAA-BBBB-CCCC-DDDD",
             "permission": 1,
             "email": "abc@gmail.com",
             "enabled": true
           }
         }
       },
-      "sessionId": "0b99ab70e31571b78d83c89c0d0d3db14fb1df5e"
+      "sessionId": "1f177cae4575466f23a7fd91c30d57f48f2c6769"
     },
     {
       "id": 2,
@@ -306,7 +305,6 @@
           "user": {
             "name": "Jane",
             "surname": "Doe",
-            "uuid": "EEEE-FFFF-GGGG-HHHH",
             "permission": 1,
             "email": "def@gmail.com",
             "enabled": true
@@ -327,7 +325,6 @@
             "name": "Albert",
             "surname": "Casanova",
             "permission": 1,
-            "uuid": "casanova@gmail.comcasanova",
             "email": "casanova@gmail.com",
             "enabled": false
           }
@@ -348,7 +345,6 @@
             "name": "teste",
             "surname": "user",
             "permission": 1,
-            "uuid": "testUser@gmail.comtest",
             "email": "testUser@gmail.com",
             "enabled": true
           }

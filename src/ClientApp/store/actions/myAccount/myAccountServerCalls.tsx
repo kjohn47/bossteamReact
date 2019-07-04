@@ -74,25 +74,32 @@ export async function makeLoginWithSession( sessionArg: IUserSession ) : Promise
     }, ERROR_LOGIN)
 }
 
-export async function makeLogoutOnServer( user: IcurrentUser ) : Promise<any>{
-    return await serverResolve( () =>
+export async function makeLogoutOnServer() : Promise<any>{
+    return await serverResolve( ( userSession: IUserSession ) =>
     {
         let serverReturn: IServerResponse = {
             hasError: false
         }
-        
-        if(user === null )
-        {
-            throw new Error("Invalid user");
-        }
-        else
-        {            
-            return new Promise( (resolve: Function) => { 
-                setTimeout( () => {
-                    resolve( serverReturn )
-                    }, 800 )
-            })
-        }
+
+        return axios.get(restServer + "Users?uuid=" + userSession.uuid ).then( (response) => {
+            let userFromServer: IServerResponse[] = response.data;
+            if( userFromServer !== null && userFromServer !== undefined && userFromServer.length > 0 )
+            {
+                let user: IServerResponse = userFromServer[0];
+                user.sessionId = "";
+                return axios.put( restServer + "Users/" + user.id, {...user} )
+                .then ( () => {
+                    
+                    return serverReturn;
+                });
+            }
+
+            serverReturn.hasError = true;
+            serverReturn.errorMessage = "Invalid user";
+
+            return serverReturn;
+        }); 
+            
     }, ERROR_LOGOUT)
 }
 

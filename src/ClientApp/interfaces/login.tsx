@@ -42,7 +42,7 @@ export interface ILoginActions {
 
 export interface ILoginReduxActions {
     makeLogin?( user: string, password: string, isPermanent: boolean ): Function;
-    makeLogout?( user: IcurrentUser ): Function;
+    makeLogout?(): Function;
     resetLoginStatus?(): Function;
 }
 

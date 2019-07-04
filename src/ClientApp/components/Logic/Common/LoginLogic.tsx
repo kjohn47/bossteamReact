@@ -98,7 +98,7 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
 
         makeLogout() : void {
             if (this.props.isLogged) {
-                this.props.makeLogout( this.props.loggedUser );                
+                this.props.makeLogout();                
             }
         }
 
@@ -172,7 +172,7 @@ function loginLogic(WrappedComponentLogin: React.ComponentType<ILogin>, WrappedC
 
     const mapDispatchToProps = (dispatch: Function): ILoginReduxActions =>({
         makeLogin: ( user: string, password: string, isPermanent: boolean ) => dispatch( makeLogin( user, password, isPermanent ) ),
-        makeLogout: ( user: IcurrentUser) => dispatch( makeLogout( user ) ),
+        makeLogout: () => dispatch( makeLogout() ),
         resetLoginStatus: () => dispatch( resetLoginStatus() )
     });
 
