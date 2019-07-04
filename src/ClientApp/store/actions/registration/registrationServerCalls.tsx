@@ -62,6 +62,7 @@ export async function registrateUserInServer( registrationArg: IUserRegistration
                         hasError: false,
                         username: registrationArg.username,
                         password: sha1( registrationArg.password ),
+                        sessionId: "",
                         payload: {
                             loginData: {
                                 success: true,
@@ -69,7 +70,6 @@ export async function registrateUserInServer( registrationArg: IUserRegistration
                                     name: registrationArg.name,
                                     surname: registrationArg.surname,
                                     permission: 1,
-                                    uuid: uuid,
                                     email: registrationArg.email,
                                     enabled: true
                                 }
