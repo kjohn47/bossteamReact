@@ -5,7 +5,7 @@ import { ILoading, IErrorHandlingText } from '../../../interfaces/common';
 import { IFetchData } from '../../../interfaces/appSettings';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { resetError } from '../../../store/actions/appSettings';
-import { sessionLogin } from '../../../store/actions/myAccount';
+import { sessionLogin, forceSessionLogout } from '../../../store/actions/myAccount';
 import { checkLogin } from '../../../common/session';
 
 interface IHistory extends RouteComponentProps<any> {};
@@ -13,6 +13,7 @@ interface IHistory extends RouteComponentProps<any> {};
 interface IErrorAction {
     resetError() : Function;
     sessionLogin(): Function;
+    makeLogout(): Function;
 }
 
 interface IAppLogged {
@@ -35,7 +36,16 @@ function errorHandlingLogic (ErrorHandlingView:React.ComponentType<IErrorHandlin
           }
         componentWillMount()
         {
-            checkLogin() && this.props.sessionLogin();
+            if (checkLogin()) {
+                this.props.sessionLogin();
+            }
+            else
+            {
+                if( this.props.isLogged )
+                {
+                    this.props.makeLogout();
+                }
+            }
         }
 
         render(){
@@ -75,7 +85,8 @@ function errorHandlingLogic (ErrorHandlingView:React.ComponentType<IErrorHandlin
     const mapDispatchToProps = (dispatch: Function) : IErrorAction => (
         {
             resetError: () => dispatch( resetError() ),
-            sessionLogin: () => dispatch( sessionLogin() )
+            sessionLogin: () => dispatch( sessionLogin() ),
+            makeLogout: () => dispatch( forceSessionLogout() )
         });
     
 
