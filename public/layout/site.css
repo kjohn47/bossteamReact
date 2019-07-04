@@ -89,6 +89,10 @@ body{
     vertical-align: middle !important;
 }
 
+.menubarLogin {
+    margin-bottom: 10px;
+}
+
 .userMenuSpace {
     width: 120px;
     padding-left: 45px; 

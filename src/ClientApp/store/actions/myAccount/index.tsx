@@ -62,16 +62,24 @@ export function sessionLogin(): Function {
         if( checkLogin() )
         {
             let session: IUserSession = getCurrentSession();
-            commonServerAction( dispatch, makeLoginWithSession, makeLoginSuccess, session, null, true, LOAD_LOGIN_MENU, updateLoginToken, null, sessionLogoutError );
+            commonServerAction( dispatch, makeLoginWithSession, makeLoginSuccess, session, null, true, LOAD_LOGIN_MENU, updateLoginToken, null, forceSessionLogoutError );
         }
         return dispatch( () => {} );
     }
 }
 
-function sessionLogoutError( dispatch: Function )
+function forceSessionLogoutError( dispatch: Function )
 {
     cookieLogout();
     dispatch( logout() );
+}
+
+export function forceSessionLogout()
+{
+    return ( dispatch: Function ) => {
+        cookieLogout();
+        dispatch( logout() );
+    }    
 }
 
 function updateLoginToken( result: IServerPayload, serverCallArg: any, successCallArg: any, dispatch: Function ) : void
@@ -96,10 +104,10 @@ function makeLoginSuccess( result: IServerPayload ) : IMyAccountAction {
     }
 }
 
-export function makeLogout( user: IcurrentUser) : Function {
+export function makeLogout() : Function {
     return (dispatch: Function) =>  
     {     
-        commonServerAction( dispatch, makeLogoutOnServer, logout, user, null , true, LOAD_LOGIN_MENU, null, logoutFunctions, logoutFunctions );
+        commonServerAction( dispatch, makeLogoutOnServer, logout, null, null , true, LOAD_LOGIN_MENU, null, logoutFunctions, logoutFunctions );
     } 
 }
 

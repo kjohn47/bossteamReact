@@ -10,6 +10,7 @@ class LoginForm extends React.PureComponent<ILogin,{}>{
         const loginText = this.props.loginText;
         return (
             <Form inline>
+                { !this.props.loading &&
                 <FormGroup  className="mb-2 mr-sm-2 mb-sm-0">
                     <Input 
                         type="text" 
@@ -24,8 +25,9 @@ class LoginForm extends React.PureComponent<ILogin,{}>{
                     <FormFeedback tooltip>
                         { this.props.loginAction.state.emptyUser ? this.props.loginText.emptyUser : this.props.loginText.invalidLogin }
                     </FormFeedback>
-                </FormGroup> 
+                </FormGroup> }
                 &nbsp;
+                { !this.props.loading &&
                 <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                     <Input 
                         type="password" 
@@ -42,22 +44,23 @@ class LoginForm extends React.PureComponent<ILogin,{}>{
                             { this.props.loginAction.state.emptyPassword ? this.props.loginText.emptyPassword : <RouterLink to="/" className="nav-link loginPassRecover">{ this.props.loginText.passwordRecover }</RouterLink> }
                         </FormFeedback>
                      }
-                </FormGroup>
-                <FormGroup check>
+                </FormGroup>}
+                { !this.props.loading &&
+                <FormGroup check>                
                     <Input 
                         type = "checkbox"
                         name = "isPermanent_inline"
                         id = "isPermanent_inline"
                         checked = {this.props.loginAction.state.isPermanent}
                         onChange = { () => { this.props.loginAction.handleIsPermanent() } }
-                    />
+                    /> 
                     <UncontrolledTooltip placement="bottom" target="isPermanent_inline">
                         { this.props.loginText.stayLoggedIn }
                     </UncontrolledTooltip>
-                </FormGroup>
+                </FormGroup>}
                 <div className="login_form_btn">
                     { this.props.loading ? 
-                            <Spinner size="sm" color="light" className="loginSpinner"/>
+                            <Spinner size="sm" color="light" className="loginSpinner menubarLogin"/>
                         :
                             <Button onClick = { () => this.props.loginAction.makeLogin() }>{loginText.submit}</Button>
                     }
@@ -65,9 +68,7 @@ class LoginForm extends React.PureComponent<ILogin,{}>{
                         <NavLink />
                     </NavItem>
                     <NavItem>
-                    { this.props.loading ?
-                            <div className="nav-link registLink">{loginText.register}</div>
-                        :
+                    { !this.props.loading &&
                             <RouterLink className="nav-link registLink" to={registrationRoute}>{loginText.register}</RouterLink>
                     }
                     </NavItem>
