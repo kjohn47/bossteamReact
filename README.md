@@ -115,12 +115,12 @@ Project structure:
 Async server calls are made in the action and the result will go to the redux store.  
 There are methods from actions/appSettings/common.tsx to be used for the async server calls for loading and error handling:  
 -- Basic: 
-- commonServerAction( dispatch, [ServerCallMethod], [SuccessAction], [ServerCallArg], [SuccessActionArg], *1 )
+----commonServerAction( dispatch, [ServerCallMethod], [SuccessAction], [ServerCallArg], [SuccessActionArg], *1 )
 
 *1 Localized loading instead of general loading    
-    true/false, [LOADING KEY] / '', *2  
+------true/false, [LOADING KEY] / '', *2  
 *2 All other methods:  
-    [MethodThatWillRunBeforeSuccess] / null, [MethodThatWillRunAfterSuccess] / null, [MethodThatWillRunOnError] / null )  
+------[MethodThatWillRunBeforeSuccess] / null, [MethodThatWillRunAfterSuccess] / null, [MethodThatWillRunOnError] / null )  
 
 If don't want to use localized loading with *2 methods, set flag to false and key to '';  
 If don't want to add of the methods, set as null.  
@@ -128,9 +128,9 @@ If don't want to add of the methods, set as null.
 The commonServerAction method is to be called on action file index.tsx using redux thunk,   
 ActionFunction()   
 {  
-    return (dispatch: Function => {  
-      commonServerAction();
-    });  
+.....return (dispatch: Function => {  
+.......commonServerAction();
+.....});  
 }  
 
 The server call Arguments can be single var or an object. They will be passed to the server Call Method as single available  
@@ -145,11 +145,12 @@ The success action method template:
   
 function successAction( result: IServerPayload, successArguments: any ): IReduxActionInterface  
 {  
-  return {  
-    type: [ACTIONTYPE],  
-    payload: {  
-    (-- mapped result data --)      
-  }  
+....return {  
+.......type: [ACTIONTYPE],  
+.......payload: {  
+...........(-- mapped result data --)  
+.......}  
+.....}  
 }  
 
 *2 success methods:  
@@ -164,13 +165,13 @@ The ServerCallMethod must be created on [action]ServerCalls.tsx and that method 
 from actions/appSettings/common.tsx  
 
 function ServerCallMethod( serverCallArgs: any ): Promise<any>  
-  {  
-      return await serverResolve( ( userSession: IUserSession ) => {  
-          return [AXIOS REST CALL].then( result => {  
-            return result.data;  
-      });  
-    }, [ERROR_TYPE_KEY]);  
-  }  
+{  
+.....return await serverResolve( ( userSession: IUserSession ) => {  
+..........return [AXIOS REST CALL].then( result => {  
+................return result.data;  
+..........});  
+.....}, [ERROR_TYPE_KEY]);  
+}  
 
 userSession is always passed as argument on serverResolve so you can do operations using authenticated user  
 more easily. serverCallArgs can be an object or single item, define the correnct interface.  
