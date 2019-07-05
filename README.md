@@ -226,11 +226,11 @@ const RouteComponent = hocFunctionLogic(ComponentView);
 class RouteComponentRoute extends React.Component{  
 ...render(){  
 .......return(  
-...........<Row>  
-...............<Col>  
-...................<RouteComponent />  
-...............</Col>  
-...........</Row>  
+...........< Row >  
+...............< Col >  
+...................< RouteComponent / >  
+...............< / Col >  
+...........< / Row >  
 .......);  
 ...}  
 }  
@@ -239,7 +239,7 @@ export default RouteComponentRoute;
 ------------------------  
 --- if the process needs authenticated user 
 ------ create the need login component const LoginForm = loginLogic(Login);
------- envolve the route component with <NeedLogin> <RouteComponent /> </NeedLogin>  
+------ envolve the route component with < NeedLogin > < RouteComponent / > < / NeedLogin >  
   
 Create a key to define the url on settings.tsx  
 Add route to Routes.tsx  
