@@ -33,6 +33,8 @@ If release is ok, merge will be made to master
   
 Project structure:  
 /-  
+---- db.json -> mock database for dev  
+---- jsonServer.js -> jsonServer for mock rest data origin  
 ---- build -> Server side rendering bundle  
 ---- public/ -> Client App output  
 ------- images/ -> Static images used on project  
@@ -70,13 +72,28 @@ Project structure:
 ------------------ LoginLogic.tsx -> Login and logout logic HOC for login form  
 ------------------ makeCard.tsx -> Maps data to card item array (not a HOC)  
 ------------------ Registration.tsx -> Registration form HOC  
------------------- Comment.tsx -> Generic Comment HOC to be used in various processes  
------------------- AddComment.tsx -> Generic Add Comment HOC to be used in various processes that include user login check  
+------------------ Comment.tsx -> Generic Comment HOC used in various processes  
+------------------ AddComment.tsx -> Generic Add Comment HOC used in various processes including user validation  
 ---------------- ( ~ )/ ( ~ ).tsx -> Specific component HOC  
 ------------- Views/ -> Views to be used on Hocs  
 ---------------- Common/( ~ ).tsx -> View for main app or shared in various processes  
 ---------------- Menu/( ~ ).tsx -> View used for the menu and footer  
 ---------------- ( ~ )/ ( ~ ).tsx -> Views Pure Component item  
+---------- Store/ -> Redux store and data access  
+------------- configureStore.tsx -> Creates the redux store from reducers and allow access to states  
+------------- actionTypes/index.tsx -> Keys for the redux actions  
+------------- reducers/ -> the reducers folder  
+---------------- index.tsx -> combine reducers here (add new reducer to list)  
+---------------- myAccount.tsx -> user login, session and related data  
+---------------- appSettings.tsx -> loading, errors, translation of app menus  
+---------------- ( ~ ).tsx -> app reducer  
+------------- actions/ -> actions folder -> async server comunication and store manipulation  
+---------------- appSettings/ -> App main actions and server comunication common  
+------------------ index.tsx -> App language, load server data actions  
+------------------ common.tsx -> methos to execute server comunication to activate load and format errors  
+---------------- [ActionFolder]/ -> folder for process action  
+------------------ [index.tsx] -> action file  
+------------------ [Action]ServerCalls.tsx -> Server comunication methods for async calls  
 
         
   
