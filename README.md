@@ -114,18 +114,19 @@ Project structure:
 
 Async server calls are made in the action and the result will go to the redux store.  
 There are methods from actions/appSettings/common.tsx to be used for the async server calls for loading and error handling:  
--- Basic: 
-----commonServerAction( dispatch, [ServerCallMethod], [SuccessAction], [ServerCallArg], [SuccessActionArg], *1 )
-
-*1 Localized loading instead of general loading    
-------true/false, [LOADING KEY] / '', *2  
+-- Basic:  
+  
+----commonServerAction( dispatch, [ServerCallMethod], [SuccessAction], [ServerCallArg], [SuccessActionArg], *1 )  
+  
+*1 Localized loading instead of general loading  
+-- true/false, [LOADING KEY] / '', *2  
 *2 All other methods:  
-------[MethodThatWillRunBeforeSuccess] / null, [MethodThatWillRunAfterSuccess] / null, [MethodThatWillRunOnError] / null )  
-
+-- [MethodThatWillRunBeforeSuccess] / null, [MethodThatWillRunAfterSuccess] / null, [MethodThatWillRunOnError] / null )  
+  
 If don't want to use localized loading with *2 methods, set flag to false and key to '';  
 If don't want to add of the methods, set as null.  
-
-The commonServerAction method is to be called on action file index.tsx using redux thunk,   
+  
+The commonServerAction method is to be called on action file index.tsx using redux thunk,  
 ActionFunction()  
 {  
 .....return (dispatch: Function => {  
