@@ -30,3 +30,20 @@ Admin will merge to release if approved.
 ---------------------------------------------------------------
 If release is ok, merge will be made to master
 ---------------------------------------------------------------
+  
+Project structure:  
+/-  
+  -- build -> Server side rendering bundle  
+  -- public/ -> Client App output  
+     -- images/ -> Static images used on project  
+     -- javascript/ -> Client bundle  
+     -- layout/ -> css used in project  
+     -- index.html -> project home/main page  
+  -- src/ -> Sources  
+     -- ServerApp/ -> Server side rendering configuration (should not need changes)  
+     -- ClientApp/ -> React sources  
+        -- index.jsx -> Start of render  
+        -- settings.tsx -> Page Settings and keys  
+        -- Routes.tsx -> Available routes and component redirect  
+        
+  
