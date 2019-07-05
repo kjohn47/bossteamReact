@@ -43,7 +43,34 @@ Project structure:
 ------- ServerApp/ -> Server side rendering configuration (should not need changes)  
 ------- ClientApp/ -> React sources  
 ---------- index.jsx -> Start of render  
----------- settings.tsx -> Page Settings and keys  
+---------- settings.tsx -> Page Settings and keys for error, loading, language, translations  
 ---------- Routes.tsx -> Available routes and component redirect  
+---------- common/ -> project common main methods  
+------------- methods.tsx -> General methods  
+------------- regex.tsx -> regex verification methods  
+------------- session.tsx -> session related, browser memory read and write  
+---------- interfaces/ -> interfaces used in project  
+------------- ( ~.tsx ) -> interface object  
+------------- common.tsx  
+------------- store.tsx  
+---------- pageData/language/ -> language translation for menus and components  
+------------- ( ~.tsx )  
+------------- 
+---------- components/ -> components used on the App  
+------------- App.tsx -> Main component, renderd the layout and routes  
+------------- Menu.tsx -> Renders the top menu based on certain logic and view  
+------------- Layout.tsk -> Apply the main layout around components (Menu, side space, footer)  
+------------- Routes/ -> Add Component here to be used in Routes.tsx. These components are the result of apply logic to view  
+------------------ ( ~.tsx ) -> Route component  
+------------- Logic/ -> all component side logic is here, same logic can be used on more than one component view (HOC)  
+---------------- Common/ -> main components logic  
+------------------ ErrorHandling.tsx -> important Hoc that shows errors, loadings, checks session alive and force logout  
+------------------
+------------------
+------------------
+------------------
+------------------
+------------------
+------------------
         
   
