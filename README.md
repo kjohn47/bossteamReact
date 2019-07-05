@@ -46,7 +46,7 @@ Project structure:
 ------- ClientApp/ -> React sources  
 ---------- index.jsx -> Start of render  
 ---------- settings.tsx -> Page Settings and keys for error, loading, language, translations  
----------- Routes.tsx -> Available routes and component redirect  
+---------- Routes.tsx -> Available routes and component redirect - use lazy here  
 ---------- common/ -> project common main methods  
 ------------- methods.tsx -> General methods  
 ------------- regex.tsx -> regex verification methods  
@@ -62,7 +62,7 @@ Project structure:
 ------------- App.tsx -> Main component, renderd the layout and routes  
 ------------- Menu.tsx -> Renders the top menu based on certain logic and view  
 ------------- Layout.tsk -> Apply the main layout around components (Menu, side space, footer)  
-------------- Routes/ -> Add Component here to be used in Routes.tsx. These components are the result of apply logic to view  
+------------- Routes/ -> Add Component with Hoc applied to view here to be used in Routes.tsx.  
 ------------------ ( ~.tsx ) -> Route component  
 ------------- Logic/ -> all component side logic is here, same logic can be used on more than one component view (HOC)  
 ---------------- Common/ -> main components logic  
@@ -96,7 +96,8 @@ Project structure:
 ------------------ [Action]ServerCalls.tsx -> Server comunication methods for async calls  
   
     
---//-- Add text translation --//--  
+--//-- Add text translation --//--//----//----//----//----//----//----//----//----//----//----//----//----//----//----  
+  
 1) add key to settings.tsx  
 2) add interface for the text object  
 3) add translation interface for languages using keys [ptCode] and [enCode] of the type of previous interface  
@@ -106,11 +107,11 @@ Project structure:
 ---> [TEXT_KEY]: GetPropertyValue( TEXT_OBJECT, language )  
 7) use your tranlation with redux store (reduxstate.appSettings.appText[TEXT_KEY]) on your HOC  
   
-----//----//----//----//----//----  
+----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----     
   
   
     
---//-- Add server call ------//--  
+--//-- Add server call ------//--//----//----//----//----//----//----//----//----//----//----//----//----//----//----    
 
 Async server calls are made in the action and the result will go to the redux store.  
 There are methods from actions/appSettings/common.tsx to be used for the async server calls for loading and error handling:  
@@ -179,21 +180,32 @@ more easily. serverCallArgs can be an object or single item, define the correnct
 result.data is the data returned from server and must respect IServerResponse interface.  
 On this project axios is used for the async ajax calls.  
 The error key will define user friendly error for the process when out of dev ambient( defined in settings)  
+If error is not defined, Generic error is applied.  
 
-----//----//----//----//----//----  
+----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----    
   
     
---// Add Error for server call //-  
+--// Add Error for server call //-//----//----//----//----//----//----//----//----//----//----//----//----//----  
+  
+  Like translations, you have to create a key for the error in settings.tsx  
+  1) Add key to settings.tsx [ERROR_KEY]  
+  2) Add key to interfaces/common.tsx to interface IErrorHandlingErrors with type: IErrorHandlingTextTranslation  
+  3) Add error key and text to pageData/language/errors.tsx ERRORS object to both [enCode] and [ptCode] keys  
+  4) Use the error key when using serverResolve method  
 
-
-----//----//----//----//----//----    
+----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----    
   
   
     
---//-- Add custom loading  --//--  
+--//-- Add custom loading  --//--//----//----//----//----//----//----//----//----//----//----//----//----//----  
+  
+Once again, you have to create a key for the localized loading in settings.tsx  
+1) Add key to settings.tsx [LOAD_KEY]  
+2) Add key to interfaces/common.tsx on ILocalLoading interface as nullable boolean  
+3) Use the key on the server commonServerAction method *1 with flag true to activate loading with async call  
+4) Use the reduxState.appSettings.fetchData.loading.localLoading[LOAD_KEY] to activate your loading spinner on HOC  
 
-
-----//----//----//----//----//----  
+----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----  
 
         
   
