@@ -94,6 +94,39 @@ Project structure:
 ---------------- [ActionFolder]/ -> folder for process action  
 ------------------ [index.tsx] -> action file  
 ------------------ [Action]ServerCalls.tsx -> Server comunication methods for async calls  
+  
+    
+--//-- Add text translation --//--  
+1) add key to settings.tsx  
+2) add interface for the text object  
+3) add translation interface for languages using keys [ptCode] and [enCode] of the type of previous interface  
+4) add key to interfaces/common.tsx IAppText of type of translation interface  
+5) add translation file to pageData/language/ folder with object of type of translation interface  
+6) add translation object to pageData/language/index.tsx identified by it's key  
+---> [TEXT_KEY]: GetPropertyValue( TEXT_OBJECT, language )  
+7) use your tranlation with redux store (reduxstate.appSettings.appText[TEXT_KEY]) on your HOC  
+  
+----//----//----//----//----//----  
+  
+  
+    
+--//-- Add server call ------//--  
+
+
+----//----//----//----//----//----  
+  
+    
+--// Add Error for server call //-  
+
+
+----//----//----//----//----//----    
+  
+  
+    
+--//-- Add custom loading  --//--  
+
+
+----//----//----//----//----//----  
 
         
   
