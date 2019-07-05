@@ -208,4 +208,42 @@ Once again, you have to create a key for the localized loading in settings.tsx
 ----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----  
 
         
+--//-- Add a process  ---//----//--//----//----//----//----//----//----//----//----//----//----//----//----//----  
+1) Create the needed interfaces  
+--- redux states, redux actions, component props, component states, etc  
+2) Create a HOC to have logic layer and connection to redux store  
+--- if it fetchs data from server on load, add the action to ComponentDidMount  
+--- don't forget to erase the data in store with ComponentWillUnmount  
+3) Create Text translation for the process  
+4) Create a view to be used on the HOC and present data  
+5) Add action types and needed actions  
+--- use server common methods to fetch data and create custom errors  
+6) Add a reducer to recieve data from server  
+7) Create the Route Component  
+sample:  
+------------------------  
+const RouteComponent = hocFunctionLogic(ComponentView);  
+class RouteComponentRoute extends React.Component{  
+...render(){  
+.......return(  
+...........<Row>  
+...............<Col>  
+...................<RouteComponent />  
+...............</Col>  
+...........</Row>  
+.......);  
+...}  
+}  
+export default RouteComponentRoute;  
   
+------------------------  
+--- if the process needs authenticated user 
+------ create the need login component const LoginForm = loginLogic(Login);
+------ envolve the route component with <NeedLogin> <RouteComponent /> </NeedLogin>  
+  
+Create a key to define the url on settings.tsx  
+Add route to Routes.tsx  
+const RouteComponentRoute = React.lazy(() => import('./components/Routes/RouteComponentRoute'));  
+add - getComponentRoute(RouteComponentRoute, routeComponentRouteUrlKey), to routes array  
+  
+----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----//----  
