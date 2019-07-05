@@ -126,13 +126,13 @@ If don't want to use localized loading with *2 methods, set flag to false and ke
 If don't want to add of the methods, set as null.  
 
 The commonServerAction method is to be called on action file index.tsx using redux thunk,   
-ActionFunction()   
+ActionFunction()  
 {  
 .....return (dispatch: Function => {  
-.......commonServerAction();
+.......commonServerAction();  
 .....});  
 }  
-
+  
 The server call Arguments can be single var or an object. They will be passed to the server Call Method as single available  
 argument and will be available for *2 success methods as second argument.  
 The success Arguments will be passed to success action as second argument and on *2 success methos as 3rd argument.  
