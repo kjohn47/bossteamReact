@@ -72,5 +72,11 @@ Project structure:
 ------------------ Registration.tsx -> Registration form HOC  
 ------------------ Comment.tsx -> Generic Comment HOC to be used in various processes  
 ------------------ AddComment.tsx -> Generic Add Comment HOC to be used in various processes that include user login check  
+---------------- ( ~ )/ ( ~ ).tsx -> Specific component HOC  
+------------- Views/ -> Views to be used on Hocs  
+---------------- Common/( ~ ).tsx -> View for main app or shared in various processes  
+---------------- Menu/( ~ ).tsx -> View used for the menu and footer  
+---------------- ( ~ )/ ( ~ ).tsx -> Views Pure Component item  
+
         
   
