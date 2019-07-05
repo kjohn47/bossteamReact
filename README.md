@@ -51,11 +51,11 @@ Project structure:
 ------------- session.tsx -> session related, browser memory read and write  
 ---------- interfaces/ -> interfaces used in project  
 ------------- ( ~.tsx ) -> interface object  
-------------- common.tsx  
-------------- store.tsx  
+------------- common.tsx -> common interfaces, errors, translations and loadings must be added here  
+------------- store.tsx -> redux store states must be added here  
 ---------- pageData/language/ -> language translation for menus and components  
-------------- ( ~.tsx )  
-------------- 
+------------- ( ~.tsx ) -> language translation file  
+------------- index.tsx -> Add translation to be used in app here  
 ---------- components/ -> components used on the App  
 ------------- App.tsx -> Main component, renderd the layout and routes  
 ------------- Menu.tsx -> Renders the top menu based on certain logic and view  
@@ -65,12 +65,12 @@ Project structure:
 ------------- Logic/ -> all component side logic is here, same logic can be used on more than one component view (HOC)  
 ---------------- Common/ -> main components logic  
 ------------------ ErrorHandling.tsx -> important Hoc that shows errors, loadings, checks session alive and force logout  
-------------------
-------------------
-------------------
-------------------
-------------------
-------------------
-------------------
+------------------ a  
+------------------ a  
+------------------ a  
+------------------ a  
+------------------ a  
+------------------ a  
+------------------ a  
         
   
