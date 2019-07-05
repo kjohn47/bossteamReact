@@ -219,6 +219,7 @@ Once again, you have to create a key for the localized loading in settings.tsx
 5) Add action types and needed actions  
 --- use server common methods to fetch data and create custom errors  
 6) Add a reducer to recieve data from server  
+--- Don't forget to add reducer default state, add the reducers to CombineReducers and to Istore interface  
 7) Create the Route Component  
 sample:  
 ------------------------  
