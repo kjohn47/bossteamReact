@@ -65,12 +65,12 @@ Project structure:
 ------------- Logic/ -> all component side logic is here, same logic can be used on more than one component view (HOC)  
 ---------------- Common/ -> main components logic  
 ------------------ ErrorHandling.tsx -> important Hoc that shows errors, loadings, checks session alive and force logout  
------------------- a  
------------------- a  
------------------- a  
------------------- a  
------------------- a  
------------------- a  
------------------- a  
+------------------ NeedLogin.tsx -> use this HOC envolving components that need authenticated users  
+------------------ PageNotFound.tsx -> Sends 404 and shows error on screen for invalid routes  
+------------------ LoginLogic.tsx -> Login and logout logic HOC for login form  
+------------------ makeCard.tsx -> Maps data to card item array (not a HOC)  
+------------------ Registration.tsx -> Registration form HOC  
+------------------ Comment.tsx -> Generic Comment HOC to be used in various processes  
+------------------ AddComment.tsx -> Generic Add Comment HOC to be used in various processes that include user login check  
         
   
