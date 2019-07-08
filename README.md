@@ -239,7 +239,7 @@ export default RouteComponentRoute;
   
 ------------------------  
 --- if the process needs authenticated user 
------- create the need login component const LoginForm = loginLogic(Login);
+------ create the need login component const LoginForm = loginLogic(Login);  
 ------ envolve the route component with < NeedLogin > < RouteComponent / > < / NeedLogin >  
   
 Create a key to define the url on settings.tsx  
