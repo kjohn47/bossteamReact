@@ -41,7 +41,7 @@ function errorHandlingLogic (ErrorHandlingView:React.ComponentType<IErrorHandlin
                 }
             });
           }
-        componentWillMount()
+        componentDidMount()
         {
             if (checkLogin()) {
                 this.props.sessionLogin();
